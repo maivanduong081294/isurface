@@ -3,6 +3,8 @@ name: Deploy WordPress to cPanel
 on:
   push:
     branches: [main]
+    paths:
+      - 'wordpress/**'
   workflow_dispatch:
 
 jobs:
