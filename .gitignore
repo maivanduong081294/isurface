@@ -1,0 +1,15 @@
+.env
+.docker/
+.repo-inspect/
+
+# WordPress runtime/config generated per environment
+wordpress/wp-config.php
+wordpress/wp-content/cache/
+wordpress/wp-content/upgrade/
+wordpress/wp-content/uploads/
+
+# Local/editor files
+.vscode/
+*.log
+Thumbs.db
+desktop.ini
