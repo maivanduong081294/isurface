@@ -16,7 +16,7 @@
       ['slider-nav-'+shortcode.options.sliderNavPosition]: shortcode.options.type === 'slider' && shortcode.options.sliderNavPosition && shortcode.options.sliderNavStyle !== 'reveal',
       ['slider-style-'+shortcode.options.sliderStyle]: shortcode.options.type === 'slider' && shortcode.options.sliderStyle
     }"
-    ng-attr-data-flickity-options="{{ shortcode.options.type === 'slider' ? '{&quot;imagesLoaded&quot;:true,&quot;groupCells&quot;:&quot;100%&quot;,&quot;dragThreshold&quot;:5,&quot;cellAlign&quot;:&quot;left&quot;,&quot;wrapAround&quot;:' + (shortcode.options.infinitive !== 'false') + ',&quot;prevNextButtons&quot;:true,&quot;percentPosition&quot;:true,&quot;pageDots&quot;:' + (shortcode.options.sliderBullets === 'true') + ',&quot;autoPlay&quot;:' + (shortcode.options.autoSlide || 'false') + '}' : undefined }}"
+    ng-attr-data-swiper-options="{{ shortcode.options.type === 'slider' ? '{&quot;imagesLoaded&quot;:true,&quot;groupCells&quot;:&quot;100%&quot;,&quot;dragThreshold&quot;:5,&quot;cellAlign&quot;:&quot;left&quot;,&quot;wrapAround&quot;:' + (shortcode.options.infinitive !== 'false') + ',&quot;prevNextButtons&quot;:true,&quot;pageDots&quot;:' + (shortcode.options.sliderBullets === 'true') + ',&quot;autoPlay&quot;:' + (shortcode.options.autoSlide || 'false') + '}' : undefined }}"
   >
     <content></content>
   </div>

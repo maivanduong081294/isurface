@@ -38,6 +38,8 @@ function get_flatsome_repeater_start( $atts ) {
       'slider_nav_color' => '',
       'auto_slide' => 'false',
 	  'infinitive' => 'true',
+      'thumb_role' => '',
+      'thumb_key' => '',
       'format' => '',
 	  'attrs' => '',
     ) );
@@ -69,16 +71,14 @@ function get_flatsome_repeater_start( $atts ) {
       $row_classes[] = 'row-isotope';
     }
 
-    $rtl = 'false';
-
-    if(is_rtl()) {
-      $rtl = 'true';
-    }
-
-    if(empty($atts['auto_slide'])) $atts['auto_slide'] = 'false';
-
-    // Group slider cells
-    $group_cells = '"100%"';
+    // Slider options shared by the "slider" and "slider-full" types.
+    $slider_options = array(
+      'cellAlign'     => 'left',
+      'wrapAround'    => 'false' !== $atts['infinitive'],
+      'pageDots'      => 'true' === $atts['slider_bullets'],
+      'autoPlay'      => $atts['auto_slide'],
+      'dragThreshold' => 5,
+    );
 
     // Add column classes
     if(!empty($atts['columns']) && $atts['type'] !== 'grid'){
@@ -123,8 +123,13 @@ function get_flatsome_repeater_start( $atts ) {
       $row_classes[] = 'row-grid';
     }
 
+    // Main slider + thumbnail slider pair ("Thumbnail Slider" options).
+    $thumbnail_class = flatsome_slider_thumbnail_class( $atts['thumb_role'], $atts['thumb_key'] );
+
     if($atts['type'] == 'slider'){
       $row_classes[] = 'slider row-slider';
+
+      if($thumbnail_class) $row_classes[] = $thumbnail_class;
 
       if($atts['slider_style']) $row_classes[] = 'slider-nav-'.$atts['slider_style'];
 
@@ -135,16 +140,17 @@ function get_flatsome_repeater_start( $atts ) {
       // Add slider push class to normal text boxes
       if(!$atts['style'] || $atts['style'] == 'default' || $atts['style'] == 'normal' || $atts['style'] == 'bounce') $row_classes[] = 'slider-nav-push';
 
-      $slider_options = '{"imagesLoaded": true, "groupCells": '.$group_cells.', "dragThreshold" : 5, "cellAlign": "left","wrapAround": '.$atts['infinitive'].',"prevNextButtons": true,"percentPosition": true,"pageDots": '.$atts['slider_bullets'].', "rightToLeft": '.$rtl.', "autoPlay" : '.$atts['auto_slide'].'}';
+      // Move a full view of columns at a time.
+      $slider_options['groupCells'] = '100%';
 
     } else if($atts['type'] == 'slider-full'){
       $row_classes_full[] = 'slider slider-auto-height row-collapse';
 
+      if($thumbnail_class) $row_classes_full[] = $thumbnail_class;
+
       if($atts['slider_nav_position']) $row_classes_full[] = 'slider-nav-'.$atts['slider_nav_position'];
 
       if($atts['slider_style']) $row_classes_full[] = 'slider-nav-'.$atts['slider_style'];
-
-      $slider_options = '{"imagesLoaded": true, "dragThreshold" : 5, "cellAlign": "left","wrapAround": '.$atts['infinitive'].',"prevNextButtons": true,"percentPosition": true,"pageDots": '.$atts['slider_bullets'].', "rightToLeft": '.$rtl.', "autoPlay" : '.$atts['auto_slide'].'}';
     }
 
 	$row_classes_full = array_unique( $row_classes_full );
@@ -164,10 +170,10 @@ function get_flatsome_repeater_start( $atts ) {
   <?php } ?>
 
   <?php if($atts['type'] == 'slider') { // Slider grid ?>
-  <div<?php echo $id_attr; ?> class="row <?php echo esc_attr( $row_classes ); ?>"  data-flickity-options='<?php echo esc_attr( $slider_options ); ?>' <?php echo $atts['attrs'] ?>>
+  <div<?php echo $id_attr; ?> class="row <?php echo esc_attr( $row_classes ); ?>"<?php echo flatsome_slider_options_attr( $slider_options ); ?> <?php echo $atts['attrs'] ?>>
 
   <?php } else if($atts['type'] == 'slider-full') { // Full slider ?>
-  <div<?php echo $id_attr; ?> class="<?php echo esc_attr( $row_classes_full ); ?>" data-flickity-options='<?php echo esc_attr( $slider_options ); ?>'>
+  <div<?php echo $id_attr; ?> class="<?php echo esc_attr( $row_classes_full ); ?>"<?php echo flatsome_slider_options_attr( $slider_options ); ?>>
 
   <?php } else if($atts['type'] == 'masonry') { // Masonry grid ?>
   <div<?php echo $id_attr; ?> class="row <?php echo esc_attr( $row_classes ); ?>" data-packery-options='{"itemSelector": ".col", "gutter": 0, "presentageWidth" : true}'>
@@ -185,6 +191,87 @@ function get_flatsome_repeater_start( $atts ) {
 
 function get_flatsome_repeater_end($type){
   echo '</div>';
+}
+
+/**
+ * Builds the options of a slider. Every slider in the theme declares its
+ * options through this function, so the defaults live in one place.
+ *
+ * The options are read by assets/js/silver-swiper.js, which maps them to
+ * Swiper parameters (wrapAround -> loop, pageDots -> pagination, ...).
+ *
+ * Shortcode attributes can be passed as they are: 'true', 'false' and numeric
+ * strings are converted, so the result is always valid JSON.
+ *
+ * @param array $options Options that differ from the defaults:
+ *                       cellAlign (center|left|right), wrapAround, autoPlay
+ *                       (false or delay in ms), pauseAutoPlayOnHover,
+ *                       prevNextButtons, pageDots, adaptiveHeight, contain,
+ *                       groupCells, freeScroll, draggable, dragThreshold,
+ *                       asNavFor (selector), parallax, rightToLeft.
+ *
+ * @return array
+ */
+function flatsome_slider_options( $options = array() ) {
+	$options = array_merge(
+		array(
+			'cellAlign'       => 'center',
+			'wrapAround'      => false,
+			'autoPlay'        => false,
+			'prevNextButtons' => true,
+			'pageDots'        => true,
+			'rightToLeft'     => is_rtl(),
+		),
+		(array) $options
+	);
+
+	foreach ( $options as $key => $value ) {
+		if ( 'true' === $value ) {
+			$options[ $key ] = true;
+		} elseif ( 'false' === $value || '' === $value || null === $value ) {
+			$options[ $key ] = false;
+		} elseif ( is_string( $value ) && is_numeric( $value ) ) {
+			$options[ $key ] = $value + 0;
+		}
+	}
+
+	// The UX Builder preview sizes its slides before the images are loaded.
+	if ( function_exists( 'ux_builder_is_active' ) && ux_builder_is_active() ) {
+		$options['imagesLoaded'] = true;
+	}
+
+	return apply_filters( 'flatsome_slider_options', $options );
+}
+
+/**
+ * Returns the class that pairs a main slider with its thumbnail slider
+ * ("Thumbnail Slider" options). Two sliders with the same pair name are linked
+ * by assets/js/silver-swiper.js.
+ *
+ * @param string $role 'main', 'thumbnail' or empty for a normal slider.
+ * @param string $key  Pair name. Empty pairs the unnamed sliders of the page.
+ *
+ * @return string Empty when the slider is not part of a pair.
+ */
+function flatsome_slider_thumbnail_class( $role, $key = '' ) {
+	if ( 'main' !== $role && 'thumbnail' !== $role ) {
+		return '';
+	}
+
+	$key = sanitize_html_class( sanitize_title( (string) $key ), 'default' );
+
+	return ( 'main' === $role ? 'slider-bullet-' : 'slider-thumbnail-' ) . $key;
+}
+
+/**
+ * Returns the slider options as an HTML attribute, with a leading space.
+ *
+ * @param array $options See flatsome_slider_options().
+ *
+ * @return string
+ */
+function flatsome_slider_options_attr( $options = array() ) {
+	return " data-swiper-options='" . esc_attr( wp_json_encode( flatsome_slider_options( $options ) ) ) . "'";
 }
 
 /* Fix Normal Shortcodes */
@@ -449,6 +536,84 @@ function flatsome_smart_links($link){
     }
 
 	return esc_url( $link );
+}
+
+/**
+ * Resolves the "Link" options (builder/shortcodes/commons/links.php) of a
+ * shortcode into a URL and the object it points to.
+ *
+ * Called from ux_builder_shortcode_atts(), so every shortcode that declares a
+ * `link` attribute receives the resolved URL without any extra code.
+ *
+ * @param array $atts Raw shortcode attributes.
+ *
+ * @return array {
+ *     @type string $type        Link type: custom, post, term or archive.
+ *     @type string $url         Resolved URL, empty when nothing is selected or the target is gone.
+ *     @type string $object_type post_type, taxonomy, post_type_archive or empty string.
+ *     @type int    $object_id   Post or term ID, 0 for custom links and archives.
+ *     @type string $object_name Post type or taxonomy name.
+ * }
+ */
+function flatsome_get_link_data( $atts ) {
+	$atts = (array) $atts;
+	$type = ! empty( $atts['link_type'] ) ? $atts['link_type'] : 'custom';
+	$data = array(
+		'type'        => $type,
+		'url'         => '',
+		'object_type' => '',
+		'object_id'   => 0,
+		'object_name' => '',
+	);
+
+	switch ( $type ) {
+		case 'post':
+			$post = ! empty( $atts['link_post'] ) ? get_post( absint( $atts['link_post'] ) ) : null;
+
+			if ( $post && 'publish' === $post->post_status ) {
+				$data['url']         = (string) get_permalink( $post );
+				$data['object_type'] = 'post_type';
+				$data['object_id']   = (int) $post->ID;
+				$data['object_name'] = $post->post_type;
+			}
+			break;
+
+		case 'term':
+			// UX Builder does not save default values, so a missing taxonomy
+			// means the default one of the `link_taxonomy` option.
+			$taxonomy = ! empty( $atts['link_taxonomy'] ) ? $atts['link_taxonomy'] : 'category';
+			$term_key = 'link_term_' . $taxonomy;
+			$term     = ! empty( $atts[ $term_key ] ) ? get_term( absint( $atts[ $term_key ] ), $taxonomy ) : null;
+
+			if ( $term && ! is_wp_error( $term ) ) {
+				$url = get_term_link( $term );
+
+				if ( ! is_wp_error( $url ) ) {
+					$data['url']         = $url;
+					$data['object_type'] = 'taxonomy';
+					$data['object_id']   = (int) $term->term_id;
+					$data['object_name'] = $term->taxonomy;
+				}
+			}
+			break;
+
+		case 'archive':
+			$post_type = ! empty( $atts['link_archive'] ) ? $atts['link_archive'] : '';
+			$url       = $post_type ? get_post_type_archive_link( $post_type ) : false;
+
+			if ( $url ) {
+				$data['url']         = $url;
+				$data['object_type'] = 'post_type_archive';
+				$data['object_name'] = $post_type;
+			}
+			break;
+
+		default:
+			$data['type'] = 'custom';
+			$data['url']  = isset( $atts['link'] ) ? trim( (string) $atts['link'] ) : '';
+	}
+
+	return $data;
 }
 
 function flatsome_to_dashed($className) {

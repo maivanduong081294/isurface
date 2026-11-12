@@ -17,6 +17,10 @@
 function flatsome_render_ux_menu_link_shortcode( $atts, $content, $tag ) {
 	global $wp_query;
 
+	// Resolved before the attributes are filtered: the object behind the link
+	// is needed for the active state.
+	$link_data = flatsome_get_link_data( $atts );
+
 	$atts = ux_builder_shortcode_atts(
 		array(
 			'_id'        => '',
@@ -45,7 +49,20 @@ function flatsome_render_ux_menu_link_shortcode( $atts, $content, $tag ) {
 	$link    = trim( $atts['link'] );
 	$icon    = $atts['icon'] ? get_flatsome_icon( 'ux-menu-link__icon text-center ' . $atts['icon'] ) : '';
 
-	if ( ! empty( $atts['post'] ) ) {
+	$is_active = false;
+
+	if ( 'custom' !== $link_data['type'] ) {
+		// Link type post, taxonomy or archive: $link already holds the resolved URL.
+		$object_id = $link_data['object_id'];
+
+		if ( 'post_type_archive' === $link_data['object_type'] ) {
+			$is_active = $wp_query->is_post_type_archive( $link_data['object_name'] );
+		} elseif ( $object_id && $queried_object && $queried_object_id === $object_id ) {
+			$is_active = 'post_type' === $link_data['object_type']
+				? $wp_query->is_singular
+				: isset( $queried_object->taxonomy ) && $queried_object->taxonomy === $link_data['object_name'];
+		}
+	} elseif ( ! empty( $atts['post'] ) ) {
 		$object_type = 'post_type';
 		$object_id   = (int) $atts['post'];
 		$object      = get_post( $object_id );
@@ -83,6 +100,10 @@ function flatsome_render_ux_menu_link_shortcode( $atts, $content, $tag ) {
 			( $object_type === 'taxonomy' && $queried_object->taxonomy === $object->taxonomy )
 		)
 	) {
+		$is_active = true;
+	}
+
+	if ( $is_active ) {
 		$classes[] = 'ux-menu-link--active';
 	}
 

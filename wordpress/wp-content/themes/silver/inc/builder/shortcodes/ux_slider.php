@@ -234,6 +234,29 @@ add_ux_builder_shortcode( 'ux_slider', array(
            ),
           ),
         ),
+        'thumbnail_options' => array(
+          'type' => 'group',
+          'heading' => __( 'Thumbnail Slider' ),
+          'options' => array(
+            'thumb_role' => array(
+              'type' => 'select',
+              'heading' => 'Role',
+              'default' => '',
+              'options' => array(
+                  '' => 'None',
+                  'main' => 'Main slider',
+                  'thumbnail' => 'Thumbnail slider',
+              ),
+            ),
+            'thumb_key' => array(
+              'type' => 'textfield',
+              'heading' => 'Pair name',
+              'description' => 'Use the same name on the main slider and on its thumbnail slider. Only needed with several pairs on one page.',
+              'default' => '',
+              'conditions' => 'thumb_role',
+            ),
+          ),
+        ),
         'slide_options' => array(
           'type' => 'group',
           'heading' => __( 'Auto Slide' ),

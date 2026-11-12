@@ -32,6 +32,8 @@ function ux_pages($atts) {
       'slider_arrows' => 'true',
       'auto_slide' => 'false',
       'infinitive' => 'true',
+      'thumb_role' => '',
+      'thumb_key' => '',
       'depth' => '',
       'depth_hover' => '',
 
@@ -146,6 +148,8 @@ function ux_pages($atts) {
       $repeater['slider_bullets'] = $slider_bullets;
       $repeater['auto_slide'] = $auto_slide;
 	  $repeater['infinitive'] = $infinitive;
+	  $repeater['thumb_role'] = $thumb_role;
+	  $repeater['thumb_key'] = $thumb_key;
       $repeater['row_spacing'] = $col_spacing;
       $repeater['row_width'] = $width;
       $repeater['columns'] = $columns;

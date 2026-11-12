@@ -1,0 +1,32 @@
+/**
+ * UX Builder "Quick view" mode (see assets/js/builder/custom/quick-view.js).
+ * Loaded in the editor and in the preview iframe; the class is set on <html>
+ * of both documents.
+ */
+
+/* Editor: no sidebar toggle or add line, and the toolbar button reads as on. */
+html.uxb-quick-view button.app-sidebar-toggle,
+html.uxb-quick-view .tools-addable {
+	display: none !important;
+}
+
+html.uxb-quick-view app-actions .dashicons-visibility {
+	color: #00a0d2;
+}
+
+/* Preview iframe: hide every editing tool and helper marker. */
+html.uxb-quick-view app-tools,
+html.uxb-quick-view .uxb-empty-message,
+html.uxb-quick-view .uxb-overlay,
+html.uxb-quick-view .uxb-placeholder,
+html.uxb-quick-view ux-banner-tool,
+html.uxb-quick-view .scroll-to,
+html.uxb-quick-view .uxb-sticky-banner:after,
+html.uxb-quick-view .uxb-sticky-column:after,
+html.uxb-quick-view .uxb-sticky-section:after {
+	display: none !important;
+}
+
+html.uxb-quick-view .has-hover-effect {
+	outline: none !important;
+}

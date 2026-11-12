@@ -146,6 +146,18 @@ function ux_builder_shortcode_atts($pairs, $atts, $shortcode = '')
 
   $atts = ux_builder_migrate_legacy_responsive_atts((array) $atts);
 
+  // Turn the dynamic link options (commons/links.php: post, taxonomy,
+  // archive) into a plain URL for every shortcode that declares `link`.
+  if (
+    array_key_exists('link', $pairs)
+    && ! empty($atts['link_type'])
+    && $atts['link_type'] !== 'custom'
+    && function_exists('flatsome_get_link_data')
+  ) {
+    $link_data    = flatsome_get_link_data($atts);
+    $atts['link'] = $link_data['url'];
+  }
+
   // Accept responsive variants of any declared option.
   foreach ($atts as $name => $value) {
     if (preg_match('/^(.*)__(md|ml|lg)$/', $name, $match) && array_key_exists($match[1], $pairs) && ! array_key_exists($name, $pairs)) {

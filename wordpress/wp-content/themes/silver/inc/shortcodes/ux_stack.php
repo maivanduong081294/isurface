@@ -42,6 +42,8 @@ function flatsome_render_ux_stack_shortcode($atts, $content, $tag)
 			'slider_bullets'       => '',
 			'auto_slide'           => '',
 			'infinitive'           => '',
+			'thumb_role'           => '',
+			'thumb_key'            => '',
 		),
 		$atts,
 		$tag
@@ -66,6 +68,11 @@ function flatsome_render_ux_stack_shortcode($atts, $content, $tag)
 		}
 		if ($atts['slider_style']) {
 			$classes[] = 'slider-style-' . $atts['slider_style'];
+		}
+		// Main slider + thumbnail slider pair ("Thumbnail Slider" options).
+		$thumbnail_class = flatsome_slider_thumbnail_class($atts['thumb_role'], $atts['thumb_key']);
+		if ($thumbnail_class) {
+			$classes[] = $thumbnail_class;
 		}
 	} else {
 		$classes[] = 'stack';
@@ -92,22 +99,18 @@ function flatsome_render_ux_stack_shortcode($atts, $content, $tag)
 	}
 
 	ob_start();
-	$flickity_options = array(
-		'imagesLoaded'     => true,
-		'groupCells'       => '100%',
-		'dragThreshold'    => 5,
-		'cellAlign'        => 'left',
-		'wrapAround'       => 'false' !== $atts['infinitive'],
-		'prevNextButtons'  => true,
-		'percentPosition'  => true,
-		'pageDots'         => 'true' === $atts['slider_bullets'],
-		'rightToLeft'      => is_rtl(),
-		'autoPlay'         => $atts['auto_slide'] ? (int) $atts['auto_slide'] : false,
+	$slider_options = array(
+		'cellAlign'     => 'left',
+		'wrapAround'    => 'false' !== $atts['infinitive'],
+		'pageDots'      => 'true' === $atts['slider_bullets'],
+		'autoPlay'      => $atts['auto_slide'] ? (int) $atts['auto_slide'] : false,
+		'groupCells'    => '100%',
+		'dragThreshold' => 5,
 	);
 
 ?>
 	<div id="<?php echo esc_attr($id); ?>" class="<?php echo esc_attr(implode(' ', $main_classes)); ?>">
-		<div class="stack-inner <?php echo esc_attr(implode(' ', $classes)); ?>" <?php if ($is_slider) : ?> data-flickity-options='<?php echo esc_attr(wp_json_encode($flickity_options)); ?>' <?php endif; ?>>
+		<div class="stack-inner <?php echo esc_attr(implode(' ', $classes)); ?>"<?php echo $is_slider ? flatsome_slider_options_attr($slider_options) : ''; ?>>
 			<?php echo do_shortcode($content); ?>
 		</div>
 		<?php

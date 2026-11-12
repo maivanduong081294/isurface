@@ -31,6 +31,8 @@ function ux_gallery($atts) {
       'slider_arrows' => 'true',
       'auto_slide' => 'false',
       'infinitive' => 'true',
+      'thumb_role' => '',
+      'thumb_key' => '',
       'depth' => '',
       'depth_hover' => '',
 
@@ -128,6 +130,8 @@ function ux_gallery($atts) {
       $repeater['slider_nav_color'] = $slider_nav_color;
       $repeater['auto_slide'] = $auto_slide;
 	  $repeater['infinitive'] = $infinitive;
+	  $repeater['thumb_role'] = $thumb_role;
+	  $repeater['thumb_key'] = $thumb_key;
       $repeater['row_spacing'] = $col_spacing;
       $repeater['row_width'] = $width;
       $repeater['columns'] = $columns;

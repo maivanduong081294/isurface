@@ -34,6 +34,8 @@ function ux_instagram_feed( $atts, $content = null ) {
 		'animate'             => '',
 		'auto_slide'          => '',
 		'infinitive'          => 'true',
+		'thumb_role'          => '',
+		'thumb_key'           => '',
 		// Image.
 		'lightbox'            => '',
 		'image_overlay'       => '',
@@ -86,6 +88,8 @@ function ux_instagram_feed( $atts, $content = null ) {
 			$repeater['slider_bullets']      = $slider_bullets;
 			$repeater['auto_slide']          = $auto_slide;
 			$repeater['infinitive']          = $infinitive;
+			$repeater['thumb_role']          = $thumb_role;
+			$repeater['thumb_key']           = $thumb_key;
 			$repeater['row_spacing']         = $col_spacing;
 			$repeater['row_width']           = $width;
 			$repeater['columns']             = $columns;

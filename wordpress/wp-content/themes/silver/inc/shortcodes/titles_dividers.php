@@ -1,8 +1,9 @@
 <?php
 // [title]
-function title_shortcode( $atts, $content = null ){
-  extract( ux_builder_shortcode_atts( array(
-    '_id' => 'title-'.rand(),
+function title_shortcode($atts, $content = null)
+{
+  extract(ux_builder_shortcode_atts(array(
+    '_id' => 'title-' . rand(),
     'text' => 'Lorem ipsum dolor sit amet...',
     'tag_name' => 'h3',
     'style' => 'normal',
@@ -18,98 +19,116 @@ function title_shortcode( $atts, $content = null ){
     'rel' => '',
     'class' => '',
     'visibility' => '',
-	// Deprecated.
+    // Deprecated.
     'letter_case' => '',
     'sub_text' => '',
-  ), $atts ) );
+  ), $atts));
 
-	if ( ! preg_match( '/^h[1-6]$/', trim( $tag_name ) ) ) $tag_name = 'h3';
+  // Cho phép cả div và p (h5, h6 giữ lại để tương thích dữ liệu cũ).
+  $allowed_tags = array('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'p');
+  $tag_name     = trim($tag_name);
+  if (! in_array($tag_name, $allowed_tags, true)) $tag_name = 'h3';
 
   $classes = array('container', 'section-title-container');
-  if ( $class ) $classes[] = $class;
-  if ( $visibility ) $classes[] = $visibility;
+  if ($class) $classes[] = $class;
+  if ($visibility) $classes[] = $visibility;
+  if ($link_text) $classes[] = 'section-title-has-link';
   $classes = implode(' ', $classes);
 
-
-	$link_atts   = array(
-		'href'   => esc_url( $link ),
-		'target' => esc_attr( $target ),
-		'rel'    => array( esc_attr( $rel ) ),
-	);
-	$link_output = '';
-	if ( $link_text ) {
-		$link_output = sprintf( '<a %s>%s%s</a>',
-			flatsome_html_atts( $link_atts ),
-			wp_kses_post( $link_text ),
-			get_flatsome_icon( 'icon-angle-right' )
-		);
-	}
+  $link_atts   = array(
+    'class'  => 'section-title-link',
+    'href'   => esc_url($link),
+    'target' => esc_attr($target),
+    'rel'    => array(esc_attr($rel)),
+  );
+  $link_output = '';
+  if ($link_text) {
+    $link_output = sprintf(
+      '<a %s>%s%s</a>',
+      flatsome_html_atts($link_atts),
+      wp_kses_post($link_text),
+      get_flatsome_icon('icon-angle-right')
+    );
+  }
 
   $small_text = '';
-  if($sub_text) $small_text = '<small class="sub-title">' . wp_kses_post( $atts['sub_text'] ) . '</small>';
+  if ($sub_text) $small_text = '<small class="sub-title">' . wp_kses_post($atts['sub_text']) . '</small>';
 
-  if($icon) $icon = get_flatsome_icon($icon);
+  if ($icon) $icon = get_flatsome_icon($icon);
 
   // fix old
-  if($style == 'bold_center') $style = 'bold-center';
+  if ($style == 'bold_center') $style = 'bold-center';
 
   $css_args = array(
-   array( 'attribute' => 'margin-top', 'value' => $margin_top),
-   array( 'attribute' => 'margin-bottom', 'value' => $margin_bottom),
+    array('attribute' => 'margin-top', 'value' => $margin_top),
+    array('attribute' => 'margin-bottom', 'value' => $margin_bottom),
   );
 
-  if($width) {
-    $css_args[] = array( 'attribute' => 'max-width', 'value' => $width);
+  if ($width) {
+    $css_args[] = array('attribute' => 'max-width', 'value' => $width);
   }
 
   $css_args_title = array();
 
-  if($size !== '100'){
-    $css_args_title[] = array( 'attribute' => 'font-size', 'value' => $size, 'unit' => '%');
+  if ($size !== '100') {
+    $css_args_title[] = array('attribute' => 'font-size', 'value' => $size, 'unit' => '%');
   }
-  if($color){
-    $css_args_title[] = array( 'attribute' => 'color', 'value' => $color);
+  if ($color) {
+    $css_args_title[] = array('attribute' => 'color', 'value' => $color);
   }
 
-  return '<div' . ( $_id ? ' id="' . esc_attr( $_id ) . '"' : '' ) . ' class="' . esc_attr( $classes ) . '" ' . get_shortcode_inline_css($css_args) . '><'. $tag_name . ' class="section-title section-title-' . esc_attr( $style ) . '"><b aria-hidden="true"></b><span class="section-title-main" '.get_shortcode_inline_css($css_args_title).'>' . $icon . wp_kses_post( $text ) . $small_text . '</span><b aria-hidden="true"></b>' . $link_output . '</' . $tag_name . '></div>';
+  // Phần tử 1: tiêu đề
+  $title_output = '<' . $tag_name . ' class="section-title section-title-' . esc_attr($style) . '">'
+    . '<b aria-hidden="true"></b>'
+    . '<span class="section-title-main" ' . get_shortcode_inline_css($css_args_title) . '>'
+    . $icon . wp_kses_post($text) . $small_text
+    . '</span>'
+    . '<b aria-hidden="true"></b>'
+    . '</' . $tag_name . '>';
+
+  // Phần tử 2: link ($link_output) nằm ngoài tiêu đề
+  return '<div' . ($_id ? ' id="' . esc_attr($_id) . '"' : '') . ' class="' . esc_attr($classes) . '" ' . get_shortcode_inline_css($css_args) . '>'
+    . $title_output
+    . $link_output
+    . '</div>';
 }
 add_shortcode('title', 'title_shortcode');
 
 
 // [divider]
-function divider_shortcode( $atts, $content = null ){
-  extract( ux_builder_shortcode_atts( array(
+function divider_shortcode($atts, $content = null)
+{
+  extract(ux_builder_shortcode_atts(array(
     'width' => '',
     'height' => '',
     'margin' => '',
     'align' => '',
     'color' => '',
-  ), $atts ) );
+  ), $atts));
 
-$align_end ='';
-$align_start = '';
+  $align_end = '';
+  $align_start = '';
 
 
-// Fallback
-if($width == 'full') $width = '100%';
+  // Fallback
+  if ($width == 'full') $width = '100%';
 
-$css_args = array(
-  array( 'attribute' => 'margin-top', 'value' => $margin),
-  array( 'attribute' => 'margin-bottom', 'value' => $margin),
-  array( 'attribute' => 'max-width', 'value' => $width ),
-  array( 'attribute' => 'height', 'value' => $height ),
-  array( 'attribute' => 'background-color', 'value' => $color ),
-);
+  $css_args = array(
+    array('attribute' => 'margin-top', 'value' => $margin),
+    array('attribute' => 'margin-bottom', 'value' => $margin),
+    array('attribute' => 'max-width', 'value' => $width),
+    array('attribute' => 'height', 'value' => $height),
+    array('attribute' => 'background-color', 'value' => $color),
+  );
 
-if($align === 'center'){
-  $align_start ='<div class="text-center">';
-  $align_end = '</div>';
-}
-if($align === 'right'){
-  $align_start ='<div class="text-right">';
-  $align_end = '</div>';
-}
-return $align_start.'<div class="is-divider divider clearfix" '.get_shortcode_inline_css($css_args).'></div>'.$align_end;
-
+  if ($align === 'center') {
+    $align_start = '<div class="text-center">';
+    $align_end = '</div>';
+  }
+  if ($align === 'right') {
+    $align_start = '<div class="text-right">';
+    $align_end = '</div>';
+  }
+  return $align_start . '<div class="is-divider divider clearfix" ' . get_shortcode_inline_css($css_args) . '></div>' . $align_end;
 }
 add_shortcode('divider', 'divider_shortcode');

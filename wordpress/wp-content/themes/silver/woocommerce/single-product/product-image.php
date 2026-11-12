@@ -77,9 +77,6 @@ if(get_theme_mod('product_zoom', 0)){
   $slider_classes[] = 'has-image-zoom';
 }
 
-$rtl = 'false';
-if(is_rtl()) $rtl = 'true';
-
 if ( get_theme_mod( 'product_gallery_slider_type' ) === 'fade' ) {
 	$slider_classes[] = 'slider-type-fade';
 }
@@ -99,19 +96,14 @@ if(get_theme_mod('product_lightbox','default') == 'disabled'){
     <?php do_action('flatsome_product_image_tools_top'); ?>
   </div>
 
-  <div class="woocommerce-product-gallery__wrapper <?php echo implode(' ', $slider_classes); ?>"
-        data-flickity-options='{
-                "cellAlign": "center",
-                "wrapAround": true,
-                "autoPlay": false,
-                "prevNextButtons":true,
-                "adaptiveHeight": true,
-                "imagesLoaded": true,
-                "lazyLoad": 1,
-                "dragThreshold" : 15,
-                "pageDots": false,
-                "rightToLeft": <?php echo $rtl; ?>
-       }'>
+  <div class="woocommerce-product-gallery__wrapper <?php echo implode(' ', $slider_classes); ?>"<?php
+    echo flatsome_slider_options_attr( array(
+      'wrapAround'     => true,
+      'adaptiveHeight' => true,
+      'dragThreshold'  => 15,
+      'pageDots'       => false,
+    ) );
+  ?>>
     <?php
     if ( $post_thumbnail_id ) {
       $html  = flatsome_wc_get_gallery_image_html( $post_thumbnail_id, true );

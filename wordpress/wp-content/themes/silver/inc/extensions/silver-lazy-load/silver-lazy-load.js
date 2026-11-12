@@ -54,7 +54,7 @@
           else $el.addClass('slider-lazy-load-active')
 
           $el.imagesLoaded(function () {
-            if ($el.hasClass('flickity-enabled')) {
+            if ($el.hasClass('swiper-enabled')) {
               $el.flickity('resize')
             }
           })

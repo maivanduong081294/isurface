@@ -20,13 +20,7 @@ if ( $post_thumbnail && $thumb_count == 1 && ! $render_without_attachments ) {
 	return;
 }
 
-$rtl              = 'false';
-$thumb_cell_align = 'left';
-
-if ( is_rtl() ) {
-	$rtl              = 'true';
-	$thumb_cell_align = 'right';
-}
+$thumb_cell_align = is_rtl() ? 'right' : 'left';
 
 if ( $attachment_ids || $render_without_attachments ) {
 	$loop          = 0;
@@ -48,19 +42,14 @@ if ( $attachment_ids || $render_without_attachments ) {
 	$gallery_class[] = 'slider row row-small row-slider slider-nav-small small-columns-4';
 	$gallery_class   = apply_filters( 'flatsome_single_product_thumbnails_classes', $gallery_class );
 	?>
-	<div class="<?php echo esc_attr( implode( ' ', $gallery_class ) ); ?>"
-		data-flickity-options='{
-			"cellAlign": "<?php echo esc_attr( $thumb_cell_align ); ?>",
-			"wrapAround": false,
-			"autoPlay": false,
-			"prevNextButtons": true,
-			"asNavFor": ".product-gallery-slider",
-			"percentPosition": true,
-			"imagesLoaded": true,
-			"pageDots": false,
-			"rightToLeft": <?php echo esc_attr( $rtl ); ?>,
-			"contain": true
-		}'>
+	<div class="<?php echo esc_attr( implode( ' ', $gallery_class ) ); ?>"<?php
+		echo flatsome_slider_options_attr( array(
+			'cellAlign' => $thumb_cell_align,
+			'asNavFor'  => '.product-gallery-slider',
+			'pageDots'  => false,
+			'contain'   => true,
+		) );
+	?>>
 		<?php
 
 

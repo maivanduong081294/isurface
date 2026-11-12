@@ -40,9 +40,6 @@ $wrapper_classes   = apply_filters(
 );
 
 $slider_classes = array('product-gallery-slider','slider','slider-nav-small','mb-0');
-$rtl = 'false';
-if(is_rtl()) $rtl = 'true';
-
 if ( get_theme_mod( 'product_gallery_slider_type' ) === 'fade' ) {
 	$slider_classes[] = 'slider-type-fade';
 }
@@ -65,19 +62,14 @@ if(get_theme_mod('product_zoom', 0)){
     <?php do_action('flatsome_product_image_tools_top'); ?>
   </div>
 
-  <div class="woocommerce-product-gallery__wrapper <?php echo implode(' ', $slider_classes); ?>"
-        data-flickity-options='{
-                "cellAlign": "center",
-                "wrapAround": true,
-                "autoPlay": false,
-                "prevNextButtons":true,
-                "adaptiveHeight": true,
-                "imagesLoaded": true,
-                "lazyLoad": 1,
-                "dragThreshold" : 15,
-                "pageDots": false,
-                "rightToLeft": <?php echo $rtl; ?>
-       }'>
+  <div class="woocommerce-product-gallery__wrapper <?php echo implode(' ', $slider_classes); ?>"<?php
+    echo flatsome_slider_options_attr( array(
+      'wrapAround'     => true,
+      'adaptiveHeight' => true,
+      'dragThreshold'  => 15,
+      'pageDots'       => false,
+    ) );
+  ?>>
     <?php
     if ( $post_thumbnail_id ) {
       $html  = flatsome_wc_get_gallery_image_html( $post_thumbnail_id, true );
@@ -110,12 +102,6 @@ if(get_theme_mod('product_zoom', 0)){
   $thumb_count = count($attachment_ids)+1;
   $render_without_attachments = apply_filters( 'flatsome_single_product_thumbnails_render_without_attachments', false, $product, array( 'thumb_count' => $thumb_count ) );
 
-  $rtl = 'false';
-
-  if(is_rtl()) $rtl = 'true';
-
-  $thumb_cell_align = "left";
-
   if ( $attachment_ids || $render_without_attachments ) {
 	  $loop              = 0;
 	  $image_size        = 'gallery_thumbnail';
@@ -132,19 +118,15 @@ if(get_theme_mod('product_zoom', 0)){
     ?>
     <div class="col xlarge-2 xlarge-col-first vertical-thumbnails pb-0">
 
-    <div class="<?php echo implode(' ', $gallery_class); ?>"
-      data-flickity-options='{
-                "cellAlign": "left",
-                "wrapAround": false,
-                "autoPlay": false,
-                "prevNextButtons": false,
-                "asNavFor": ".product-gallery-slider",
-                "percentPosition": true,
-                "imagesLoaded": true,
-                "pageDots": false,
-                "rightToLeft": <?php echo $rtl; ?>,
-                "contain":  true
-            }'
+    <div class="<?php echo implode(' ', $gallery_class); ?>"<?php
+      echo flatsome_slider_options_attr( array(
+        'cellAlign'       => 'left',
+        'prevNextButtons' => false,
+        'asNavFor'        => '.product-gallery-slider',
+        'pageDots'        => false,
+        'contain'         => true,
+      ) );
+    ?>
       ><?php
 
        if ( has_post_thumbnail() ) :

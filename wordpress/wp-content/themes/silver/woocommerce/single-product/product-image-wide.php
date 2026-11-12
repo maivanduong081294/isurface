@@ -40,8 +40,6 @@ $wrapper_classes   = apply_filters(
 );
 
 $slider_classes = array( 'product-gallery-slider', 'slider', 'slider-nav-circle', 'mb-half', 'slider-style-container', 'slider-nav-light', 'slider-load-first', 'no-overflow' );
-$rtl = 'false';
-if(is_rtl()) $rtl = 'true';
 
 ?>
 <?php do_action( 'flatsome_before_product_images' ); ?>
@@ -53,19 +51,14 @@ if(is_rtl()) $rtl = 'true';
 		</div>
 	</div>
 
-	<div class="woocommerce-product-gallery__wrapper <?php echo implode( ' ', $slider_classes ); ?>"
-			data-flickity-options='{
-				"cellAlign": "center",
-				"wrapAround": true,
-				"autoPlay": false,
-				"prevNextButtons":true,
-				"adaptiveHeight": true,
-				"imagesLoaded": true,
-				"lazyLoad": 1,
-				"dragThreshold" : 15,
-				"pageDots": false,
-				"rightToLeft": <?php echo $rtl; ?>
-			}'
+	<div class="woocommerce-product-gallery__wrapper <?php echo implode( ' ', $slider_classes ); ?>"<?php
+		echo flatsome_slider_options_attr( array(
+			'wrapAround'     => true,
+			'adaptiveHeight' => true,
+			'dragThreshold'  => 15,
+			'pageDots'       => false,
+		) );
+	?>
 			style="background-color: #333;">
 		<?php
 

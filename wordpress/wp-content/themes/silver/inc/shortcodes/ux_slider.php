@@ -34,9 +34,9 @@ function shortcode_ux_slider($atts, $content=null) {
         'height' => '',
         'rtl' => 'false',
         'draggable' => 'true',
-        'friction' => '0.6',
-        'selectedattraction' => '0.1',
         'threshold' => '10',
+        'thumb_role' => '',
+        'thumb_key' => '',
 
         // Derpicated
         'mobile' => 'true',
@@ -82,14 +82,25 @@ function shortcode_ux_slider($atts, $content=null) {
     // Always show Nav if set
     if($hide_nav ==  'true') {$classes[] = 'slider-show-nav';}
 
-    // Slider Nav visebility
-    $is_arrows = 'true';
-    $is_bullets = 'true';
+    // Main slider + thumbnail slider pair ("Thumbnail Slider" options).
+    $thumbnail_class = flatsome_slider_thumbnail_class( $thumb_role, $thumb_key );
+    if ( $thumbnail_class ) $classes[] = $thumbnail_class;
 
-    if($arrows == 'false') $is_arrows = 'false';
-    if($bullets == 'false') $is_bullets = 'false';
-
-    if(is_rtl()) $rtl = 'true';
+    $slider_options = array(
+        'cellAlign'            => $slide_align,
+        'freeScroll'           => $freescroll,
+        'wrapAround'           => $infinitive,
+        'autoPlay'             => $auto_slide,
+        'pauseAutoPlayOnHover' => $pause_hover,
+        'prevNextButtons'      => $arrows !== 'false',
+        'pageDots'             => $bullets !== 'false',
+        'contain'              => true,
+        'adaptiveHeight'       => $auto_height,
+        'dragThreshold'        => $threshold,
+        'rightToLeft'          => is_rtl() || $rtl === 'true',
+        'draggable'            => $draggable,
+        'parallax'             => $parallax,
+    );
 
     $classes = implode(" ", $classes);
 
@@ -107,35 +118,14 @@ function shortcode_ux_slider($atts, $content=null) {
 			'property' => 'margin-bottom',
 		),
 		'slide_width' => array(
-			'selector'  => '.flickity-slider > *',
+			'selector'  => '.swiper-slider > *',
 			'property'  => 'max-width',
 			'important' => true,
 		),
 	);
 ?>
 <div class="<?php echo esc_attr( $wrapper_classes ); ?>" id="<?php echo esc_attr( $_id ); ?>" <?php echo get_shortcode_inline_css($css_args); ?>>
-    <div class="<?php echo esc_attr( $classes ); ?>"
-        data-flickity-options='{
-            "cellAlign": "<?php echo esc_attr( $slide_align ); ?>",
-            "imagesLoaded": true,
-            "lazyLoad": 1,
-            "freeScroll": <?php echo esc_attr( $freescroll ); ?>,
-            "wrapAround": <?php echo esc_attr( $infinitive ); ?>,
-            "autoPlay": <?php echo esc_attr( $auto_slide );?>,
-            "pauseAutoPlayOnHover" : <?php echo esc_attr( $pause_hover ); ?>,
-            "prevNextButtons": <?php echo esc_attr( $is_arrows ); ?>,
-            "contain" : true,
-            "adaptiveHeight" : <?php echo esc_attr( $auto_height ); ?>,
-            "dragThreshold" : <?php echo esc_attr( $threshold ); ?>,
-            "percentPosition": true,
-            "pageDots": <?php echo esc_attr( $is_bullets ); ?>,
-            "rightToLeft": <?php echo esc_attr( $rtl ); ?>,
-            "draggable": <?php echo esc_attr( $draggable ); ?>,
-            "selectedAttraction": <?php echo esc_attr( $selectedattraction ); ?>,
-            "parallax" : <?php echo esc_attr( $parallax ); ?>,
-            "friction": <?php echo esc_attr( $friction ); ?>
-        }'
-        >
+    <div class="<?php echo esc_attr( $classes ); ?>"<?php echo flatsome_slider_options_attr( $slider_options ); ?>>
         <?php echo do_shortcode( $content ); ?>
      </div>
 

@@ -42,6 +42,8 @@ function flatsome_portfolio_shortcode($atts, $content = null, $tag = '' ) {
         'slider_arrows' => 'true',
         'auto_slide' => 'false',
         'infinitive' => 'true',
+        'thumb_role' => '',
+        'thumb_key' => '',
         'depth' => '',
         'depth_hover' => '',
 
@@ -171,6 +173,8 @@ $repeater['slider_nav_position'] = $slider_nav_position;
 $repeater['slider_bullets'] = $slider_bullets;
 $repeater['auto_slide'] = $auto_slide;
 $repeater['infinitive'] = $infinitive;
+$repeater['thumb_role'] = $thumb_role;
+$repeater['thumb_key'] = $thumb_key;
 $repeater['row_spacing'] = $col_spacing;
 $repeater['row_width'] = $width;
 $repeater['columns'] = $columns;

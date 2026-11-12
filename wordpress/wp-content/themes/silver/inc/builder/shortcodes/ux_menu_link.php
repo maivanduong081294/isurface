@@ -7,13 +7,15 @@
 
 $flatsome_ux_menu_link_options = require __DIR__ . '/commons/links.php';
 
+// Legacy `post` and `term` selectors: kept for existing content and only
+// offered next to the custom link, right below the link type.
 $flatsome_ux_menu_link_options['options'] = flatsome_array_insert(
 	$flatsome_ux_menu_link_options['options'],
 	array(
 		'post' => array(
 			'type'       => 'select',
 			'full_width' => true,
-			'conditions' => '!term && !link',
+			'conditions' => 'link_type === "custom" && !term && !link',
 			'config'     => array(
 				'placeholder' => __( 'Select post..', 'flatsome' ),
 				'postSelect'  => array(),
@@ -22,7 +24,7 @@ $flatsome_ux_menu_link_options['options'] = flatsome_array_insert(
 		'term' => array(
 			'type'       => 'select',
 			'full_width' => true,
-			'conditions' => '!post && !link',
+			'conditions' => 'link_type === "custom" && !post && !link',
 			'config'     => array(
 				'placeholder' => __( 'Select category..', 'flatsome' ),
 				'termSelect'  => array(
@@ -36,10 +38,10 @@ $flatsome_ux_menu_link_options['options'] = flatsome_array_insert(
 			),
 		),
 	),
-	0
+	1
 );
 
-$flatsome_ux_menu_link_options['options']['link']['conditions'] = '!post && !term';
+$flatsome_ux_menu_link_options['options']['link']['conditions'] = 'link_type === "custom" && !post && !term';
 
 add_ux_builder_shortcode( 'ux_menu_link', array(
 	'name'      => __( 'Menu link', 'flatsome' ),

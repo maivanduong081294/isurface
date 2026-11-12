@@ -61,5 +61,22 @@ return array(
 		''      => 'Enable',
 	),
 ),
+'thumb_role'          => array(
+	'type'    => 'select',
+	'heading' => 'Thumbnail Role',
+	'default' => '',
+	'options' => array(
+		''          => 'None',
+		'main'      => 'Main slider',
+		'thumbnail' => 'Thumbnail slider',
+	),
+),
+'thumb_key'           => array(
+	'type'        => 'textfield',
+	'heading'     => 'Pair name',
+	'description' => 'Use the same name on the main slider and on its thumbnail slider. Only needed with several pairs on one page.',
+	'default'     => '',
+	'conditions'  => 'thumb_role',
+),
 )
 );

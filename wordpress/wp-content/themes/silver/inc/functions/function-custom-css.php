@@ -1,6 +1,56 @@
 <?php
 /* CUSTOM CSS */
 function flatsome_custom_css() {
+if ( ! function_exists( 'fs_color_channels' ) ) {
+	function fs_color_channels( $hex ) {
+		$hex = ltrim( trim( (string) $hex ), '#' );
+		if ( strlen( $hex ) === 3 ) {
+			$hex = preg_replace( '/(.)/', '$1$1', $hex );
+		}
+		if ( ! preg_match( '/^[0-9a-f]{6}$/i', $hex ) ) {
+			return null;
+		}
+		return sprintf( '%d, %d, %d', hexdec( substr( $hex, 0, 2 ) ), hexdec( substr( $hex, 2, 2 ) ), hexdec( substr( $hex, 4, 2 ) ) );
+	}
+}
+
+$fs_opacity_colors = array(
+	'primary'   => get_theme_mod( 'color_primary', Flatsome_Default::COLOR_PRIMARY ),
+	'secondary' => get_theme_mod( 'color_secondary', Flatsome_Default::COLOR_SECONDARY ),
+	'base'      => get_theme_mod( 'color_texts', Flatsome_Default::COLOR_BASE ),
+);
+
+// Layout spacing. Each entry is printed as the CSS variable --fs-{name}, which
+// the layout classes in assets/css/silver.css read: rows and columns (.row,
+// .col), .container, .section and the margin / padding / gap helpers.
+// A pair is mobile-first: the value for mobile and tablet portrait, then the
+// value from tablet landscape (850px) up.
+$fs_layout_spacing = apply_filters(
+	'flatsome_layout_spacing',
+	array(
+		'column-gap'        => array( '20px', '30px' ),
+		'row-gap'           => array( '20px', '30px' ),
+		'column-gap-small'  => '19.6px',
+		'row-gap-small'     => '19.6px',
+		'column-gap-xsmall' => '4px',
+		'row-gap-xsmall'    => '3px',
+		'column-gap-large'  => '60px',
+		'row-gap-large'     => '30px',
+		'container-padding' => 'calc(var(--fs-column-gap) / 2)',
+		'section-padding'   => array( '20px', '30px' ),
+		'margin'            => array( '20px', '30px' ),
+		'padding'           => array( '20px', '30px' ),
+		'gap'               => array( '20px', '30px' ),
+	)
+);
+$fs_layout_spacing_portial = array();
+foreach ( $fs_layout_spacing as $name => $value ) {
+	if ( is_array( $value ) ) {
+		$fs_layout_spacing[ $name ]           = reset( $value );
+		$fs_layout_spacing_portial[ $name ] = end( $value );
+	}
+}
+	
 ob_start();
 ?>
 <style id="custom-css" type="text/css">
@@ -13,7 +63,31 @@ ob_start();
 	--fs-color-base: <?php echo esc_attr( get_theme_mod( 'color_texts', Flatsome_Default::COLOR_BASE ) ); ?>;
 	--fs-experimental-link-color: <?php echo esc_attr( get_theme_mod( 'color_links' ) ?: Flatsome_Default::LINK_COLOR ); ?>;
 	--fs-experimental-link-color-hover: <?php echo esc_attr( get_theme_mod( 'color_links_hover' ) ?: Flatsome_Default::LINK_COLOR_HOVER ); ?>;
+<?php foreach ( $fs_opacity_colors as $name => $value ) :
+	$rgb = fs_color_channels( $value );
+	if ( ! $rgb ) {
+		continue; // giá trị không phải hex (ví dụ rgba) thì bỏ qua
+	}
+	?>
+	--fs-color-<?php echo esc_attr( $name ); ?>-rgb: <?php echo esc_attr( $rgb ); ?>;
+<?php for ( $i = 10; $i <= 90; $i += 10 ) : ?>
+	--fs-color-<?php echo esc_attr( $name ); ?>-<?php echo (int) $i; ?>: rgba(<?php echo esc_attr( $rgb ); ?>, 0.<?php echo (int) ( $i / 10 ); ?>);
+<?php endfor; ?>
+<?php endforeach; ?>
+<?php foreach ( $fs_layout_spacing as $name => $value ) : ?>
+	--fs-<?php echo esc_attr( $name ); ?>: <?php echo esc_attr( $value ); ?>;
+<?php endforeach; ?>
 }
+
+<?php if ( $fs_layout_spacing_portial ) : ?>
+@media (min-width: 550px) {
+	:root {
+<?php foreach ( $fs_layout_spacing_portial as $name => $value ) : ?>
+		--fs-<?php echo esc_attr( $name ); ?>: <?php echo esc_attr( $value ); ?>;
+<?php endforeach; ?>
+	}
+}
+<?php endif; ?>
 
 .tooltipster-base {
 	--tooltip-color: <?php echo esc_attr( get_theme_mod( 'tooltip_color', Flatsome_Default::TOOLTIP_COLOR ) ); ?>;

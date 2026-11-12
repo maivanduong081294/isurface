@@ -3,8 +3,9 @@
  *
  * What it does:
  * - Builds the Swiper markup around the slides and maps the slider options
- *   declared by shortcodes/templates (data-flickity-options: cellAlign,
- *   wrapAround, autoPlay, prevNextButtons, pageDots, ...) to Swiper options.
+ *   declared by shortcodes/templates (data-swiper-options, built in PHP by
+ *   flatsome_slider_options(): cellAlign, wrapAround, autoPlay,
+ *   prevNextButtons, pageDots, ...) to Swiper options.
  * - Reads class modifiers on the slider element:
  *     slider-loop                  infinite loop
  *     slider-auto-3000             autoplay every 3000ms
@@ -15,9 +16,12 @@
  *     slider-horizontal-{tier}     horizontal from that tier up
  *     slider-bullet-{key}          main slider controlled by a thumbnail slider
  *     slider-thumbnail-{key}       thumbnail slider for "slider-bullet-{key}"
- * - Keeps the jQuery `.flickity()` API, the `*.flickity` events and the
- *   `flickity-*` class names the rest of the theme relies on (product gallery,
- *   quick view, variation images, theme CSS), so nothing else has to change.
+ * - Marks up the slider with the theme's own `swiper-*` classes (swiper-enabled,
+ *   swiper-viewport, swiper-slider, swiper-prev-next-button, swiper-page-dots),
+ *   which the theme CSS styles.
+ * - Keeps the jQuery `.flickity()` API and the `*.flickity` events that the
+ *   compiled theme scripts call (product gallery, quick view, variation
+ *   images), so those bundles keep working unchanged.
  * - Loads the Swiper library on demand from `silver.swiper`.
  */
 (function ($, window, document) {
@@ -28,6 +32,8 @@
 	const config = window.silver || {};
 	const DATA_KEY = 'flickity';
 	const EVENT_NS = '.flickity';
+	const OPTIONS_ATTR = 'data-swiper-options';
+	const LEGACY_OPTIONS_ATTR = 'data-flickity-options';
 	const BREAKPOINTS = { medium: 550, large: 850, xlarge: 1200 };
 	const DEFAULT_SPEED = 400;
 	const DEFAULT_AUTOPLAY = 3000;
@@ -139,7 +145,14 @@
 		// Main slider + thumbnails: slider-bullet-{key} / slider-thumbnail-{key}.
 		if (classValue(classes, 'slider-bullet-')) options.pageDots = false;
 		const thumbKey = classValue(classes, 'slider-thumbnail-');
-		if (thumbKey) options.asNavFor = '.slider-bullet-' + thumbKey;
+		if (thumbKey) {
+			options.asNavFor = '.slider-bullet-' + thumbKey;
+			// A thumbnail follows the main slider: it must keep its slides in
+			// DOM order (no loop) and never move on its own.
+			options.wrapAround = false;
+			options.autoPlay = false;
+			options.pageDots = false;
+		}
 
 		return options;
 	}
@@ -241,11 +254,11 @@
 		const svgNS = 'http://www.w3.org/2000/svg';
 		const button = document.createElement('button');
 		button.type = 'button';
-		button.className = 'flickity-button flickity-prev-next-button ' + direction;
+		button.className = 'swiper-button swiper-prev-next-button ' + direction;
 		button.setAttribute('aria-label', label);
 
 		const svg = document.createElementNS(svgNS, 'svg');
-		svg.setAttribute('class', 'flickity-button-icon');
+		svg.setAttribute('class', 'swiper-button-icon');
 		svg.setAttribute('viewBox', '0 0 100 100');
 
 		const path = document.createElementNS(svgNS, 'path');
@@ -292,19 +305,19 @@
 
 		/* ---- build / mount ---- */
 
-		// Wrap the slides in the Swiper structure. Class names stay compatible
-		// with the existing theme CSS and scripts:
-		//   element.flickity-enabled > .flickity-viewport.swiper
-		//     > .flickity-slider.swiper-wrapper > .swiper-slide
+		// Wrap the slides in the Swiper structure. The theme CSS and scripts
+		// target these class names:
+		//   element.swiper-enabled > .swiper-viewport.swiper
+		//     > .swiper-slider.swiper-wrapper > .swiper-slide
 		build() {
 			const element = this.element;
 			const settings = (this.settings = normalizeSettings(this.options, element));
 			const cells = Array.from(element.children).filter(isCell);
 
 			this.viewport = document.createElement('div');
-			this.viewport.className = 'flickity-viewport swiper';
+			this.viewport.className = 'swiper-viewport swiper';
 			this.slider = document.createElement('div');
-			this.slider.className = 'flickity-slider swiper-wrapper';
+			this.slider.className = 'swiper-slider swiper-wrapper';
 
 			cells.forEach((cell) => {
 				cell.classList.add('swiper-slide');
@@ -313,11 +326,11 @@
 
 			this.viewport.appendChild(this.slider);
 			element.insertBefore(this.viewport, element.firstChild);
-			element.classList.add('flickity-enabled', 'swiper-section');
+			element.classList.add('swiper-enabled', 'swiper-section');
 
 			if (settings.rightToLeft) {
 				this.viewport.setAttribute('dir', 'rtl');
-				element.classList.add('flickity-rtl');
+				element.classList.add('swiper-rtl');
 			}
 
 			if (settings.draggable !== false && cells.length > 1) {
@@ -333,7 +346,7 @@
 
 			if (settings.pageDots) {
 				this.dots = document.createElement('ol');
-				this.dots.className = 'flickity-page-dots';
+				this.dots.className = 'swiper-page-dots';
 				element.appendChild(this.dots);
 			}
 
@@ -513,8 +526,17 @@
 			const namespace = '.silverNav' + this.uid;
 			const $target = (this.$navTarget = this.getNavTarget());
 
+			// Highlight the thumbnail of the slide the main slider starts on,
+			// unless the markup already marks one.
+			const cells = this.getCellElements();
+			if (!cells.some((cell) => cell.classList.contains('is-nav-selected'))) {
+				const main = $target.data(DATA_KEY);
+				const current = cells[main ? main.selectedIndex : 0] || cells[0];
+				if (current) current.classList.add('is-nav-selected');
+			}
+
 			// Clicking a thumbnail selects the slide in the main slider.
-			this.$element.on('click' + namespace, '.flickity-slider > *', (event) => {
+			this.$element.on('click' + namespace, '.swiper-slider > *', (event) => {
 				const index = this.getCellElements().indexOf(event.currentTarget);
 				const target = this.getNavTarget().data(DATA_KEY);
 				if (target && index > -1) target.select(index);
@@ -683,7 +705,7 @@
 				if (node && node.parentNode) node.parentNode.removeChild(node);
 			});
 
-			element.classList.remove('flickity-enabled', 'swiper-section', 'is-draggable', 'flickity-rtl');
+			element.classList.remove('swiper-enabled', 'swiper-section', 'is-draggable', 'swiper-rtl');
 			element.removeEventListener('load', this.onImageLoad, true);
 
 			const namespace = '.silverNav' + this.uid;
@@ -725,11 +747,25 @@
 	$.fn.flickity = plugin;
 	$.fn.silverSlider = plugin;
 
+	// Markup saved before the attribute was renamed (hand-written HTML, cached
+	// fragments) still declares its options in "data-flickity-options".
+	function upgradeLegacyMarkup(context) {
+		$('[' + LEGACY_OPTIONS_ATTR + ']', context || document).each((index, element) => {
+			if (!element.hasAttribute(OPTIONS_ATTR)) {
+				element.setAttribute(OPTIONS_ATTR, element.getAttribute(LEGACY_OPTIONS_ATTR));
+			}
+			element.removeAttribute(LEGACY_OPTIONS_ATTR);
+		});
+	}
+
+	// This script runs before the theme attaches its slider behavior.
+	upgradeLegacyMarkup(document);
+
 	// Sliders written by hand with class modifiers only (no declared options).
 	function initStandalone(context) {
 		$('.slider', context || document)
-			.not('[data-flickity-options]')
-			.not('.flickity-enabled')
+			.not('[' + OPTIONS_ATTR + ']')
+			.not('.swiper-enabled')
 			.not('.product-lightbox .slider')
 			.each((index, element) => {
 				if (Array.from(element.children).some(isCell)) $(element).flickity({});
