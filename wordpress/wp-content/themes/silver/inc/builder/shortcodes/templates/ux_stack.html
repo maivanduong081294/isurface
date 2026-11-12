@@ -1,0 +1,28 @@
+<div
+  id="{{:: shortcode.$id }}"
+  class="stack-wrapper {{ shortcode.options.class }} {{ shortcode.options.visibility }}"
+>
+  <div
+    class="stack-inner"
+    ng-class="{
+      'stack': shortcode.options.type !== 'slider',
+      ['stack-'+shortcode.options.direction]: shortcode.options.type !== 'slider' && shortcode.options.direction,
+      ['items-'+shortcode.options.align]: shortcode.options.type !== 'slider' && shortcode.options.align,
+      ['justify-'+shortcode.options.distribute]: shortcode.options.type !== 'slider' && shortcode.options.distribute,
+      'slider': shortcode.options.type === 'slider',
+      'row-slider': shortcode.options.type === 'slider',
+      ['slider-nav-'+shortcode.options.sliderNavStyle]: shortcode.options.type === 'slider' && shortcode.options.sliderNavStyle,
+      ['slider-nav-'+shortcode.options.sliderNavColor]: shortcode.options.type === 'slider' && shortcode.options.sliderNavColor,
+      ['slider-nav-'+shortcode.options.sliderNavPosition]: shortcode.options.type === 'slider' && shortcode.options.sliderNavPosition && shortcode.options.sliderNavStyle !== 'reveal',
+      ['slider-style-'+shortcode.options.sliderStyle]: shortcode.options.type === 'slider' && shortcode.options.sliderStyle
+    }"
+    ng-attr-data-flickity-options="{{ shortcode.options.type === 'slider' ? '{&quot;imagesLoaded&quot;:true,&quot;groupCells&quot;:&quot;100%&quot;,&quot;dragThreshold&quot;:5,&quot;cellAlign&quot;:&quot;left&quot;,&quot;wrapAround&quot;:' + (shortcode.options.infinitive !== 'false') + ',&quot;prevNextButtons&quot;:true,&quot;percentPosition&quot;:true,&quot;pageDots&quot;:' + (shortcode.options.sliderBullets === 'true') + ',&quot;autoPlay&quot;:' + (shortcode.options.autoSlide || 'false') + '}' : undefined }}"
+  >
+    <content></content>
+  </div>
+  <style>
+    #{{:: shortcode.$id }} .stack-inner {
+      --stack-gap: {{ shortcode.options.gap }}rem;
+    }
+  </style>
+</div>

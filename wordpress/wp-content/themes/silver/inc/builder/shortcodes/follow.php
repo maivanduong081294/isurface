@@ -1,0 +1,97 @@
+<?php
+
+add_ux_builder_shortcode( 'follow', array(
+    'name' => __( 'Follow Icons' ),
+    'category' => __( 'Content' ),
+    'thumbnail' =>  flatsome_ux_builder_thumbnail( 'share' ),
+    'options' => array(
+        'title' => array(
+            'type' => 'textfield',
+            'heading' => 'Title',
+            'default' => '',
+        ),
+
+        'style' => array(
+            'type' => 'radio-buttons',
+            'heading' => __( 'Style' ),
+            'default' => 'outline',
+            'options' => array(
+                'outline' => array( 'title' => 'Outline' ),
+                'fill' => array( 'title' => 'Fill' ),
+                'small' => array( 'title' => 'Small' ),
+            ),
+        ),
+        'align' => array(
+            'type' => 'radio-buttons',
+            'heading' => __( 'Align' ),
+            'default' => '',
+            'options' => array(
+                '' => array( 'title' => 'Inline' ),
+                'left'   => array( 'title' => 'Left',   'icon' => 'dashicons-editor-alignleft'),
+                'center' => array( 'title' => 'Center', 'icon' => 'dashicons-editor-aligncenter'),
+                'right'  => array( 'title' => 'Right',  'icon' => 'dashicons-editor-alignright'),
+            ),
+        ),
+        'scale' => array(
+            'type' => 'slider',
+            'heading' => 'Scale',
+            'default' => '100',
+            'unit' => '%',
+            'max' => '300',
+            'min' => '50',
+        ),
+		'tooltip' => array(
+			'type'    => 'checkbox',
+			'heading' => __( 'Tooltips' ),
+			'default' => 'true',
+		),
+        'social_icons' => array(
+	        'type' => 'group',
+	        'heading' => 'Follow Icons',
+	        'options' => array(
+		        'icon_order' => array(
+			        'type' => 'select',
+			        'heading' => 'Icon order',
+			        'description' => 'Drag the selected icons to change their order. Only icons with a link are displayed. Unlisted icons appear afterwards.',
+			        'default' => 'facebook,instagram,tiktok,snapchat,x,twitter,threads,email,phone,pinterest,rss,linkedin,youtube,flickr,px500,vkontakte,telegram,twitch,discord,whatsapp,zalo',
+			        'full_width' => true,
+			        'config' => array(
+				        'multiple' => true,
+				        'sortable' => true,
+				        'placeholder' => 'Select icons...',
+				        'options' => array(
+					        'facebook' => 'Facebook', 'instagram' => 'Instagram', 'tiktok' => 'TikTok',
+					        'snapchat' => 'SnapChat', 'x' => 'X', 'twitter' => 'Twitter', 'threads' => 'Threads',
+					        'email' => 'Email', 'phone' => 'Phone', 'pinterest' => 'Pinterest', 'rss' => 'RSS',
+					        'linkedin' => 'LinkedIn', 'youtube' => 'YouTube', 'flickr' => 'Flickr',
+					        'px500' => '500px', 'vkontakte' => 'VKontakte', 'telegram' => 'Telegram',
+					        'twitch' => 'Twitch', 'discord' => 'Discord', 'whatsapp' => 'WhatsApp', 'zalo' => 'Zalo',
+				        ),
+			        ),
+		        ),
+		        'whatsapp' => array( 'type' => 'textfield', 'heading' => 'WhatsApp', 'default' => '', 'description' => 'Enter a full link, for example https://wa.me/84901234567' ),
+		        'zalo' => array( 'type' => 'textfield', 'heading' => 'Zalo', 'default' => '', 'description' => 'Enter a full link, for example https://zalo.me/0901234567' ),
+		        'facebook' => array( 'type' => 'textfield','heading' => 'Facebook', 'default' => ''),
+		        'instagram' => array( 'type' => 'textfield','heading' => 'Instagram', 'default' => ''),
+		        'tiktok' => array( 'type' => 'textfield','heading' => 'TikTok', 'default' => ''),
+		        'snapchat' => array( 'type' => 'image', 'heading' => __( 'SnapChat' )),
+		        'x' => array( 'type' => 'textfield','heading' => 'X', 'default' => ''),
+		        'twitter' => array( 'type' => 'textfield','heading' => 'Twitter', 'default' => ''),
+		        'threads' => array( 'type' => 'textfield','heading' => 'Threads', 'default' => ''),
+		        'email' => array( 'type' => 'textfield','heading' => 'Email', 'default' => ''),
+		        'phone' => array( 'type' => 'textfield','heading' => 'Phone', 'default' => ''),
+		        'pinterest' => array( 'type' => 'textfield','heading' => 'Pinterest', 'default' => ''),
+		        'rss' => array( 'type' => 'textfield','heading' => 'RSS', 'default' => ''),
+		        'linkedin' => array( 'type' => 'textfield','heading' => 'Linkedin', 'default' => ''),
+		        'youtube' => array( 'type' => 'textfield','heading' => 'Youtube', 'default' => ''),
+		        'flickr' => array( 'type' => 'textfield','heading' => 'Flickr', 'default' => ''),
+		        'px500' => array( 'type' => 'textfield','heading' => '500px', 'default' => ''),
+		        'vkontakte' => array( 'type' => 'textfield','heading' => 'VKontakte', 'default' => ''),
+		        'telegram' => array( 'type' => 'textfield','heading' => 'Telegram', 'default' => ''),
+		        'twitch' => array( 'type' => 'textfield','heading' => 'Twitch', 'default' => ''),
+		        'discord' => array( 'type' => 'textfield','heading' => 'Discord', 'default' => ''),
+	        ),
+        ),
+        'advanced_options' => require( __DIR__ . '/commons/advanced.php'),
+    ),
+) );

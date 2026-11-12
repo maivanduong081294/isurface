@@ -1,0 +1,295 @@
+/* Font Awesome icon picker for UX Builder (editor sidebar + popup). */
+
+/* ---- Field in the options sidebar ---- */
+.silver-icon-field {
+	display: flex;
+	gap: 4px;
+}
+
+.silver-icon-field__select,
+.silver-icon-field__clear {
+	background-color: #333a41;
+	border: 1px solid hsla(0, 0%, 100%, .05);
+	border-radius: 0;
+	color: #f1f1f1;
+	cursor: pointer;
+	font-size: 13px;
+	line-height: 1;
+	margin: 0;
+	min-height: 30px;
+	padding: 4px 8px;
+	transition: color .3s, border .3s, background .3s;
+}
+
+.silver-icon-field__select {
+	align-items: center;
+	display: flex;
+	flex: 1;
+	gap: 8px;
+	min-width: 0;
+	text-align: left;
+}
+
+.silver-icon-field__clear {
+	flex: 0 0 30px;
+	padding: 0;
+	text-align: center;
+}
+
+.silver-icon-field__select:hover,
+.silver-icon-field__select:focus,
+.silver-icon-field__clear:hover,
+.silver-icon-field__clear:focus {
+	background-color: #3e474f;
+	color: #fff;
+	outline: 0;
+}
+
+.silver-icon-field__preview {
+	align-items: center;
+	display: inline-flex;
+	flex: 0 0 22px;
+	font-size: 16px;
+	height: 22px;
+	justify-content: center;
+	width: 22px;
+}
+
+.silver-icon-field__preview .dashicons {
+	font-size: 18px;
+	height: 18px;
+	opacity: .6;
+	width: 18px;
+}
+
+.silver-icon-field__label {
+	flex: 1;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.silver-icon-field__clear .dashicons {
+	font-size: 16px;
+	height: 16px;
+	width: 16px;
+}
+
+/* ---- Popup ---- */
+.silver-icon-picker {
+	bottom: 0;
+	color: #f1f1f1;
+	display: none;
+	font-size: 13px;
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 1000;
+}
+
+.silver-icon-picker.is-open {
+	display: block;
+}
+
+.silver-icon-picker__backdrop {
+	background-color: rgba(0, 0, 0, .6);
+	bottom: 0;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.silver-icon-picker__dialog {
+	background-color: #1c2024;
+	border: 1px solid hsla(0, 0%, 100%, .08);
+	border-radius: 4px;
+	box-shadow: 0 10px 40px rgba(0, 0, 0, .5);
+	display: flex;
+	flex-direction: column;
+	height: min(720px, calc(100% - 40px));
+	left: 50%;
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: min(820px, calc(100% - 40px));
+}
+
+.silver-icon-picker__header {
+	align-items: center;
+	display: flex;
+	gap: 8px;
+	padding: 16px 16px 8px;
+}
+
+.silver-icon-picker__search {
+	flex: 1;
+	position: relative;
+}
+
+.silver-icon-picker__search input {
+	background-color: #333a41;
+	border: 1px solid hsla(0, 0%, 100%, .08);
+	border-radius: 3px;
+	box-shadow: none;
+	color: #f1f1f1;
+	font-size: 13px;
+	height: 36px;
+	line-height: 1;
+	margin: 0;
+	padding: 0 36px 0 12px;
+	width: 100%;
+}
+
+.silver-icon-picker__search input:focus {
+	background-color: #3e474f;
+	border-color: hsla(0, 0%, 100%, .2);
+	outline: 0;
+}
+
+.silver-icon-picker__search .dashicons {
+	opacity: .6;
+	pointer-events: none;
+	position: absolute;
+	right: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.silver-icon-picker__close {
+	background: transparent;
+	border: 0;
+	color: #f1f1f1;
+	cursor: pointer;
+	height: 36px;
+	margin: 0;
+	opacity: .6;
+	padding: 0;
+	width: 36px;
+}
+
+.silver-icon-picker__close:hover {
+	opacity: 1;
+}
+
+.silver-icon-picker__tabs {
+	border-bottom: 1px solid hsla(0, 0%, 100%, .05);
+	display: flex;
+	gap: 4px;
+	padding: 0 16px;
+}
+
+.silver-icon-picker__tabs button {
+	background: transparent;
+	border: 0;
+	border-bottom: 2px solid transparent;
+	color: #f1f1f1;
+	cursor: pointer;
+	font-size: 12px;
+	margin: 0;
+	opacity: .6;
+	padding: 8px 10px;
+	text-transform: uppercase;
+}
+
+.silver-icon-picker__tabs button:hover,
+.silver-icon-picker__tabs button.is-active {
+	opacity: 1;
+}
+
+.silver-icon-picker__tabs button.is-active {
+	border-bottom-color: #fff;
+}
+
+.silver-icon-picker__body {
+	flex: 1;
+	overflow-y: auto;
+	padding: 16px;
+}
+
+.silver-icon-picker__grid {
+	display: grid;
+	gap: 12px;
+	grid-template-columns: repeat(auto-fill, minmax(86px, 1fr));
+}
+
+.silver-icon-picker__item {
+	align-items: center;
+	background-color: #23282d;
+	border: 1px solid hsla(0, 0%, 100%, .08);
+	border-radius: 3px;
+	color: #f1f1f1;
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	height: 86px;
+	justify-content: center;
+	margin: 0;
+	min-width: 0;
+	padding: 6px;
+	transition: background-color .15s, border-color .15s, color .15s;
+}
+
+.silver-icon-picker__item i {
+	font-size: 24px;
+	line-height: 1;
+}
+
+.silver-icon-picker__item span {
+	font-size: 11px;
+	line-height: 1.2;
+	max-width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.silver-icon-picker__item:hover,
+.silver-icon-picker__item:focus {
+	background-color: #333a41;
+	border-color: hsla(0, 0%, 100%, .25);
+	outline: 0;
+}
+
+.silver-icon-picker__item.is-active,
+.silver-icon-picker__item.is-active:hover {
+	background-color: #fff;
+	border-color: #fff;
+	color: #1c2024;
+}
+
+.silver-icon-picker__empty {
+	margin: 40px 0;
+	opacity: .6;
+	text-align: center;
+}
+
+.silver-icon-picker__footer {
+	align-items: center;
+	border-top: 1px solid hsla(0, 0%, 100%, .05);
+	display: flex;
+	justify-content: space-between;
+	padding: 10px 16px;
+}
+
+.silver-icon-picker__count {
+	opacity: .6;
+}
+
+.silver-icon-picker__none {
+	background-color: #333a41;
+	border: 1px solid hsla(0, 0%, 100%, .08);
+	border-radius: 3px;
+	color: #f1f1f1;
+	cursor: pointer;
+	font-size: 12px;
+	margin: 0;
+	padding: 6px 12px;
+}
+
+.silver-icon-picker__none:hover {
+	background-color: #3e474f;
+}

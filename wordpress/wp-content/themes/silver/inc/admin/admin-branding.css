@@ -1,0 +1,41 @@
+/* Silver branding in the WordPress toolbar and admin menu. */
+#wpadminbar #wp-admin-bar-flatsome_panel > .ab-item {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+#wpadminbar #wp-admin-bar-flatsome_panel .silver-admin-bar-logo {
+	display: block;
+	flex: 0 0 auto;
+	width: 24px;
+	height: 24px;
+	margin: 0;
+	padding: 0;
+	object-fit: contain;
+}
+
+#adminmenu #toplevel_page_flatsome-panel > .menu-top > .wp-menu-image {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#adminmenu #toplevel_page_flatsome-panel > .menu-top > .wp-menu-image img {
+	display: block;
+	width: 24px;
+	height: 24px;
+	max-width: none;
+	margin: 0;
+	padding: 0;
+	object-fit: contain;
+	opacity: 1;
+}
+
+@media (min-width: 783px) {
+	#wpadminbar #wp-admin-bar-flatsome_panel .silver-admin-bar-logo,
+	#adminmenu #toplevel_page_flatsome-panel > .menu-top > .wp-menu-image img {
+		width: 20px;
+		height: 20px;
+	}
+}

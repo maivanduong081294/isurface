@@ -1,0 +1,21 @@
+/*
+Theme Name: isurface
+Description: This is a child theme for Silver Theme
+Author: UX Themes
+Template: silver
+Version: 3.0
+*/
+
+/* Small: mobile-first base styles below 550px, inherited upwards. */
+
+@media (min-width: 550px) {
+  /* Medium: tablet portrait. */
+}
+
+@media (min-width: 850px) {
+  /* Large: tablet landscape. */
+}
+
+@media (min-width: 1200px) {
+  /* Xlarge: desktop. */
+}

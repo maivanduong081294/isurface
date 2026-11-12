@@ -1,0 +1,12 @@
+<svg width="100" height="68" viewBox="0 0 100 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+<title>container</title>
+<path d="M100 0H0V68H100V0Z" fill="white"/>
+<path opacity="0.5" d="M7 12H93V56H7V12Z" stroke="#00A0D2" stroke-width="1.5" stroke-dasharray="3 3"/>
+<path d="M17 21H83V47H17V21Z" fill="url(#ux_container_linear)" fill-opacity="0.15" stroke="#00A0D2" stroke-width="2"/>
+<defs>
+<linearGradient id="ux_container_linear" x1="17" y1="21" x2="80" y2="55" gradientUnits="userSpaceOnUse">
+<stop stop-color="#C8EAF4" stop-opacity="0.208022"/>
+<stop offset="1" stop-color="#3DD0FF"/>
+</linearGradient>
+</defs>
+</svg>

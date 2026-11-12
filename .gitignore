@@ -3,6 +3,7 @@
 .repo-inspect/
 
 # WordPress runtime/config generated per environment
+wordpress/.htaccess
 wordpress/wp-config.php
 wordpress/wp-content/cache/
 wordpress/wp-content/upgrade/

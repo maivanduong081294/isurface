@@ -1,0 +1,17 @@
+<div
+  id="{{:: shortcode.$id }}"
+  class="ux-container {{ shortcode.options.class }} {{ shortcode.options.visibility }}"
+  ng-class="{'container': shortcode.options.width !== 'full-width', 'ux-container-full': shortcode.options.width === 'full-width'}"
+>
+  <div
+    ng-if="shortcode.options.effect"
+    class="ux-container-effect effect-{{ shortcode.options.effect }}"
+    aria-hidden="true"
+  ></div>
+  <div class="ux-container_content"><content></content></div>
+  <style>
+    #{{:: shortcode.$id }} > .ux-container-content {
+      padding: {{ shortcode.options.padding }}px;
+    }
+  </style>
+</div>
