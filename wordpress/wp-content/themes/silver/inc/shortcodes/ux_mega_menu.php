@@ -8,24 +8,10 @@
  * DOM order also works as an accordion. On desktop the items use
  * `display: contents` and the panel is a 2-column grid (tabs | panes).
  *
- * Assets: assets/css/silver-mega-menu.css, assets/js/silver-mega-menu.js.
+ * Assets: assets/css/src/silver-mega-menu.css and
+ * assets/js/src/silver-mega-menu.js, merged into silver.css / silver.js by
+ * build/build.mjs.
  */
-
-/**
- * Enqueue the mega menu assets (small, loaded on every page so the builder
- * canvas and AJAX renders have them).
- */
-function silver_mega_menu_assets()
-{
-  $uri  = get_template_directory_uri();
-  $dir  = get_template_directory();
-  $css  = '/assets/css/silver-mega-menu.css';
-  $js   = '/assets/js/silver-mega-menu.js';
-
-  wp_enqueue_style('silver-mega-menu', $uri . $css, array('silver-main'), filemtime($dir . $css));
-  wp_enqueue_script('silver-mega-menu', $uri . $js, array('jquery', 'silver-js'), filemtime($dir . $js), true);
-}
-add_action('wp_enqueue_scripts', 'silver_mega_menu_assets', 110);
 
 /**
  * Counts the items of the mega menu being rendered.

@@ -23,6 +23,10 @@
  *   compiled theme scripts call (product gallery, quick view, variation
  *   images), so those bundles keep working unchanged.
  * - Loads the Swiper library on demand from `silver.swiper`.
+ *
+ * Merged into silver.js by the build, so it is on every page that loads the
+ * theme script. It stays off where PHP does not print the library URL: the
+ * UX Builder iframe, which keeps its own bundled slider for editing.
  */
 (function ($, window, document) {
 	'use strict';
@@ -30,6 +34,9 @@
 	if (!$) return;
 
 	const config = window.silver || {};
+
+	if (!config.swiper) return;
+
 	const DATA_KEY = 'flickity';
 	const EVENT_NS = '.flickity';
 	const OPTIONS_ATTR = 'data-swiper-options';
@@ -512,12 +519,21 @@
 		getNavTarget() {
 			const selector = this.settings.asNavFor;
 			if (!selector) return $();
-			if (typeof selector !== 'string') return $(selector).first();
+			if (selector instanceof Element || selector instanceof $) return $(selector).first();
+			if (typeof selector !== 'string') return $();
 
-			// Prefer the gallery in the same product / lightbox.
-			const $scope = this.$element.closest('.product, .product-lightbox, .mfp-content');
-			const $scoped = $scope.length ? $scope.find(selector).first() : $();
-			return $scoped.length ? $scoped : $(selector).first();
+			// The selector comes from data-swiper-options, which can be written in
+			// post content. Never pass it to $(): jQuery would build HTML from a
+			// string such as "<img onerror=...>". .find() only matches selectors,
+			// and an invalid one throws, so it resolves to nothing.
+			try {
+				// Prefer the gallery in the same product / lightbox.
+				const $scope = this.$element.closest('.product, .product-lightbox, .mfp-content');
+				const $scoped = $scope.length ? $scope.find(selector).first() : $();
+				return $scoped.length ? $scoped : $(document).find(selector).first();
+			} catch (error) {
+				return $();
+			}
 		}
 
 		bindNav() {

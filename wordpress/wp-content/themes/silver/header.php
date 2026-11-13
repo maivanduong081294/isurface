@@ -22,8 +22,6 @@
 <?php do_action( 'silver_after_body_open' ); ?>
 <?php wp_body_open(); ?>
 
-<a class="skip-link screen-reader-text" href="#main"><?php esc_html_e( 'Skip to content', 'silver' ); ?></a>
-
 <div id="wrapper">
 
 	<?php do_action( 'silver_before_header' ); ?>

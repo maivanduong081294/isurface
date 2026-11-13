@@ -204,7 +204,7 @@ function get_silver_repeater_end($type){
  * Builds the options of a slider. Every slider in the theme declares its
  * options through this function, so the defaults live in one place.
  *
- * The options are read by assets/js/silver-swiper.js, which maps them to
+ * The options are read by assets/js/src/silver-swiper.js, which maps them to
  * Swiper parameters (wrapAround -> loop, pageDots -> pagination, ...).
  *
  * Shortcode attributes can be passed as they are: 'true', 'false' and numeric
@@ -253,7 +253,7 @@ function silver_slider_options( $options = array() ) {
 /**
  * Returns the class that pairs a main slider with its thumbnail slider
  * ("Thumbnail Slider" options). Two sliders with the same pair name are linked
- * by assets/js/silver-swiper.js.
+ * by assets/js/src/silver-swiper.js.
  *
  * @param string $role 'main', 'thumbnail' or empty for a normal slider.
  * @param string $key  Pair name. Empty pairs the unnamed sliders of the page.
@@ -621,6 +621,35 @@ function silver_get_link_data( $atts ) {
 	}
 
 	return $data;
+}
+
+/**
+ * Returns the name of the object the "Link" options point to: the post title,
+ * the term name or the label of the post type archive.
+ *
+ * @param array $atts Raw shortcode attributes.
+ *
+ * @return string Empty for custom links, or when nothing is selected or the target is gone.
+ */
+function silver_get_link_title( $atts ) {
+	$data = silver_get_link_data( $atts );
+
+	switch ( $data['object_type'] ) {
+		case 'post_type':
+			return (string) get_the_title( $data['object_id'] );
+
+		case 'taxonomy':
+			$term = get_term( $data['object_id'], $data['object_name'] );
+
+			return ( $term && ! is_wp_error( $term ) ) ? (string) $term->name : '';
+
+		case 'post_type_archive':
+			$post_type = get_post_type_object( $data['object_name'] );
+
+			return $post_type ? esc_html( $post_type->labels->name ) : '';
+	}
+
+	return '';
 }
 
 function silver_to_dashed($className) {

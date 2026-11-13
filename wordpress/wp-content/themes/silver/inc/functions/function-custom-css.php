@@ -1,4 +1,16 @@
 <?php
+/**
+ * A theme option printed as the value of a CSS variable: without the
+ * characters that would end the declaration or the <style> element.
+ *
+ * @param string $value Option value (color, length...).
+ *
+ * @return string
+ */
+function silver_css_var_value( $value ) {
+	return trim( preg_replace( '/[;{}<>]/', '', (string) $value ) );
+}
+
 /* CUSTOM CSS */
 function silver_custom_css() {
 if ( ! function_exists( 'fs_color_channels' ) ) {
@@ -18,6 +30,33 @@ $fs_opacity_colors = array(
 	'primary'   => get_theme_mod( 'color_primary', Silver_Default::COLOR_PRIMARY ),
 	'secondary' => get_theme_mod( 'color_secondary', Silver_Default::COLOR_SECONDARY ),
 	'base'      => get_theme_mod( 'color_texts', Silver_Default::COLOR_BASE ),
+);
+
+// Theme options read by the components merged into silver.css (sources in
+// assets/css/src: silver-dialog.css, silver-mega-menu.css). Each one is printed
+// as --fs-{name} only while the option is set, so the component keeps its own
+// default otherwise: var(--fs-button-radius, 6px).
+$fs_button_radius   = get_theme_mod( 'button_radius' );
+$fs_dropdown_radius = get_theme_mod( 'dropdown_radius' );
+$fs_option_vars     = array_filter(
+	apply_filters(
+		'silver_option_css_vars',
+		array(
+			// Style > Typography > Headings color.
+			'color-headings'  => get_theme_mod( 'type_headings_color' ),
+			// Style > Global Styles > Default Button Radius.
+			'button-radius'   => '0px' !== $fs_button_radius ? $fs_button_radius : '',
+			// Style > Lightbox > Backdrop color.
+			'lightbox-bg'     => get_theme_mod( 'flatsome_lightbox_bg' ),
+			// Header > Dropdown Style.
+			'dropdown-bg'     => get_theme_mod( 'dropdown_bg' ),
+			'dropdown-border' => get_theme_mod( 'dropdown_border_enabled', 1 ) ? get_theme_mod( 'dropdown_border' ) : '',
+			'dropdown-radius' => '0' !== (string) $fs_dropdown_radius ? $fs_dropdown_radius : '',
+		)
+	),
+	static function ( $value ) {
+		return is_string( $value ) && '' !== trim( $value );
+	}
 );
 
 // Layout spacing. Each entry is printed as the CSS variable --fs-{name}, which
@@ -73,6 +112,9 @@ ob_start();
 <?php for ( $i = 10; $i <= 90; $i += 10 ) : ?>
 	--fs-color-<?php echo esc_attr( $name ); ?>-<?php echo (int) $i; ?>: rgba(<?php echo esc_attr( $rgb ); ?>, 0.<?php echo (int) ( $i / 10 ); ?>);
 <?php endfor; ?>
+<?php endforeach; ?>
+<?php foreach ( $fs_option_vars as $name => $value ) : ?>
+	--fs-<?php echo esc_attr( $name ); ?>: <?php echo esc_attr( silver_css_var_value( $value ) ); ?>;
 <?php endforeach; ?>
 <?php foreach ( $fs_layout_spacing as $name => $value ) : ?>
 	--fs-<?php echo esc_attr( $name ); ?>: <?php echo esc_attr( $value ); ?>;

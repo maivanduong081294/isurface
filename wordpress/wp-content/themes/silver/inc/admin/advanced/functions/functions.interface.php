@@ -157,10 +157,12 @@ function of_ajax_callback()
 {
 	global $options_machine, $of_options;
 
-	$nonce=$_POST['security'];
+	$nonce = isset( $_POST['security'] ) ? sanitize_text_field( wp_unslash( $_POST['security'] ) ) : '';
 
+	if ( ! wp_verify_nonce( $nonce, 'of_ajax_nonce' ) ) die('-1');
 
-	if (! wp_verify_nonce($nonce, 'of_ajax_nonce') ) die('-1');
+	// Same capability as the "Advanced" options page that prints the nonce.
+	if ( ! current_user_can( 'edit_theme_options' ) ) die('-1');
 
 	//get options array from db
 	$all = of_get_options();
@@ -232,7 +234,13 @@ function of_ajax_callback()
 	elseif($save_type == 'import_options'){
 
 
-		$smof_data = unserialize(base64_decode($_POST['data'])); //100% safe - ignore theme check nag
+		// The export is a serialized array of plain values: never build objects
+		// from it (PHP Object Injection).
+		$import    = isset( $_POST['data'] ) ? base64_decode( trim( wp_unslash( $_POST['data'] ) ) ) : false;
+		$smof_data = is_string( $import ) ? @unserialize( $import, array( 'allowed_classes' => false ) ) : false;
+
+		if ( ! is_array( $smof_data ) ) die('-1');
+
 		of_save_options($smof_data);
 
 

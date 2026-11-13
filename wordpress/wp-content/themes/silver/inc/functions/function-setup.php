@@ -240,14 +240,22 @@ function silver_scripts() {
 	// Enqueue theme scripts.
 	silver_enqueue_asset( 'silver-js', 'silver', array( 'jquery', 'hoverIntent' ) );
 
-	// Swiper slider engine (replaces Flickity on the frontend). It keeps the
-	// .flickity() API for the rest of the theme and loads Swiper on demand.
-	// The UX Builder iframe keeps its own bundled slider for editing.
+	// silver.js is rebuilt by build/build.mjs, which merges the theme bundle
+	// with the scripts in assets/js/src (slider, dialog, counter, mega menu):
+	// version it by file time, so browsers reload it after a build.
+	$main_js = get_template_directory() . '/assets/js/silver.js';
+	if ( file_exists( $main_js ) && isset( wp_scripts()->registered['silver-js'] ) ) {
+		wp_scripts()->registered['silver-js']->ver .= '.' . filemtime( $main_js );
+	}
+
+	// Swiper slider engine (replaces Flickity on the frontend), part of
+	// silver.js. It keeps the .flickity() API for the rest of the theme and
+	// loads the Swiper library on demand from `silver.swiper`. The UX Builder
+	// iframe keeps its own bundled slider for editing: without the library URL
+	// the engine stays off there.
 	if ( ! ( function_exists( 'ux_builder_is_iframe' ) && ux_builder_is_iframe() ) ) {
-		$swiper_file = get_template_directory() . '/assets/js/silver-swiper.js';
-		wp_enqueue_script( 'silver-swiper', $uri . '/assets/js/silver-swiper.js', array( 'jquery', 'silver-js' ), file_exists( $swiper_file ) ? filemtime( $swiper_file ) : $version, true );
 		wp_add_inline_script(
-			'silver-swiper',
+			'silver-js',
 			'window.silver = Object.assign( window.silver || {}, ' . wp_json_encode( array( 'swiper' => $uri . '/assets/libs/swiper-bundle.min.js?ver=11.2.10' ) ) . ' );',
 			'before'
 		);
@@ -335,6 +343,74 @@ function silver_scripts() {
 }
 
 add_action( 'wp_enqueue_scripts', 'silver_scripts', 100 );
+
+/**
+ * Silver Dialog: popup alert / confirm / notice shared by every script
+ * (sources in assets/js/src/silver-dialog.js and assets/css/src/silver-dialog.css).
+ *
+ * Frontend: the dialog is part of silver.js / silver.css (merged by
+ * build/build.mjs), so every script can call silverDialog.alert() /
+ * silverDialog.confirm(). wp-admin: it is a file of its own, loaded by the
+ * scripts that depend on it.
+ *
+ * In both cases a script declares the 'silver-dialog' dependency:
+ *
+ *   wp_enqueue_script( 'my-script', $src, array( 'silver-dialog' ), $ver, true );
+ *
+ * @return array Options of the dialog (window.silverDialogConfig).
+ */
+function silver_dialog_config() {
+	return apply_filters(
+		'silver_dialog_config',
+		array(
+			'okText'        => __( 'Đóng', 'silver' ),
+			'yesText'       => __( 'Đồng ý', 'silver' ),
+			'noText'        => __( 'Huỷ', 'silver' ),
+			'closeLabel'    => __( 'Đóng', 'silver' ),
+			// true: every window.alert() (theme, plugins) opens as a popup, and
+			// the code after alert() no longer waits for the user. Set it to
+			// false through the 'silver_dialog_config' filter to keep the
+			// browser alert. window.confirm() can not be replaced this way.
+			'overrideAlert' => true,
+		)
+	);
+}
+
+/**
+ * Frontend: the dialog is inside silver.js / silver.css. 'silver-dialog' is
+ * kept as a handle without a file, so depending on it loads the main files.
+ */
+function silver_register_dialog_frontend() {
+	wp_register_script( 'silver-dialog', false, array( 'silver-js' ), null, true );
+	wp_register_style( 'silver-dialog', false, array( 'silver-main' ), null );
+
+	wp_add_inline_script( 'silver-js', 'window.silverDialogConfig = ' . wp_json_encode( silver_dialog_config() ) . ';', 'before' );
+}
+// After silver_scripts() (priority 100), which registers silver-js.
+add_action( 'wp_enqueue_scripts', 'silver_register_dialog_frontend', 101 );
+
+/**
+ * wp-admin: silver.js / silver.css are not loaded there, so the dialog is
+ * registered as a file of its own. The script adds its stylesheet itself
+ * (`styleUrl`), so depending on the script is enough.
+ */
+function silver_register_dialog_admin() {
+	$uri     = get_template_directory_uri();
+	$dir     = get_template_directory();
+	$js      = '/assets/js/silver-dialog.js';
+	$css     = '/assets/css/silver-dialog.css';
+	$ver     = wp_get_theme( get_template() )->get( 'Version' );
+	$css_ver = file_exists( $dir . $css ) ? filemtime( $dir . $css ) : $ver;
+
+	wp_register_style( 'silver-dialog', $uri . $css, array(), $css_ver );
+	wp_register_script( 'silver-dialog', $uri . $js, array(), file_exists( $dir . $js ) ? filemtime( $dir . $js ) : $ver, true );
+
+	$config             = silver_dialog_config();
+	$config['styleUrl'] = add_query_arg( 'ver', $css_ver, $uri . $css );
+
+	wp_add_inline_script( 'silver-dialog', 'window.silverDialogConfig = ' . wp_json_encode( $config ) . ';', 'before' );
+}
+add_action( 'admin_enqueue_scripts', 'silver_register_dialog_admin', 1 );
 
 /**
  * Set up UX Builder.

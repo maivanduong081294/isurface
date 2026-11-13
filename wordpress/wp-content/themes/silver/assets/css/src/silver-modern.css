@@ -128,6 +128,157 @@ input[type="button"]:focus-visible {
 	transform: none;
 }
 
+/* ------------------------------------------- Buttons: styles of the presets */
+/* UX Builder presets: Simple / Round / Circle (solid), Outline ×3, Simple Link,
+   Underline, CTA Small / Large (shade + depth). Geometry stays on the tokens
+   above; this block only reworks colour, shadow and hover.
+
+   --sv-btn-accent is the button's own colour, so shadows and hover states
+   follow Primary / Secondary / Success / Alert. These tokens sit on the button
+   (not :root) because they read that accent. */
+.button,
+input[type="submit"],
+input[type="button"],
+input[type="reset"] {
+	--sv-btn-accent: var(--fs-color-primary, #446084);
+	--sv-btn-depth: 0 0 0 0 transparent;
+	--sv-btn-depth-1: 0 1px 2px rgba(15, 23, 42, 0.14), 0 2px 5px -2px color-mix(in srgb, var(--sv-btn-accent) 40%, transparent);
+	--sv-btn-depth-2: 0 1px 2px rgba(15, 23, 42, 0.14), 0 6px 12px -5px color-mix(in srgb, var(--sv-btn-accent) 50%, transparent);
+	--sv-btn-depth-3: 0 1px 2px rgba(15, 23, 42, 0.16), 0 10px 20px -8px color-mix(in srgb, var(--sv-btn-accent) 60%, transparent);
+	--sv-btn-depth-4: 0 2px 4px -1px rgba(15, 23, 42, 0.16), 0 16px 28px -10px color-mix(in srgb, var(--sv-btn-accent) 65%, transparent);
+	--sv-btn-depth-5: 0 2px 4px -1px rgba(15, 23, 42, 0.16), 0 22px 36px -12px color-mix(in srgb, var(--sv-btn-accent) 70%, transparent);
+	--sv-btn-depth-hover: 0 8px 18px -8px color-mix(in srgb, var(--sv-btn-accent) 65%, #0f172a);
+	--sv-btn-hover-shadow: inset 0 0 0 100px rgba(0, 0, 0, 0.08), var(--sv-btn-depth-hover);
+}
+
+.button.secondary,
+.button.alt,
+.button.checkout,
+.checkout-button {
+	--sv-btn-accent: var(--fs-color-secondary, #d26e4b);
+}
+
+.button.success {
+	--sv-btn-accent: var(--fs-color-success, #627d47);
+}
+
+.button.alert {
+	--sv-btn-accent: var(--fs-color-alert, #b20000);
+}
+
+/* White and form buttons have no colour of their own: neutral shadow. */
+.button.white,
+.button.is-form {
+	--sv-btn-accent: #0f172a;
+}
+
+/* Depth 1–5 (CTA presets): soft shadow tinted with the button colour instead
+   of the heavy black one shared with boxes and columns. Without a hover depth
+   the button keeps its resting depth on hover. */
+.button.box-shadow-1 { --sv-btn-depth: var(--sv-btn-depth-1); --sv-btn-depth-hover: var(--sv-btn-depth-1); }
+.button.box-shadow-2 { --sv-btn-depth: var(--sv-btn-depth-2); --sv-btn-depth-hover: var(--sv-btn-depth-2); }
+.button.box-shadow-3 { --sv-btn-depth: var(--sv-btn-depth-3); --sv-btn-depth-hover: var(--sv-btn-depth-3); }
+.button.box-shadow-4 { --sv-btn-depth: var(--sv-btn-depth-4); --sv-btn-depth-hover: var(--sv-btn-depth-4); }
+.button.box-shadow-5 { --sv-btn-depth: var(--sv-btn-depth-5); --sv-btn-depth-hover: var(--sv-btn-depth-5); }
+.button.box-shadow-1-hover { --sv-btn-depth-hover: var(--sv-btn-depth-1); }
+.button.box-shadow-2-hover { --sv-btn-depth-hover: var(--sv-btn-depth-2); }
+.button.box-shadow-3-hover { --sv-btn-depth-hover: var(--sv-btn-depth-3); }
+.button.box-shadow-4-hover { --sv-btn-depth-hover: var(--sv-btn-depth-4); }
+.button.box-shadow-5-hover { --sv-btn-depth-hover: var(--sv-btn-depth-5); }
+
+/* :where() keeps these as weak as the generic .box-shadow-* rules they
+   replace, so link, nav and disabled buttons still opt out. */
+.button:where([class*="box-shadow-"]) {
+	box-shadow: var(--sv-btn-depth);
+}
+
+.button:where([class*="box-shadow-"]):hover {
+	box-shadow: var(--sv-btn-hover-shadow);
+}
+
+/* The generic hover depth lifts 6px, which is too much for a button. */
+.button.box-shadow-4-hover:hover,
+.button.box-shadow-5-hover:hover {
+	transform: translateY(-2px);
+}
+
+/* Shade: light-to-colour gradient with a crisp top edge instead of the glossy
+   overlay. */
+.button.is-shade {
+	background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 70%);
+}
+
+.button.is-shade:after {
+	border-radius: inherit;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 -1px 0 rgba(15, 23, 42, 0.12);
+	left: 0;
+	width: 100%;
+}
+
+/* Simple Link: a soft pill in the text colour appears on hover. It is drawn
+   outside the button box so the label stays aligned with the content edge. */
+.button.is-link {
+	isolation: isolate;
+}
+
+.button.is-link:before {
+	background-color: color-mix(in srgb, currentColor 11%, transparent);
+	border-radius: inherit;
+	content: "";
+	inset: 0.3em -0.6em;
+	opacity: 0;
+	position: absolute;
+	transform: scale(0.94);
+	transition: opacity var(--sv-transition), transform var(--sv-transition);
+	z-index: -1;
+}
+
+.button.is-link:hover:before,
+.button.is-link:focus-visible:before {
+	opacity: 1;
+	transform: none;
+}
+
+/* Underline: a faint full-width track under the label; the solid line sweeps
+   across it on hover. */
+.button.is-underline:before {
+	background-color: color-mix(in srgb, currentColor 28%, transparent);
+	background-image: linear-gradient(currentColor, currentColor);
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	background-size: 0 100%;
+	border-radius: 2px;
+	bottom: 0.45em;
+	left: 0;
+	opacity: 1;
+	transition: background-size 0.3s var(--sv-ease);
+	width: 100%;
+}
+
+[dir="rtl"] .button.is-underline:before {
+	background-position: 100% 0;
+}
+
+.button.is-underline:hover:before {
+	background-size: 100% 100%;
+}
+
+/* Link and underline keep their colour on hover (a darker tone of it) instead
+   of turning dark grey. On dark sections they still turn white. */
+.button:is(.primary, .secondary, .success, .alert):is(.is-link, .is-underline):hover {
+	color: color-mix(in srgb, var(--sv-btn-accent) 78%, #000);
+}
+
+.dark .button:is(.primary, .secondary, .success, .alert):is(.is-link, .is-underline):hover {
+	color: #fff;
+}
+
+/* The pill / line already signals hover; fading the label only hurts contrast. */
+.dark .button.is-link:hover,
+.dark .button.is-underline:hover {
+	opacity: 1;
+}
+
 .searchform .flex-grow .search-field {
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
@@ -499,7 +650,7 @@ label:has(> input[type="radio"]) > input {
 }
 
 /* ---------------------------------------------------- Counter (ux_counter) */
-/* Module CSS (silver-counter.css) loads later: use 2 classes to win. */
+/* Two classes, to win over the element CSS (src/silver-counter.css, merged into silver.css). */
 .ux-counter .ux-counter-value {
 	letter-spacing: -0.02em;
 }
@@ -603,6 +754,9 @@ label:has(> input[type="radio"]) > input {
 	}
 
 	.button:hover,
+	.button.box-shadow-4-hover:hover,
+	.button.box-shadow-5-hover:hover,
+	.button.is-link:before,
 	.box.has-hover:hover .box-image img,
 	.pricing-table:hover,
 	.icon-box:hover .icon-box-img img,

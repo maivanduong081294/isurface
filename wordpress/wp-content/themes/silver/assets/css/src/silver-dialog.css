@@ -1,0 +1,403 @@
+/**
+ * Silver Dialog — giao diện popup alert / confirm / notice.
+ * Đi kèm assets/js/src/silver-dialog.js. Gộp vào silver.css khi build.
+ *
+ * Các biến --fs-* lấy từ theme options, in ra trong
+ * inc/functions/function-custom-css.php. Giá trị sau dấu phẩy là mặc định khi
+ * option chưa đặt (hoặc trong wp-admin, nơi không có custom CSS của theme).
+ *
+ * Tuỳ biến riêng cho popup bằng Custom CSS, ví dụ:
+ *   .silver-dialog { --silver-dialog-primary: #e60023; --silver-dialog-radius: 6px; }
+ */
+
+.silver-dialog {
+	/* Theo theme options. */
+	--silver-dialog-primary: var(--fs-color-primary, #446084);        /* Màu chính */
+	--silver-dialog-success: var(--fs-color-success, #627d47);        /* Màu success */
+	--silver-dialog-error: var(--fs-color-alert, #b20000);            /* Màu alert */
+	--silver-dialog-info: var(--fs-color-secondary, #c05530);         /* Màu phụ */
+	--silver-dialog-text: var(--fs-color-base, #4a4a4a);              /* Màu chữ */
+	--silver-dialog-title: var(--fs-color-headings, #1f2937);         /* Màu tiêu đề */
+	--silver-dialog-overlay: var(--fs-lightbox-bg, rgba(15, 23, 42, 0.55)); /* Nền lightbox */
+	--silver-dialog-btn-radius: var(--fs-button-radius, 10px);        /* Bo góc nút */
+
+	/* Không có theme option tương ứng. */
+	--silver-dialog-warning: #e8a317;
+	--silver-dialog-bg: #fff;
+	--silver-dialog-radius: 16px;
+	--silver-dialog-width: 400px;
+
+	/* Màu của loại thông báo (success, warning...): icon và nền ngả màu. */
+	--silver-dialog-accent: var(--silver-dialog-tone, var(--silver-dialog-primary));
+
+	position: fixed;
+	inset: 0;
+	z-index: 100000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 16px;
+	opacity: 0;
+	transition: opacity 0.2s ease;
+	font-size: 15px;
+	line-height: 1.55;
+	color: var(--silver-dialog-text);
+}
+
+.silver-dialog--success { --silver-dialog-tone: var(--silver-dialog-success); }
+.silver-dialog--warning { --silver-dialog-tone: var(--silver-dialog-warning); }
+.silver-dialog--error { --silver-dialog-tone: var(--silver-dialog-error); }
+.silver-dialog--info { --silver-dialog-tone: var(--silver-dialog-info); }
+
+.silver-dialog.is-visible {
+	opacity: 1;
+}
+
+/* Đang mờ dần sau khi đóng: không nhận thao tác nữa. */
+.silver-dialog.is-closing {
+	pointer-events: none;
+}
+
+.silver-dialog__overlay {
+	position: absolute;
+	inset: 0;
+	background: var(--silver-dialog-overlay);
+	-webkit-backdrop-filter: blur(3px);
+	backdrop-filter: blur(3px);
+}
+
+/* ------------------------------------------------------------------ Khung */
+.silver-dialog__box {
+	position: relative;
+	box-sizing: border-box;
+	width: 100%;
+	max-width: var(--silver-dialog-width);
+	max-height: calc(100vh - 32px);
+	overflow-y: auto;
+	padding: 36px 28px 24px;
+	border-radius: var(--silver-dialog-radius);
+	background: var(--silver-dialog-bg);
+	box-shadow: 0 24px 60px -12px rgba(15, 23, 42, 0.35), 0 0 0 1px rgba(15, 23, 42, 0.04);
+	text-align: center;
+	transform: translateY(10px) scale(0.94);
+	transition: transform 0.3s cubic-bezier(0.34, 1.4, 0.64, 1);
+	outline: none;
+}
+
+.silver-dialog.is-visible .silver-dialog__box {
+	transform: none;
+}
+
+/* Bấm ra ngoài khi popup phải đóng bằng nút: khung rung nhẹ để nhắc. */
+.silver-dialog.is-nudge .silver-dialog__box {
+	animation: silver-dialog-nudge 0.32s ease;
+}
+
+@keyframes silver-dialog-nudge {
+	0%, 100% { transform: none; }
+	25% { transform: translateX(-7px); }
+	50% { transform: translateX(6px); }
+	75% { transform: translateX(-3px); }
+}
+
+/* Có icon: phần trên của khung ngả nhẹ theo màu của loại thông báo. */
+.silver-dialog--success .silver-dialog__box,
+.silver-dialog--warning .silver-dialog__box,
+.silver-dialog--error .silver-dialog__box,
+.silver-dialog--info .silver-dialog__box {
+	background: linear-gradient(180deg, color-mix(in srgb, var(--silver-dialog-accent) 10%, var(--silver-dialog-bg)) 0, var(--silver-dialog-bg) 150px);
+}
+
+.silver-dialog--popup .silver-dialog__box {
+	--silver-dialog-width: 640px;
+	padding: 28px;
+	text-align: start;
+}
+
+/* ------------------------------------------------------------------- Icon */
+.silver-dialog__icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 64px;
+	height: 64px;
+	margin: 12px auto 32px;
+	border-radius: 50%;
+	/* Nền đặc theo màu của loại thông báo, nét icon màu trắng. */
+	color: #fff;
+	background: var(--silver-dialog-accent);
+	/* Hai vòng sáng toả ra quanh icon. */
+	box-shadow:
+		0 0 0 9px color-mix(in srgb, var(--silver-dialog-accent) 18%, transparent),
+		0 0 0 20px color-mix(in srgb, var(--silver-dialog-accent) 8%, transparent),
+		0 10px 22px -6px color-mix(in srgb, var(--silver-dialog-accent) 65%, transparent);
+}
+
+.silver-dialog__icon svg {
+	width: 30px;
+	height: 30px;
+	stroke-width: 2.6; /* Nét đậm hơn cho rõ trên nền màu. */
+}
+
+/* Icon nảy lên, rồi nét vẽ chạy (các nét có pathLength="1"). */
+.silver-dialog.is-visible .silver-dialog__icon {
+	animation: silver-dialog-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.silver-dialog__icon svg > * {
+	stroke-dasharray: 1;
+	stroke-dashoffset: 1;
+}
+
+.silver-dialog.is-visible .silver-dialog__icon svg > * {
+	animation: silver-dialog-draw 0.45s ease-out 0.2s forwards;
+}
+
+@keyframes silver-dialog-pop {
+	from { transform: scale(0.5); opacity: 0; }
+	to { transform: none; opacity: 1; }
+}
+
+@keyframes silver-dialog-draw {
+	to { stroke-dashoffset: 0; }
+}
+
+/* ------------------------------------------------------------------- Chữ */
+.silver-dialog__title {
+	margin: 0 0 8px;
+	font-size: 1.25em;
+	font-weight: 700;
+	line-height: 1.3;
+	color: var(--silver-dialog-title);
+}
+
+.silver-dialog__message {
+	color: var(--silver-dialog-text);
+	white-space: pre-line;
+	overflow-wrap: anywhere;
+}
+
+/* Nội dung là HTML (notice): khoảng cách giữa các đoạn gọn lại. */
+.silver-dialog__message > :first-child {
+	margin-top: 0;
+}
+
+.silver-dialog__message > :last-child {
+	margin-bottom: 0;
+}
+
+/* Không có tiêu đề và nội dung ngắn: nội dung là dòng chính, to và đậm hơn. */
+.silver-dialog--headline .silver-dialog__message {
+	font-size: 1.15em;
+	font-weight: 600;
+	line-height: 1.4;
+	color: var(--silver-dialog-title);
+}
+
+.silver-dialog--popup .silver-dialog__message {
+	color: inherit;
+	font-size: inherit;
+	font-weight: inherit;
+	white-space: normal;
+}
+
+.silver-dialog--popup .silver-dialog__title {
+	padding-inline-end: 36px; /* Chừa chỗ cho nút X. */
+}
+
+/* -------------------------------------------------------------------- Nút */
+.silver-dialog__actions {
+	display: flex;
+	justify-content: center;
+	gap: 12px;
+	margin-top: 26px;
+}
+
+.silver-dialog .silver-dialog__btn {
+	position: relative;
+	flex: 1 1 0;
+	min-width: 0;
+	min-height: 46px;
+	margin: 0;
+	padding: 0 20px;
+	border: 0;
+	border-radius: var(--silver-dialog-btn-radius);
+	font-size: 1em;
+	font-weight: 600;
+	line-height: 1.2;
+	text-transform: none;
+	letter-spacing: 0;
+	cursor: pointer;
+	transition: filter 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+}
+
+/* Alert chỉ có một nút: không kéo hết chiều ngang. */
+.silver-dialog--alert .silver-dialog__btn {
+	flex: 0 1 auto;
+	min-width: 160px;
+}
+
+.silver-dialog .silver-dialog__btn:active:not(:disabled) {
+	transform: translateY(1px);
+}
+
+.silver-dialog .silver-dialog__btn:focus-visible {
+	outline: 2px solid var(--silver-dialog-primary);
+	outline-offset: 2px;
+}
+
+.silver-dialog .silver-dialog__btn:disabled {
+	cursor: default;
+	opacity: 0.7;
+}
+
+.silver-dialog .silver-dialog__btn--primary {
+	color: #fff;
+	background: var(--silver-dialog-primary);
+	box-shadow: 0 8px 18px -8px color-mix(in srgb, var(--silver-dialog-primary) 70%, transparent);
+}
+
+.silver-dialog--danger .silver-dialog__btn--primary {
+	background: var(--silver-dialog-error);
+	box-shadow: 0 8px 18px -8px color-mix(in srgb, var(--silver-dialog-error) 70%, transparent);
+}
+
+.silver-dialog .silver-dialog__btn--primary:hover:not(:disabled) {
+	filter: brightness(1.08);
+}
+
+.silver-dialog .silver-dialog__btn--secondary {
+	color: var(--silver-dialog-title);
+	background: #f1f3f5;
+	box-shadow: none;
+}
+
+.silver-dialog .silver-dialog__btn--secondary:hover:not(:disabled) {
+	background: #e5e8eb;
+}
+
+/* Loading của nút Đồng ý */
+.silver-dialog__btn.is-loading .silver-dialog__btn-text {
+	visibility: hidden;
+}
+
+.silver-dialog__btn.is-loading::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 18px;
+	height: 18px;
+	margin: -9px 0 0 -9px;
+	border: 2px solid currentColor;
+	border-right-color: transparent;
+	border-radius: 50%;
+	animation: silver-dialog-spin 0.7s linear infinite;
+}
+
+@keyframes silver-dialog-spin {
+	to { transform: rotate(360deg); }
+}
+
+/* ------------------------------------------- Thanh đếm khi tự đóng (timeout) */
+.silver-dialog__progress {
+	position: absolute;
+	inset-block-end: 0;
+	inset-inline-start: 0;
+	width: 100%;
+	height: 3px;
+	background: var(--silver-dialog-accent);
+	transform-origin: 0 50%;
+}
+
+[dir="rtl"] .silver-dialog__progress {
+	transform-origin: 100% 50%;
+}
+
+.silver-dialog.is-visible .silver-dialog__progress {
+	animation: silver-dialog-progress var(--silver-dialog-timeout, 3s) linear forwards;
+}
+
+@keyframes silver-dialog-progress {
+	to { transform: scaleX(0); }
+}
+
+/* ------------------------------------- Nút X (chỉ popup nội dung tuỳ ý có) */
+.silver-dialog .silver-dialog__close {
+	position: absolute;
+	inset-block-start: 12px;
+	inset-inline-end: 12px;
+	width: 34px;
+	height: 34px;
+	min-height: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: #f1f3f5;
+	color: #6b7280;
+	cursor: pointer;
+	transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.silver-dialog .silver-dialog__close::before,
+.silver-dialog .silver-dialog__close::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 14px;
+	height: 2px;
+	margin: -1px 0 0 -7px;
+	border-radius: 1px;
+	background: currentColor;
+	transform: rotate(45deg);
+}
+
+.silver-dialog .silver-dialog__close::after {
+	transform: rotate(-45deg);
+}
+
+.silver-dialog .silver-dialog__close:hover {
+	color: var(--silver-dialog-title);
+	background: #e5e8eb;
+}
+
+/* Khoá cuộn trang khi có dialog */
+html.silver-dialog-open {
+	overflow: hidden;
+}
+
+/* Mobile: nút xếp dọc, nút chính ở trên */
+@media (max-width: 480px) {
+	.silver-dialog__box {
+		padding: 30px 20px 20px;
+	}
+
+	.silver-dialog__actions {
+		flex-direction: column-reverse;
+	}
+
+	.silver-dialog .silver-dialog__btn {
+		flex: 0 0 auto;
+		width: 100%;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.silver-dialog,
+	.silver-dialog__box {
+		transition: none;
+	}
+
+	.silver-dialog.is-nudge .silver-dialog__box,
+	.silver-dialog.is-visible .silver-dialog__icon,
+	.silver-dialog.is-visible .silver-dialog__icon svg > *,
+	.silver-dialog.is-visible .silver-dialog__progress {
+		animation: none;
+	}
+
+	.silver-dialog__icon svg > * {
+		stroke-dashoffset: 0;
+	}
+}

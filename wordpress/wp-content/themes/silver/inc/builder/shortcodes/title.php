@@ -16,19 +16,33 @@ add_ux_builder_shortcode('title', array(
 	'name'      => __('Title', 'ux-builder'),
 	'category'  => __('Content'),
 	'thumbnail' => silver_ux_builder_thumbnail('title'),
-	'template'  => silver_ux_builder_template('title.html'),
+	// No client template: the preview is rendered by the shortcode itself, so
+	// the dynamic title, the tag and the link always match the front end.
 	'info'      => '{{ text }}',
 	'wrap'      => false,
 	'options' => array(
 		'style'            => array(
 			'type'    => 'select',
 			'heading' => 'Style',
-			'default' => 'normal',
+			// Not saved to the shortcode: must match the default in title_shortcode().
+			'default' => 'simple',
 			'options' => array(
+				'simple'      => 'Simple',
 				'normal'      => 'Normal',
 				'center'      => 'Center',
 				'bold'        => 'Left Bold',
 				'bold-center' => 'Center Bold',
+			),
+		),
+		// Only offered when the Link options point to a post, a term or an archive.
+		'text_source'      => array(
+			'type'       => 'select',
+			'heading'    => 'Title source',
+			'default'    => 'custom',
+			'conditions' => 'link_type === "post" || link_type === "term" || link_type === "archive"',
+			'options'    => array(
+				'custom' => 'Custom text',
+				'link'   => 'Name of the linked item',
 			),
 		),
 		'text'             => array(
@@ -36,6 +50,7 @@ add_ux_builder_shortcode('title', array(
 			'heading'    => 'Title',
 			'default'    => 'Lorem ipsum dolor sit amet...',
 			'auto_focus' => true,
+			'conditions' => 'link_type === "custom" || text_source === "custom"',
 		),
 		'tag_name'         => array(
 			'type'    => 'select',

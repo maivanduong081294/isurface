@@ -4,19 +4,12 @@
  *
  * The value keeps its format ("5", "7/7", "10+", "≤5 min", "2-3 days",
  * "200%", "1,250", "4.8"): every number in it is animated, the rest of the
- * text stays as is (assets/js/silver-counter.js). The final value is in the
+ * text stays as is (assets/js/src/silver-counter.js). The final value is in the
  * HTML, so it is shown without JS and read by search engines / screen readers.
+ *
+ * Assets: assets/css/src/silver-counter.css and assets/js/src/silver-counter.js,
+ * merged into silver.css / silver.js by build/build.mjs.
  */
-
-/** Counter assets (small, loaded on every page for the builder canvas / AJAX renders). */
-function silver_counter_assets()
-{
-  $uri = get_template_directory_uri();
-  $dir = get_template_directory();
-  wp_enqueue_style('silver-counter', $uri . '/assets/css/silver-counter.css', array('silver-main'), filemtime($dir . '/assets/css/silver-counter.css'));
-  wp_enqueue_script('silver-counter', $uri . '/assets/js/silver-counter.js', array('jquery', 'silver-js'), filemtime($dir . '/assets/js/silver-counter.js'), true);
-}
-add_action('wp_enqueue_scripts', 'silver_counter_assets', 110);
 
 // [ux_counter]
 function silver_counter_shortcode($atts, $content = null, $tag = 'ux_counter')

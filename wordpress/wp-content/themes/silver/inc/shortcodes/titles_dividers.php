@@ -5,8 +5,9 @@ function title_shortcode($atts, $content = null)
   extract(ux_builder_shortcode_atts(array(
     '_id' => 'title-' . rand(),
     'text' => 'Lorem ipsum dolor sit amet...',
+    'text_source' => 'custom',
     'tag_name' => 'h2',
-    'style' => 'normal',
+    'style' => 'simple',
     'size' => '100',
     'margin_top' => '',
     'margin_bottom' => '',
@@ -23,6 +24,13 @@ function title_shortcode($atts, $content = null)
     'letter_case' => '',
     'sub_text' => '',
   ), $atts));
+
+  // Tiêu đề động: lấy tên của bài viết / term / archive đã chọn ở nhóm Link.
+  // Link type là custom, hoặc đối tượng không còn tồn tại, thì dùng text đã nhập.
+  if ($text_source === 'link') {
+    $link_title = silver_get_link_title($atts);
+    if ($link_title !== '') $text = $link_title;
+  }
 
   // Cho phép cả div và p (h5, h6 giữ lại để tương thích dữ liệu cũ).
   $allowed_tags = array('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'p');

@@ -4,15 +4,22 @@
  * so their tab goes to column 1 and their pane to column 2.
  * Mobile: the items are an accordion.
  * Logical properties (inline/block) keep it working in RTL.
+ *
+ * Merged into silver.css by the build. The --fs-* variables come from the
+ * theme options (inc/functions/function-custom-css.php); the value after the
+ * comma is used while the option is not set.
  */
 .ux-mega-menu {
   --ux-mega-width: 1100px;
   --ux-mega-sidebar: 260px;
   --ux-mega-min-height: 0px;
-  --ux-mega-radius: 20px;
-  --ux-mega-sidebar-bg: #f7f7f5;
-  --ux-mega-border: rgba(0, 0, 0, 0.06);
+  /* Theme options: Header > Dropdown Style, Style > Colors. */
+  --ux-mega-radius: var(--fs-dropdown-radius, 20px);
+  --ux-mega-bg: var(--fs-dropdown-bg, #fff);
+  --ux-mega-border: var(--fs-dropdown-border, rgba(0, 0, 0, 0.06));
   --ux-mega-accent: var(--fs-color-primary);
+  /* No theme option. */
+  --ux-mega-sidebar-bg: #f7f7f5;
   display: inline-block;
   position: relative;
   vertical-align: middle;
@@ -35,7 +42,7 @@
   white-space: nowrap;
 }
 .ux-mega-menu-panel {
-  background: #fff;
+  background: var(--ux-mega-bg);
   border-radius: var(--ux-mega-radius);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
   display: none;
@@ -83,7 +90,7 @@
 }
 .ux-mega-menu-tab:hover,
 .ux-mega-menu-item.is-active > .ux-mega-menu-tab {
-  background: #fff;
+  background: var(--ux-mega-bg);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
   color: var(--ux-mega-accent);
 }
@@ -193,7 +200,7 @@
 /* Desktop: tabs | active pane. */
 @media (min-width: 850px) {
   .ux-mega-menu.is-open .ux-mega-menu-panel {
-    background: linear-gradient(to right, var(--ux-mega-sidebar-bg) var(--ux-mega-sidebar), var(--ux-mega-border) var(--ux-mega-sidebar), var(--ux-mega-border) calc(var(--ux-mega-sidebar) + 1px), #fff calc(var(--ux-mega-sidebar) + 1px));
+    background: linear-gradient(to right, var(--ux-mega-sidebar-bg) var(--ux-mega-sidebar), var(--ux-mega-border) var(--ux-mega-sidebar), var(--ux-mega-border) calc(var(--ux-mega-sidebar) + 1px), var(--ux-mega-bg) calc(var(--ux-mega-sidebar) + 1px));
     column-gap: 1px;
     display: grid;
     grid-template-columns: var(--ux-mega-sidebar) minmax(0, 1fr);
@@ -201,7 +208,7 @@
     padding-block: 12px;
   }
   [dir="rtl"] .ux-mega-menu.is-open .ux-mega-menu-panel {
-    background: linear-gradient(to left, var(--ux-mega-sidebar-bg) var(--ux-mega-sidebar), var(--ux-mega-border) var(--ux-mega-sidebar), var(--ux-mega-border) calc(var(--ux-mega-sidebar) + 1px), #fff calc(var(--ux-mega-sidebar) + 1px));
+    background: linear-gradient(to left, var(--ux-mega-sidebar-bg) var(--ux-mega-sidebar), var(--ux-mega-border) var(--ux-mega-sidebar), var(--ux-mega-border) calc(var(--ux-mega-sidebar) + 1px), var(--ux-mega-bg) calc(var(--ux-mega-sidebar) + 1px));
   }
   .ux-mega-menu-item {
     display: contents;

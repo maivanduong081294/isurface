@@ -3071,6 +3071,31 @@ a.secondary:not(.button) {
 .text-right .button:last-of-type {
   margin-right: 0 !important;
 }
+/* [button] shortcode: the button sits alone in a block-level wrapper, so the
+   trailing gap has no neighbour to separate. It only pushes the button off
+   axis when the alignment does not come from .text-center / .text-right
+   (inline text-align, .small-text-center, .medium-text-center, ...). */
+.silver-button-wrapper > .button {
+  margin-inline-end: 0;
+}
+/* Search block (widgets / block editor). WordPress global styles give
+   .wp-element-button its own padding and font size, and the theme adds its
+   1em control margins, so the button ended up taller than the field, pushed
+   in from the edge and squeezed until its label was cut off. Size both like
+   the theme controls and let only the field shrink. */
+.wp-block-search .wp-block-search__input {
+  flex: 1 1 0;
+  margin: 0;
+}
+.wp-block-search .wp-block-search__button {
+  flex: 0 0 auto;
+  font-size: var(--sv-btn-font-size);
+  line-height: var(--sv-btn-line-height);
+  margin: 0;
+  margin-inline-start: 8px;
+  padding: 0 var(--sv-btn-padding-x);
+  white-space: nowrap;
+}
 .button.disabled,
 .button[disabled],
 button.disabled,
@@ -9984,6 +10009,37 @@ html {
 }
 .section-title-bold b:first-of-type {
   display: none;
+}
+/* Simple (default style): the title only, no rule and no side lines. */
+.section-title-simple b {
+  display: none;
+}
+/* [title link_text="…"]: the link is a sibling of the heading, so the heading
+   holds nothing but the title. Lay both out on one row. */
+.section-title-has-link {
+  align-items: center;
+  column-gap: 15px;
+  display: flex;
+  flex-wrap: wrap;
+}
+/* The .container clearfix would become a flex item and take one gap. */
+.section-title-has-link:before,
+.section-title-has-link:after {
+  content: none;
+}
+.section-title-has-link > .section-title {
+  flex: 1 1 0;
+  margin-bottom: 0; /* flex items keep their margin; the container already has one */
+  min-width: 0;
+  width: auto;
+}
+.section-title-link {
+  font-size: 0.9em;
+  margin-inline-start: auto;
+  white-space: nowrap;
+}
+.section-title-link i {
+  margin-inline-start: 0.4em;
 }
 .silver-cookies {
   background-color: #fff;
