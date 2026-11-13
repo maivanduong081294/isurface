@@ -4,7 +4,7 @@ add_ux_builder_shortcode( 'ux_image_box', array(
     'name' => __( 'Image Box' ),
     'category' => __( 'Content' ),
     'type' => 'container',
-    'thumbnail' =>  flatsome_ux_builder_thumbnail( 'image_box' ),
+    'thumbnail' =>  silver_ux_builder_thumbnail( 'image_box' ),
     'wrap' => false,
     'presets' => array(
         array(

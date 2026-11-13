@@ -1,5 +1,5 @@
 /* eslint-disable semi, no-var */
-Flatsome.behavior('wp-rocket-lazy-load-packery', {
+Silver.behavior('wp-rocket-lazy-load-packery', {
   attach: function (context) {
     var $lazyLoad = jQuery('.has-packery .lazy-load', context)
 

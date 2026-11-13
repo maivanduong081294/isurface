@@ -2,67 +2,67 @@
 /**
  * Registers the Stack element in UX Builder.
  *
- * @package flatsome
+ * @package silver
  */
 
 add_ux_builder_shortcode( 'ux_stack', array(
 	'type'      => 'container',
-	'name'      => __( 'Stack', 'flatsome' ),
-	'category'  => __( 'Layout', 'flatsome' ),
-	'thumbnail' => flatsome_ux_builder_thumbnail( 'ux_stack' ),
-	'template'  => flatsome_ux_builder_template( 'ux_stack.html' ),
+	'name'      => __( 'Stack', 'silver' ),
+	'category'  => __( 'Layout', 'silver' ),
+	'thumbnail' => silver_ux_builder_thumbnail( 'ux_stack' ),
+	'template'  => silver_ux_builder_template( 'ux_stack.html' ),
 	'directives' => array( 'ux-slider' ),
 	'wrap'      => false,
 	'nested'    => true,
 	'options'   => array(
 		'type'             => array(
 			'type'    => 'select',
-			'heading' => __( 'Layout', 'flatsome' ),
+			'heading' => __( 'Layout', 'silver' ),
 			'default' => 'stack',
 			'options' => array(
-				'stack'  => __( 'Stack', 'flatsome' ),
-				'slider' => __( 'Slider', 'flatsome' ),
+				'stack'  => __( 'Stack', 'silver' ),
+				'slider' => __( 'Slider', 'silver' ),
 			),
 		),
 		'direction'        => array(
 			'type'       => 'select',
-			'heading'    => __( 'Direction', 'flatsome' ),
+			'heading'    => __( 'Direction', 'silver' ),
 			'responsive' => true,
 			'default'    => 'row',
 			'options'    => array(
-				'row' => __( 'Horizontal', 'flatsome' ),
-				'col' => __( 'Vertical', 'flatsome' ),
+				'row' => __( 'Horizontal', 'silver' ),
+				'col' => __( 'Vertical', 'silver' ),
 			),
 		),
 		'distribute'       => array(
 			'type'       => 'select',
-			'heading'    => __( 'Distribute', 'flatsome' ),
+			'heading'    => __( 'Distribute', 'silver' ),
 			'responsive' => true,
 			'default'    => 'start',
 			'options'    => array(
-				'start'   => __( 'Start', 'flatsome' ),
-				'center'  => __( 'Center', 'flatsome' ),
-				'end'     => __( 'End', 'flatsome' ),
-				'between' => __( 'Space between', 'flatsome' ),
-				'around'  => __( 'Space around', 'flatsome' ),
+				'start'   => __( 'Start', 'silver' ),
+				'center'  => __( 'Center', 'silver' ),
+				'end'     => __( 'End', 'silver' ),
+				'between' => __( 'Space between', 'silver' ),
+				'around'  => __( 'Space around', 'silver' ),
 			),
 		),
 		'align'            => array(
 			'type'       => 'select',
-			'heading'    => __( 'Align', 'flatsome' ),
+			'heading'    => __( 'Align', 'silver' ),
 			'responsive' => true,
 			'default'    => 'stretch',
 			'options'    => array(
-				'stretch'  => __( 'Stretch', 'flatsome' ),
-				'start'    => __( 'Start', 'flatsome' ),
-				'center'   => __( 'Center', 'flatsome' ),
-				'end'      => __( 'End', 'flatsome' ),
-				'baseline' => __( 'Baseline', 'flatsome' ),
+				'stretch'  => __( 'Stretch', 'silver' ),
+				'start'    => __( 'Start', 'silver' ),
+				'center'   => __( 'Center', 'silver' ),
+				'end'      => __( 'End', 'silver' ),
+				'baseline' => __( 'Baseline', 'silver' ),
 			),
 		),
 		'gap'              => array(
 			'type'       => 'slider',
-			'heading'    => __( 'Gap', 'flatsome' ),
+			'heading'    => __( 'Gap', 'silver' ),
 			'responsive' => true,
 			'default'    => '0',
 			'unit'       => 'rem',
@@ -72,14 +72,14 @@ add_ux_builder_shortcode( 'ux_stack', array(
 		),
 		'slider_style' => array(
 			'type'       => 'select',
-			'heading'    => __( 'Slider Style', 'flatsome' ),
+			'heading'    => __( 'Slider Style', 'silver' ),
 			'default'    => 'normal',
 			'conditions' => 'type === "slider"',
 			'options'    => array(
-				'normal'    => __( 'Default', 'flatsome' ),
-				'container' => __( 'Container', 'flatsome' ),
-				'focus'     => __( 'Focus', 'flatsome' ),
-				'shadow'    => __( 'Shadow', 'flatsome' ),
+				'normal'    => __( 'Default', 'silver' ),
+				'container' => __( 'Container', 'silver' ),
+				'focus'     => __( 'Focus', 'silver' ),
+				'shadow'    => __( 'Shadow', 'silver' ),
 			),
 		),
 		'slider_options' => require( __DIR__ . '/commons/repeater-slider.php' ),

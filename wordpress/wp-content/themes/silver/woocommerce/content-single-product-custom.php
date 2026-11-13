@@ -7,14 +7,14 @@
  * @author           WooThemes
  * @package          WooCommerce/Templates
  * @version          3.0.0
- * @flatsome-version 3.16.0
+ * @silver-version 3.16.0
  */
 
 defined( 'ABSPATH' ) || exit;
 
 global $product;
 
-$layout       = flatsome_product_block( get_the_ID() );
+$layout       = silver_product_block( get_the_ID() );
 $layout_id    = $layout['id'];
 $layout_scope = $layout['scope'];
 
@@ -34,7 +34,7 @@ $classes = array(
 	 * @hooked wc_print_notices - 10
 	 */
 	do_action( 'woocommerce_before_single_product' );
-	do_action( 'flatsome_before_single_product_custom' );
+	do_action( 'silver_before_single_product_custom' );
 	if ( post_password_required() ) {
 		echo get_the_password_form(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
@@ -46,11 +46,11 @@ $classes = array(
 
 	<div class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>">
 
-		<?php echo flatsome_apply_shortcode( 'block', array( 'id' => $layout_id ) ); ?>
+		<?php echo silver_apply_shortcode( 'block', array( 'id' => $layout_id ) ); ?>
 			<div id="product-sidebar" class="mfp-hide">
 				<div class="sidebar-inner">
 					<?php
-					do_action( 'flatsome_before_product_sidebar' );
+					do_action( 'silver_before_product_sidebar' );
 					/**
 					 * The woocommerce_sidebar hook
 					 *

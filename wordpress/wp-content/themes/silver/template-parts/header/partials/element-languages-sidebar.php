@@ -2,8 +2,8 @@
 /**
  * Custom languages dropdown for sidebar.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.20.0
+ * @package          Silver\Templates
+ * @silver-version 3.20.0
  */
 
 $current_lang = 'Languages';

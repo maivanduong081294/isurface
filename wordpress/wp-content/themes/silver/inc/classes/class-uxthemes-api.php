@@ -1,8 +1,8 @@
 <?php
 /**
- * Flatsome_Registration class.
+ * Silver_Registration class.
  *
- * @package Flatsome
+ * @package Silver
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -37,7 +37,7 @@ final class UxThemes_API {
 	}
 
 	/**
-	 * Sends a request to the Flatsome Account API.
+	 * Sends a request to the Silver Account API.
 	 *
 	 * @param string $path    REST API path.
 	 * @param string $context REST API path.
@@ -75,7 +75,7 @@ final class UxThemes_API {
 			$error = isset( $data['message'] )
 				? new WP_Error( $status, $data['message'], $data )
 				// translators: %d: The status code.
-				: new WP_Error( $status, sprintf( __( 'Sorry, an error occurred while accessing the API. Error %d', 'flatsome' ), $status ), $data );
+				: new WP_Error( $status, sprintf( __( 'Sorry, an error occurred while accessing the API. Error %d', 'silver' ), $status ), $data );
 
 			return $this->get_error( $error, $context, $data );
 		}
@@ -116,67 +116,67 @@ final class UxThemes_API {
 		switch ( $status ) {
 			case 400:
 				if ( $context === 'register' ) {
-					return new WP_Error( $status, __( 'Your purchase code is malformed.', 'flatsome' ), $data );
+					return new WP_Error( $status, __( 'Your purchase code is malformed.', 'silver' ), $data );
 				}
 				if ( $context === 'envato-register' ) {
-					return new WP_Error( $status, __( 'Sorry, an error occurred. Please try again.', 'flatsome' ), $data );
+					return new WP_Error( $status, __( 'Sorry, an error occurred. Please try again.', 'silver' ), $data );
 				}
 				if ( $context === 'latest-version' ) {
-					return new WP_Error( $status, __( 'Flatsome was unable to get the latest version. Your site might have changed domain after you registered it.', 'flatsome' ), $data );
+					return new WP_Error( $status, __( 'Silver was unable to get the latest version. Your site might have changed domain after you registered it.', 'silver' ), $data );
 				}
 				return $error;
 			case 403:
 				if ( $context === 'latest-version' ) {
-					return new WP_Error( $status, __( 'Flatsome was unable to get the latest version because the purchase code has not been verified yet. Please re-register it in order to receive updates.', 'flatsome' ), $data );
+					return new WP_Error( $status, __( 'Silver was unable to get the latest version because the purchase code has not been verified yet. Please re-register it in order to receive updates.', 'silver' ), $data );
 				}
 				return $error;
 			case 404:
 				if ( $context === 'register' || $context === 'envato-register' || $context === 'wupdates-register' ) {
-					return new WP_Error( $status, __( 'The purchase code is malformed or does not belong to a Flatsome sale.', 'flatsome' ), $data );
+					return new WP_Error( $status, __( 'The purchase code is malformed or does not belong to a Silver sale.', 'silver' ), $data );
 				}
 				if ( $context === 'unregister' ) {
 					// translators: %s: License manager link attributes.
-					return new WP_Error( $status, sprintf( __( 'The registration was not found for <a%s>your account</a>. It was only deleted on this site.', 'flatsome' ), $account_attrs ), $data );
+					return new WP_Error( $status, sprintf( __( 'The registration was not found for <a%s>your account</a>. It was only deleted on this site.', 'silver' ), $account_attrs ), $data );
 				}
 				if ( $context === 'latest-version' ) {
 					// translators: %s: License manager link attributes.
-					return new WP_Error( $status, sprintf( __( 'Flatsome was unable to get the latest version. Your registration might have been deleted from <a%s>your account</a>.', 'flatsome' ), $account_attrs ), $data );
+					return new WP_Error( $status, sprintf( __( 'Silver was unable to get the latest version. Your registration might have been deleted from <a%s>your account</a>.', 'silver' ), $account_attrs ), $data );
 				}
 				if ( $context === 'wupdates-latest-version' ) {
-					return new WP_Error( $status, __( 'Flatsome was unable to get the latest version. Your purchase code is malformed.', 'flatsome' ), $data );
+					return new WP_Error( $status, __( 'Silver was unable to get the latest version. Your purchase code is malformed.', 'silver' ), $data );
 				}
 				return $error;
 			case 409:
 				if ( $context === 'wupdates' ) {
 					// translators: %s: License manager link attributes.
-					return new WP_Error( $status, sprintf( __( 'Your purchase code has been used on too many sites. Please go to <a%s>your account</a> and manage your licenses.', 'flatsome' ), $account_attrs ), $data );
+					return new WP_Error( $status, sprintf( __( 'Your purchase code has been used on too many sites. Please go to <a%s>your account</a> and manage your licenses.', 'silver' ), $account_attrs ), $data );
 				}
 				// translators: %s: Guide document link attributes.
-				return new WP_Error( $status, sprintf( __( 'This purchase code is already registered. Please follow <a%s>this guide</a> to re-register Flatsome.', 'flatsome' ), $reregister_doc_attrs ), $data );
+				return new WP_Error( $status, sprintf( __( 'This purchase code is already registered. Please follow <a%s>this guide</a> to re-register Silver.', 'silver' ), $reregister_doc_attrs ), $data );
 			case 410:
 				if ( $context === 'register' || $context === 'envato-register' || $context === 'latest-version' ) {
-					return new WP_Error( $status, __( 'Your purchase code has been blocked. Please contact support to resolve the issue.', 'flatsome' ), $data );
+					return new WP_Error( $status, __( 'Your purchase code has been blocked. Please contact support to resolve the issue.', 'silver' ), $data );
 				}
 				if ( $context === 'wupdates-register' ) {
-					return new WP_Error( $status, __( 'The purchase code does not belong to a Flatsome sale.', 'flatsome' ), $data );
+					return new WP_Error( $status, __( 'The purchase code does not belong to a Silver sale.', 'silver' ), $data );
 				}
 				if ( $context === 'wupdates-latest-version' ) {
-					return new WP_Error( $status, __( 'Flatsome was unable to get the latest version. The purchase code does not belong to a Flatsome sale.', 'flatsome' ), $data );
+					return new WP_Error( $status, __( 'Silver was unable to get the latest version. The purchase code does not belong to a Silver sale.', 'silver' ), $data );
 				}
-				return new WP_Error( $status, __( 'The requested resource no longer exists.', 'flatsome' ), $data );
+				return new WP_Error( $status, __( 'The requested resource no longer exists.', 'silver' ), $data );
 			case 417:
-				return new WP_Error( $status, __( 'No domain was sent with the request.', 'flatsome' ), $data );
+				return new WP_Error( $status, __( 'No domain was sent with the request.', 'silver' ), $data );
 			case 422:
-				return new WP_Error( $status, __( 'Unable to parse the domain for your site.', 'flatsome' ), $data );
+				return new WP_Error( $status, __( 'Unable to parse the domain for your site.', 'silver' ), $data );
 			case 423:
 				if ( $context === 'register' || $context === 'envato-register' || $context === 'latest-version' || $context === 'wupdates-latest-version' || $context === 'wupdates' ) {
-					return new WP_Error( $status, __( 'Your purchase code has been locked. Please contact support to resolve the issue.', 'flatsome' ), $data );
+					return new WP_Error( $status, __( 'Your purchase code has been locked. Please contact support to resolve the issue.', 'silver' ), $data );
 				}
-				return new WP_Error( $status, __( 'The requested resource has been locked.', 'flatsome' ), $data );
+				return new WP_Error( $status, __( 'The requested resource has been locked.', 'silver' ), $data );
 			case 429:
-				return new WP_Error( $status, __( 'Sorry, the API is overloaded.', 'flatsome' ), $data );
+				return new WP_Error( $status, __( 'Sorry, the API is overloaded.', 'silver' ), $data );
 			case 503:
-				return new WP_Error( $status, __( 'Sorry, the API is unavailable at the moment.', 'flatsome' ), $data );
+				return new WP_Error( $status, __( 'Sorry, the API is unavailable at the moment.', 'silver' ), $data );
 			default:
 				return $error;
 		}

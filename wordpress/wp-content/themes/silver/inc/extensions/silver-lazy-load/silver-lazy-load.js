@@ -11,7 +11,7 @@
     })
   }
 
-  Flatsome.behavior('lazy-load-images', {
+  Silver.behavior('lazy-load-images', {
     attach: function (context) {
       var observer = createObserver(function (entry) {
         if (entry.intersectionRatio > 0) {
@@ -42,7 +42,7 @@
     }
   })
 
-  Flatsome.behavior('lazy-load-sliders', {
+  Silver.behavior('lazy-load-sliders', {
     attach: function (context) {
       var observer = createObserver(function (entry) {
         if (entry.intersectionRatio > 0) {
@@ -67,7 +67,7 @@
     }
   })
 
-  Flatsome.behavior('lazy-load-packery', {
+  Silver.behavior('lazy-load-packery', {
     attach: function (context) {
       var observer = createObserver(function (entry) {
         if (entry.intersectionRatio > 0) {

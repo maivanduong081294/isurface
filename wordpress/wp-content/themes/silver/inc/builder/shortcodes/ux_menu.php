@@ -2,21 +2,21 @@
 /**
  * Registers the Menu element in UX Builder.
  *
- * @package flatsome
+ * @package silver
  */
 
 add_ux_builder_shortcode( 'ux_menu', array(
 	'type'      => 'container',
-	'name'      => __( 'Menu', 'flatsome' ),
-	'category'  => __( 'Content', 'flatsome' ),
+	'name'      => __( 'Menu', 'silver' ),
+	'category'  => __( 'Content', 'silver' ),
 	'allow'     => array( 'ux_menu_link', 'ux_menu_title' ),
-	'thumbnail' => flatsome_ux_builder_thumbnail( 'ux_menu' ),
-	'template'  => flatsome_ux_builder_template( 'ux_menu.html' ),
+	'thumbnail' => silver_ux_builder_thumbnail( 'ux_menu' ),
+	'template'  => silver_ux_builder_template( 'ux_menu.html' ),
 	'wrap'      => false,
 	'nested'    => false,
 	'presets'   => array(
 		array(
-			'name'    => __( 'Default', 'flatsome' ),
+			'name'    => __( 'Default', 'silver' ),
 			'content' => '
 				[ux_menu divider="solid"]
 					[ux_menu_link text="Menu link 1"]
@@ -30,12 +30,12 @@ add_ux_builder_shortcode( 'ux_menu', array(
 	'options'   => array(
 		'divider'          => array(
 			'type'       => 'radio-buttons',
-			'heading'    => __( 'Divider', 'flatsome' ),
+			'heading'    => __( 'Divider', 'silver' ),
 			'responsive' => true,
 			'default'    => '',
 			'options'    => array(
-				''      => array( 'title' => __( 'None', 'flatsome' ) ),
-				'solid' => array( 'title' => __( 'Solid', 'flatsome' ) ),
+				''      => array( 'title' => __( 'None', 'silver' ) ),
+				'solid' => array( 'title' => __( 'Solid', 'silver' ) ),
 			),
 		),
 		'advanced_options' => require __DIR__ . '/commons/advanced.php',

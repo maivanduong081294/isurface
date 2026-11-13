@@ -3,18 +3,18 @@
  * Menu options handler
  *
  * @author     UX Themes
- * @package    Flatsome
+ * @package    Silver
  * @since      3.13.0
  */
 
-namespace Flatsome\Admin;
+namespace Silver\Admin;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Class Menu
  *
- * @package Flatsome\Admin
+ * @package Silver\Admin
  */
 class Menu {
 
@@ -47,8 +47,8 @@ class Menu {
 	 * Menu constructor.
 	 */
 	public function __construct() {
-		if ( apply_filters( 'flatsome_admin_menu_items_enabled', true ) ) {
-			$this->ux_blocks = flatsome_get_block_list_by_id();
+		if ( apply_filters( 'silver_admin_menu_items_enabled', true ) ) {
+			$this->ux_blocks = silver_get_block_list_by_id();
 
 			add_action( 'admin_enqueue_scripts', [ $this, 'register_assets' ] );
 			add_action( 'wp_nav_menu_item_custom_fields', [ $this, 'add_menu_fields' ], 10, 5 );
@@ -86,38 +86,38 @@ class Menu {
 						<path d="M218.505 437.013V375.737L169.875 327.108L218.505 278.476V217.2L139.236 296.471L61.2764 218.51L218.505 61.2804V0.00683594L0 218.51L218.505 437.013Z" fill="black"/>
 						<path opacity="0.5" d="M218.507 61.2759L375.735 218.505L297.776 296.464L218.507 217.198V278.472L267.139 327.103L218.507 375.732V437.006L328.413 327.103L437.012 218.505L218.507 0V61.2759Z" fill="black"/>
 				</svg>
-				<?php esc_html_e( 'Flatsome menu item options', 'flatsome' ); ?>
+				<?php esc_html_e( 'Silver menu item options', 'silver' ); ?>
 			</h3>
 
 			<div class="ux-menu-item-options__section-dropdown">
-				<?php $this->section_title( __( 'Menu dropdown', 'flatsome' ) ); ?>
+				<?php $this->section_title( __( 'Menu dropdown', 'silver' ) ); ?>
 				<p class="description description-wide ux-menu-item-options__design">
 					<label for="edit-menu-item-design-<?php echo esc_attr( $item_id ); ?>">
-						<?php esc_html_e( 'Design', 'flatsome' ); ?><br>
+						<?php esc_html_e( 'Design', 'silver' ); ?><br>
 						<select id="edit-menu-item-design-<?php echo esc_attr( $item_id ); ?>" class="widefat" name="menu-item-design[<?php echo esc_attr( $item_id ); ?>]">
-							<option value="default" <?php selected( $design, 'default', true ); ?>><?php esc_html_e( 'Default', 'flatsome' ); ?></option>
-							<option value="custom-size" <?php selected( $design, 'custom-size', true ); ?>><?php esc_html_e( 'Default (custom size)', 'flatsome' ); ?></option>
-							<option value="container-width" <?php selected( $design, 'container-width', true ); ?>><?php esc_html_e( 'Container width', 'flatsome' ); ?></option>
-							<option value="full-width" <?php selected( $design, 'full-width', true ); ?>><?php esc_html_e( 'Full width', 'flatsome' ); ?></option>
+							<option value="default" <?php selected( $design, 'default', true ); ?>><?php esc_html_e( 'Default', 'silver' ); ?></option>
+							<option value="custom-size" <?php selected( $design, 'custom-size', true ); ?>><?php esc_html_e( 'Default (custom size)', 'silver' ); ?></option>
+							<option value="container-width" <?php selected( $design, 'container-width', true ); ?>><?php esc_html_e( 'Container width', 'silver' ); ?></option>
+							<option value="full-width" <?php selected( $design, 'full-width', true ); ?>><?php esc_html_e( 'Full width', 'silver' ); ?></option>
 						</select>
 					</label>
-					<?php $this->field_description( __( 'Select dropdown design.', 'flatsome' ) ); ?>
+					<?php $this->field_description( __( 'Select dropdown design.', 'silver' ) ); ?>
 				</p>
 				<p class="description description-thin ux-menu-item-options__width">
 					<label for="edit-menu-item-width-<?php echo esc_attr( $item_id ); ?>">
-						<?php esc_html_e( 'Width', 'flatsome' ); ?> (px)<br>
+						<?php esc_html_e( 'Width', 'silver' ); ?> (px)<br>
 						<input type="number" id="edit-menu-item-width-<?php echo esc_attr( $item_id ); ?>" class="widefat" min="0" name="menu-item-width[<?php echo esc_attr( $item_id ); ?>]" value="<?php echo esc_attr( $width ); ?>">
 					</label>
 				</p>
 				<p class="description description-thin ux-menu-item-options__height">
 					<label for="edit-menu-item-height-<?php echo esc_attr( $item_id ); ?>">
-						<?php esc_html_e( 'Height (optional)', 'flatsome' ); ?> (px)<br>
+						<?php esc_html_e( 'Height (optional)', 'silver' ); ?> (px)<br>
 						<input type="number" id="edit-menu-item-height-<?php echo esc_attr( $item_id ); ?>" class="widefat" min="0" name="menu-item-height[<?php echo esc_attr( $item_id ); ?>]" value="<?php echo esc_attr( $height ); ?>">
 					</label>
 				</p>
 				<p class="description description-wide ux-menu-item-options__block">
 					<label for="edit-menu-item-block-<?php echo esc_attr( $item_id ); ?>">
-						<?php esc_html_e( 'UX Block', 'flatsome' ); ?><br>
+						<?php esc_html_e( 'UX Block', 'silver' ); ?><br>
 						<select id="edit-menu-item-block-<?php echo esc_attr( $item_id ); ?>" class="widefat" name="menu-item-block[<?php echo esc_attr( $item_id ); ?>]">
 							<option value="" <?php selected( $block, '', true ); ?>><?php echo '-- None --'; ?></option>
 							<?php foreach ( $this->ux_blocks as $block_id => $title ) : ?>
@@ -129,22 +129,22 @@ class Menu {
 				</p>
 				<p class="description description-wide ux-menu-item-options__behavior">
 					<label for="edit-menu-item-behavior-<?php echo esc_attr( $item_id ); ?>">
-						<?php esc_html_e( 'Reveal', 'flatsome' ); ?><br>
+						<?php esc_html_e( 'Reveal', 'silver' ); ?><br>
 						<select id="edit-menu-item-behavior-<?php echo esc_attr( $item_id ); ?>" class="widefat" name="menu-item-behavior[<?php echo esc_attr( $item_id ); ?>]">
-							<option value="hover" <?php selected( $behavior, 'hover', true ); ?>><?php esc_html_e( 'On hover', 'flatsome' ); ?></option>
-							<option value="click" <?php selected( $behavior, 'click', true ); ?>><?php esc_html_e( 'On click', 'flatsome' ); ?></option>
+							<option value="hover" <?php selected( $behavior, 'hover', true ); ?>><?php esc_html_e( 'On hover', 'silver' ); ?></option>
+							<option value="click" <?php selected( $behavior, 'click', true ); ?>><?php esc_html_e( 'On click', 'silver' ); ?></option>
 						</select>
 					</label>
 				</p>
 			</div>
 
-			<?php $this->section_title( __( 'Menu icon', 'flatsome' ) ); ?>
+			<?php $this->section_title( __( 'Menu icon', 'silver' ) ); ?>
 			<p class="description description-wide ux-menu-item-options__icon-type">
 				<label for="edit-menu-item-icon-type-<?php echo esc_attr( $item_id ); ?>">
-					<?php esc_html_e( 'Icon type', 'flatsome' ); ?><br>
+					<?php esc_html_e( 'Icon type', 'silver' ); ?><br>
 					<select id="edit-menu-item-icon-type-<?php echo esc_attr( $item_id ); ?>" class="widefat" name="menu-item-icon-type[<?php echo esc_attr( $item_id ); ?>]">
-						<option value="media" <?php selected( $icon_type, 'media', true ); ?>><?php esc_html_e( 'Media library', 'flatsome' ); ?></option>
-						<option value="html" <?php selected( $icon_type, 'html', true ); ?>><?php esc_html_e( 'Custom content', 'flatsome' ); ?></option>
+						<option value="media" <?php selected( $icon_type, 'media', true ); ?>><?php esc_html_e( 'Media library', 'silver' ); ?></option>
+						<option value="html" <?php selected( $icon_type, 'html', true ); ?>><?php esc_html_e( 'Custom content', 'silver' ); ?></option>
 					</select>
 				</label>
 			</p>
@@ -156,22 +156,22 @@ class Menu {
 				</p>
 				<p class="description description-thin ux-menu-item-options__icon-size">
 					<label for="edit-menu-item-icon-width-<?php echo esc_attr( $item_id ); ?>">
-						<?php esc_html_e( 'Width', 'flatsome' ); ?> (px)<br>
+						<?php esc_html_e( 'Width', 'silver' ); ?> (px)<br>
 						<input type="number" id="edit-menu-item-icon-width-<?php echo esc_attr( $item_id ); ?>" class="widefat" min="0" name="menu-item-icon-width[<?php echo esc_attr( $item_id ); ?>]" value="<?php echo esc_attr( $icon_width ); ?>">
 					</label>
 					<label for="edit-menu-item-icon-height-<?php echo esc_attr( $item_id ); ?>">
-						<?php esc_html_e( 'Height', 'flatsome' ); ?> (px)<br>
+						<?php esc_html_e( 'Height', 'silver' ); ?> (px)<br>
 						<input type="number" id="edit-menu-item-icon-height-<?php echo esc_attr( $item_id ); ?>" class="widefat" min="0" name="menu-item-icon-height[<?php echo esc_attr( $item_id ); ?>]" value="<?php echo esc_attr( $icon_height ); ?>">
 					</label>
-					<?php $this->field_description( __( 'Icons default (empty) to 20x20.', 'flatsome' ) ); ?>
+					<?php $this->field_description( __( 'Icons default (empty) to 20x20.', 'silver' ) ); ?>
 				</p>
 			</div>
 			<p class="description description-wide ux-menu-item-options__icon-html">
 				<label for="edit-menu-item-icon-html-<?php echo esc_attr( $item_id ); ?>">
-					<?php esc_html_e( 'Markup', 'flatsome' ); ?><br>
+					<?php esc_html_e( 'Markup', 'silver' ); ?><br>
 					<textarea id="edit-menu-item-icon-html-<?php echo esc_attr( $item_id ); ?>" class="widefat" rows="3" cols="20" name="menu-item-icon-html[<?php echo esc_attr( $item_id ); ?>]"><?php echo esc_attr( $icon_html ); ?></textarea>
 				</label>
-				<?php $this->field_description( __( 'Add any HTML, SVG or shortcode here.', 'flatsome' ) ); ?>
+				<?php $this->field_description( __( 'Add any HTML, SVG or shortcode here.', 'silver' ) ); ?>
 			</p>
 
 
@@ -242,12 +242,12 @@ class Menu {
 		);
 		$output .= sprintf( '<button type="button" class="upload-button button" data-item-id="%s">%s</button>',
 			esc_attr( $item_id ),
-			__( 'Select image', 'flatsome' )
+			__( 'Select image', 'silver' )
 		);
 		$output .= sprintf( '<button type="button" class="remove-button button %s" data-item-id="%s">%s</button>',
 			! $image ? 'hidden' : '',
 			esc_attr( $item_id ),
-			__( 'Remove', 'flatsome' )
+			__( 'Remove', 'silver' )
 		);
 		$output .= sprintf( '<input type="hidden" id="edit-menu-item-%1$s-%2$s" name="menu-item-%1$s[%2$s]" value="%3$s">',
 			$field_identifier,
@@ -270,8 +270,8 @@ class Menu {
 
 			wp_enqueue_media();
 
-			flatsome_enqueue_asset( 'flatsome-admin-menu', 'admin/admin-menu', array( 'jquery', 'nav-menu' ) );
-			wp_enqueue_style( 'flatsome-admin-menu', get_template_directory_uri() . '/assets/css/admin/admin-menu.css', null, $version );
+			silver_enqueue_asset( 'silver-admin-menu', 'admin/admin-menu', array( 'jquery', 'nav-menu' ) );
+			wp_enqueue_style( 'silver-admin-menu', get_template_directory_uri() . '/assets/css/admin/admin-menu.css', null, $version );
 		}
 	}
 }

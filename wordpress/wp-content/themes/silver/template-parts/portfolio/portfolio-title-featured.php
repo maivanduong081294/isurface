@@ -2,8 +2,8 @@
 /**
  * Portfolio title featured image background.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.16.0
+ * @package          Silver\Templates
+ * @silver-version 3.16.0
  */
 
 ?>
@@ -20,7 +20,7 @@
 				<?php echo get_the_term_list( get_the_ID(), 'featured_item_category', '', ', ', '' ); ?>
 			</div>
 			<h1 class="entry-title is-xlarge uppercase"><?php the_title(); ?></h1>
-			<?php do_action('flatsome_portfolio_title_after'); ?>
+			<?php do_action('silver_portfolio_title_after'); ?>
 	 	</div>
 	</div>
 </div>

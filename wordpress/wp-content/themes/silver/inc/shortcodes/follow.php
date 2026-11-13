@@ -2,7 +2,7 @@
 /**
  * Registers the `follow` shortcode.
  *
- * @package flatsome
+ * @package silver
  */
 
 /**
@@ -14,7 +14,7 @@
  *
  * @return string
  */
-function flatsome_follow( $atts, $content = null, $tag = '' ) {
+function silver_follow( $atts, $content = null, $tag = '' ) {
 	extract( $atts = ux_builder_shortcode_atts(
 		array(
 			'_id'        => '',
@@ -58,9 +58,19 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 
 	if ( $class ) $wrapper_class[]      = $class;
 	if ( $visibility ) $wrapper_class[] = $visibility;
-	if ( $align ) {
+	// "inline" is the default (explicit value for responsive options).
+	if ( $align && $align !== 'inline' ) {
 		$wrapper_class[] = 'full-width';
 		$wrapper_class[] = 'text-' . $align;
+	}
+
+	// Responsive align (larger screens).
+	$responsive_style = '';
+	if ( silver_responsive_has_overrides( (array) $atts, 'align' ) ) {
+		if ( ! $_id ) $_id = 'follow-' . wp_rand();
+		$responsive_style = silver_responsive_style_tag( $_id, (array) $atts, array(
+			'align' => array( 'selector' => '', 'only_overrides' => true, 'default' => 'inline', 'important' => false, 'map' => silver_responsive_map( 'icons_align' ) ),
+		) );
 	}
 
 	$_social_links = array(
@@ -87,7 +97,7 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 		'zalo'      => $zalo,
 	);
 
-	$social_links        = apply_filters( "flatsome_shortcode_{$tag}_social_links", $_social_links, $atts );
+	$social_links        = apply_filters( "silver_shortcode_{$tag}_social_links", $_social_links, $atts );
 	$custom_social_links = array_diff( $_social_links, $social_links );
 	$use_global_link     = count( array_filter( $social_links ) ) === 0 && count( array_filter( $custom_social_links ) ) === 0;
 
@@ -119,7 +129,7 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 	if ( $size === 'small' ) {
 		$style = 'small';
 	}
-	$style = get_flatsome_icon_class( $style );
+	$style = get_silver_icon_class( $style );
 
 	// Scale.
 	if ( $scale ) $scale = 'style="font-size:' . esc_attr( $scale ) . '%"';
@@ -127,7 +137,7 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 	// Tooltip.
 	if ( $tooltip === 'true' ) $style .= ' tooltip';
 
-	$follow_links = apply_filters( 'flatsome_follow_links', array(
+	$follow_links = apply_filters( 'silver_follow_links', array(
 		'facebook'  => array(
 			'enabled'  => ! empty( $facebook ),
 			'atts'     => array(
@@ -136,10 +146,10 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 				'rel'        => 'noopener nofollow',
 				'data-label' => 'Facebook',
 				'class'      => $style . ' facebook',
-				'title'      => esc_attr__( 'Follow on Facebook', 'flatsome' ),
-				'aria-label' => esc_attr__( 'Follow on Facebook', 'flatsome' ),
+				'title'      => esc_attr__( 'Follow on Facebook', 'silver' ),
+				'aria-label' => esc_attr__( 'Follow on Facebook', 'silver' ),
 			),
-			'icon'     => get_flatsome_icon( 'icon-facebook' ),
+			'icon'     => get_silver_icon( 'icon-facebook' ),
 			'priority' => 10,
 		),
 		'instagram' => array(
@@ -150,10 +160,10 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 				'rel'        => 'noopener nofollow',
 				'data-label' => 'Instagram',
 				'class'      => $style . ' instagram',
-				'title'      => esc_attr__( 'Follow on Instagram', 'flatsome' ),
-				'aria-label' => esc_attr__( 'Follow on Instagram', 'flatsome' ),
+				'title'      => esc_attr__( 'Follow on Instagram', 'silver' ),
+				'aria-label' => esc_attr__( 'Follow on Instagram', 'silver' ),
 			),
-			'icon'     => get_flatsome_icon( 'icon-instagram' ),
+			'icon'     => get_silver_icon( 'icon-instagram' ),
 			'priority' => 20,
 		),
 		'tiktok'    => array(
@@ -164,10 +174,10 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 				'rel'        => 'noopener nofollow',
 				'data-label' => 'TikTok',
 				'class'      => $style . ' tiktok',
-				'title'      => esc_attr__( 'Follow on TikTok', 'flatsome' ),
-				'aria-label' => esc_attr__( 'Follow on TikTok', 'flatsome' ),
+				'title'      => esc_attr__( 'Follow on TikTok', 'silver' ),
+				'aria-label' => esc_attr__( 'Follow on TikTok', 'silver' ),
 			),
-			'icon'     => get_flatsome_icon( 'icon-tiktok' ),
+			'icon'     => get_silver_icon( 'icon-tiktok' ),
 			'priority' => 30,
 		),
 		'snapchat'  => array(
@@ -181,14 +191,14 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 				'target'     => '_blank',
 				'rel'        => 'noopener nofollow',
 				'class'      => $style . ' snapchat',
-				'title'      => esc_attr__( 'Follow on SnapChat', 'flatsome' ),
-				'aria-label' => esc_attr__( 'Follow on SnapChat', 'flatsome' ),
+				'title'      => esc_attr__( 'Follow on SnapChat', 'silver' ),
+				'aria-label' => esc_attr__( 'Follow on SnapChat', 'silver' ),
 			),
-			'icon'     => get_flatsome_icon( 'icon-snapchat' ),
+			'icon'     => get_silver_icon( 'icon-snapchat' ),
 			'after'    => sprintf(
 				'<div id="follow-snapchat-lightbox" class="mfp-hide"><div class="text-center">%1$s<p>%2$s</p></div></div>',
-				do_shortcode( flatsome_get_image( $snapchat ) ),
-				esc_html__( 'Point the SnapChat camera at this to add us to SnapChat.', 'flatsome' )
+				do_shortcode( silver_get_image( $snapchat ) ),
+				esc_html__( 'Point the SnapChat camera at this to add us to SnapChat.', 'silver' )
 			),
 			'priority' => 40,
 		),
@@ -196,14 +206,14 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 			'enabled'  => ! empty( $x ),
 			'atts'     => array(
 				'href'       => esc_url( $x ),
-				'data-label' => esc_attr_x( 'X', 'social media', 'flatsome' ),
+				'data-label' => esc_attr_x( 'X', 'social media', 'silver' ),
 				'target'     => '_blank',
 				'rel'        => 'noopener nofollow',
 				'class'      => $style . ' x',
-				'title'      => esc_attr__( 'Follow on X', 'flatsome' ),
-				'aria-label' => esc_attr__( 'Follow on X', 'flatsome' ),
+				'title'      => esc_attr__( 'Follow on X', 'silver' ),
+				'aria-label' => esc_attr__( 'Follow on X', 'silver' ),
 			),
-			'icon'     => get_flatsome_icon( 'icon-x' ),
+			'icon'     => get_silver_icon( 'icon-x' ),
 			'priority' => 50,
 		),
 		'twitter'   => array(
@@ -214,10 +224,10 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 				'target'     => '_blank',
 				'rel'        => 'noopener nofollow',
 				'class'      => $style . ' twitter',
-				'title'      => esc_attr__( 'Follow on Twitter', 'flatsome' ),
-				'aria-label' => esc_attr__( 'Follow on Twitter', 'flatsome' ),
+				'title'      => esc_attr__( 'Follow on Twitter', 'silver' ),
+				'aria-label' => esc_attr__( 'Follow on Twitter', 'silver' ),
 			),
-			'icon'     => get_flatsome_icon( 'icon-twitter' ),
+			'icon'     => get_silver_icon( 'icon-twitter' ),
 			'priority' => 50,
 		),
 		'threads'   => array(
@@ -228,10 +238,10 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 				'target'     => '_blank',
 				'rel'        => 'noopener nofollow',
 				'class'      => $style . ' threads',
-				'title'      => esc_attr__( 'Follow on Threads', 'flatsome' ),
-				'aria-label' => esc_attr__( 'Follow on Threads', 'flatsome' ),
+				'title'      => esc_attr__( 'Follow on Threads', 'silver' ),
+				'aria-label' => esc_attr__( 'Follow on Threads', 'silver' ),
 			),
-			'icon'     => get_flatsome_icon( 'icon-threads' ),
+			'icon'     => get_silver_icon( 'icon-threads' ),
 			'priority' => 55,
 		),
 		'email'     => array(
@@ -242,10 +252,10 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 				'target'     => '_blank',
 				'rel'        => 'nofollow',
 				'class'      => $style . ' email',
-				'title'      => esc_attr__( 'Send us an email', 'flatsome' ),
-				'aria-label' => esc_attr__( 'Send us an email', 'flatsome' ),
+				'title'      => esc_attr__( 'Send us an email', 'silver' ),
+				'aria-label' => esc_attr__( 'Send us an email', 'silver' ),
 			),
-			'icon'     => get_flatsome_icon( 'icon-envelop' ),
+			'icon'     => get_silver_icon( 'icon-envelop' ),
 			'priority' => 60,
 		),
 		'phone'     => array(
@@ -256,10 +266,10 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 				'target'     => '_blank',
 				'rel'        => 'nofollow',
 				'class'      => $style . ' phone',
-				'title'      => esc_attr__( 'Call us', 'flatsome' ),
-				'aria-label' => esc_attr__( 'Call us', 'flatsome' ),
+				'title'      => esc_attr__( 'Call us', 'silver' ),
+				'aria-label' => esc_attr__( 'Call us', 'silver' ),
 			),
-			'icon'     => get_flatsome_icon( 'icon-phone' ),
+			'icon'     => get_silver_icon( 'icon-phone' ),
 			'priority' => 70,
 		),
 		'pinterest' => array(
@@ -270,10 +280,10 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 				'target'     => '_blank',
 				'rel'        => 'noopener nofollow',
 				'class'      => $style . ' pinterest',
-				'title'      => esc_attr__( 'Follow on Pinterest', 'flatsome' ),
-				'aria-label' => esc_attr__( 'Follow on Pinterest', 'flatsome' ),
+				'title'      => esc_attr__( 'Follow on Pinterest', 'silver' ),
+				'aria-label' => esc_attr__( 'Follow on Pinterest', 'silver' ),
 			),
-			'icon'     => get_flatsome_icon( 'icon-pinterest' ),
+			'icon'     => get_silver_icon( 'icon-pinterest' ),
 			'priority' => 80,
 		),
 		'rss'       => array(
@@ -284,10 +294,10 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 				'target'     => '_blank',
 				'rel'        => 'noopener nofollow',
 				'class'      => $style . ' rss',
-				'title'      => esc_attr__( 'Subscribe to RSS', 'flatsome' ),
-				'aria-label' => esc_attr__( 'Subscribe to RSS', 'flatsome' ),
+				'title'      => esc_attr__( 'Subscribe to RSS', 'silver' ),
+				'aria-label' => esc_attr__( 'Subscribe to RSS', 'silver' ),
 			),
-			'icon'     => get_flatsome_icon( 'icon-feed' ),
+			'icon'     => get_silver_icon( 'icon-feed' ),
 			'priority' => 90,
 		),
 		'linkedin'  => array(
@@ -298,10 +308,10 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 				'target'     => '_blank',
 				'rel'        => 'noopener nofollow',
 				'class'      => $style . ' linkedin',
-				'title'      => esc_attr__( 'Follow on LinkedIn', 'flatsome' ),
-				'aria-label' => esc_attr__( 'Follow on LinkedIn', 'flatsome' ),
+				'title'      => esc_attr__( 'Follow on LinkedIn', 'silver' ),
+				'aria-label' => esc_attr__( 'Follow on LinkedIn', 'silver' ),
 			),
-			'icon'     => get_flatsome_icon( 'icon-linkedin' ),
+			'icon'     => get_silver_icon( 'icon-linkedin' ),
 			'priority' => 100,
 		),
 		'youtube'   => array(
@@ -312,10 +322,10 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 				'target'     => '_blank',
 				'rel'        => 'noopener nofollow',
 				'class'      => $style . ' youtube',
-				'title'      => esc_attr__( 'Follow on YouTube', 'flatsome' ),
-				'aria-label' => esc_attr__( 'Follow on YouTube', 'flatsome' ),
+				'title'      => esc_attr__( 'Follow on YouTube', 'silver' ),
+				'aria-label' => esc_attr__( 'Follow on YouTube', 'silver' ),
 			),
-			'icon'     => get_flatsome_icon( 'icon-youtube' ),
+			'icon'     => get_silver_icon( 'icon-youtube' ),
 			'priority' => 110,
 		),
 		'flickr'    => array(
@@ -326,10 +336,10 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 				'target'     => '_blank',
 				'rel'        => 'noopener nofollow',
 				'class'      => $style . ' flickr',
-				'title'      => esc_attr__( 'Flickr', 'flatsome' ),
-				'aria-label' => esc_attr__( 'Flickr', 'flatsome' ),
+				'title'      => esc_attr__( 'Flickr', 'silver' ),
+				'aria-label' => esc_attr__( 'Flickr', 'silver' ),
 			),
-			'icon'     => get_flatsome_icon( 'icon-flickr' ),
+			'icon'     => get_silver_icon( 'icon-flickr' ),
 			'priority' => 120,
 		),
 		'500px'     => array(
@@ -340,10 +350,10 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 				'target'     => '_blank',
 				'rel'        => 'noopener nofollow',
 				'class'      => $style . ' px500',
-				'title'      => esc_attr__( 'Follow on 500px', 'flatsome' ),
-				'aria-label' => esc_attr__( 'Follow on 500px', 'flatsome' ),
+				'title'      => esc_attr__( 'Follow on 500px', 'silver' ),
+				'aria-label' => esc_attr__( 'Follow on 500px', 'silver' ),
 			),
-			'icon'     => get_flatsome_icon( 'icon-500px' ),
+			'icon'     => get_silver_icon( 'icon-500px' ),
 			'priority' => 130,
 		),
 		'vkontakte' => array(
@@ -354,10 +364,10 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 				'target'     => '_blank',
 				'rel'        => 'noopener nofollow',
 				'class'      => $style . ' vk',
-				'title'      => esc_attr__( 'Follow on VKontakte', 'flatsome' ),
-				'aria-label' => esc_attr__( 'Follow on VKontakte', 'flatsome' ),
+				'title'      => esc_attr__( 'Follow on VKontakte', 'silver' ),
+				'aria-label' => esc_attr__( 'Follow on VKontakte', 'silver' ),
 			),
-			'icon'     => get_flatsome_icon( 'icon-vk' ),
+			'icon'     => get_silver_icon( 'icon-vk' ),
 			'priority' => 140,
 		),
 		'telegram'  => array(
@@ -368,10 +378,10 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 				'target'     => '_blank',
 				'rel'        => 'noopener nofollow',
 				'class'      => $style . ' telegram',
-				'title'      => esc_attr__( 'Follow on Telegram', 'flatsome' ),
-				'aria-label' => esc_attr__( 'Follow on Telegram', 'flatsome' ),
+				'title'      => esc_attr__( 'Follow on Telegram', 'silver' ),
+				'aria-label' => esc_attr__( 'Follow on Telegram', 'silver' ),
 			),
-			'icon'     => get_flatsome_icon( 'icon-telegram' ),
+			'icon'     => get_silver_icon( 'icon-telegram' ),
 			'priority' => 150,
 		),
 		'twitch'    => array(
@@ -382,10 +392,10 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 				'target'     => '_blank',
 				'rel'        => 'noopener nofollow',
 				'class'      => $style . ' twitch',
-				'title'      => esc_attr__( 'Follow on Twitch', 'flatsome' ),
-				'aria-label' => esc_attr__( 'Follow on Twitch', 'flatsome' ),
+				'title'      => esc_attr__( 'Follow on Twitch', 'silver' ),
+				'aria-label' => esc_attr__( 'Follow on Twitch', 'silver' ),
 			),
-			'icon'     => get_flatsome_icon( 'icon-twitch' ),
+			'icon'     => get_silver_icon( 'icon-twitch' ),
 			'priority' => 160,
 		),
 		'discord'   => array(
@@ -396,10 +406,10 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 				'target'     => '_blank',
 				'rel'        => 'noopener nofollow',
 				'class'      => $style . ' discord',
-				'title'      => esc_attr__( 'Follow on Discord', 'flatsome' ),
-				'aria-label' => esc_attr__( 'Follow on Discord', 'flatsome' ),
+				'title'      => esc_attr__( 'Follow on Discord', 'silver' ),
+				'aria-label' => esc_attr__( 'Follow on Discord', 'silver' ),
 			),
-			'icon'     => get_flatsome_icon( 'icon-discord' ),
+			'icon'     => get_silver_icon( 'icon-discord' ),
 			'priority' => 170,
 		),
 		'whatsapp'  => array(
@@ -410,10 +420,10 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 				'target'     => '_blank',
 				'rel'        => 'noopener nofollow',
 				'class'      => $style . ' whatsapp',
-				'title'      => esc_attr__( 'Chat on WhatsApp', 'flatsome' ),
-				'aria-label' => esc_attr__( 'Chat on WhatsApp', 'flatsome' ),
+				'title'      => esc_attr__( 'Chat on WhatsApp', 'silver' ),
+				'aria-label' => esc_attr__( 'Chat on WhatsApp', 'silver' ),
 			),
-			'icon'     => get_flatsome_icon( 'icon-whatsapp' ),
+			'icon'     => get_silver_icon( 'icon-whatsapp' ),
 			'priority' => 180,
 		),
 		'zalo'      => array(
@@ -424,10 +434,10 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 				'target'     => '_blank',
 				'rel'        => 'noopener nofollow',
 				'class'      => $style . ' zalo',
-				'title'      => esc_attr__( 'Chat on Zalo', 'flatsome' ),
-				'aria-label' => esc_attr__( 'Chat on Zalo', 'flatsome' ),
+				'title'      => esc_attr__( 'Chat on Zalo', 'silver' ),
+				'aria-label' => esc_attr__( 'Chat on Zalo', 'silver' ),
 			),
-			'icon'     => get_flatsome_icon( 'icon-zalo' ),
+			'icon'     => get_silver_icon( 'icon-zalo' ),
 			'priority' => 190,
 		),
 	), array( // phpcs:ignore PEAR.Functions.FunctionCallSignature.Indent
@@ -437,7 +447,7 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 	) );
 
 	// Sort links based on priority.
-	uasort( $follow_links, 'flatsome_sort_on_priority' );
+	uasort( $follow_links, 'silver_sort_on_priority' );
 
 	// Explicit element order takes precedence; keep unlisted icons in their existing order.
 	if ( ! empty( $icon_order ) ) {
@@ -460,7 +470,7 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 		foreach ( $follow_links as $follow_link ) {
 			if ( isset( $follow_link['enabled'] ) && $follow_link['enabled'] == false ) continue;
 			printf( '<a %1$s>%2$s</a>',
-				flatsome_html_atts( $follow_link['atts'] ),
+				silver_html_atts( $follow_link['atts'] ),
 				! empty( $follow_link['icon'] ) ? $follow_link['icon'] : '' // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			);
 			if ( ! empty( $follow_link['after'] ) ) {
@@ -472,7 +482,7 @@ function flatsome_follow( $atts, $content = null, $tag = '' ) {
 	<?php
 	$content = ob_get_clean();
 
-	return flatsome_sanitize_whitespace_chars( $content );
+	return silver_sanitize_whitespace_chars( $content ) . $responsive_style;
 }
 
-add_shortcode( 'follow', 'flatsome_follow' );
+add_shortcode( 'follow', 'silver_follow' );

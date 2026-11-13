@@ -454,7 +454,7 @@ body {
     box-shadow: none;
 }
 
-body:not(.flatsome-wp-version-gte-70) .envato-setup .envato-setup-actions .button {
+body:not(.silver-wp-version-gte-70) .envato-setup .envato-setup-actions .button {
     font-size: 1.25em;
     padding: .5em 1em;
     line-height: 1em;

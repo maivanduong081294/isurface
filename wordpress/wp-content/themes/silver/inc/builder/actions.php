@@ -1,6 +1,6 @@
 <?php
 
-add_action('wp_ajax_flatsome_block_title', function () {
+add_action('wp_ajax_silver_block_title', function () {
 	global $wpdb;
 
 	$block_id = isset($_GET['block_id'])

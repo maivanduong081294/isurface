@@ -4,7 +4,7 @@ add_ux_builder_shortcode( 'page_header', array(
   'name' => __( 'Page Header' ),
   'category' => __( 'Layout' ),
   'wrap' => false,
-  'thumbnail' =>  flatsome_ux_builder_thumbnail( 'page_title' ),
+  'thumbnail' =>  silver_ux_builder_thumbnail( 'page_title' ),
   'allow' => array(),
   'presets' => array(),
   'options' => array(
@@ -66,6 +66,7 @@ add_ux_builder_shortcode( 'page_header', array(
         ),
 
         'text_color' => array(
+          'responsive' => true,
           'type' => 'radio-buttons',
           'heading' => __('Text color'),
           'default' => 'light',
@@ -76,6 +77,7 @@ add_ux_builder_shortcode( 'page_header', array(
         ),
 
         'align' => array(
+            'responsive' => true,
             'type' => 'radio-buttons',
             'heading' => 'Align',
             'full_width' => true,
@@ -88,6 +90,7 @@ add_ux_builder_shortcode( 'page_header', array(
         ),
 
         'v_align' => array(
+            'responsive' => true,
             'type' => 'radio-buttons',
             'heading' => 'Vertical Align',
             'full_width' => true,
@@ -194,18 +197,33 @@ add_ux_builder_shortcode( 'page_header', array(
       'heading' => __( 'Background' ),
       'options' => array(
         'bg' => array(
+          'responsive' => true,
           'type' => 'image',
           'heading' => __( 'Image' ),
           'thumb_size' => 'bg_size',
           'bg_position' => 'bg_pos',
         ),
+        // Hide the image on a screen: an empty image there means "inherit".
+        'bg_visible' => array(
+          'type' => 'radio-buttons',
+          'heading' => __( 'Image visibility' ),
+          'responsive' => true,
+          'default' => 'show',
+          'conditions' => 'bg',
+          'options' => array(
+          	'show' => array( 'title' => 'Show' ),
+          	'hide' => array( 'title' => 'Hide' ),
+          ),
+        ),
         'bg_size'=> array(
+          'responsive' => true,
           'type' => 'select',
           'heading' => 'Size',
           'default' => 'large',
-          'options' => flatsome_ux_builder_image_sizes()
+          'options' => silver_ux_builder_image_sizes()
         ),
         'bg_color' => array(
+          'responsive' => true,
           'type' => 'colorpicker',
           'heading' => __('Color'),
           'format' => 'rgb',
@@ -222,6 +240,7 @@ add_ux_builder_shortcode( 'page_header', array(
           'helpers' => require( __DIR__ . '/helpers/colors-overlay.php' ),
         ),
         'bg_pos' => array(
+          'responsive' => true,
           'type' => 'textfield',
           'heading' => __('Position'),
            'on_change' => array(

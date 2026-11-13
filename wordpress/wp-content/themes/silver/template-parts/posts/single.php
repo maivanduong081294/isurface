@@ -2,8 +2,8 @@
 /**
  * Posts single.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.19.9
+ * @package          Silver\Templates
+ * @silver-version 3.19.9
  */
 
 if ( have_posts() ) : ?>
@@ -13,7 +13,7 @@ if ( have_posts() ) : ?>
 <?php while ( have_posts() ) : the_post(); ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<div class="article-inner <?php flatsome_blog_article_classes(); ?>">
+	<div class="article-inner <?php silver_blog_article_classes(); ?>">
 		<?php
 			if ( get_theme_mod( 'blog_post_style', 'default' ) == 'default' || get_theme_mod( 'blog_post_style', 'default' ) == 'inline' ) {
 				get_template_part( 'template-parts/posts/partials/entry-header', get_theme_mod( 'blog_posts_header_style', 'normal' ) );

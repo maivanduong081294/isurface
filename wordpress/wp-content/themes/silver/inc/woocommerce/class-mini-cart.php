@@ -2,17 +2,17 @@
 /**
  * Mini cart class.
  *
- * @package Flatsome\WooCommerce
+ * @package Silver\WooCommerce
  */
 
-namespace Flatsome\WooCommerce;
+namespace Silver\WooCommerce;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Class MiniCart
  *
- * @package Flatsome\WooCommerce
+ * @package Silver\WooCommerce
  */
 final class MiniCart {
 
@@ -27,20 +27,20 @@ final class MiniCart {
 	 * MiniCart constructor.
 	 */
 	private function __construct() {
-		add_action( 'flatsome_before_mini_cart_empty_message', [ $this, 'before_empty_message_html' ] );
-		add_action( 'flatsome_after_mini_cart_empty_message', [ $this, 'after_empty_message_html' ] );
+		add_action( 'silver_before_mini_cart_empty_message', [ $this, 'before_empty_message_html' ] );
+		add_action( 'silver_after_mini_cart_empty_message', [ $this, 'after_empty_message_html' ] );
 
-		add_action( 'wp_ajax_flatsome_ajax_cart_item_alter_quantity', [ $this, 'cart_item_alter_quantity' ] );
-		add_action( 'wp_ajax_nopriv_flatsome_ajax_cart_item_alter_quantity', [ $this, 'cart_item_alter_quantity' ] );
+		add_action( 'wp_ajax_silver_ajax_cart_item_alter_quantity', [ $this, 'cart_item_alter_quantity' ] );
+		add_action( 'wp_ajax_nopriv_silver_ajax_cart_item_alter_quantity', [ $this, 'cart_item_alter_quantity' ] );
 
 		add_filter( 'woocommerce_widget_cart_item_quantity', [ $this, 'quantity_html' ], 11, 3 );
-		add_action( 'flatsome_after_mini_cart_contents', [ $this, 'cross_sells' ] );
+		add_action( 'silver_after_mini_cart_contents', [ $this, 'cross_sells' ] );
 
-		add_action( 'flatsome_before_mini_cart_cross_sells', function () {
+		add_action( 'silver_before_mini_cart_cross_sells', function () {
 			add_filter( 'woocommerce_loop_add_to_cart_link', [ $this, 'loop_add_to_cart' ], 5, 3 );
 		} );
 
-		add_action( 'flatsome_after_mini_cart_cross_sells', function () {
+		add_action( 'silver_after_mini_cart_cross_sells', function () {
 			remove_filter( 'woocommerce_loop_add_to_cart_link', [ $this, 'loop_add_to_cart' ], 5 );
 		} );
 
@@ -165,7 +165,7 @@ final class MiniCart {
 	 * @return string The modified link html.
 	 */
 	public function loop_add_to_cart( $link, $product, $args ) {
-		$insert = '<svg aria-hidden="true" width="10" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M11 5H7V1a1 1 0 00-2 0v4H1a1 1 0 000 2h4v4a1 1 0 002 0V7h4a1 1 0 000-2z" fill="currentColor" fill-rule="nonzero"></path></svg>' . esc_html_x( 'Add', 'mini cart add to cart button label', 'flatsome' );
+		$insert = '<svg aria-hidden="true" width="10" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M11 5H7V1a1 1 0 00-2 0v4H1a1 1 0 000 2h4v4a1 1 0 002 0V7h4a1 1 0 000-2z" fill="currentColor" fill-rule="nonzero"></path></svg>' . esc_html_x( 'Add', 'mini cart add to cart button label', 'silver' );
 
 		return preg_replace( '/(<a.*?>).*?(<\/a>)/', '$1' . $insert . '$2', $link );
 	}
@@ -185,7 +185,7 @@ final class MiniCart {
 		?>
 		<div class="ux-mini-cart-qty">
 			<?php
-			if ( $header_cart_qty && $product->is_purchasable() && apply_filters( 'flatsome_show_mini_cart_item_quantity', true, $cart_item_key ) ) {
+			if ( $header_cart_qty && $product->is_purchasable() && apply_filters( 'silver_show_mini_cart_item_quantity', true, $cart_item_key ) ) {
 				if ( $product->is_sold_individually() ) {
 					$min_quantity = 1;
 					$max_quantity = 1;
@@ -240,12 +240,12 @@ final class MiniCart {
 		}, $cross_sells ) );
 
 		$cross_sells_orderby = apply_filters( 'woocommerce_cross_sells_orderby', 'date' );
-		$cross_sells_orderby = apply_filters( 'flatsome_mini_cart_cross_sells_orderby', $cross_sells_orderby );
+		$cross_sells_orderby = apply_filters( 'silver_mini_cart_cross_sells_orderby', $cross_sells_orderby );
 		$cross_sells_order   = apply_filters( 'woocommerce_cross_sells_order', 'desc' );
-		$cross_sells_order   = apply_filters( 'flatsome_mini_cart_cross_sells_order', $cross_sells_order );
+		$cross_sells_order   = apply_filters( 'silver_mini_cart_cross_sells_order', $cross_sells_order );
 		$cross_sells         = wc_products_array_orderby( $cross_sells, $cross_sells_orderby, $cross_sells_order );
 
-		$limit       = intval( apply_filters( 'flatsome_mini_cart_cross_sells_total', 5 ) );
+		$limit       = intval( apply_filters( 'silver_mini_cart_cross_sells_total', 5 ) );
 		$cross_sells = $limit > 0 ? array_slice( $cross_sells, 0, $limit ) : $cross_sells;
 
 		wc_get_template( 'cart/mini-cart/cross-sells.php', array( 'cross_sells' => $cross_sells ) );

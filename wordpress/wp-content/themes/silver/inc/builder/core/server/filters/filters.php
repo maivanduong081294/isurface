@@ -34,7 +34,7 @@ add_filter( 'ux_builder_preprocess_array_content', function (  $content, $tag, $
       $pattern = get_shortcode_regex();
       $columns = 0;
       $current_grid = 0;
-      $grid = flatsome_get_grid($options['grid']);
+      $grid = silver_get_grid($options['grid']);
       $grid_total = count($grid);
       if (preg_match_all( '/'. $pattern .'/s', $content, $matches )
           && array_key_exists( 2, $matches )

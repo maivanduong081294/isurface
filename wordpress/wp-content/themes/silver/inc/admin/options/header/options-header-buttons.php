@@ -1,120 +1,120 @@
 <?php
 
-Flatsome_Option::add_section( 'header_buttons',
+Silver_Option::add_section( 'header_buttons',
 	array(
-		'title' => __( 'Buttons', 'flatsome-admin' ),
+		'title' => __( 'Buttons', 'silver' ),
 		'panel' => 'header',
 	)
 );
 
-Flatsome_Option::add_field( '',
+Silver_Option::add_field( '',
 	array(
 		'type'     => 'custom',
 		'settings' => 'custom_title_button_1',
-		'label'    => __( '', 'flatsome-admin' ),
+		'label'    => __( '', 'silver' ),
 		'section'  => 'header_buttons',
 		'default'  => '<div class="options-title-divider">Button 1</div>',
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'      => 'text',
 		'settings'  => 'header_button_1',
-		'transport' => flatsome_customizer_transport(),
+		'transport' => silver_customizer_transport(),
 		'default'   => 'Button 1',
-		'label'     => __( 'Text', 'flatsome-admin' ),
+		'label'     => __( 'Text', 'silver' ),
 		'section'   => 'header_buttons',
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'      => 'radio-buttonset',
 		'settings'  => 'header_button_1_letter_case',
-		'transport' => flatsome_customizer_transport(),
-		'label'     => __( 'Letter case', 'flatsome-admin' ),
+		'transport' => silver_customizer_transport(),
+		'label'     => __( 'Letter case', 'silver' ),
 		'section'   => 'header_buttons',
 		'default'   => '',
 		'choices'   => array(
-			''          => __( 'ABC', 'flatsome-admin' ),
-			'lowercase' => __( 'Abc', 'flatsome-admin' ),
+			''          => __( 'ABC', 'silver' ),
+			'lowercase' => __( 'Abc', 'silver' ),
 		),
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'        => 'text',
 		'settings'    => 'header_button_1_link',
-		'transport'   => flatsome_customizer_transport(),
+		'transport'   => silver_customizer_transport(),
 		'default'     => '',
-		'label'       => __( 'Link', 'flatsome-admin' ),
+		'label'       => __( 'Link', 'silver' ),
 		'section'     => 'header_buttons',
 		'description' => $smart_links,
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'      => 'select',
 		'settings'  => 'header_button_1_link_target',
-		'transport' => flatsome_customizer_transport(),
-		'label'     => __( 'Target', 'flatsome-admin' ),
+		'transport' => silver_customizer_transport(),
+		'label'     => __( 'Target', 'silver' ),
 		'section'   => 'header_buttons',
 		'default'   => '_self',
 		'choices'   => array(
-			'_self'  => __( 'Same window', 'flatsome-admin' ),
-			'_blank' => __( 'New window', 'flatsome-admin' ),
+			'_self'  => __( 'Same window', 'silver' ),
+			'_blank' => __( 'New window', 'silver' ),
 		),
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'        => 'text',
 		'settings'    => 'header_button_1_link_rel',
-		'transport'   => flatsome_customizer_transport(),
+		'transport'   => silver_customizer_transport(),
 		'default'     => '',
-		'label'       => __( 'Rel', 'flatsome-admin' ),
+		'label'       => __( 'Rel', 'silver' ),
 		'section'     => 'header_buttons',
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'      => 'text',
 		'settings'  => 'header_button_1_radius',
-		'transport' => flatsome_customizer_transport(),
+		'transport' => silver_customizer_transport(),
 		'default'   => '99px',
-		'label'     => __( 'Radius', 'flatsome-admin' ),
+		'label'     => __( 'Radius', 'silver' ),
 		'section'   => 'header_buttons',
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'      => 'select',
 		'settings'  => 'header_button_1_icon',
-		'transport' => flatsome_customizer_transport(),
-		'label'     => __( 'Icon', 'flatsome-admin' ),
+		'transport' => silver_customizer_transport(),
+		'label'     => __( 'Icon', 'silver' ),
 		'section'   => 'header_buttons',
 		'default'   => '',
 		'choices'   => require get_template_directory() . '/inc/builder/shortcodes/values/icons.php',
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'            => 'radio-buttonset',
 		'settings'        => 'header_button_1_icon_position',
-		'transport'       => flatsome_customizer_transport(),
-		'label'           => __( 'Icon position', 'flatsome-admin' ),
+		'transport'       => silver_customizer_transport(),
+		'label'           => __( 'Icon position', 'silver' ),
 		'section'         => 'header_buttons',
 		'default'         => '',
 		'choices'         => array(
-			'left' => __( 'Left', 'flatsome-admin' ),
-			''     => __( 'Right', 'flatsome-admin' ),
+			'left' => __( 'Left', 'silver' ),
+			''     => __( 'Right', 'silver' ),
 		),
 		'active_callback' => array(
 			array(
@@ -126,17 +126,17 @@ Flatsome_Option::add_field( 'option',
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'            => 'radio-buttonset',
 		'settings'        => 'header_button_1_icon_visibility',
-		'transport'       => flatsome_customizer_transport(),
-		'label'           => __( 'Icon visibility', 'flatsome-admin' ),
+		'transport'       => silver_customizer_transport(),
+		'label'           => __( 'Icon visibility', 'silver' ),
 		'section'         => 'header_buttons',
 		'default'         => '',
 		'choices'         => array(
-			''     => __( 'Always visible', 'flatsome-admin' ),
-			'true' => __( 'Visible on hover', 'flatsome-admin' ),
+			''     => __( 'Always visible', 'silver' ),
+			'true' => __( 'Visible on hover', 'silver' ),
 		),
 		'active_callback' => array(
 			array(
@@ -148,51 +148,51 @@ Flatsome_Option::add_field( 'option',
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'      => 'radio-buttonset',
 		'settings'  => 'header_button_1_color',
-		'transport' => flatsome_customizer_transport(),
-		'label'     => __( 'Color', 'flatsome-admin' ),
+		'transport' => silver_customizer_transport(),
+		'label'     => __( 'Color', 'silver' ),
 		'section'   => 'header_buttons',
 		'default'   => 'primary',
 		'choices'   => array(
-			'plain'     => __( 'Plain', 'flatsome-admin' ),
-			'primary'   => __( 'Primary', 'flatsome-admin' ),
-			'secondary' => __( 'Secondary', 'flatsome-admin' ),
-			'success'   => __( 'Success', 'flatsome-admin' ),
-			'alert'     => __( 'Alert', 'flatsome-admin' ),
+			'plain'     => __( 'Plain', 'silver' ),
+			'primary'   => __( 'Primary', 'silver' ),
+			'secondary' => __( 'Secondary', 'silver' ),
+			'success'   => __( 'Success', 'silver' ),
+			'alert'     => __( 'Alert', 'silver' ),
 		),
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'      => 'radio-buttonset',
 		'settings'  => 'header_button_1_style',
-		'transport' => flatsome_customizer_transport(),
-		'label'     => __( 'Style', 'flatsome-admin' ),
+		'transport' => silver_customizer_transport(),
+		'label'     => __( 'Style', 'silver' ),
 		'section'   => 'header_buttons',
 		'choices'   => $button_styles,
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'      => 'radio-buttonset',
 		'settings'  => 'header_button_1_size',
-		'transport' => flatsome_customizer_transport(),
-		'label'     => __( 'Size', 'flatsome-admin' ),
+		'transport' => silver_customizer_transport(),
+		'label'     => __( 'Size', 'silver' ),
 		'section'   => 'header_buttons',
 		'choices'   => $nav_sizes,
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'      => 'slider',
 		'settings'  => 'header_button_1_depth',
-		'label'     => __( 'Depth', 'flatsome-admin' ),
+		'label'     => __( 'Depth', 'silver' ),
 		'section'   => 'header_buttons',
 		'default'   => 0,
 		'choices'   => array(
@@ -200,15 +200,15 @@ Flatsome_Option::add_field( 'option',
 			'max'  => 5,
 			'step' => 1,
 		),
-		'transport' => flatsome_customizer_transport(),
+		'transport' => silver_customizer_transport(),
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'      => 'slider',
 		'settings'  => 'header_button_1_depth_hover',
-		'label'     => __( 'Depth :hover', 'flatsome-admin' ),
+		'label'     => __( 'Depth :hover', 'silver' ),
 		'section'   => 'header_buttons',
 		'default'   => 0,
 		'choices'   => array(
@@ -216,118 +216,118 @@ Flatsome_Option::add_field( 'option',
 			'max'  => 5,
 			'step' => 1,
 		),
-		'transport' => flatsome_customizer_transport(),
+		'transport' => silver_customizer_transport(),
 	)
 );
 
-Flatsome_Option::add_field( '',
+Silver_Option::add_field( '',
 	array(
 		'type'     => 'custom',
 		'settings' => 'custom_title_button_2',
-		'label'    => __( '', 'flatsome-admin' ),
+		'label'    => __( '', 'silver' ),
 		'section'  => 'header_buttons',
 		'default'  => '<div class="options-title-divider">Button 2</div>',
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'      => 'text',
 		'settings'  => 'header_button_2',
-		'transport' => flatsome_customizer_transport(),
+		'transport' => silver_customizer_transport(),
 		'default'   => 'Button 2',
-		'label'     => __( 'Text', 'flatsome-admin' ),
+		'label'     => __( 'Text', 'silver' ),
 		'section'   => 'header_buttons',
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'      => 'radio-buttonset',
 		'settings'  => 'header_button_2_letter_case',
-		'transport' => flatsome_customizer_transport(),
-		'label'     => __( 'Letter case', 'flatsome-admin' ),
+		'transport' => silver_customizer_transport(),
+		'label'     => __( 'Letter case', 'silver' ),
 		'section'   => 'header_buttons',
 		'default'   => '',
 		'choices'   => array(
-			''          => __( 'ABC', 'flatsome-admin' ),
-			'lowercase' => __( 'Abc', 'flatsome-admin' ),
+			''          => __( 'ABC', 'silver' ),
+			'lowercase' => __( 'Abc', 'silver' ),
 		),
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'        => 'text',
 		'settings'    => 'header_button_2_link',
-		'transport'   => flatsome_customizer_transport(),
+		'transport'   => silver_customizer_transport(),
 		'default'     => '',
-		'label'       => __( 'Link', 'flatsome-admin' ),
+		'label'       => __( 'Link', 'silver' ),
 		'section'     => 'header_buttons',
 		'description' => $smart_links,
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'      => 'select',
 		'settings'  => 'header_button_2_link_target',
-		'transport' => flatsome_customizer_transport(),
-		'label'     => __( 'Target', 'flatsome-admin' ),
+		'transport' => silver_customizer_transport(),
+		'label'     => __( 'Target', 'silver' ),
 		'section'   => 'header_buttons',
 		'default'   => '_self',
 		'choices'   => array(
-			'_self'  => __( 'Same window', 'flatsome-admin' ),
-			'_blank' => __( 'New window', 'flatsome-admin' ),
+			'_self'  => __( 'Same window', 'silver' ),
+			'_blank' => __( 'New window', 'silver' ),
 		),
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'        => 'text',
 		'settings'    => 'header_button_2_link_rel',
-		'transport'   => flatsome_customizer_transport(),
+		'transport'   => silver_customizer_transport(),
 		'default'     => '',
-		'label'       => __( 'Rel', 'flatsome-admin' ),
+		'label'       => __( 'Rel', 'silver' ),
 		'section'     => 'header_buttons',
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'      => 'text',
 		'settings'  => 'header_button_2_radius',
-		'transport' => flatsome_customizer_transport(),
+		'transport' => silver_customizer_transport(),
 		'default'   => '99px',
-		'label'     => __( 'Radius', 'flatsome-admin' ),
+		'label'     => __( 'Radius', 'silver' ),
 		'section'   => 'header_buttons',
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'      => 'select',
 		'settings'  => 'header_button_2_icon',
-		'transport' => flatsome_customizer_transport(),
-		'label'     => __( 'Icon', 'flatsome-admin' ),
+		'transport' => silver_customizer_transport(),
+		'label'     => __( 'Icon', 'silver' ),
 		'section'   => 'header_buttons',
 		'default'   => '',
 		'choices'   => require get_template_directory() . '/inc/builder/shortcodes/values/icons.php',
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'            => 'radio-buttonset',
 		'settings'        => 'header_button_2_icon_position',
-		'transport'       => flatsome_customizer_transport(),
-		'label'           => __( 'Icon position', 'flatsome-admin' ),
+		'transport'       => silver_customizer_transport(),
+		'label'           => __( 'Icon position', 'silver' ),
 		'section'         => 'header_buttons',
 		'default'         => '',
 		'choices'         => array(
-			'left' => __( 'Left', 'flatsome-admin' ),
-			''     => __( 'Right', 'flatsome-admin' ),
+			'left' => __( 'Left', 'silver' ),
+			''     => __( 'Right', 'silver' ),
 		),
 		'active_callback' => array(
 			array(
@@ -339,17 +339,17 @@ Flatsome_Option::add_field( 'option',
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'            => 'radio-buttonset',
 		'settings'        => 'header_button_2_icon_visibility',
-		'transport'       => flatsome_customizer_transport(),
-		'label'           => __( 'Icon visibility', 'flatsome-admin' ),
+		'transport'       => silver_customizer_transport(),
+		'label'           => __( 'Icon visibility', 'silver' ),
 		'section'         => 'header_buttons',
 		'default'         => '',
 		'choices'         => array(
-			''     => __( 'Always visible', 'flatsome-admin' ),
-			'true' => __( 'Visible on hover', 'flatsome-admin' ),
+			''     => __( 'Always visible', 'silver' ),
+			'true' => __( 'Visible on hover', 'silver' ),
 		),
 		'active_callback' => array(
 			array(
@@ -361,52 +361,52 @@ Flatsome_Option::add_field( 'option',
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'      => 'radio-buttonset',
 		'settings'  => 'header_button_2_color',
-		'transport' => flatsome_customizer_transport(),
-		'label'     => __( 'Color', 'flatsome-admin' ),
+		'transport' => silver_customizer_transport(),
+		'label'     => __( 'Color', 'silver' ),
 		'section'   => 'header_buttons',
 		'default'   => 'secondary',
 		'choices'   => array(
-			'plain'     => __( 'Plain', 'flatsome-admin' ),
-			'primary'   => __( 'Primary', 'flatsome-admin' ),
-			'secondary' => __( 'Secondary', 'flatsome-admin' ),
-			'success'   => __( 'Success', 'flatsome-admin' ),
-			'alert'     => __( 'Alert', 'flatsome-admin' ),
+			'plain'     => __( 'Plain', 'silver' ),
+			'primary'   => __( 'Primary', 'silver' ),
+			'secondary' => __( 'Secondary', 'silver' ),
+			'success'   => __( 'Success', 'silver' ),
+			'alert'     => __( 'Alert', 'silver' ),
 		),
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'      => 'radio-buttonset',
 		'settings'  => 'header_button_2_style',
-		'transport' => flatsome_customizer_transport(),
-		'label'     => __( 'Style', 'flatsome-admin' ),
+		'transport' => silver_customizer_transport(),
+		'label'     => __( 'Style', 'silver' ),
 		'section'   => 'header_buttons',
 		'default'   => 'outline',
 		'choices'   => $button_styles,
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'      => 'radio-buttonset',
 		'settings'  => 'header_button_2_size',
-		'transport' => flatsome_customizer_transport(),
-		'label'     => __( 'Size', 'flatsome-admin' ),
+		'transport' => silver_customizer_transport(),
+		'label'     => __( 'Size', 'silver' ),
 		'section'   => 'header_buttons',
 		'choices'   => $nav_sizes,
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'      => 'slider',
 		'settings'  => 'header_button_2_depth',
-		'label'     => __( 'Depth', 'flatsome-admin' ),
+		'label'     => __( 'Depth', 'silver' ),
 		'section'   => 'header_buttons',
 		'default'   => 0,
 		'choices'   => array(
@@ -414,15 +414,15 @@ Flatsome_Option::add_field( 'option',
 			'max'  => 5,
 			'step' => 1,
 		),
-		'transport' => flatsome_customizer_transport(),
+		'transport' => silver_customizer_transport(),
 	)
 );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'      => 'slider',
 		'settings'  => 'header_button_2_depth_hover',
-		'label'     => __( 'Depth :hover', 'flatsome-admin' ),
+		'label'     => __( 'Depth :hover', 'silver' ),
 		'section'   => 'header_buttons',
 		'default'   => 0,
 		'choices'   => array(
@@ -430,11 +430,11 @@ Flatsome_Option::add_field( 'option',
 			'max'  => 5,
 			'step' => 1,
 		),
-		'transport' => flatsome_customizer_transport(),
+		'transport' => silver_customizer_transport(),
 	)
 );
 
-function flatsome_refresh_header_buttons_partials( WP_Customize_Manager $wp_customize ) {
+function silver_refresh_header_buttons_partials( WP_Customize_Manager $wp_customize ) {
 	// Abort if selective refresh is not available.
 	if ( ! isset( $wp_customize->selective_refresh ) ) {
 		return;
@@ -490,4 +490,4 @@ function flatsome_refresh_header_buttons_partials( WP_Customize_Manager $wp_cust
 
 }
 
-add_action( 'customize_register', 'flatsome_refresh_header_buttons_partials' );
+add_action( 'customize_register', 'silver_refresh_header_buttons_partials' );

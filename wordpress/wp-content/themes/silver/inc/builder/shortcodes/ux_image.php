@@ -14,7 +14,7 @@ add_ux_builder_shortcode( 'ux_image', array(
     'name' => __( 'Image', 'ux-builder'),
     'category' => __( 'Content' ),
     'toolbar_thumbnail' => 'id',
-    'thumbnail' =>  flatsome_ux_builder_thumbnail( 'ux_image' ),
+    'thumbnail' =>  silver_ux_builder_thumbnail( 'ux_image' ),
     'wrap' => false,
 
     'presets' => array(
@@ -36,7 +36,7 @@ add_ux_builder_shortcode( 'ux_image', array(
             'heading' => 'Image Size',
             'param_name' => 'image_size',
             'default' => 'large',
-            'options' => flatsome_ux_builder_image_sizes(),
+            'options' => silver_ux_builder_image_sizes(),
         ),
         'width' => array(
           'type' => 'slider',
@@ -51,6 +51,7 @@ add_ux_builder_shortcode( 'ux_image', array(
           ),
         ),
         'height' => array(
+              'responsive' => true,
               'type' => 'scrubfield',
               'heading' => __('Height'),
               'default' => '',
@@ -88,7 +89,7 @@ add_ux_builder_shortcode( 'ux_image', array(
 	        'heading'    => __( 'Lightbox Image Size' ),
 	        'conditions' => 'lightbox == "true"',
 	        'default'    => 'large',
-	        'options'    => flatsome_ux_builder_image_sizes(),
+	        'options'    => silver_ux_builder_image_sizes(),
         ),
 
         'caption' => array(

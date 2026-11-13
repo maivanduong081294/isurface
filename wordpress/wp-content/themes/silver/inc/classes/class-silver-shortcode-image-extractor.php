@@ -2,20 +2,20 @@
 /**
  * This class is responsible for extracting images from shortcodes in content.
  *
- * @package Flatsome
+ * @package Silver
  * @since   3.18.3
  */
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Class Flatsome_Shortcode_Image_Extractor
+ * Class Silver_Shortcode_Image_Extractor
  */
-final class Flatsome_Shortcode_Image_Extractor {
+final class Silver_Shortcode_Image_Extractor {
 	/**
 	 * The single instance of the class.
 	 *
-	 * @var Flatsome_Shortcode_Image_Extractor
+	 * @var Silver_Shortcode_Image_Extractor
 	 */
 	protected static $instance = null;
 
@@ -145,7 +145,7 @@ final class Flatsome_Shortcode_Image_Extractor {
 				$atts = shortcode_parse_atts( $atts_string );
 				if ( empty( $atts['id'] ) ) continue;
 
-				$block_id = flatsome_get_block_id( $atts['id'] );
+				$block_id = silver_get_block_id( $atts['id'] );
 				$block    = $block_id ? get_post( $block_id ) : null;
 				if ( $block === null ) continue;
 
@@ -165,7 +165,7 @@ final class Flatsome_Shortcode_Image_Extractor {
 	/**
 	 * Main instance.
 	 *
-	 * @return Flatsome_Shortcode_Image_Extractor
+	 * @return Silver_Shortcode_Image_Extractor
 	 */
 	public static function get_instance() {
 		if ( is_null( self::$instance ) ) {

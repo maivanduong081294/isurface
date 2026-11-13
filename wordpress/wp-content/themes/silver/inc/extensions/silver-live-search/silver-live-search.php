@@ -1,16 +1,16 @@
 <?php
 
-function flatsome_live_search_script() {
+function silver_live_search_script() {
 	wp_enqueue_script(
-		'flatsome-live-search',
+		'silver-live-search',
 		get_template_directory_uri() . '/assets/js/extensions/silver-live-search.js',
 		[ 'jquery' ],
-		flatsome()->version(),
+		silver()->version(),
 		true
 	);
 }
 
-add_action( 'wp_enqueue_scripts', 'flatsome_live_search_script' );
+add_action( 'wp_enqueue_scripts', 'silver_live_search_script' );
 
 /**
  * Search for posts and pages.
@@ -19,14 +19,14 @@ add_action( 'wp_enqueue_scripts', 'flatsome_live_search_script' );
  *
  * @return array Posts.
  */
-function flatsome_ajax_search_posts( $args ) {
+function silver_ajax_search_posts( $args ) {
 	$defaults = $args;
 
-	$args['s']         = apply_filters( 'flatsome_ajax_search_query', $args['s'] );
-	$args['post_type'] = apply_filters( 'flatsome_ajax_search_post_type', array( 'post', 'page' ) );
+	$args['s']         = apply_filters( 'silver_ajax_search_query', $args['s'] );
+	$args['post_type'] = apply_filters( 'silver_ajax_search_post_type', array( 'post', 'page' ) );
 
 	$search_query   = http_build_query( $args );
-	$query_function = apply_filters( 'flatsome_ajax_search_function', 'get_posts', $search_query, $args, $defaults );
+	$query_function = apply_filters( 'silver_ajax_search_function', 'get_posts', $search_query, $args, $defaults );
 
 	return ( ( $query_function == 'get_posts' ) || ! function_exists( $query_function ) ) ? get_posts( $args ) : $query_function( $search_query, $args, $defaults );
 }
@@ -39,7 +39,7 @@ function flatsome_ajax_search_posts( $args ) {
  *
  * @return array Products.
  */
-function flatsome_ajax_search_get_products( $search_type, array $args ) {
+function silver_ajax_search_get_products( $search_type, array $args ) {
 	$order_by      = get_theme_mod( 'search_products_order_by', 'relevance' );
 	$order         = get_theme_mod( 'search_products_order', 'ASC' );
 	$ordering_args = WC()->query->get_catalog_ordering_args( $order_by, $order );
@@ -50,22 +50,22 @@ function flatsome_ajax_search_get_products( $search_type, array $args ) {
 	$args['order']      = $ordering_args['order'];
 	$args['meta_query'] = WC()->query->get_meta_query(); // WPCS: slow query ok.
 	$args['tax_query']  = array(); // WPCS: slow query ok.
-	$args               = flatsome_ajax_search_catalog_visibility( $args );
-	$args               = flatsome_ajax_search_query_by_category( $args );
+	$args               = silver_ajax_search_catalog_visibility( $args );
+	$args               = silver_ajax_search_query_by_category( $args );
 
 	switch ( $search_type ) {
 		case 'product':
-			$args['s'] = apply_filters( 'flatsome_ajax_search_products_search_query', $args['s'] );
+			$args['s'] = apply_filters( 'silver_ajax_search_products_search_query', $args['s'] );
 			break;
 		case 'tag':
 			$args['s']           = '';
-			$args['product_tag'] = apply_filters( 'flatsome_ajax_search_products_by_tag_search_query', $args['s'] );
+			$args['product_tag'] = apply_filters( 'silver_ajax_search_products_by_tag_search_query', $args['s'] );
 			break;
 		case 'sku':
-			$query                = apply_filters( 'flatsome_ajax_search_products_by_sku_search_query', $args['s'] );
+			$query                = apply_filters( 'silver_ajax_search_products_by_sku_search_query', $args['s'] );
 			$args['s']            = '';
 			$args['post_type']    = array( 'product', 'product_variation' );
-			$args['meta_query'][] = apply_filters( 'flatsome_ajax_search_products_by_sku_search_meta_query_args', array(
+			$args['meta_query'][] = apply_filters( 'silver_ajax_search_products_by_sku_search_meta_query_args', array(
 				'key'   => '_sku',
 				'value' => $query,
 			), $query );
@@ -73,7 +73,7 @@ function flatsome_ajax_search_get_products( $search_type, array $args ) {
 	}
 
 	$search_query   = http_build_query( $args );
-	$query_function = apply_filters( 'flatsome_ajax_search_function', 'get_posts', $search_query, $args, $defaults );
+	$query_function = apply_filters( 'silver_ajax_search_function', 'get_posts', $search_query, $args, $defaults );
 
 	return ( ( $query_function === 'get_posts' ) || ! function_exists( $query_function ) ) ? get_posts( $args ) : $query_function( $search_query, $args, $defaults );
 }
@@ -85,7 +85,7 @@ function flatsome_ajax_search_get_products( $search_type, array $args ) {
  *
  * @return array Query args with addition.
  */
-function flatsome_ajax_search_catalog_visibility( $args ) {
+function silver_ajax_search_catalog_visibility( $args ) {
 	$product_visibility_term_ids = wc_get_product_visibility_term_ids();
 
 	// Catalog visibility.
@@ -116,7 +116,7 @@ function flatsome_ajax_search_catalog_visibility( $args ) {
  *
  * @return array Query args with or without addition.
  */
-function flatsome_ajax_search_query_by_category( $args ) {
+function silver_ajax_search_query_by_category( $args ) {
 	if ( isset( $_REQUEST['product_cat'] ) ) {
 		$args['tax_query'][] = array(
 			'taxonomy' => 'product_cat',
@@ -131,7 +131,7 @@ function flatsome_ajax_search_query_by_category( $args ) {
 /**
  * Search AJAX handler.
  */
-function flatsome_ajax_search() {
+function silver_ajax_search() {
 	if ( ! isset( $_REQUEST['query'] ) ) {
 		wp_send_json_error( [
 			'message' => 'No search query provided',
@@ -139,7 +139,7 @@ function flatsome_ajax_search() {
 	}
 
 	// The string from search text field.
-	$query        = apply_filters( 'flatsome_ajax_search_query', sanitize_text_field( wp_unslash( $_REQUEST['query'] ) ) );
+	$query        = apply_filters( 'silver_ajax_search_query', sanitize_text_field( wp_unslash( $_REQUEST['query'] ) ) );
 	$wc_activated = is_woocommerce_activated();
 	$products     = array();
 	$posts        = array();
@@ -159,13 +159,13 @@ function flatsome_ajax_search() {
 	);
 
 	if ( $wc_activated ) {
-		$products     = flatsome_ajax_search_get_products( 'product', $args );
-		$sku_products = get_theme_mod( 'search_by_sku', 0 ) ? flatsome_ajax_search_get_products( 'sku', $args ) : array();
-		$tag_products = get_theme_mod( 'search_by_product_tag', 0 ) ? flatsome_ajax_search_get_products( 'tag', $args ) : array();
+		$products     = silver_ajax_search_get_products( 'product', $args );
+		$sku_products = get_theme_mod( 'search_by_sku', 0 ) ? silver_ajax_search_get_products( 'sku', $args ) : array();
+		$tag_products = get_theme_mod( 'search_by_product_tag', 0 ) ? silver_ajax_search_get_products( 'tag', $args ) : array();
 	}
 
 	if ( ( ! $wc_activated || get_theme_mod( 'search_result', 1 ) ) && ! isset( $_REQUEST['product_cat'] ) ) {
-		$posts = flatsome_ajax_search_posts( $args );
+		$posts = silver_ajax_search_posts( $args );
 	}
 
 	$results = array_merge( $products, $sku_products, $tag_products, $posts );
@@ -206,7 +206,7 @@ function flatsome_ajax_search() {
 	}
 
 	if ( empty( $results ) ) {
-		$no_results = $wc_activated ? __( 'No products found.', 'woocommerce' ) : __( 'No matches found', 'flatsome' );
+		$no_results = $wc_activated ? __( 'No products found.', 'woocommerce' ) : __( 'No matches found', 'silver' );
 
 		$suggestions[] = array(
 			'id'    => -1,
@@ -215,13 +215,13 @@ function flatsome_ajax_search() {
 		);
 	}
 
-	$suggestions = flatsome_unique_suggestions( array( $products, $sku_products, $tag_products ), $suggestions );
+	$suggestions = silver_unique_suggestions( array( $products, $sku_products, $tag_products ), $suggestions );
 
 	wp_send_json( array( 'suggestions' => $suggestions ) );
 }
 
-add_action( 'wp_ajax_flatsome_ajax_search_products', 'flatsome_ajax_search' );
-add_action( 'wp_ajax_nopriv_flatsome_ajax_search_products', 'flatsome_ajax_search' );
+add_action( 'wp_ajax_silver_ajax_search_products', 'silver_ajax_search' );
+add_action( 'wp_ajax_nopriv_silver_ajax_search_products', 'silver_ajax_search' );
 
 /**
  * Makes search suggestions unique if multiple raw_results have values.
@@ -231,7 +231,7 @@ add_action( 'wp_ajax_nopriv_flatsome_ajax_search_products', 'flatsome_ajax_searc
  *
  * @return array Unique suggestions.
  */
-function flatsome_unique_suggestions( array $raw_results, array $suggestions ) {
+function silver_unique_suggestions( array $raw_results, array $suggestions ) {
 	$results         = array_map( function ( $n ) { return $n ? true : false; }, $raw_results );
 	$needs_filtering = count( array_filter( $results ) ) > 1;
 

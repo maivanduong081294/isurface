@@ -3,14 +3,14 @@
  * YITH wishlist integration
  *
  * @author      UX Themes
- * @package     Flatsome/Integrations
+ * @package     Silver/Integrations
  */
 
-if ( ! function_exists( 'flatsome_wishlist_integrations_scripts' ) ) {
+if ( ! function_exists( 'silver_wishlist_integrations_scripts' ) ) {
 	/**
 	 * Enqueues wishlist integrations scripts
 	 */
-	function flatsome_wishlist_integrations_scripts() {
+	function silver_wishlist_integrations_scripts() {
 		global $integrations_uri;
 
 		wp_dequeue_style( 'yith-wcwl-main' );
@@ -22,29 +22,29 @@ if ( ! function_exists( 'flatsome_wishlist_integrations_scripts' ) ) {
 		wp_dequeue_style( 'yith_wcas_frontend' );
 		wp_deregister_style( 'yith_wcas_frontend' );
 
-		wp_enqueue_script( 'flatsome-woocommerce-wishlist', $integrations_uri . '/wc-yith-wishlist/wishlist.js', array( 'jquery', 'flatsome-js' ), flatsome()->version(), true );
-		wp_enqueue_style( 'flatsome-woocommerce-wishlist', $integrations_uri . '/wc-yith-wishlist/wishlist.css', 'flatsome-woocommerce-style', flatsome()->version() );
+		wp_enqueue_script( 'silver-woocommerce-wishlist', $integrations_uri . '/wc-yith-wishlist/wishlist.js', array( 'jquery', 'silver-js' ), silver()->version(), true );
+		wp_enqueue_style( 'silver-woocommerce-wishlist', $integrations_uri . '/wc-yith-wishlist/wishlist.css', 'silver-woocommerce-style', silver()->version() );
 	}
 }
 
-add_action( 'wp_enqueue_scripts', 'flatsome_wishlist_integrations_scripts' );
+add_action( 'wp_enqueue_scripts', 'silver_wishlist_integrations_scripts' );
 
 /**
  * Force YITH Wishlist to use PHP templates.
  *
  * @return string
  */
-function flatsome_yith_wcwl_rendering_method(): string {
+function silver_yith_wcwl_rendering_method(): string {
 	return 'php-templates';
 }
 
-add_filter( 'yith_wcwl_rendering_method', 'flatsome_yith_wcwl_rendering_method' );
+add_filter( 'yith_wcwl_rendering_method', 'silver_yith_wcwl_rendering_method' );
 
-if ( ! function_exists( 'flatsome_wishlist_account_item' ) ) {
+if ( ! function_exists( 'silver_wishlist_account_item' ) ) {
 	/**
 	 * Add wishlist button to my account dropdown
 	 */
-	function flatsome_wishlist_account_item() {
+	function silver_wishlist_account_item() {
 		$page_id = get_option( 'yith_wcwl_wishlist_page_id' );
 		if ( ! $page_id ) {
 			return;
@@ -58,20 +58,20 @@ if ( ! function_exists( 'flatsome_wishlist_account_item' ) ) {
 		<?php
 	}
 }
-add_action( 'flatsome_account_links', 'flatsome_wishlist_account_item' );
+add_action( 'silver_account_links', 'silver_wishlist_account_item' );
 
 
-if ( ! function_exists( 'flatsome_product_wishlist_button' ) ) {
+if ( ! function_exists( 'silver_product_wishlist_button' ) ) {
 	/**
 	 * Add wishlist Button to Product Image
 	 */
-	function flatsome_product_wishlist_button() {
+	function silver_product_wishlist_button() {
 		$icon                = get_theme_mod( 'wishlist_icon', 'heart' );
 		if ( ! $icon ) $icon = 'heart';
 		?>
 		<div class="wishlist-icon">
-			<button class="wishlist-button button is-outline circle icon" aria-label="<?php echo esc_html__( 'Wishlist', 'flatsome' ); ?>">
-				<?php echo get_flatsome_icon( 'icon-' . $icon ); ?>
+			<button class="wishlist-button button is-outline circle icon" aria-label="<?php echo esc_html__( 'Wishlist', 'silver' ); ?>">
+				<?php echo get_silver_icon( 'icon-' . $icon ); ?>
 			</button>
 			<div class="wishlist-popup dark">
 				<?php echo do_shortcode( '[yith_wcwl_add_to_wishlist]' ); ?>
@@ -81,10 +81,10 @@ if ( ! function_exists( 'flatsome_product_wishlist_button' ) ) {
 	}
 }
 
-add_action( 'flatsome_product_image_tools_top', 'flatsome_product_wishlist_button', 2 );
-add_action( 'flatsome_product_box_tools_top', 'flatsome_product_wishlist_button', 2 );
+add_action( 'silver_product_image_tools_top', 'silver_product_wishlist_button', 2 );
+add_action( 'silver_product_box_tools_top', 'silver_product_wishlist_button', 2 );
 
-if ( ! function_exists( 'flatsome_header_wishlist' ) ) {
+if ( ! function_exists( 'silver_header_wishlist' ) ) {
 	/**
 	 * Registers the wishlist header element.
 	 *
@@ -92,20 +92,20 @@ if ( ! function_exists( 'flatsome_header_wishlist' ) ) {
 	 *
 	 * @return array
 	 */
-	function flatsome_header_wishlist( $elements ) {
-		$elements['wishlist'] = esc_html__( 'Wishlist', 'flatsome' );
+	function silver_header_wishlist( $elements ) {
+		$elements['wishlist'] = esc_html__( 'Wishlist', 'silver' );
 
 		return $elements;
 	}
 }
 
-add_filter( 'flatsome_header_element', 'flatsome_header_wishlist' );
+add_filter( 'silver_header_element', 'silver_header_wishlist' );
 
-if ( ! function_exists( 'flatsome_update_wishlist_count' ) ) {
+if ( ! function_exists( 'silver_update_wishlist_count' ) ) {
 	/**
 	 * Update Wishlist Count
 	 */
-	function flatsome_update_wishlist_count() {
+	function silver_update_wishlist_count() {
 		$count = function_exists( 'yith_wcwl_wishlists' )
 			? yith_wcwl_wishlists()->count_items_in_wishlist()
 			: YITH_WCWL()->count_products();
@@ -114,5 +114,5 @@ if ( ! function_exists( 'flatsome_update_wishlist_count' ) ) {
 	}
 }
 
-add_action( 'wp_ajax_flatsome_update_wishlist_count', 'flatsome_update_wishlist_count' );
-add_action( 'wp_ajax_nopriv_flatsome_update_wishlist_count', 'flatsome_update_wishlist_count' );
+add_action( 'wp_ajax_silver_update_wishlist_count', 'silver_update_wishlist_count' );
+add_action( 'wp_ajax_nopriv_silver_update_wishlist_count', 'silver_update_wishlist_count' );

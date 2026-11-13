@@ -8,9 +8,9 @@
 	row-box-shadow-{{ shortcode.options.depthHover }}-hover
 	{{ shortcode.options.class }}
 	{{ shortcode.options.visibility }}
-	align-{{ shortcode.options.vAlign }}
-	align-{{ shortcode.options.hAlign }}"
-	ng-style="{'max-width' : (shortcode.options.width == 'custom') ? shortcode.options.customWidth : ''}">
+	{{ shortcode.options.vAlign && shortcode.options.vAlign !== 'top' ? 'align-' + shortcode.options.vAlign : '' }}
+	{{ shortcode.options.hAlign && shortcode.options.hAlign !== 'left' ? 'align-' + shortcode.options.hAlign : '' }}"
+	ng-style="{'max-width' : (shortcode.options.width == 'custom') ? shortcode.options.customWidth : '', 'flex-wrap' : (shortcode.options.flexWrap || ''), 'flex-direction' : (shortcode.options.flexReverse === 'yes' ? 'row-reverse' : '')}">
 
     <content></content>
 

@@ -49,7 +49,7 @@ function ux_image_box( $atts, $content = null ) {
 		'rel'    => array( $rel ),
 	);
 
-	$link_start = '<a href="' . esc_url( $link ) . '"' . flatsome_parse_target_rel( $link_atts ) . '>';
+	$link_start = '<a href="' . esc_url( $link ) . '"' . silver_parse_target_rel( $link_atts ) . '>';
 	$link_end   = '</a>';
 
 	if ( $style ) $classes_box[] = 'box-' . $style;
@@ -61,6 +61,11 @@ function ux_image_box( $atts, $content = null ) {
 
 	if ( $image_hover ) $classes_image[] = 'image-' . $image_hover;
 	if ( $image_hover_alt ) $classes_image[] = 'image-' . $image_hover_alt;
+
+	// Responsive Box styles: base value + CSS for larger screens.
+	$image_height = silver_responsive_base( (array) $atts, 'image_height' ) ?: $image_height;
+	list( $_id, $responsive_style ) = silver_responsive_single_box( $_id, $atts, 'image-box-' );
+
 	if ( $image_height ) $classes_image[] = 'image-cover';
 
 	// Text classes
@@ -86,12 +91,13 @@ function ux_image_box( $atts, $content = null ) {
 	);
 
 	?>
-	<div class="box has-hover <?php echo esc_attr( implode( ' ', $classes_box ) ); ?>" <?php echo $animate; ?>>
+	<?php echo $responsive_style; // phpcs:ignore WordPress.Security.EscapeOutput ?>
+	<div<?php echo $_id ? ' id="' . esc_attr( $_id ) . '"' : ''; ?> class="box has-hover <?php echo esc_attr( implode( ' ', $classes_box ) ); ?>" <?php echo $animate; ?>>
 
 		<div class="box-image" <?php echo get_shortcode_inline_css( $css_image ); ?>>
 			<?php if ( $link ) echo $link_start; ?>
 			<div class="<?php echo esc_attr( implode( ' ', $classes_image ) ); ?>" <?php echo get_shortcode_inline_css( $css_image_height ); ?>>
-				<?php echo flatsome_get_image( $img, $image_size ); ?>
+				<?php echo silver_get_image( $img, $image_size ); ?>
 				<?php if ( $image_overlay ) { ?><div class="overlay" style="background-color:<?php echo esc_attr( $image_overlay ); ?>"></div><?php } ?>
 				<?php if ( $style == 'shade' ) { ?><div class="shade"></div><?php } ?>
 			</div>

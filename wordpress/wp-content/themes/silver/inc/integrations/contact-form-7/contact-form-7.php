@@ -1,7 +1,7 @@
 <?php
 
 
-function flatsome_contact_form_presets($args){
+function silver_contact_form_presets($args){
  	?>
     <div class="metabox-holder">
     <p style="font-size: 1.5em; background-color: rgba(0, 130, 0, 0.09); padding-bottom:15px;">
@@ -51,14 +51,14 @@ function flatsome_contact_form_presets($args){
  	<?php
 }
 
-function flatsome_contact_form_presets_tab( $panels ) {
+function silver_contact_form_presets_tab( $panels ) {
   $new_page = array(
-    'Flatsome-Presets' => array(
-      'title' => __( 'Presets', 'flatsome-admin' ),
-      'callback' => 'flatsome_contact_form_presets'
+    'Silver-Presets' => array(
+      'title' => __( 'Presets', 'silver' ),
+      'callback' => 'silver_contact_form_presets'
     )
   );
   $panels = array_merge($new_page,$panels);
   return $panels;
 }
-add_filter( 'wpcf7_editor_panels', 'flatsome_contact_form_presets_tab' ,50);
+add_filter( 'wpcf7_editor_panels', 'silver_contact_form_presets_tab' ,50);

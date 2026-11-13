@@ -62,7 +62,7 @@ class Kirki_Fonts_Downloader {
 	 * @return array      Returns an array of remote URLs and their local counterparts.
 	 */
 	protected function get_local_files_from_css( $css ) {
-		$fonts_dir  = flatsome_get_fonts_dir();
+		$fonts_dir  = silver_get_fonts_dir();
 		$font_files = $this->get_files_from_css( $css );
 		$stored     = get_option( 'kirki_downloaded_font_files', array() );
 		$change     = false; // If in the end this is true, we need to update the cache option.
@@ -185,7 +185,7 @@ class Kirki_Fonts_Downloader {
 			 * The default user-agent is the only one compatible with woff (not woff2)
 			 * which also supports unicode ranges.
 			 *
-			 * From flatsome 3.18.5 User agent changed to woff2 compatible. Old: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.1.2 Safari/603.3.8'
+			 * From silver 3.18.5 User agent changed to woff2 compatible. Old: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.1.2 Safari/603.3.8'
 			 */
 			$user_agent = 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:73.0) Gecko/20100101 Firefox/73.0';
 		}

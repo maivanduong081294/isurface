@@ -2,17 +2,17 @@
 /**
  * Additional variation images admin class.
  *
- * @package Flatsome\Extensions
+ * @package Silver\Extensions
  */
 
-namespace Flatsome\Extensions;
+namespace Silver\Extensions;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Class Variation_Images_Admin
  *
- * @package Flatsome\Extensions
+ * @package Silver\Extensions
  */
 class Variation_Images_Admin {
 
@@ -53,7 +53,7 @@ class Variation_Images_Admin {
 	private function __construct() {
 		add_action( 'admin_print_scripts', array( $this, 'enqueue_scripts' ) );
 
-		add_action( 'wp_ajax_flatsome_additional_variation_images_load_images_ajax', array( $this, 'load_images_ajax' ) );
+		add_action( 'wp_ajax_silver_additional_variation_images_load_images_ajax', array( $this, 'load_images_ajax' ) );
 		add_action( 'save_post', array( $this, 'save_post_meta' ), 1, 2 );
 		add_action( 'woocommerce_save_product_variation', array( $this, 'save_product_variation' ), 10, 2 );
 	}
@@ -64,13 +64,13 @@ class Variation_Images_Admin {
 	public function enqueue_scripts() {
 		if ( 'product' === get_post_type() ) {
 			wp_enqueue_style(
-				'flatsome-variation-images-admin',
+				'silver-variation-images-admin',
 				get_template_directory_uri() . '/assets/css/extensions/silver-variation-images-admin.css',
 				array(),
 				variation_images()->version
 			);
 			wp_enqueue_script(
-				'flatsome-variation-images-admin',
+				'silver-variation-images-admin',
 				get_template_directory_uri() . '/assets/js/extensions/silver-variation-images-admin.js',
 				array( 'jquery' ),
 				variation_images()->version,
@@ -78,12 +78,12 @@ class Variation_Images_Admin {
 			);
 
 			wp_localize_script(
-				'flatsome-variation-images-admin',
-				'flatsome_variation_images_admin',
+				'silver-variation-images-admin',
+				'silver_variation_images_admin',
 				array(
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
 					'nonce'   => array(
-						'load_images' => wp_create_nonce( 'flatsome-variation-images-load-images' ),
+						'load_images' => wp_create_nonce( 'silver-variation-images-load-images' ),
 					),
 				)
 			);
@@ -99,7 +99,7 @@ class Variation_Images_Admin {
 			exit;
 		}
 
-		if ( ! check_ajax_referer( 'flatsome-variation-images-load-images', 'nonce', false ) ) {
+		if ( ! check_ajax_referer( 'silver-variation-images-load-images', 'nonce', false ) ) {
 			wp_send_json_error( array(
 				'message' => 'Invalid nonce',
 			) );

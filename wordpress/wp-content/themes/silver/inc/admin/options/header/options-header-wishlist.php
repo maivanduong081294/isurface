@@ -4,17 +4,17 @@
  * - Wishlist Options
  *************/
 
-  Flatsome_Option::add_section( 'header_wishlist', array(
-    'title'       => __( 'Wishlist', 'flatsome-admin' ),
+  Silver_Option::add_section( 'header_wishlist', array(
+    'title'       => __( 'Wishlist', 'silver' ),
     'panel'       => 'header',
     'priority' => 110,
   ) );
 
-  Flatsome_Option::add_field( 'option', array(
+  Silver_Option::add_field( 'option', array(
     'type'        => 'select',
     'settings'     => 'wishlist_icon',
-    'label'       => __( 'Wishlist Icon', 'flatsome-admin' ),
-    'transport' => flatsome_customizer_transport(),
+    'label'       => __( 'Wishlist Icon', 'silver' ),
+    'transport' => silver_customizer_transport(),
     'section'     => 'header_wishlist',
     'default'     => 'heart',
     'choices'     => array(
@@ -29,12 +29,12 @@
   ));
 
 
-  Flatsome_Option::add_field( 'option', array(
+  Silver_Option::add_field( 'option', array(
     'type'        => 'radio-image',
     'settings'     => 'wishlist_icon_style',
-    'label'       => __( 'Wishlist Icon Style', 'flatsome-admin' ),
+    'label'       => __( 'Wishlist Icon Style', 'silver' ),
     'section'     => 'header_wishlist',
-    'transport' => flatsome_customizer_transport(),
+    'transport' => silver_customizer_transport(),
     'default'     => '',
     'choices'     => array(
       '' => $image_url . 'icon-plain.svg',
@@ -46,28 +46,28 @@
   ));
 
 
-  Flatsome_Option::add_field( 'option',  array(
+  Silver_Option::add_field( 'option',  array(
     'type'        => 'checkbox',
     'settings'     => 'wishlist_title',
-    'label'       => __( 'Show Wishlist Title', 'flatsome-admin' ),
-    //'description' => __( 'This is the control description', 'flatsome-admin' ),
-    //'help'        => __( 'This is some extra help. You can use this to add some additional instructions for users. The main description should go in the "description" of the field, this is only to be used for help tips.', 'flatsome-admin' ),
+    'label'       => __( 'Show Wishlist Title', 'silver' ),
+    //'description' => __( 'This is the control description', 'silver' ),
+    //'help'        => __( 'This is some extra help. You can use this to add some additional instructions for users. The main description should go in the "description" of the field, this is only to be used for help tips.', 'silver' ),
     'section'     => 'header_wishlist',
-    'transport' => flatsome_customizer_transport(),
+    'transport' => silver_customizer_transport(),
     'default'     => 1,
   ));
 
-  Flatsome_Option::add_field( 'option',  array(
+  Silver_Option::add_field( 'option',  array(
     'type'        => 'text',
     'settings'     => 'header_wishlist_label',
-    'label'       => __( 'Custom Title', 'flatsome-admin' ),
+    'label'       => __( 'Custom Title', 'silver' ),
     'section'     => 'header_wishlist',
-    'transport' => flatsome_customizer_transport(),
+    'transport' => silver_customizer_transport(),
     'default'     => '',
   ));
 
 
-  function flatsome_refresh_wishlist_partials( WP_Customize_Manager $wp_customize ) {
+  function silver_refresh_wishlist_partials( WP_Customize_Manager $wp_customize ) {
 
     // Abort if selective refresh is not available.
     if ( ! isset( $wp_customize->selective_refresh ) ) {
@@ -84,4 +84,4 @@
     ) );
 
   }
-  add_action( 'customize_register', 'flatsome_refresh_wishlist_partials' );
+  add_action( 'customize_register', 'silver_refresh_wishlist_partials' );

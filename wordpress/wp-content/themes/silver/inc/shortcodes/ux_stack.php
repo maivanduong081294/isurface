@@ -3,7 +3,7 @@
 /**
  * Registers the `ux_stack` shortcode.
  *
- * @package flatsome
+ * @package silver
  */
 
 /**
@@ -15,7 +15,7 @@
  *
  * @return string
  */
-function flatsome_render_ux_stack_shortcode($atts, $content, $tag)
+function silver_render_ux_stack_shortcode($atts, $content, $tag)
 {
 	$atts = ux_builder_shortcode_atts(
 		array(
@@ -70,7 +70,7 @@ function flatsome_render_ux_stack_shortcode($atts, $content, $tag)
 			$classes[] = 'slider-style-' . $atts['slider_style'];
 		}
 		// Main slider + thumbnail slider pair ("Thumbnail Slider" options).
-		$thumbnail_class = flatsome_slider_thumbnail_class($atts['thumb_role'], $atts['thumb_key']);
+		$thumbnail_class = silver_slider_thumbnail_class($atts['thumb_role'], $atts['thumb_key']);
 		if ($thumbnail_class) {
 			$classes[] = $thumbnail_class;
 		}
@@ -81,9 +81,14 @@ function flatsome_render_ux_stack_shortcode($atts, $content, $tag)
 	if (! empty($atts['class']))      $main_classes[] = $atts['class'];
 	if (! empty($atts['visibility'])) $main_classes[] = $atts['visibility'];
 
-	foreach ($is_slider ? array() : array('sm', 'md', 'ml', '') as $value) {
-		$class_prefix = $value ? "$value:" : 'lg:';
+	// Mobile-first: the unsuffixed value is the mobile value ("sm:" classes have
+	// no media query), "__md", "__ml" and "__lg" override larger screens.
+	foreach ($is_slider ? array() : array('', 'md', 'ml', 'lg') as $value) {
+		$class_prefix = $value ? "$value:" : 'sm:';
 		$attr_suffix  = $value ? "__$value" : '';
+		if (! isset($atts["direction{$attr_suffix}"])) $atts["direction{$attr_suffix}"] = null;
+		if (! isset($atts["distribute{$attr_suffix}"])) $atts["distribute{$attr_suffix}"] = null;
+		if (! isset($atts["align{$attr_suffix}"])) $atts["align{$attr_suffix}"] = null;
 
 		if ($atts["direction{$attr_suffix}"]) {
 			$classes[] = "{$class_prefix}stack-{$atts["direction{$attr_suffix}"]}";
@@ -110,7 +115,7 @@ function flatsome_render_ux_stack_shortcode($atts, $content, $tag)
 
 ?>
 	<div id="<?php echo esc_attr($id); ?>" class="<?php echo esc_attr(implode(' ', $main_classes)); ?>">
-		<div class="stack-inner <?php echo esc_attr(implode(' ', $classes)); ?>"<?php echo $is_slider ? flatsome_slider_options_attr($slider_options) : ''; ?>>
+		<div class="stack-inner <?php echo esc_attr(implode(' ', $classes)); ?>"<?php echo $is_slider ? silver_slider_options_attr($slider_options) : ''; ?>>
 			<?php echo do_shortcode($content); ?>
 		</div>
 		<?php
@@ -131,13 +136,13 @@ function flatsome_render_ux_stack_shortcode($atts, $content, $tag)
 
 	return ob_get_clean();
 }
-add_shortcode('ux_stack', 'flatsome_render_ux_stack_shortcode');
-add_shortcode('ux_stack_inner', 'flatsome_render_ux_stack_shortcode');
-add_shortcode('ux_stack_inner_1', 'flatsome_render_ux_stack_shortcode');
-add_shortcode('ux_stack_inner_2', 'flatsome_render_ux_stack_shortcode');
-add_shortcode('ux_stack_inner_4', 'flatsome_render_ux_stack_shortcode');
-add_shortcode('ux_stack_inner_5', 'flatsome_render_ux_stack_shortcode');
-add_shortcode('ux_stack_inner_6', 'flatsome_render_ux_stack_shortcode');
-add_shortcode('ux_stack_inner_7', 'flatsome_render_ux_stack_shortcode');
-add_shortcode('ux_stack_inner_8', 'flatsome_render_ux_stack_shortcode');
-add_shortcode('ux_stack_inner_9', 'flatsome_render_ux_stack_shortcode');
+add_shortcode('ux_stack', 'silver_render_ux_stack_shortcode');
+add_shortcode('ux_stack_inner', 'silver_render_ux_stack_shortcode');
+add_shortcode('ux_stack_inner_1', 'silver_render_ux_stack_shortcode');
+add_shortcode('ux_stack_inner_2', 'silver_render_ux_stack_shortcode');
+add_shortcode('ux_stack_inner_4', 'silver_render_ux_stack_shortcode');
+add_shortcode('ux_stack_inner_5', 'silver_render_ux_stack_shortcode');
+add_shortcode('ux_stack_inner_6', 'silver_render_ux_stack_shortcode');
+add_shortcode('ux_stack_inner_7', 'silver_render_ux_stack_shortcode');
+add_shortcode('ux_stack_inner_8', 'silver_render_ux_stack_shortcode');
+add_shortcode('ux_stack_inner_9', 'silver_render_ux_stack_shortcode');

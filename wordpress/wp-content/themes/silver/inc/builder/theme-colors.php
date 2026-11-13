@@ -58,10 +58,10 @@ function silver_ux_builder_theme_colors_enqueue( $context ) {
 	// Success is no longer offered as a swatch, but elements saved with it keep
 	// resolving in the editor.
 	$colors = array(
-		'primary'   => get_theme_mod( 'color_primary', Flatsome_Default::COLOR_PRIMARY ),
-		'secondary' => get_theme_mod( 'color_secondary', Flatsome_Default::COLOR_SECONDARY ),
-		'base'      => get_theme_mod( 'color_texts', Flatsome_Default::COLOR_BASE ),
-		'success'   => get_theme_mod( 'color_success', Flatsome_Default::COLOR_SUCCESS ),
+		'primary'   => get_theme_mod( 'color_primary', Silver_Default::COLOR_PRIMARY ),
+		'secondary' => get_theme_mod( 'color_secondary', Silver_Default::COLOR_SECONDARY ),
+		'base'      => get_theme_mod( 'color_texts', Silver_Default::COLOR_BASE ),
+		'success'   => get_theme_mod( 'color_success', Silver_Default::COLOR_SUCCESS ),
 	);
 
 	$css = '';
@@ -85,7 +85,9 @@ function silver_ux_builder_theme_colors_enqueue( $context ) {
 	// options below it (text align, ...) do not paint over it.
 	$layout = '.option-colorpicker .option-helpers-colors{display:grid;grid-template-columns:repeat(9,auto);gap:3px 0;white-space:normal;z-index:100}'
 		. '.option-colorpicker .option-helpers-colors a[title$=" 10%"]{grid-column-start:1}'
-		. '.dragging .option-colorpicker .option-helpers-colors{display:none}';
+		. '.dragging .option-colorpicker .option-helpers-colors{display:none}'
+		// "None" (transparent) and "Default" (inherit) swatches: a crossed swatch.
+		. '.option-colorpicker .option-helpers-colors a[title="None"],.option-colorpicker .option-helpers-colors a[title="Default"]{background:#fff linear-gradient(to top right,transparent calc(50% - 1px),#e33 calc(50% - 1px),#e33 calc(50% + 1px),transparent calc(50% + 1px))!important}';
 
 	wp_add_inline_style( 'ux-builder-core', ':root{' . $css . '}' . $layout );
 }

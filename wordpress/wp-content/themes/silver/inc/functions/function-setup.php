@@ -5,7 +5,7 @@ if ( ! isset( $content_width ) ) {
 }
 
 /**
- * Initialized Envato and Flatsome Account implementation.
+ * Initialized Envato and Silver Account implementation.
  */
 flatsome_envato();
 
@@ -21,12 +21,12 @@ add_filter( 'should_load_separate_core_block_assets', '__return_true' );
  *
  * @return array
  */
-function flatsome_woocommerce_create_pages( $pages ) {
+function silver_woocommerce_create_pages( $pages ) {
 	if ( ! fl_woocommerce_version_check( '8.3' ) ) {
 		return $pages;
 	}
 
-	if ( apply_filters( 'experimental_flatsome_woocommerce_blockify', false ) ) {
+	if ( apply_filters( 'experimental_silver_woocommerce_blockify', false ) ) {
 		return $pages;
 	}
 
@@ -36,7 +36,7 @@ function flatsome_woocommerce_create_pages( $pages ) {
 	return $pages;
 }
 
-add_filter( 'woocommerce_create_pages', 'flatsome_woocommerce_create_pages' );
+add_filter( 'woocommerce_create_pages', 'silver_woocommerce_create_pages' );
 
 /**
  * Remove the "CustomizeStore" task from each task list.
@@ -45,7 +45,7 @@ add_filter( 'woocommerce_create_pages', 'flatsome_woocommerce_create_pages' );
  *
  * @return array The modified task lists.
  */
-function experimental_flatsome_woocommerce_admin_onboarding_tasklists( $task_lists ) {
+function experimental_silver_woocommerce_admin_onboarding_tasklists( $task_lists ) {
 	if ( isset( $task_lists ) && is_array( $task_lists ) ) {
 		foreach ( $task_lists as $task_list ) {
 			if ( isset( $task_list->tasks ) && is_array( $task_list->tasks ) ) {
@@ -61,12 +61,12 @@ function experimental_flatsome_woocommerce_admin_onboarding_tasklists( $task_lis
 	return $task_lists;
 }
 
-add_filter( 'woocommerce_admin_experimental_onboarding_tasklists', 'experimental_flatsome_woocommerce_admin_onboarding_tasklists' );
+add_filter( 'woocommerce_admin_experimental_onboarding_tasklists', 'experimental_silver_woocommerce_admin_onboarding_tasklists' );
 
 /**
- * Setup Flatsome.
+ * Setup Silver.
  */
-function flatsome_setup() {
+function silver_setup() {
 
 	/* add woocommerce support */
 	add_theme_support( 'woocommerce' );
@@ -79,10 +79,10 @@ function flatsome_setup() {
 	add_theme_support( 'title-tag' );
 
 	/* Load child theme languages */
-	load_theme_textdomain( 'flatsome', get_stylesheet_directory() . '/languages' );
+	load_theme_textdomain( 'silver', get_stylesheet_directory() . '/languages' );
 
 	/* load theme languages */
-	load_theme_textdomain( 'flatsome', get_template_directory() . '/languages' );
+	load_theme_textdomain( 'silver', get_template_directory() . '/languages' );
 
 	/* Add default posts and comments RSS feed links to head */
 	add_theme_support( 'automatic-feed-links' );
@@ -111,13 +111,13 @@ function flatsome_setup() {
 
 	/*  Register menus. */
 	register_nav_menus( array(
-		'primary'        => __( 'Main Menu', 'flatsome' ),
-		'primary_mobile' => __( 'Main Menu - Mobile', 'flatsome' ),
-		'secondary'      => __( 'Secondary Menu', 'flatsome' ),
-		'footer'         => __( 'Footer Menu', 'flatsome' ),
-		'top_bar_nav'    => __( 'Top Bar Menu', 'flatsome' ),
-		'my_account'     => __( 'My Account Menu', 'flatsome' ),
-		'vertical'       => __( 'Vertical Menu', 'flatsome' ),
+		'primary'        => __( 'Main Menu', 'silver' ),
+		'primary_mobile' => __( 'Main Menu - Mobile', 'silver' ),
+		'secondary'      => __( 'Secondary Menu', 'silver' ),
+		'footer'         => __( 'Footer Menu', 'silver' ),
+		'top_bar_nav'    => __( 'Top Bar Menu', 'silver' ),
+		'my_account'     => __( 'My Account Menu', 'silver' ),
+		'vertical'       => __( 'Vertical Menu', 'silver' ),
 	) );
 
 	/*  Register post meta. */
@@ -138,20 +138,20 @@ function flatsome_setup() {
 	remove_theme_support( 'widgets-block-editor' );
 }
 
-add_action( 'after_setup_theme', 'flatsome_setup' );
+add_action( 'after_setup_theme', 'silver_setup' );
 
 
 /**
  * Setup Theme Widgets
  */
-function flatsome_widgets_init() {
+function silver_widgets_init() {
 
 	$title_before = '';
 	$title_class  = '';
 	$title_after  = '<div class="is-divider small"></div>';
 
 	register_sidebar( array(
-		'name'          => __( 'Sidebar', 'flatsome' ),
+		'name'          => __( 'Sidebar', 'silver' ),
 		'id'            => 'sidebar-main',
 		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</aside>',
@@ -161,7 +161,7 @@ function flatsome_widgets_init() {
 
 
 	register_sidebar( array(
-		'name'          => __( 'Footer 1', 'flatsome' ),
+		'name'          => __( 'Footer 1', 'silver' ),
 		'id'            => 'sidebar-footer-1',
 		'before_widget' => '<div id="%1$s" class="col pb-0 widget %2$s">',
 		'after_widget'  => '</div>',
@@ -171,7 +171,7 @@ function flatsome_widgets_init() {
 
 
 	register_sidebar( array(
-		'name'          => __( 'Footer 2', 'flatsome' ),
+		'name'          => __( 'Footer 2', 'silver' ),
 		'id'            => 'sidebar-footer-2',
 		'before_widget' => '<div id="%1$s" class="col pb-0 widget %2$s">',
 		'after_widget'  => '</div>',
@@ -180,13 +180,13 @@ function flatsome_widgets_init() {
 	) );
 }
 
-add_action( 'widgets_init', 'flatsome_widgets_init' );
+add_action( 'widgets_init', 'silver_widgets_init' );
 
 
 /**
- * Setup Flatsome Styles and Scripts
+ * Setup Silver Styles and Scripts
  */
-function flatsome_scripts() {
+function silver_scripts() {
 	$uri     = get_template_directory_uri();
 	$theme   = wp_get_theme( get_template() );
 	$version = $theme->get( 'Version' );
@@ -199,42 +199,53 @@ function flatsome_scripts() {
 	);
 
 	// Styles.
-	wp_enqueue_style( 'flatsome-main', $uri . '/assets/css/silver.css', array( 'silver-fontawesome' ), $style_version, 'all' );
-	wp_style_add_data( 'flatsome-main', 'rtl', 'replace' );
+	wp_enqueue_style( 'silver-main', $uri . '/assets/css/silver.css', array( 'silver-fontawesome' ), $style_version, 'all' );
+	wp_style_add_data( 'silver-main', 'rtl', 'replace' );
 
 
 	if ( is_woocommerce_activated() ) {
-		wp_enqueue_style( 'flatsome-shop', $uri . '/assets/css/silver-shop.css', array(), $style_version, 'all' );
-		wp_style_add_data( 'flatsome-shop', 'rtl', 'replace' );
+		wp_enqueue_style( 'silver-shop', $uri . '/assets/css/silver-shop.css', array(), $style_version, 'all' );
+		wp_style_add_data( 'silver-shop', 'rtl', 'replace' );
+	}
+
+	// Modern UI design layer (Customizer > Style > Global Styles > Modern UI).
+	if ( get_theme_mod( 'silver_modern_ui', 1 ) ) {
+		$modern_file = $css_dir . 'silver-modern.css';
+		wp_enqueue_style(
+			'silver-modern',
+			$uri . '/assets/css/silver-modern.css',
+			is_woocommerce_activated() ? array( 'silver-main', 'silver-shop' ) : array( 'silver-main' ),
+			file_exists( $modern_file ) ? filemtime( $modern_file ) : $style_version
+		);
 	}
 
 	// Load current theme styles.css file.
 	if ( ! get_theme_mod( 'flatsome_disable_style_css', 0 ) ) {
-		wp_enqueue_style( 'flatsome-style', get_stylesheet_uri(), array(), wp_get_theme()->get( 'Version' ), 'all' );
+		wp_enqueue_style( 'silver-style', get_stylesheet_uri(), array(), wp_get_theme()->get( 'Version' ), 'all' );
 	}
 
 	// Register styles (Loaded on request).
-	wp_register_style( 'flatsome-effects', $uri . '/assets/css/effects.css', array(), $version, 'all' );
+	wp_register_style( 'silver-effects', $uri . '/assets/css/effects.css', array(), $version, 'all' );
 
 	// Register scripts (Loaded on request).
-	wp_register_script( 'flatsome-masonry-js', $uri . '/assets/libs/packery.pkgd.min.js', array( 'jquery' ), $version, true );
-	wp_register_script( 'flatsome-isotope-js', $uri . '/assets/libs/isotope.pkgd.min.js', array( 'jquery', 'flatsome-js' ), $version, true );
+	wp_register_script( 'silver-masonry-js', $uri . '/assets/libs/packery.pkgd.min.js', array( 'jquery' ), $version, true );
+	wp_register_script( 'silver-isotope-js', $uri . '/assets/libs/isotope.pkgd.min.js', array( 'jquery', 'silver-js' ), $version, true );
 
 	// Google maps.
 	$maps_api = trim( get_theme_mod( 'google_map_api' ) );
 	if ( ! empty( $maps_api ) ) {
-		wp_register_script( 'flatsome-maps', "//maps.googleapis.com/maps/api/js?key=$maps_api&callback=jQuery.noop", array( 'jquery' ), $version, true );
+		wp_register_script( 'silver-maps', "//maps.googleapis.com/maps/api/js?key=$maps_api&callback=jQuery.noop", array( 'jquery' ), $version, true );
 	}
 
 	// Enqueue theme scripts.
-	flatsome_enqueue_asset( 'flatsome-js', 'flatsome', array( 'jquery', 'hoverIntent' ) );
+	silver_enqueue_asset( 'silver-js', 'silver', array( 'jquery', 'hoverIntent' ) );
 
 	// Swiper slider engine (replaces Flickity on the frontend). It keeps the
 	// .flickity() API for the rest of the theme and loads Swiper on demand.
 	// The UX Builder iframe keeps its own bundled slider for editing.
 	if ( ! ( function_exists( 'ux_builder_is_iframe' ) && ux_builder_is_iframe() ) ) {
 		$swiper_file = get_template_directory() . '/assets/js/silver-swiper.js';
-		wp_enqueue_script( 'silver-swiper', $uri . '/assets/js/silver-swiper.js', array( 'jquery', 'flatsome-js' ), file_exists( $swiper_file ) ? filemtime( $swiper_file ) : $version, true );
+		wp_enqueue_script( 'silver-swiper', $uri . '/assets/js/silver-swiper.js', array( 'jquery', 'silver-js' ), file_exists( $swiper_file ) ? filemtime( $swiper_file ) : $version, true );
 		wp_add_inline_script(
 			'silver-swiper',
 			'window.silver = Object.assign( window.silver || {}, ' . wp_json_encode( array( 'swiper' => $uri . '/assets/libs/swiper-bundle.min.js?ver=11.2.10' ) ) . ' );',
@@ -243,7 +254,7 @@ function flatsome_scripts() {
 	}
 
 	// Register theme assets.
-	flatsome_register_asset( 'flatsome-relay', 'flatsome-relay', array( 'flatsome-js', 'jquery' ) );
+	silver_register_asset( 'silver-relay', 'silver-relay', array( 'silver-js', 'jquery' ) );
 
 	$sticky_height = get_theme_mod( 'header_height_sticky', 70 );
 
@@ -251,7 +262,7 @@ function flatsome_scripts() {
 		$sticky_height = $sticky_height + 30;
 	}
 
-	$lightbox_close_markup = apply_filters('flatsome_lightbox_close_button', '<button title="%title%" type="button" class="mfp-close"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>');
+	$lightbox_close_markup = apply_filters('silver_lightbox_close_button', '<button title="%title%" type="button" class="mfp-close"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>');
 
 	$localize_data = array(
 		'theme'              => array( 'version' => $version ),
@@ -263,14 +274,14 @@ function flatsome_scripts() {
 		'assets_url'         => $uri . '/assets/',
 		'lightbox'           => array(
 			'close_markup'     => $lightbox_close_markup,
-			'close_btn_inside' => apply_filters( 'flatsome_lightbox_close_btn_inside', false ),
+			'close_btn_inside' => apply_filters( 'silver_lightbox_close_btn_inside', false ),
 		),
 		'user'               => array(
 			'can_edit_pages' => current_user_can( 'edit_pages' ),
 		),
 		'i18n'               => array(
-			'mainMenu'     => __( 'Main Menu', 'flatsome' ),
-			'toggleButton' => __( 'Toggle', 'flatsome' ),
+			'mainMenu'     => __( 'Main Menu', 'silver' ),
+			'toggleButton' => __( 'Toggle', 'silver' ),
 		),
 		'options'            => array(
 			'cookie_notice_version'                 => get_theme_mod( 'cookie_notice_version', '1' ),
@@ -290,17 +301,17 @@ function flatsome_scripts() {
 
 	if ( is_woocommerce_activated() ) {
 		$wc_localize_data = array(
-			'is_mini_cart_reveal' => flatsome_is_mini_cart_reveal(),
+			'is_mini_cart_reveal' => silver_is_mini_cart_reveal(),
 		);
 
 		$localize_data = array_merge( $localize_data, $wc_localize_data );
 	}
 
 	// Add variables to scripts.
-	wp_localize_script( 'flatsome-js', 'flatsomeVars', $localize_data );
+	wp_localize_script( 'silver-js', 'silverVars', $localize_data );
 
-	if ( apply_filters( 'experimental_flatsome_pjax_enabled', true ) ) {
-		$pjax = apply_filters( 'experimental_flatsome_pjax', array(
+	if ( apply_filters( 'experimental_silver_pjax_enabled', true ) ) {
+		$pjax = apply_filters( 'experimental_silver_pjax', array(
 			'cache_bust' => false,
 			'elements'   => array( '#wrapper' ),
 			'entries'    => array(),
@@ -309,13 +320,13 @@ function flatsome_scripts() {
 		) );
 
 		if ( ! empty( $pjax['entries'] ) ) {
-			flatsome_enqueue_asset( 'flatsome-pjax', 'flatsome-pjax', array( 'flatsome-js', 'jquery' ) );
-			wp_add_inline_script( 'flatsome-pjax', 'var flatsomePjax = ' . wp_json_encode( $pjax ), 'before' );
+			silver_enqueue_asset( 'silver-pjax', 'silver-pjax', array( 'silver-js', 'jquery' ) );
+			wp_add_inline_script( 'silver-pjax', 'var silverPjax = ' . wp_json_encode( $pjax ), 'before' );
 		}
 	}
 
 	if ( is_woocommerce_activated() ) {
-		flatsome_enqueue_asset( 'flatsome-theme-woocommerce-js', 'woocommerce', array( 'flatsome-js', 'woocommerce' ) );
+		silver_enqueue_asset( 'silver-theme-woocommerce-js', 'woocommerce', array( 'silver-js', 'woocommerce' ) );
 	}
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
@@ -323,65 +334,65 @@ function flatsome_scripts() {
 	}
 }
 
-add_action( 'wp_enqueue_scripts', 'flatsome_scripts', 100 );
+add_action( 'wp_enqueue_scripts', 'silver_scripts', 100 );
 
 /**
  * Set up UX Builder.
  */
-function flatsome_ux_builder_setup() {
+function silver_ux_builder_setup() {
 	// Add Ux Builder to post types.
 	add_ux_builder_post_type( 'blocks' );
 	add_ux_builder_post_type( 'product' );
 	add_ux_builder_post_type( 'featured_item' );
 }
 
-add_action( 'init', 'flatsome_ux_builder_setup', 10 );
+add_action( 'init', 'silver_ux_builder_setup', 10 );
 
 /**
  * Enqueue UX Builder scripts.
  *
  * @param  string $context Context is «editor» or content.
  */
-function flatsome_ux_builder_scripts( $context ) {
+function silver_ux_builder_scripts( $context ) {
 	$uri     = get_template_directory_uri();
 	$theme   = wp_get_theme( get_template() );
 	$version = $theme->get( 'Version' );
 
 	// Add UxBuilder assets.
 	if ( $context == 'editor' ) {
-		flatsome_enqueue_asset( 'ux-builder-flatsome', 'builder/custom/editor', array( 'ux-builder-core' ) );
-		wp_enqueue_style( 'ux-builder-flatsome', $uri . '/assets/css/builder/custom/builder.css', array( 'ux-builder-core' ), $version );
+		silver_enqueue_asset( 'ux-builder-silver', 'builder/custom/editor', array( 'ux-builder-core' ) );
+		wp_enqueue_style( 'ux-builder-silver', $uri . '/assets/css/builder/custom/builder.css', array( 'ux-builder-core' ), $version );
 	}
 	if ( $context == 'content' ) {
-		wp_enqueue_style( 'ux-builder-flatsome', $uri . '/assets/css/builder/custom/builder.css', null, $version );
-		flatsome_enqueue_asset( 'ux-builder-flatsome', 'builder/custom/content', array(
-			'flatsome-js',
-			'flatsome-masonry-js',
+		wp_enqueue_style( 'ux-builder-silver', $uri . '/assets/css/builder/custom/builder.css', null, $version );
+		silver_enqueue_asset( 'ux-builder-silver', 'builder/custom/content', array(
+			'silver-js',
+			'silver-masonry-js',
 		) );
 	}
 }
 
-add_action( 'ux_builder_enqueue_scripts', 'flatsome_ux_builder_scripts', 10 );
+add_action( 'ux_builder_enqueue_scripts', 'silver_ux_builder_scripts', 10 );
 
 
 /**
  * Remove MediaElement.js scripts and styles.
  */
-function flatsome_deregister_mejs() {
+function silver_deregister_mejs() {
 	if ( get_theme_mod( 'disable_mejs' ) ) {
 		wp_deregister_script( 'wp-mediaelement' );
 		wp_deregister_style( 'wp-mediaelement' );
 	}
 }
 
-add_action( 'wp_enqueue_scripts', 'flatsome_deregister_mejs', PHP_INT_MAX );
+add_action( 'wp_enqueue_scripts', 'silver_deregister_mejs', PHP_INT_MAX );
 
 /**
  * Remove jQuery migrate.
  *
  * @param WP_Scripts $scripts WP_Scripts object.
  */
-function flatsome_remove_jquery_migrate( $scripts ) {
+function silver_remove_jquery_migrate( $scripts ) {
 	if ( ! get_theme_mod( 'jquery_migrate' ) ) return;
 	if ( ! is_admin() && isset( $scripts->registered['jquery'] ) ) {
 		$script = $scripts->registered['jquery'];
@@ -394,7 +405,7 @@ function flatsome_remove_jquery_migrate( $scripts ) {
 	}
 }
 
-add_action( 'wp_default_scripts', 'flatsome_remove_jquery_migrate' );
+add_action( 'wp_default_scripts', 'silver_remove_jquery_migrate' );
 
 // Disable emoji scripts
 if ( ! is_admin() && get_theme_mod( 'disable_emoji', 0 ) ) {
@@ -402,17 +413,17 @@ if ( ! is_admin() && get_theme_mod( 'disable_emoji', 0 ) ) {
 	remove_action('wp_print_styles', 'print_emoji_styles');
 }
 
-function flatsome_deregister_block_styles() {
+function silver_deregister_block_styles() {
 	if ( ! is_admin() && get_theme_mod( 'disable_blockcss', 0 ) ) {
     wp_dequeue_style( 'wp-block-library' );
   }
 }
-add_action( 'wp_print_styles', 'flatsome_deregister_block_styles', 100 );
+add_action( 'wp_print_styles', 'silver_deregister_block_styles', 100 );
 
 /**
  * Prefetch lazy-loaded chunks.
  */
-function flatsome_prefetch_scripts( $urls, $type ) {
+function silver_prefetch_scripts( $urls, $type ) {
 	static $manifest;
 
 	$manifest_path = get_template_directory() . '/assets/manifest.json';
@@ -428,8 +439,8 @@ function flatsome_prefetch_scripts( $urls, $type ) {
 	}
 
 	$asset_handle_map = array(
-		'js/silver'    => 'flatsome-js',
-		'js/woocommerce' => 'flatsome-theme-woocommerce-js',
+		'js/silver'    => 'silver-js',
+		'js/woocommerce' => 'silver-theme-woocommerce-js',
 	);
 
 	foreach ( $manifest as $key => $asset ) {
@@ -451,33 +462,33 @@ function flatsome_prefetch_scripts( $urls, $type ) {
 	}
 	return $urls;
 }
-add_filter( 'wp_resource_hints', 'flatsome_prefetch_scripts', 10, 2 );
+add_filter( 'wp_resource_hints', 'silver_prefetch_scripts', 10, 2 );
 
 /**
  * Add JSON to allowed file types.
  *
  * @param array $mimes Allowed file types.
  */
-function flatsome_upload_mimes( $mimes ) {
+function silver_upload_mimes( $mimes ) {
 	if ( ! isset( $mimes['json'] ) ) {
 		$mimes['json'] = 'text/plain';
 	}
 	return $mimes;
 }
-add_filter( 'upload_mimes', 'flatsome_upload_mimes' );
+add_filter( 'upload_mimes', 'silver_upload_mimes' );
 
 /**
- * Configures Flatsome PJAX.
+ * Configures Silver PJAX.
  *
  * If '$args['selectors'][]' or '$args['element'][]' array is empty, PJAX does not load & activate.
  *
- * @param array $args The original array of arguments provided by the 'flatsome_pjax' filter.
+ * @param array $args The original array of arguments provided by the 'silver_pjax' filter.
  *
  * @return array The modified array of arguments.
  */
-function experimental_flatsome_pjax_config( $args ) {
+function experimental_silver_pjax_config( $args ) {
 	if ( get_theme_mod( 'blog_pagination' ) === 'ajax' ) {
-		if ( flatsome_is_blog_archive() ) {
+		if ( silver_is_blog_archive() ) {
 			$args['entries'][] = [
 				'selectors'           => [ '.page-numbers.nav-pagination:not(.ux-relay__pagination) li a' ],
 				'processing_elements' => [
@@ -503,7 +514,7 @@ function experimental_flatsome_pjax_config( $args ) {
 	}
 
 	if ( is_woocommerce_activated() ) {
-		$is_shop_archive          = flatsome_is_shop_archive();
+		$is_shop_archive          = silver_is_shop_archive();
 		$shop_ajax_pagination     = get_theme_mod( 'shop_pagination' ) === 'ajax';
 		$processing_elements_shop = [
 			'.shop-container' => [
@@ -550,4 +561,4 @@ function experimental_flatsome_pjax_config( $args ) {
 	return $args;
 }
 
-add_filter( 'experimental_flatsome_pjax', 'experimental_flatsome_pjax_config' );
+add_filter( 'experimental_silver_pjax', 'experimental_silver_pjax_config' );

@@ -3,20 +3,20 @@
  * Rank Math integration
  *
  * @author      UX Themes
- * @package     Flatsome\Integrations
+ * @package     Silver\Integrations
  * @since       3.12.0
  */
 
-namespace Flatsome\Integrations;
+namespace Silver\Integrations;
 
-use Flatsome_Shortcode_Image_Extractor;
+use Silver_Shortcode_Image_Extractor;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Class Rank_Math
  *
- * @package Flatsome\Integrations
+ * @package Silver\Integrations
  */
 class Rank_Math {
 
@@ -41,16 +41,16 @@ class Rank_Math {
 	public function integrate() {
 		// Primary term.
 		if ( get_theme_mod( 'rank_math_primary_term' ) ) {
-			add_filter( 'flatsome_woocommerce_shop_loop_category', [ $this, 'get_primary_term' ], 10, 2 );
+			add_filter( 'silver_woocommerce_shop_loop_category', [ $this, 'get_primary_term' ], 10, 2 );
 			add_filter( 'woocommerce_product_categories_widget_main_term', [ $this, 'make_primary_term_current_category' ] );
 		}
 		if ( get_theme_mod( 'rank_math_manages_product_layout_priority' ) ) {
-			add_filter( 'flatsome_product_block_primary_term_id', [ $this, 'get_primary_term_id' ], 10, 2 );
+			add_filter( 'silver_product_block_primary_term_id', [ $this, 'get_primary_term_id' ], 10, 2 );
 		}
 		// Breadcrumb.
 		if ( get_theme_mod( 'rank_math_breadcrumb' ) ) {
-			remove_action( 'flatsome_breadcrumb', 'woocommerce_breadcrumb', 20 );
-			add_action( 'flatsome_breadcrumb', [ $this, 'rank_math_breadcrumb' ], 20 );
+			remove_action( 'silver_breadcrumb', 'woocommerce_breadcrumb', 20 );
+			add_action( 'silver_breadcrumb', [ $this, 'rank_math_breadcrumb' ], 20 );
 		}
 	}
 
@@ -157,7 +157,7 @@ class Rank_Math {
 
 		$content = $post->post_content;
 
-		$image_extractor = Flatsome_Shortcode_Image_Extractor::get_instance();
+		$image_extractor = Silver_Shortcode_Image_Extractor::get_instance();
 
 		$extracted_images = $image_extractor->extract_images( $content );
 		if ( ! empty( $extracted_images ) ) {

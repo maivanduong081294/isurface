@@ -6,7 +6,7 @@ return array(
 	'options' => array(
 		'font_size'   => array(
 			'type'       => 'slider',
-			'heading'    => __( 'Font size', 'flatsome' ),
+			'heading'    => __( 'Font size', 'silver' ),
 			'responsive' => true,
 			'unit'       => 'rem',
 			'max'        => 4,
@@ -15,7 +15,7 @@ return array(
 		),
 		'line_height' => array(
 			'type'       => 'slider',
-			'heading'    => __( 'Line height', 'flatsome' ),
+			'heading'    => __( 'Line height', 'silver' ),
 			'responsive' => true,
 			'max'        => 3,
 			'min'        => 0.75,
@@ -23,7 +23,7 @@ return array(
 		),
 		'text_align'  => array(
 			'type'       => 'radio-buttons',
-			'heading'    => __( 'Text align', 'flatsome' ),
+			'heading'    => __( 'Text align', 'silver' ),
 			'responsive' => true,
 			'default'    => '',
 			'options'    => array(
@@ -47,10 +47,11 @@ return array(
 		),
 		'text_color' => array(
 			'type'     => 'colorpicker',
-			'heading'  => __( 'Text color', 'flatsome' ),
+			'heading'  => __( 'Text color', 'silver' ),
+			'responsive' => true,
 			'format'   => 'rgb',
 			'position' => 'bottom right',
-			'helpers'  => require( __DIR__ . '/../helpers/colors.php' ),
+			'helpers' => require( __DIR__ . '/../helpers/colors-text.php' ),
 		),
 	),
 );

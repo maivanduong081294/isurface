@@ -234,7 +234,7 @@ class AjaxManager {
 
     if ( is_wp_error( $file['tmp_name'] ) ) {
       @unlink( $file['tmp_name'] );
-      return new \WP_Error( 'flatsome', 'Could not download image from Silver Studio.' );
+      return new \WP_Error( 'silver', 'Could not download image from Silver Studio.' );
     }
 
     // 3. Add image to media library.

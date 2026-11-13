@@ -2,44 +2,44 @@
 
 // CART
 
-Flatsome_Option::add_section( 'cart-checkout', array(
-	'title'       => __( 'Cart', 'flatsome-admin' ),
+Silver_Option::add_section( 'cart-checkout', array(
+	'title'       => __( 'Cart', 'silver' ),
 	'panel' => 'woocommerce',
   'priority'    => 1000
 ) );
 
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
   'type'        => 'radio-buttonset',
   'settings'     => 'cart_layout',
-  'label'       => __( 'Cart layout', 'flatsome-admin' ),
+  'label'       => __( 'Cart layout', 'silver' ),
   'section'     => 'cart-checkout',
   'default'     => '',
   'choices'     => array(
-    '' => __( 'Default', 'flatsome-admin' ),
-    'simple' => __( 'Simple', 'flatsome-admin' ),
-    'focused' => __( 'Focused', 'flatsome-admin' ),
+    '' => __( 'Default', 'silver' ),
+    'simple' => __( 'Simple', 'silver' ),
+    'focused' => __( 'Focused', 'silver' ),
   ),
 ));
 
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
   'type'        => 'checkbox',
   'settings'     => 'cart_sticky_sidebar',
-  'label'       => __( 'Sticky sidebar', 'flatsome-admin' ),
+  'label'       => __( 'Sticky sidebar', 'silver' ),
   'section'     => 'cart-checkout',
   'default' => 0
 ));
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'            => 'select',
 	'settings'        => 'cart_sticky_sidebar_mode',
-	'label'           => __( 'Sticky mode', 'flatsome-admin' ),
+	'label'           => __( 'Sticky mode', 'silver' ),
 	'section'         => 'cart-checkout',
 	'default'         => '',
 	'choices'         => array(
-		''           => __( 'CSS (native)', 'flatsome-admin' ),
-		'javascript' => __( 'JavaScript (enhanced)', 'flatsome-admin' ),
+		''           => __( 'CSS (native)', 'silver' ),
+		'javascript' => __( 'JavaScript (enhanced)', 'silver' ),
 	),
 	'active_callback' => array(
 		array(
@@ -50,40 +50,40 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'checkbox',
 	'settings' => 'cart_auto_refresh',
-	'label'    => __( 'Auto update on quantity change', 'flatsome-admin' ),
+	'label'    => __( 'Auto update on quantity change', 'silver' ),
 	'section'  => 'cart-checkout',
 	'default'  => 0,
 ) );
 
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
   'type'        => 'checkbox',
   'settings'     => 'cart_boxed_shipping_labels',
-  'label'       => __( 'Boxed Shipping labels', 'flatsome' ),
+  'label'       => __( 'Boxed Shipping labels', 'silver' ),
   'section'     => 'cart-checkout',
   'default' => 0
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
   'type'        => 'checkbox',
   'settings'     => 'cart_estimate_text',
-  'label'       => __( 'Show shipping estimate destination', 'flatsome' ),
+  'label'       => __( 'Show shipping estimate destination', 'silver' ),
   'section'     => 'cart-checkout',
   'default' => 1
 ));
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'checkbox',
 	'settings' => 'cart_shipping',
-	'label'    => esc_html__( 'Show free shipping', 'flatsome' ),
+	'label'    => esc_html__( 'Show free shipping', 'silver' ),
 	'section'  => 'cart-checkout',
 	'default'  => 0,
 ) );
 
-Flatsome_Option::add_field( '', array(
+Silver_Option::add_field( '', array(
 	'type'     => 'custom',
 	'settings' => 'cart_steps_title',
 	'label'    => '',
@@ -91,23 +91,23 @@ Flatsome_Option::add_field( '', array(
 	'default'  => '<div class="options-title-divider">Steps</div>',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'radio-buttonset',
 	'settings' => 'cart_steps_size',
-	'label'    => __( 'Steps size', 'flatsome-admin' ),
+	'label'    => __( 'Steps size', 'silver' ),
 	'section'  => 'cart-checkout',
 	'default'  => 'h2',
 	'choices'  => array(
-		'h2' => __( 'Default', 'flatsome-admin' ),
-		'h3' => __( 'Small', 'flatsome-admin' ),
-		'h4' => __( 'Smaller', 'flatsome-admin' ),
+		'h2' => __( 'Default', 'silver' ),
+		'h3' => __( 'Small', 'silver' ),
+		'h4' => __( 'Smaller', 'silver' ),
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'radio-buttonset',
 	'settings' => 'cart_steps_case',
-	'label'    => esc_attr__( 'Steps letter case', 'flatsome-admin' ),
+	'label'    => esc_attr__( 'Steps letter case', 'silver' ),
 	'section'  => 'cart-checkout',
 	'default'  => 'uppercase',
 	'choices'  => array(
@@ -116,15 +116,15 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'checkbox',
 	'settings' => 'cart_steps_numbers',
-	'label'    => __( 'Step numbers', 'flatsome-admin' ),
+	'label'    => __( 'Step numbers', 'silver' ),
 	'section'  => 'cart-checkout',
 	'default'  => 0,
 ) );
 
-Flatsome_Option::add_field( '', array(
+Silver_Option::add_field( '', array(
 	'type'     => 'custom',
 	'settings' => 'cart_coupon_title',
 	'label'    => '',
@@ -132,19 +132,19 @@ Flatsome_Option::add_field( '', array(
 	'default'  => '<div class="options-title-divider">Coupon</div>',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'select',
 	'settings' => 'cart_coupon_position',
-	'label'    => esc_html__( 'Position', 'flatsome-admin' ),
+	'label'    => esc_html__( 'Position', 'silver' ),
 	'section'  => 'cart-checkout',
 	'default'  => 'sidebar',
 	'choices'  => array(
-		'sidebar' => esc_html__( 'In Sidebar', 'flatsome-admin' ),
-		'bottom'  => esc_html__( 'Below products', 'flatsome-admin' ),
+		'sidebar' => esc_html__( 'In Sidebar', 'silver' ),
+		'bottom'  => esc_html__( 'Below products', 'silver' ),
 	),
 ) );
 
-Flatsome_Option::add_field( '', array(
+Silver_Option::add_field( '', array(
 	'type'     => 'custom',
 	'settings' => 'html_cart_title',
 	'label'    => '',
@@ -152,21 +152,21 @@ Flatsome_Option::add_field( '', array(
 	'default'  => '<div class="options-title-divider">Custom Content</div>',
 ) );
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'textarea',
 	'settings'     => 'html_cart_sidebar',
-	'transport' => flatsome_customizer_transport(),
-	'label'       => __( 'Cart Sidebar content', 'flatsome-admin' ),
+	'transport' => silver_customizer_transport(),
+	'label'       => __( 'Cart Sidebar content', 'silver' ),
 	'help'        => __( 'Enter HTML that will show on bottom of cart sidebar' ),
 	'section'     => 'cart-checkout',
 	'default'     => '',
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'textarea',
 	'settings'     => 'html_cart_footer',
-	'transport' => flatsome_customizer_transport(),
-	'label'       => __( 'After Cart content', 'flatsome-admin' ),
+	'transport' => silver_customizer_transport(),
+	'label'       => __( 'After Cart content', 'silver' ),
 	'help'        => __( 'Enter HTML or Shortcodes that will show after cart here.' ),
 	'section'     => 'cart-checkout',
 	'default'     => '',
@@ -175,49 +175,49 @@ Flatsome_Option::add_field( 'option',  array(
 
 // CHECKOUT
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
   'type'        => 'radio-buttonset',
   'settings'     => 'checkout_layout',
   'priority' => 1,
-  'label'       => __( 'Checkout layout', 'flatsome-admin' ),
+  'label'       => __( 'Checkout layout', 'silver' ),
   'section'     => 'woocommerce_checkout',
   'default'     => '',
   'choices'     => array(
-    '' => __( 'Default', 'flatsome-admin' ),
-    'simple' => __( 'Simple', 'flatsome-admin' ),
-    'focused' => __( 'Focused', 'flatsome-admin' ),
+    '' => __( 'Default', 'silver' ),
+    'simple' => __( 'Simple', 'silver' ),
+    'focused' => __( 'Focused', 'silver' ),
   ),
 ));
 
 
 if ( is_nextend_facebook_login() || is_nextend_google_login() ) {
-	Flatsome_Option::add_field( 'option',  array(
+	Silver_Option::add_field( 'option',  array(
 		'type'        => 'checkbox',
 		'settings'     => 'facebook_login_checkout',
-		'label'       => __( 'Social Login Buttons', 'flatsome-admin' ),
+		'label'       => __( 'Social Login Buttons', 'silver' ),
 		'section'     => 'woocommerce_checkout',
 		'default' => 0
 	));
 }
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'radio-buttonset',
 	'settings' => 'checkout_terms_and_conditions',
-	'label'    => __( 'Terms and conditions link style', 'flatsome-admin' ),
+	'label'    => __( 'Terms and conditions link style', 'silver' ),
 	'section'  => 'woocommerce_checkout',
 	'default'  => '',
 	'choices'  => array(
-		''         => __( 'Default', 'flatsome-admin' ),
-		'tab'      => __( 'New Tab', 'flatsome-admin' ),
-		'lightbox' => __( 'Lightbox', 'flatsome-admin' ),
+		''         => __( 'Default', 'silver' ),
+		'tab'      => __( 'New Tab', 'silver' ),
+		'lightbox' => __( 'Lightbox', 'silver' ),
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'            => 'checkbox',
 	'settings'        => 'terms_and_conditions_lightbox_buttons',
-	'transport'       => flatsome_customizer_transport(),
-	'label'           => __( 'Terms and conditions "Agree" button', 'flatsome-admin' ),
+	'transport'       => silver_customizer_transport(),
+	'label'           => __( 'Terms and conditions "Agree" button', 'silver' ),
 	'section'         => 'woocommerce_checkout',
 	'default'         => 1,
 	'active_callback' => array(
@@ -229,39 +229,39 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
   'type'        => 'checkbox',
   'settings'     => 'checkout_floating_labels',
-  'label'       => __( 'Floating field labels', 'flatsome-admin' ),
+  'label'       => __( 'Floating field labels', 'silver' ),
   'section'     => 'woocommerce_checkout',
   'default' => 0
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
   'type'        => 'checkbox',
   'settings'     => 'checkout_fields_email_first',
-  'label'       => __( 'Move E-mail field to first position', 'flatsome-admin' ),
+  'label'       => __( 'Move E-mail field to first position', 'silver' ),
   'section'     => 'woocommerce_checkout',
   'default' => 0
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
   'type'        => 'checkbox',
   'settings'     => 'checkout_sticky_sidebar',
-  'label'       => __( 'Sticky sidebar', 'flatsome-admin' ),
+  'label'       => __( 'Sticky sidebar', 'silver' ),
   'section'     => 'woocommerce_checkout',
   'default' => 0
 ));
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'            => 'select',
 	'settings'        => 'checkout_sticky_sidebar_mode',
-	'label'           => __( 'Sticky mode', 'flatsome-admin' ),
+	'label'           => __( 'Sticky mode', 'silver' ),
 	'section'         => 'woocommerce_checkout',
 	'default'         => '',
 	'choices'         => array(
-		''           => __( 'CSS (native)', 'flatsome-admin' ),
-		'javascript' => __( 'JavaScript (enhanced)', 'flatsome-admin' ),
+		''           => __( 'CSS (native)', 'silver' ),
+		'javascript' => __( 'JavaScript (enhanced)', 'silver' ),
 	),
 	'active_callback' => array(
 		array(
@@ -272,19 +272,19 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'checkbox',
 	'settings' => 'checkout_shipping',
-	'label'    => esc_html__( 'Show free shipping', 'flatsome' ),
+	'label'    => esc_html__( 'Show free shipping', 'silver' ),
 	'section'  => 'woocommerce_checkout',
 	'default'  => 0,
 ) );
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'textarea',
 	'settings'     => 'html_checkout_sidebar',
-	'transport' => flatsome_customizer_transport(),
-	'label'       => __( 'Checkout Sidebar content', 'flatsome-admin' ),
+	'transport' => silver_customizer_transport(),
+	'label'       => __( 'Checkout Sidebar content', 'silver' ),
 	'help'        => __( 'Enter HTML that will show on bottom of checkout sidebar' ),
 	'section'     => 'woocommerce_checkout',
 	'default'     => '',

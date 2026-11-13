@@ -2,19 +2,19 @@
 /**
  * Post-entry title.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.16.0
+ * @package          Silver\Templates
+ * @silver-version 3.16.0
  */
 
 if ( is_single() ) :
 	if ( get_theme_mod( 'blog_single_header_category', 1 ) ) :
 		echo '<h6 class="entry-category is-xsmall">';
-		echo get_the_category_list( __( ', ', 'flatsome' ) );
+		echo get_the_category_list( __( ', ', 'silver' ) );
 		echo '</h6>';
 	endif;
 else :
 	echo '<h6 class="entry-category is-xsmall">';
-	echo get_the_category_list( __( ', ', 'flatsome' ) );
+	echo get_the_category_list( __( ', ', 'silver' ) );
 	echo '</h6>';
 endif;
 
@@ -33,10 +33,10 @@ endif;
 $single_post = is_singular( 'post' );
 if ( $single_post && get_theme_mod( 'blog_single_header_meta', 1 ) ) : ?>
 	<div class="entry-meta uppercase is-xsmall">
-		<?php flatsome_posted_on(); ?>
+		<?php silver_posted_on(); ?>
 	</div>
 <?php elseif ( ! $single_post && 'post' == get_post_type() ) : ?>
 	<div class="entry-meta uppercase is-xsmall">
-		<?php flatsome_posted_on(); ?>
+		<?php silver_posted_on(); ?>
 	</div>
 <?php endif; ?>

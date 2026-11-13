@@ -2,12 +2,12 @@
 
 
 // Option links
-function flatsome_admin_bar_helper(){
+function silver_admin_bar_helper(){
 
 
 global $wp_admin_bar;
 
-$panel_url = get_admin_url().'admin.php?page=flatsome-panel';
+$panel_url = get_admin_url().'admin.php?page=silver-panel';
 $advanced_url = get_admin_url().'admin.php?page=optionsframework&tab=';
 $permalink = get_permalink();
 if(is_admin()) $permalink = get_home_url();
@@ -19,40 +19,40 @@ if(function_exists('is_shop') && is_shop()) {
 $optionUrl_panel = get_admin_url().'customize.php?url='.$permalink.'&autofocus%5Bpanel%5D=';
 $optionUrl_section = get_admin_url().'customize.php?url='.$permalink.'&autofocus%5Bsection%5D=';
 $icon_style = 'font: normal 20px/1 \'dashicons\';-webkit-font-smoothing: antialiased;padding-right: 4px;margin-top:3px;';
-$flatsome_icon = '<img class="silver-admin-bar-logo" src="' . esc_url( silver_theme_square_logo_url() ) . '" alt="" width="20" height="20">';
+$silver_icon = '<img class="silver-admin-bar-logo" src="' . esc_url( silver_theme_square_logo_url() ) . '" alt="" width="20" height="20">';
 
 $wp_admin_bar->add_menu( array(
- 'id' => 'flatsome_panel',
- 'title' => $flatsome_icon.'<span class="silver-admin-bar-label">Silver</span>',
+ 'id' => 'silver_panel',
+ 'title' => $silver_icon.'<span class="silver-admin-bar-label">Silver</span>',
  'href' => $panel_url
 ));
 
 $wp_admin_bar->add_menu( array(
  'id' => 'theme_options',
- 'parent' => 'flatsome_panel',
+ 'parent' => 'silver_panel',
  'title' => '<span class="dashicons dashicons-admin-generic" style="'.$icon_style.'"></span>Theme Options',
  'href' => $optionUrl_panel
 ));
 
 $wp_admin_bar->add_menu( array(
- 'parent' => 'flatsome_panel',
+ 'parent' => 'silver_panel',
  'id' => 'options_advanced',
  'title' => '<span class="dashicons dashicons-admin-tools" style="'.$icon_style.'"></span>Advanced',
  'href' =>  $advanced_url.''
 ));
 
 	$wp_admin_bar->add_menu( array(
-		'parent' => 'flatsome_panel',
-		'id'     => 'flatsome_panel_status',
+		'parent' => 'silver_panel',
+		'id'     => 'silver_panel_status',
 		'title'  => 'Status',
 		'href'   => $panel_url . '-status',
 	) );
 
 $wp_admin_bar->add_menu( array(
- 'parent' => 'flatsome_panel',
- 'id' => 'flatsome_panel_setup_wizard',
+ 'parent' => 'silver_panel',
+ 'id' => 'silver_panel_setup_wizard',
  'title' => 'Setup Wizard',
- 'href' => admin_url().'admin.php?page=flatsome-setup'
+ 'href' => admin_url().'admin.php?page=silver-setup'
 ));
 
 $wp_admin_bar->add_menu( array(
@@ -515,7 +515,7 @@ if(is_woocommerce_activated()) {
       if(is_shop() || is_product_category()){
           $wp_admin_bar->add_menu( array(
              'parent' => 'customize',
-             'id' => 'admin_bar_helper_flatsome',
+             'id' => 'admin_bar_helper_silver',
              'title' => __('Product Catalog','woocommerce'),
  			'href' =>  $optionUrl_section.'woocommerce_product_catalog'
          ));
@@ -524,4 +524,4 @@ if(is_woocommerce_activated()) {
 }
 
 }
-add_action( 'admin_bar_menu', 'flatsome_admin_bar_helper' , 35);
+add_action( 'admin_bar_menu', 'silver_admin_bar_helper' , 35);

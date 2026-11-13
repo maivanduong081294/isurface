@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Flatsome functions and definitions
+ * Silver functions and definitions
  *
- * @package flatsome
+ * @package silver
  */
 require get_template_directory() . '/inc/init.php';
 
-flatsome()->init();
+silver()->init();
 
 /**
  * It's not recommended to add any custom code here. Please use a child theme

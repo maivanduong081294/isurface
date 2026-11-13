@@ -1,24 +1,24 @@
 <?php
 
-function flatsome_ux_builder_template( $path ) {
+function silver_ux_builder_template( $path ) {
   ob_start();
   include get_template_directory() . '/inc/builder/shortcodes/templates/' . $path;
   return ob_get_clean();
 }
 
-function flatsome_ux_builder_thumbnail( $name ) {
+function silver_ux_builder_thumbnail( $name ) {
   return get_template_directory_uri() . '/inc/builder/shortcodes/thumbnails/' . $name . '.svg';
 }
 
-function flatsome_ux_builder_template_thumb( $name ) {
+function silver_ux_builder_template_thumb( $name ) {
   return get_template_directory_uri() . '/inc/builder/templates/thumbs/' . $name . '.jpg';
 }
 
-function flatsome_ux_builder_image_sizes( $sizes = array() ) {
+function silver_ux_builder_image_sizes( $sizes = array() ) {
   $image_sizes      = get_intermediate_image_sizes();
   $additional_sizes = wp_get_additional_image_sizes();
 
-  $sizes['original'] = __( 'Original', 'flatsome' );
+  $sizes['original'] = __( 'Original', 'silver' );
 
   foreach ( $image_sizes as $key ) {
     if ( isset( $additional_sizes[ $key ] ) ) {
@@ -64,7 +64,7 @@ function flatsome_ux_builder_image_sizes( $sizes = array() ) {
  *
  * @return array The updated array with the new element inserted.
  */
-function flatsome_ux_builder_array_insert_after( $array, $key, $new ) {
+function silver_ux_builder_array_insert_after( $array, $key, $new ) {
 	$keys  = array_keys( $array );
 	$index = array_search( $key, $keys, true );
 	$pos   = false === $index ? count( $array ) : $index + 1;

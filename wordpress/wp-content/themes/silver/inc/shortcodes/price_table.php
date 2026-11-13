@@ -43,6 +43,20 @@ function ux_price_table( $atts, $content = null ){
       array( 'attribute' => 'background-color', 'value' => $bg_color ),
   );
 
+  // Responsive text color / background (larger screens).
+  $responsive_style = '';
+  if ( silver_responsive_any_overrides( (array) $atts, array( 'color', 'bg_color' ) ) ) {
+    if ( ! $_id ) $_id = 'price-table-' . wp_rand();
+    $responsive_style = silver_responsive_style_tag( $_id, (array) $atts, array_merge(
+      array(
+        'bg_color' => array( 'selector' => '.pricing-table', 'property' => 'background-color', 'only_overrides' => true ),
+      ),
+      // "dark" adds the `dark` class (light text).
+      silver_responsive_scheme_rules( 'color', '', 'dark', 'light', array( 'only_overrides' => true, 'default' => 'light' ) )
+    ) );
+  }
+
+  echo $responsive_style; // phpcs:ignore WordPress.Security.EscapeOutput
 ?>
 <div<?php if ( $_id ) : ?> id="<?php echo esc_attr( $_id ); ?>"<?php endif; ?> class="<?php echo esc_attr( implode( ' ', $classes_wrapper ) ); ?>">
   <div class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>"<?php echo get_shortcode_inline_css($css_args); ?>>

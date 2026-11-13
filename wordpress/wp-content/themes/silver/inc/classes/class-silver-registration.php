@@ -1,8 +1,8 @@
 <?php
 /**
- * Flatsome_Registration class.
+ * Silver_Registration class.
  *
- * @package Flatsome
+ * @package Silver
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,9 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * The Flatsome registration.
+ * The Silver registration.
  */
-final class Flatsome_Registration extends Flatsome_Base_Registration {
+final class Silver_Registration extends Silver_Base_Registration {
 
 	/**
 	 * Setup instance.
@@ -24,21 +24,21 @@ final class Flatsome_Registration extends Flatsome_Base_Registration {
 	}
 
 	/**
-	 * Registers Flatsome.
+	 * Registers Silver.
 	 *
 	 * @param string $code Purchase code.
 	 * @return array|WP_error
 	 */
 	public function register( $code ) {
 		if ( empty( $code ) ) {
-			return new WP_Error( 400, __( 'No purchase code provided.', 'flatsome' ) );
+			return new WP_Error( 400, __( 'No purchase code provided.', 'silver' ) );
 		} elseif ( strlen( $code ) === 32 && strpos( $code, '-' ) === false ) {
-			return new WP_Error( 400, __( 'The provided value seems to be a token. Please register with a purchase code instead.', 'flatsome' ) );
+			return new WP_Error( 400, __( 'The provided value seems to be a token. Please register with a purchase code instead.', 'silver' ) );
 		} elseif ( strlen( $code ) !== 36 || substr_count( $code, '-' ) !== 4 ) {
-			return new WP_Error( 400, __( 'Invalid purchase code.', 'flatsome' ) );
+			return new WP_Error( 400, __( 'Invalid purchase code.', 'silver' ) );
 		}
 
-		$is_verifying = isset( $_POST['flatsome_verify'] ); // phpcs:ignore WordPress.Security.NonceVerification
+		$is_verifying = isset( $_POST['silver_verify'] ); // phpcs:ignore WordPress.Security.NonceVerification
 		$id           = $is_verifying ? $this->get_option( 'id' ) : 0;
 
 		$result = ! empty( $id )
@@ -52,7 +52,7 @@ final class Flatsome_Registration extends Flatsome_Base_Registration {
 			// Finish the registration if the request was stopped by an Envato
 			// rate limit. It needs to be verified later in order to receive updates.
 			if ( $status === 429 && isset( $data['id'] ) ) {
-				$result = new WP_Error( $status, __( 'Your site is registered. But the purchase code could not be verified at the moment.', 'flatsome' ), $data );
+				$result = new WP_Error( $status, __( 'Your site is registered. But the purchase code could not be verified at the moment.', 'silver' ), $data );
 				$this->set_options( $data );
 			}
 
@@ -94,7 +94,7 @@ final class Flatsome_Registration extends Flatsome_Base_Registration {
 	}
 
 	/**
-	 * Get latest Flatsome version.
+	 * Get latest Silver version.
 	 *
 	 * @return string|WP_error
 	 */
@@ -102,7 +102,7 @@ final class Flatsome_Registration extends Flatsome_Base_Registration {
 		$code = $this->get_code();
 
 		if ( empty( $code ) ) {
-			return new WP_Error( 'missing-purchase-code', __( 'No purchase code.', 'flatsome' ) );
+			return new WP_Error( 'missing-purchase-code', __( 'No purchase code.', 'silver' ) );
 		}
 
 		$id  = $this->get_option( 'id', '0' );
@@ -125,11 +125,11 @@ final class Flatsome_Registration extends Flatsome_Base_Registration {
 		}
 
 		if ( empty( $result['version'] ) ) {
-			return new WP_Error( 'missing-version', __( 'No version received.', 'flatsome' ) );
+			return new WP_Error( 'missing-version', __( 'No version received.', 'silver' ) );
 		}
 
 		if ( ! is_string( $result['version'] ) ) {
-			return new WP_Error( 'invalid-version', __( 'Invalid version received.', 'flatsome' ) );
+			return new WP_Error( 'invalid-version', __( 'Invalid version received.', 'silver' ) );
 		}
 
 		return $result['version'];
@@ -145,7 +145,7 @@ final class Flatsome_Registration extends Flatsome_Base_Registration {
 		$code = $this->get_code();
 
 		if ( empty( $code ) ) {
-			return new WP_Error( 'missing-purchase-code', __( 'No purchase code.', 'flatsome' ) );
+			return new WP_Error( 'missing-purchase-code', __( 'No purchase code.', 'silver' ) );
 		}
 
 		$id     = $this->get_option( 'id', '0' );
@@ -156,11 +156,11 @@ final class Flatsome_Registration extends Flatsome_Base_Registration {
 		}
 
 		if ( empty( $result['url'] ) ) {
-			return new WP_Error( 'missing-url', __( 'No URL received.', 'flatsome' ) );
+			return new WP_Error( 'missing-url', __( 'No URL received.', 'silver' ) );
 		}
 
 		if ( ! is_string( $result['url'] ) ) {
-			return new WP_Error( 'invalid-url', __( 'Invalid URL received.', 'flatsome' ) );
+			return new WP_Error( 'invalid-url', __( 'Invalid URL received.', 'silver' ) );
 		}
 
 		return $result['url'];
@@ -179,7 +179,7 @@ final class Flatsome_Registration extends Flatsome_Base_Registration {
 	}
 
 	/**
-	 * Checks whether Flatsome is registered or not.
+	 * Checks whether Silver is registered or not.
 	 *
 	 * @return boolean
 	 */
@@ -197,7 +197,7 @@ final class Flatsome_Registration extends Flatsome_Base_Registration {
 	}
 
 	/**
-	 * Checks whether Flatsome is registered or not.
+	 * Checks whether Silver is registered or not.
 	 *
 	 * @return boolean
 	 */

@@ -4,7 +4,7 @@ add_ux_builder_shortcode( 'ux_video', array(
     'name' => __( 'Video','ux-builder'),
     'category' => __( 'Content' ),
 //    'toolbar_thumbnail' => 'id',
-    'thumbnail' =>  flatsome_ux_builder_thumbnail( 'ux_video' ),
+    'thumbnail' =>  silver_ux_builder_thumbnail( 'ux_video' ),
     'allow_in' => array('text_box'),
     'wrap' => true,
     'overlay' => true,
@@ -19,6 +19,7 @@ add_ux_builder_shortcode( 'ux_video', array(
         ),
 
         'height' => array(
+              'responsive' => true,
               'type' => 'scrubfield',
               'heading' => __('Height'),
               'default' => '56.25%',

@@ -2,7 +2,7 @@
 /**
  * Registers the `ux_menu` shortcode.
  *
- * @package flatsome
+ * @package silver
  */
 
 /**
@@ -14,7 +14,7 @@
  *
  * @return string
  */
-function flatsome_render_ux_menu_shortcode( $atts, $content, $tag ) {
+function silver_render_ux_menu_shortcode( $atts, $content, $tag ) {
 	$atts = ux_builder_shortcode_atts(
 		array(
 			'_id'        => '',
@@ -42,4 +42,4 @@ function flatsome_render_ux_menu_shortcode( $atts, $content, $tag ) {
 
 	return ob_get_clean();
 }
-add_shortcode( 'ux_menu', 'flatsome_render_ux_menu_shortcode' );
+add_shortcode( 'ux_menu', 'silver_render_ux_menu_shortcode' );

@@ -1,4 +1,4 @@
-Flatsome.behavior('cart-refresh', {
+Silver.behavior('cart-refresh', {
   attach: function () {
     if (!jQuery('.cart-auto-refresh').length) {
       return

@@ -1,7 +1,7 @@
 <?php
 
 // [page_header]
-function flatsome_page_header_shortcode($atts) {
+function silver_page_header_shortcode($atts) {
   $atts = ux_builder_shortcode_atts( array(
     '_id' => 'page-header-'.rand(),
     'class' => '',
@@ -27,6 +27,7 @@ function flatsome_page_header_shortcode($atts) {
 
     // Background
     'bg' => '',
+    'bg_visible' => 'show',
     'bg_color' => '',
     'bg_overlay' => '',
 	'bg_overlay__sm' => '',
@@ -108,15 +109,15 @@ function flatsome_page_header_shortcode($atts) {
    // Breadcrumbs
    if ( $type == 'breadcrumbs' ) {
      echo '<div class="title-breadcrumbs pb-half pt-half">';
-     flatsome_breadcrumb( 'page-breadcrumbs' );
+     silver_breadcrumb( 'page-breadcrumbs' );
      echo '</div>';
    } else if ( $type == 'subnav' ) {
-     get_flatsome_subnav( $nav_class );
+     get_silver_subnav( $nav_class );
    } else if ( $type == 'onpage' ) {
      echo '<ul class="nav ' . esc_attr( $nav_class ) . '"><li class="nav-single-page hidden"></li></ul>';
    } else if ( $type == 'share' ) {
      echo '<div class="title-share pt-half pb-half">';
-	 echo flatsome_apply_shortcode( 'share', array(
+	 echo silver_apply_shortcode( 'share', array(
 		 'style'   => get_theme_mod( 'social_icons_style', 'outline' ),
 		 'tooltip' => get_theme_mod( 'social_icons_tooltip', 1 ) ? 'true' : 'false',
 	 ) );
@@ -149,7 +150,7 @@ function flatsome_page_header_shortcode($atts) {
    }
 
    // Sub nav
-   //get_flatsome_subnav($nav_class);
+   //get_silver_subnav($nav_class);
 
    $content = ob_get_contents();
    ob_end_clean();
@@ -158,7 +159,7 @@ function flatsome_page_header_shortcode($atts) {
   <div id="<?php echo esc_attr( $_id ); ?>" class="page-header-wrapper">
   <div class="page-title <?php echo esc_attr( implode( ' ', $classes ) ); ?>">
 
-    <?php if ( $bg || $bg_color ) { ?>
+    <?php if ( $bg || silver_responsive_values( $atts, 'bg' ) || silver_responsive_values( $atts, 'bg_color' ) ) { ?>
     <div class="page-title-bg">
       <div class="title-bg fill bg-fill"
         data-parallax-container=".page-title"
@@ -217,6 +218,7 @@ function flatsome_page_header_shortcode($atts) {
         ),
       );
       echo ux_builder_element_style_tag($_id, $args, $atts);
+      echo silver_page_header_responsive_style($_id, $atts);
     ?>
   </div>
   <?php if($style == 'divided') echo '<div class="container header-wrapper-divider"><hr/></div>'; ?>
@@ -227,4 +229,87 @@ function flatsome_page_header_shortcode($atts) {
    return $content;
 }
 
-add_shortcode("page_header", "flatsome_page_header_shortcode");
+add_shortcode("page_header", "silver_page_header_shortcode");
+
+/**
+ * Responsive align / vertical align / text color / background size of a
+ * page header (values for larger screens).
+ *
+ * @param string $id
+ * @param array  $atts
+ * @return string
+ */
+function silver_page_header_responsive_style( $id, $atts ) {
+  $rules = array_merge(
+    array(
+      'align'         => array(
+        'selector'       => '.page-title-inner',
+        'only_overrides' => true,
+        'default'        => 'left',
+        'map'            => array(
+          'left'   => 'flex-direction: row; text-align: left',
+          'center' => 'flex-direction: column; text-align: center',
+          'right'  => 'flex-direction: row-reverse; text-align: right',
+        ),
+      ),
+      'align|title'   => array(
+        'option'         => 'align',
+        'selector'       => '.title-wrapper, .page-title-sub',
+        'only_overrides' => true,
+        'default'        => 'left',
+        'map'            => silver_responsive_map( 'text_align' ),
+      ),
+      'align|content' => array(
+        'option'         => 'align',
+        'selector'       => '.title-content',
+        'only_overrides' => true,
+        'default'        => 'left',
+        'map'            => array(
+          'left'   => 'text-align: right; justify-content: flex-end',
+          'center' => 'text-align: center; justify-content: center',
+          'right'  => 'text-align: left; justify-content: flex-start',
+        ),
+      ),
+      'v_align'       => array(
+        'selector'       => '.page-title-inner',
+        'only_overrides' => true,
+        'default'        => 'center',
+        'map'            => array(
+          'top'    => 'align-items: flex-start',
+          'center' => 'align-items: center',
+          'bottom' => 'align-items: flex-end',
+        ),
+      ),
+    ),
+    // "light" adds the `dark` class (light text).
+    silver_responsive_scheme_rules( 'text_color', '.page-title', 'light', 'dark', array( 'only_overrides' => true, 'default' => 'light' ) )
+  );
+
+  // Background image with a size per breakpoint, or hidden ("Image visibility").
+  if ( silver_responsive_background_is_responsive( $atts ) ) {
+    $images = silver_responsive_background_values( $atts );
+    $sizes  = silver_responsive_filled( $atts, 'bg_size', $atts['bg_size'] ? $atts['bg_size'] : 'large' );
+    $values = array();
+
+    foreach ( $images as $index => $image ) {
+      if ( ! $image ) {
+        $values[ $index ] = 'background-image: none';
+        continue;
+      }
+      $declaration      = apply_filters( 'ux_builder_css_declaration', array(
+        'property' => 'background-image',
+        'value'    => $image,
+        'size'     => $sizes[ $index ],
+      ) );
+      $values[ $index ] = $declaration['value'] ? 'background-image: ' . $declaration['value'] : '';
+    }
+
+    $rules['bg|size'] = array(
+      'selector' => '.title-bg',
+      'values'   => $values,
+      'callback' => 'strval',
+    );
+  }
+
+  return silver_responsive_style_tag( $id, $atts, $rules );
+}

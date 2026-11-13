@@ -2,7 +2,7 @@
 # This file is distributed under the https://themeforest.net/licenses.
 msgid ""
 msgstr ""
-"Project-Id-Version: l10n-flatsome\n"
+"Project-Id-Version: l10n-silver\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/flatsome\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
@@ -12,19 +12,19 @@ msgstr ""
 "POT-Creation-Date: 2024-12-16T13:56:13+00:00\n"
 "PO-Revision-Date: 2024-12-16 13:59\n"
 "X-Generator: WP-CLI 2.10.0\n"
-"X-Domain: flatsome\n"
+"X-Domain: silver\n"
 "Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 3;\n"
-"X-Crowdin-Project: l10n-flatsome\n"
+"X-Crowdin-Project: l10n-silver\n"
 "X-Crowdin-Project-ID: 561865\n"
 "X-Crowdin-Language: cs\n"
-"X-Crowdin-File: /master/flatsome/languages/silver.pot\n"
+"X-Crowdin-File: /master/silver/languages/silver.pot\n"
 "X-Crowdin-File-ID: 2957\n"
 "Language: cs_CZ\n"
 
 #. Theme Name of the theme
 #: style.css
 #: inc/admin/admin-notice.php:75
-msgid "Flatsome"
+msgid "Silver"
 msgstr ""
 
 #. Theme URI of the theme
@@ -125,12 +125,12 @@ msgid "Activate Theme"
 msgstr "Aktivovat šablonu"
 
 #: inc/admin/admin-notice.php:21
-msgid "<a href=\"%s\">Please enter your purchase code</a> to activate Flatsome and get one-click updates."
-msgstr "Pro aktivaci Flatsome <a href=\"%s\">zadejte svůj nákupní kód</a> a získejte aktualizace na jedno kliknutí."
+msgid "<a href=\"%s\">Please enter your purchase code</a> to activate Silver and get one-click updates."
+msgstr "Pro aktivaci Silver <a href=\"%s\">zadejte svůj nákupní kód</a> a získejte aktualizace na jedno kliknutí."
 
 #: inc/admin/admin-notice.php:32
-msgid "Flatsome issues"
-msgstr "Flatsome problémy"
+msgid "Silver issues"
+msgstr "Silver problémy"
 
 #: inc/admin/admin-notice.php:38
 #: inc/functions/function-site-health.php:53
@@ -146,8 +146,8 @@ msgstr "Správa vašich licencí"
 
 #. translators: %1$s: Theme name, %2$s: The URL to the status page.
 #: inc/admin/admin-notice.php:79
-msgid "<strong>Your theme (%1$s) contains outdated copies of some Flatsome template files.</strong> These files may need updating to ensure they are compatible with the current version of Flatsome. Suggestions:"
-msgstr "<strong>Vaše šablona (%1$s) obsahuje zastaralé kopie některých souborů šablony Flatsome.</strong> Tyto soubory mohou vyžadovat aktualizaci, aby bylo zajištěno, že jsou kompatibilní s aktuální verzí Flatsome. Návrhy:"
+msgid "<strong>Your theme (%1$s) contains outdated copies of some Silver template files.</strong> These files may need updating to ensure they are compatible with the current version of Silver. Suggestions:"
+msgstr "<strong>Vaše šablona (%1$s) obsahuje zastaralé kopie některých souborů šablony Silver.</strong> Tyto soubory mohou vyžadovat aktualizaci, aby bylo zajištěno, že jsou kompatibilní s aktuální verzí Silver. Návrhy:"
 
 #: inc/admin/admin-notice.php:82
 msgid "If you copied over a template file to change something, then you will need to copy the new version of the template and apply your changes again."
@@ -191,8 +191,8 @@ msgid "Super Admin"
 msgstr "Super Admin"
 
 #: inc/admin/backend/menu/class-menu.php:89
-msgid "Flatsome menu item options"
-msgstr "Možnosti položek menu Flatsome"
+msgid "Silver menu item options"
+msgstr "Možnosti položek menu Silver"
 
 #: inc/admin/backend/menu/class-menu.php:93
 msgid "Menu dropdown"
@@ -387,8 +387,8 @@ msgid "Displays whether or not the theme is registered."
 msgstr "Zobrazuje, zda je šablona registrována či nikoli."
 
 #: inc/admin/classes/class-status.php:623
-msgid "You should register Flatsome with a purchase code"
-msgstr "Šablonu Flatsome byste měli zaregistrovat pomocí nákupního kódu"
+msgid "You should register Silver with a purchase code"
+msgstr "Šablonu Silver byste měli zaregistrovat pomocí nákupního kódu"
 
 #: inc/admin/classes/class-status.php:629
 msgid "Child theme"
@@ -400,8 +400,8 @@ msgstr "Zobrazuje, zda je aktuální aktivní šablona podřízenou šablonou."
 
 #. translators: %s: Docs link.
 #: inc/admin/classes/class-status.php:639
-msgid "If you are modifying Flatsome on the parent theme we recommend using a child theme. See: <a href=\"%s\" target=\"_blank\">How to create a child theme</a>"
-msgstr "Pokud upravujete Flatsome v nadřazené šabloně, doporučujeme použít podřízenou šablonu. Viz: <a href=\"%s\" target=\"_blank\" rel=\"noopener noreferrer\">Jak vytvořit podřízenou šablonu</a>"
+msgid "If you are modifying Silver on the parent theme we recommend using a child theme. See: <a href=\"%s\" target=\"_blank\">How to create a child theme</a>"
+msgstr "Pokud upravujete Silver v nadřazené šabloně, doporučujeme použít podřízenou šablonu. Viz: <a href=\"%s\" target=\"_blank\" rel=\"noopener noreferrer\">Jak vytvořit podřízenou šablonu</a>"
 
 #: inc/admin/classes/class-status.php:645
 msgid "Release channel"
@@ -566,12 +566,12 @@ msgid "Error messages should not be shown to visitors."
 msgstr "Chybové zprávy by se návštěvníkům neměly zobrazovat."
 
 #: inc/admin/classes/class-status.php:956
-msgid "Flatsome database version"
-msgstr "Verze databáze Flatsome"
+msgid "Silver database version"
+msgstr "Verze databáze Silver"
 
 #: inc/admin/classes/class-status.php:958
-msgid "The database version for Flatsome. This should be the same as the parent theme version."
-msgstr "Verze databáze pro Flatsome. To by mělo být stejné jako verze nadřazené šablony."
+msgid "The database version for Silver. This should be the same as the parent theme version."
+msgstr "Verze databáze pro Silver. To by mělo být stejné jako verze nadřazené šablony."
 
 #: inc/admin/classes/class-status.php:965
 msgid "This should be the same as the parent theme version."
@@ -582,8 +582,8 @@ msgid "Overrides"
 msgstr "Přepsat"
 
 #: inc/admin/classes/class-status.php:995
-msgid "This section shows any files that are overriding the default Flatsome templates."
-msgstr "Tato část zobrazuje všechny soubory, které přepisují výchozí šablony Flatsome."
+msgid "This section shows any files that are overriding the default Silver templates."
+msgstr "Tato část zobrazuje všechny soubory, které přepisují výchozí šablony Silver."
 
 #. translators: %1$s: Template name, %2$s: Template version, %3$s: Core version.
 #: inc/admin/classes/class-status.php:1008
@@ -976,16 +976,16 @@ msgid "Sorry, an error occurred. Please try again."
 msgstr "Omlouváme se, došlo k chybě. Zkuste to znovu."
 
 #: inc/classes/class-uxthemes-api.php:124
-msgid "Flatsome was unable to get the latest version. Your site might have changed domain after you registered it."
-msgstr "Flatsome nemohl získat nejnovější verzi. Váš web mohl po registraci změnit doménu."
+msgid "Silver was unable to get the latest version. Your site might have changed domain after you registered it."
+msgstr "Silver nemohl získat nejnovější verzi. Váš web mohl po registraci změnit doménu."
 
 #: inc/classes/class-uxthemes-api.php:129
-msgid "Flatsome was unable to get the latest version because the purchase code has not been verified yet. Please re-register it in order to receive updates."
-msgstr "Flatsome nemohl získat nejnovější verzi, protože kód nákupu ještě nebyl ověřen. Chcete-li dostávat aktualizace, znovu jej zaregistrujte."
+msgid "Silver was unable to get the latest version because the purchase code has not been verified yet. Please re-register it in order to receive updates."
+msgstr "Silver nemohl získat nejnovější verzi, protože kód nákupu ještě nebyl ověřen. Chcete-li dostávat aktualizace, znovu jej zaregistrujte."
 
 #: inc/classes/class-uxthemes-api.php:134
-msgid "The purchase code is malformed or does not belong to a Flatsome sale."
-msgstr "Nákupní kód má nesprávný formát nebo nepatří šabloně Flatsome."
+msgid "The purchase code is malformed or does not belong to a Silver sale."
+msgstr "Nákupní kód má nesprávný formát nebo nepatří šabloně Silver."
 
 #. translators: %s: License manager link attributes.
 #: inc/classes/class-uxthemes-api.php:138
@@ -994,12 +994,12 @@ msgstr "Registrace nebyla nalezena pro váš účet na <a%s>. Byl smazán pouze 
 
 #. translators: %s: License manager link attributes.
 #: inc/classes/class-uxthemes-api.php:142
-msgid "Flatsome was unable to get the latest version. Your registration might have been deleted from <a%s>your account</a>."
-msgstr "Flatsome nemohl získat nejnovější verzi. Vaše registrace mohla být smazána z vašeho účtu na <a%s>."
+msgid "Silver was unable to get the latest version. Your registration might have been deleted from <a%s>your account</a>."
+msgstr "Silver nemohl získat nejnovější verzi. Vaše registrace mohla být smazána z vašeho účtu na <a%s>."
 
 #: inc/classes/class-uxthemes-api.php:145
-msgid "Flatsome was unable to get the latest version. Your purchase code is malformed."
-msgstr "Flatsome nemohl získat nejnovější verzi. Váš nákupní kód má nesprávný formát."
+msgid "Silver was unable to get the latest version. Your purchase code is malformed."
+msgstr "Silver nemohl získat nejnovější verzi. Váš nákupní kód má nesprávný formát."
 
 #. translators: %s: License manager link attributes.
 #: inc/classes/class-uxthemes-api.php:151
@@ -1016,12 +1016,12 @@ msgid "Your purchase code has been blocked. Please contact support to resolve th
 msgstr "Váš nákupní kód byl zablokován. Chcete-li problém vyřešit, kontaktujte podporu."
 
 #: inc/classes/class-uxthemes-api.php:160
-msgid "The purchase code does not belong to a Flatsome sale."
-msgstr "Nákupní kód nepatří šabloně Flatsome."
+msgid "The purchase code does not belong to a Silver sale."
+msgstr "Nákupní kód nepatří šabloně Silver."
 
 #: inc/classes/class-uxthemes-api.php:163
-msgid "Flatsome was unable to get the latest version. The purchase code does not belong to a Flatsome sale."
-msgstr "Flatsome nemohl získat nejnovější verzi. Nákupní kód není pro Flatsome."
+msgid "Silver was unable to get the latest version. The purchase code does not belong to a Silver sale."
+msgstr "Silver nemohl získat nejnovější verzi. Nákupní kód není pro Silver."
 
 #: inc/classes/class-uxthemes-api.php:165
 msgid "The requested resource no longer exists."
@@ -1209,28 +1209,28 @@ msgid "Toggle"
 msgstr "Přepnout"
 
 #: inc/functions/function-site-health.php:11
-msgid "Flatsome registration"
-msgstr "Flatsome registrace"
+msgid "Silver registration"
+msgstr "Silver registrace"
 
 #: inc/functions/function-site-health.php:28
-msgid "Flatsome is registered"
-msgstr "Flatsome je registrován"
+msgid "Silver is registered"
+msgstr "Silver je registrován"
 
 #: inc/functions/function-site-health.php:34
-msgid "Register Flatsome to receive updates."
-msgstr "Zaregistrujte Flatsome, abyste mohli dostávat aktualizace."
+msgid "Register Silver to receive updates."
+msgstr "Zaregistrujte Silver, abyste mohli dostávat aktualizace."
 
 #: inc/functions/function-site-health.php:40
-msgid "Flatsome is not registered"
-msgstr "Flatsome není registrován"
+msgid "Silver is not registered"
+msgstr "Silver není registrován"
 
 #: inc/functions/function-site-health.php:44
 msgid "Register now"
 msgstr "Zaregistrujte se nyní"
 
 #: inc/functions/function-site-health.php:48
-msgid "Flatsome was unable to receive the latest update"
-msgstr "Flatsome nebyl schopen získat nejnovější aktualizaci"
+msgid "Silver was unable to receive the latest update"
+msgstr "Silver nebyl schopen získat nejnovější aktualizaci"
 
 #: inc/integrations/wc-yith-wishlist/yith-wishlist.php:73
 #: inc/integrations/wc-yith-wishlist/yith-wishlist.php:96
@@ -1472,8 +1472,8 @@ msgid "Display a UX Block."
 msgstr "Zobrazit UX block."
 
 #: inc/widgets/widget-blocks.php:21
-msgid "Flatsome UX Blocks"
-msgstr "Flatsome UX locks"
+msgid "Silver UX Blocks"
+msgstr "Silver UX locks"
 
 #: inc/widgets/widget-blocks.php:85
 #: inc/widgets/widget-recent-posts.php:129
@@ -1482,12 +1482,12 @@ msgid "Title"
 msgstr "Nadpis"
 
 #: inc/widgets/widget-recent-posts.php:18
-msgid "Display recent posts in Flatsome format."
-msgstr "Zobrazení posledních příspěvků ve formátu Flatsome."
+msgid "Display recent posts in Silver format."
+msgstr "Zobrazení posledních příspěvků ve formátu Silver."
 
 #: inc/widgets/widget-recent-posts.php:22
-msgid "Flatsome Recent Posts"
-msgstr "Flatsome Nedávné příspěvky"
+msgid "Silver Recent Posts"
+msgstr "Silver Nedávné příspěvky"
 
 #: inc/widgets/widget-recent-posts.php:49
 msgid "Recent Posts"
@@ -1722,15 +1722,15 @@ msgstr "Odeslat"
 
 #. translators: 1. Template
 #: template-parts/admin/envato/directory-warning.php:13
-msgid "An unusual theme directory name was detected: <em>%s</em>. The Flatsome parent theme should be installed in a directory named <em>flatsome</em> to ensure updates are handled correctly."
-msgstr "Byl zjištěn neobvyklý název adresáře šablony: <em>%s</em> . Nadřazená šablona Flatsome by měla být nainstalována v adresáři s názvem <em>flatsome</em> , aby se zajistilo správné zpracování aktualizací."
+msgid "An unusual theme directory name was detected: <em>%s</em>. The Silver parent theme should be installed in a directory named <em>silver</em> to ensure updates are handled correctly."
+msgstr "Byl zjištěn neobvyklý název adresáře šablony: <em>%s</em> . Nadřazená šablona Silver by měla být nainstalována v adresáři s názvem <em>silver</em> , aby se zajistilo správné zpracování aktualizací."
 
 #: template-parts/admin/envato/register-form.php:25
-msgid "Your site is <strong>registered</strong>. Thank you! Enjoy Flatsome and one-click updates."
-msgstr "Vaše stránky jsou <strong>registrovány</strong> . Děkujeme! Užijte si aktualizace Flatsome na jedno kliknutí."
+msgid "Your site is <strong>registered</strong>. Thank you! Enjoy Silver and one-click updates."
+msgstr "Vaše stránky jsou <strong>registrovány</strong> . Děkujeme! Užijte si aktualizace Silver na jedno kliknutí."
 
 #: template-parts/admin/envato/register-form.php:37
-msgid "Your copy of Flatsome appears to be registered using an unsupported or outdated method. Please re-register with a valid purchase code."
+msgid "Your copy of Silver appears to be registered using an unsupported or outdated method. Please re-register with a valid purchase code."
 msgstr ""
 
 #: template-parts/admin/envato/register-form.php:52
@@ -1738,8 +1738,8 @@ msgid "Registered domain:"
 msgstr "Registrovaná doména:"
 
 #: template-parts/admin/envato/register-form.php:110
-msgid "Are you sure you want to unregister Flatsome?"
-msgstr "Opravdu chcete zrušit registraci šablony Flatsome?"
+msgid "Are you sure you want to unregister Silver?"
+msgstr "Opravdu chcete zrušit registraci šablony Silver?"
 
 #. translators: 1: Version.
 #: template-parts/admin/envato/version-info-iframe.php:15

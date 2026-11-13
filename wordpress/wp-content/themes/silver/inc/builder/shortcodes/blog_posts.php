@@ -174,9 +174,9 @@ $options = array_merge($options, $box_styles);
 add_ux_builder_shortcode( 'blog_posts', array(
     'name' => __( 'Blog posts' ),
     'category' => __( 'Content' ),
-    'thumbnail' =>  flatsome_ux_builder_thumbnail( 'blog_posts' ),
+    'thumbnail' =>  silver_ux_builder_thumbnail( 'blog_posts' ),
     'scripts' => array(
-        'flatsome-masonry-js' => get_template_directory_uri() .'/assets/libs/packery.pkgd.min.js',
+        'silver-masonry-js' => get_template_directory_uri() .'/assets/libs/packery.pkgd.min.js',
     ),
 
     'presets' => array(

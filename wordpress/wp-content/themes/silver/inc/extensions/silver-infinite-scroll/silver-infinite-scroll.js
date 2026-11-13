@@ -1,7 +1,7 @@
 /* global flatsome_infinite_scroll, Packery, ga */
 
 ;(function ($) {
-  $.fn.flatsomeInfiniteScroll = function () {
+  $.fn.silverInfiniteScroll = function () {
     return this.each(function () {
       var $container = jQuery('.shop-container .products')
       var paginationNext = '.woocommerce-pagination li a.next'
@@ -41,7 +41,7 @@
       }
 
       $infiScrollContainer.on('load.infiniteScroll', function (event, response, path) {
-        flatsomeInfiniteScroll.attachBehaviors(response)
+        silverInfiniteScroll.attachBehaviors(response)
       })
 
       $infiScrollContainer.on('request.infiniteScroll', function (event, path) {
@@ -49,7 +49,7 @@
       })
 
       $infiScrollContainer.on('append.infiniteScroll', function (event, response, path, items) {
-        jQuery(document).trigger('flatsome-infiniteScroll-append', [response, path, items])
+        jQuery(document).trigger('silver-infiniteScroll-append', [response, path, items])
         if (byButton) viewMoreButton.removeClass('loading')
 
         // Fix Safari bug
@@ -59,10 +59,10 @@
 
         // Load fragments and init_handling_after_ajax for new items.
         jQuery(document).trigger('yith_wcwl_reload_fragments')
-        jQuery(document).trigger('flatsome-equalize-box')
+        jQuery(document).trigger('silver-equalize-box')
 
-        Flatsome.attach('lazy-load-images', $container)
-        flatsomeInfiniteScroll.animateNewItems(items)
+        Silver.attach('lazy-load-images', $container)
+        silverInfiniteScroll.animateNewItems(items)
 
         if (isMasonry) {
           setTimeout(function () {
@@ -80,12 +80,12 @@
         }
       })
 
-      var flatsomeInfiniteScroll = {
+      var silverInfiniteScroll = {
         attachBehaviors: function (response) {
-          Flatsome.attach('quick-view', response)
-          Flatsome.attach('tooltips', response)
-          Flatsome.attach('add-qty', response)
-          Flatsome.attach('wishlist', response)
+          Silver.attach('quick-view', response)
+          Silver.attach('tooltips', response)
+          Silver.attach('add-qty', response)
+          Silver.attach('wishlist', response)
         },
         animateNewItems: function (items) {
           if (isMasonry) return
@@ -100,10 +100,10 @@
 
   // Doc ready.
   $(function () {
-    $(document.body).flatsomeInfiniteScroll()
+    $(document.body).silverInfiniteScroll()
 
-    $(document).on('facetwp-loaded yith-wcan-ajax-filtered experimental-flatsome-pjax-request-done', function () {
-      $(document.body).flatsomeInfiniteScroll()
+    $(document).on('facetwp-loaded yith-wcan-ajax-filtered experimental-silver-pjax-request-done', function () {
+      $(document.body).silverInfiniteScroll()
     })
   })
 })(jQuery)

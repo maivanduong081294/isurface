@@ -1,16 +1,16 @@
 <?php
 /**
- * Flatsome_Cache class.
+ * Silver_Cache class.
  *
- * @package Flatsome
+ * @package Silver
  */
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * The Flatsome Cache.
+ * The Silver Cache.
  */
-final class Flatsome_Cache {
+final class Silver_Cache {
 
 	/**
 	 * Purge caches.
@@ -20,7 +20,7 @@ final class Flatsome_Cache {
 	 * cache plugin support if you experience caching issues.
 	 *
 	 * Warning: The list of supported caches may change or be added to in the future. Do not rely
-	 * on or use this functionality outside of Flatsome core code.
+	 * on or use this functionality outside of Silver core code.
 	 *
 	 * @param array $caches An array of caches to delete.
 	 */
@@ -28,7 +28,7 @@ final class Flatsome_Cache {
 		$default_caches = [ 'third_party' => false ];
 
 		$caches = wp_parse_args( $caches, $default_caches );
-		$caches = apply_filters( 'flatsome_cache_clear_items', $caches );
+		$caches = apply_filters( 'silver_cache_clear_items', $caches );
 
 		// Exit if all are false.
 		if ( ! in_array( true, $caches, true ) ) {

@@ -1,9 +1,9 @@
-<div id="tab-plugins" class="panel flatsome-panel">
+<div id="tab-plugins" class="panel silver-panel">
 <?php
     
 
-  if ( isset( $_GET['flatsome-deactivate'] ) && 'deactivate-plugin' == $_GET['flatsome-deactivate'] ) {
-    check_admin_referer( 'flatsome-deactivate', 'flatsome-deactivate-nonce' );
+  if ( isset( $_GET['silver-deactivate'] ) && 'deactivate-plugin' == $_GET['silver-deactivate'] ) {
+    check_admin_referer( 'silver-deactivate', 'silver-deactivate-nonce' );
 
     $plugins = TGM_Plugin_Activation::$instance->plugins;
 
@@ -12,8 +12,8 @@
         deactivate_plugins( $plugin['file_path'] );
       }
     }
-  } if ( isset( $_GET['flatsome-activate'] ) && 'activate-plugin' == $_GET['flatsome-activate'] ) {
-    check_admin_referer( 'flatsome-activate', 'flatsome-activate-nonce' );
+  } if ( isset( $_GET['silver-activate'] ) && 'activate-plugin' == $_GET['silver-activate'] ) {
+    check_admin_referer( 'silver-activate', 'silver-activate-nonce' );
 
     $plugins = TGM_Plugin_Activation::$instance->plugins;
 
@@ -49,7 +49,7 @@ function plugin_link( $item ) {
                 'plugin_name'   => urlencode( $item['sanitized_plugin'] ),
                 'plugin_source' => urlencode( $item['source'] ),
                 'tgmpa-install' => 'install-plugin',
-                'return_url'    => 'flatsome-panel',
+                'return_url'    => 'silver-panel',
               ),
               TGM_Plugin_Activation::$instance->get_tgmpa_url()
             ),
@@ -70,10 +70,10 @@ function plugin_link( $item ) {
               'plugin'               => urlencode( $item['slug'] ),
               'plugin_name'          => urlencode( $item['sanitized_plugin'] ),
               'plugin_source'        => urlencode( $item['source'] ),
-              'flatsome-activate'       => 'activate-plugin',
-              'flatsome-activate-nonce' => wp_create_nonce( 'flatsome-activate' ),
+              'silver-activate'       => 'activate-plugin',
+              'silver-activate-nonce' => wp_create_nonce( 'silver-activate' ),
             ),
-            admin_url( 'admin.php?page=flatsome-panel-plugins' )
+            admin_url( 'admin.php?page=silver-panel-plugins' )
           ) ),
           $item['sanitized_plugin']
         ),
@@ -89,7 +89,7 @@ function plugin_link( $item ) {
               array(
                 'page'          => urlencode( TGM_Plugin_Activation::$instance->menu ),
                 'plugin'        => urlencode( $item['slug'] ),
-                'return_url'    => 'flatsome-panel',
+                'return_url'    => 'silver-panel',
                 'tgmpa-update'  => 'update-plugin',
                 'plugin_source' => urlencode( $item['source'] ),
                 'version'       => urlencode( $item['version'] ),
@@ -111,10 +111,10 @@ function plugin_link( $item ) {
               'plugin'                 => urlencode( $item['slug'] ),
               'plugin_name'            => urlencode( $item['sanitized_plugin'] ),
               'plugin_source'          => urlencode( $item['source'] ),
-              'flatsome-deactivate'       => 'deactivate-plugin',
-              'flatsome-deactivate-nonce' => wp_create_nonce( 'flatsome-deactivate' ),
+              'silver-deactivate'       => 'deactivate-plugin',
+              'silver-deactivate-nonce' => wp_create_nonce( 'silver-deactivate' ),
             ),
-            admin_url( 'admin.php?page=flatsome-panel-plugins' )
+            admin_url( 'admin.php?page=silver-panel-plugins' )
           ) ),
           $item['sanitized_plugin']
         ),
@@ -125,10 +125,10 @@ function plugin_link( $item ) {
   }
 
 
-$flatsome_theme = wp_get_theme();
-if ( $flatsome_theme->parent_theme ) {
+$silver_theme = wp_get_theme();
+if ( $silver_theme->parent_theme ) {
   $template_dir = basename( get_template_directory() );
-  $flatsome_theme  = wp_get_theme( $template_dir );
+  $silver_theme  = wp_get_theme( $template_dir );
 }
 $plugins  = TGM_Plugin_Activation::$instance->plugins;
 
@@ -153,7 +153,7 @@ $installed_plugins = get_plugins();
     margin-right: 0!important;
   }
   .theme .plugin-info{position: absolute; bottom:0; width:100%; left:0; text-align: center; font-size: 11px; opacity: 0;} .theme:hover .plugin-info{opacity: 1}</style>
-  <div class="flatsome-demo-themes flatsome-install-plugins" style="margin-top:35px;">
+  <div class="silver-demo-themes silver-install-plugins" style="margin-top:35px;">
     <div class="theme-browser rendered">
       <?php foreach ( $plugins as $plugin ) : ?>
         <?php
@@ -172,15 +172,15 @@ $installed_plugins = get_plugins();
               <img src="<?php echo $plugin['image_url']; ?>" alt="" />
               <div class="plugin-info">
                 <?php if ( isset( $installed_plugins[ $plugin['file_path'] ] ) ) : ?>
-                  <?php printf( __( 'Version: %1s | <a href="%2s" target="_blank">%3s</a>', 'flatsome_admin' ), $installed_plugins[ $plugin['file_path'] ]['Version'], $installed_plugins[ $plugin['file_path'] ]['AuthorURI'], $installed_plugins[ $plugin['file_path'] ]['Author'] ); ?>
+                  <?php printf( __( 'Version: %1s | <a href="%2s" target="_blank">%3s</a>', 'silver' ), $installed_plugins[ $plugin['file_path'] ]['Version'], $installed_plugins[ $plugin['file_path'] ]['AuthorURI'], $installed_plugins[ $plugin['file_path'] ]['Author'] ); ?>
                 <?php elseif ( 'bundled' == $plugin['source_type'] ) : ?>
-                  <?php printf( esc_attr__( 'Available Version: %s', 'flatsome_admin' ), $plugin['version'] ); ?>
+                  <?php printf( esc_attr__( 'Available Version: %s', 'silver' ), $plugin['version'] ); ?>
                 <?php endif; ?>
               </div>
             </div>
             <h3 class="theme-name">
               <?php if ( 'active' == $plugin_status ) : ?>
-                <span><?php printf( __( 'Active: %s', 'flatsome_admin' ), $plugin['name'] ); ?></span>
+                <span><?php printf( __( 'Active: %s', 'silver' ), $plugin['name'] ); ?></span>
               <?php else : ?>
                 <?php echo $plugin['name']; ?>
               <?php endif; ?>
@@ -190,12 +190,12 @@ $installed_plugins = get_plugins();
             </div>
             <?php if ( isset( $plugin_action['update'] ) && $plugin_action['update'] ) : ?>
               <div class="theme-update">
-                <?php printf( __( 'Update Available: Version %s', 'flatsome_admin' ), $plugin['version'] ); ?>
+                <?php printf( __( 'Update Available: Version %s', 'silver' ), $plugin['version'] ); ?>
               </div>
             <?php endif; ?>
             <?php if ( isset( $plugin['required'] ) && $plugin['required'] ) : ?>
               <div class="plugin-required">
-                <?php esc_html_e( 'Required', 'flatsome_admin' ); ?>
+                <?php esc_html_e( 'Required', 'silver' ); ?>
               </div>
             <?php endif; ?>
           </div>

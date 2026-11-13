@@ -1,23 +1,23 @@
 <?php 
 
-Flatsome_Option::add_section( 'blog-archive', array(
-	'title'       => __( 'Blog Archive', 'flatsome-admin' ),
+Silver_Option::add_section( 'blog-archive', array(
+	'title'       => __( 'Blog Archive', 'silver' ),
 	'panel' => 'blog',
-	'description' => __( 'Set custom layouts for archive pages like Categories, Search etc.', 'flatsome-admin' ),
+	'description' => __( 'Set custom layouts for archive pages like Categories, Search etc.', 'silver' ),
 ) );
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'checkbox',
 	'settings'     => 'blog_archive_title',
-	'label'       => __( 'Enable Blog Archive Title', 'flatsome-admin' ),
+	'label'       => __( 'Enable Blog Archive Title', 'silver' ),
 	'section'     => 'blog-archive',
 	'default'     => 1,
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'radio-image',
 	'settings'     => 'blog_style_archive',
-	'label'       => __( 'Posts Layout', 'flatsome-admin' ),
+	'label'       => __( 'Posts Layout', 'silver' ),
 	'section'     => 'blog-archive',
 	'default'     => '',
 	'choices'     => array(

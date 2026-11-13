@@ -5,7 +5,7 @@
  * @author           WooThemes
  * @package          WooCommerce/Templates
  * @version          1.6.4
- * @flatsome-version 3.16.0
+ * @silver-version 3.16.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -28,10 +28,10 @@ if($badge_style == 'style3') $badge_style = 'frame';
 	$text        = $custom_text ? $custom_text : __( 'Sale!', 'woocommerce' );
 
 	if ( get_theme_mod( 'sale_bubble_percentage' ) ) {
-		$text = flatsome_presentage_bubble( $product, $text );
+		$text = silver_presentage_bubble( $product, $text );
 	}
 	echo apply_filters( 'woocommerce_sale_flash', '<div class="callout badge badge-'.$badge_style.'"><div class="badge-inner secondary on-sale"><span class="onsale">' .  $text . '</span></div></div>', $post, $product ); ?>
 <?php endif; ?>
 
-<?php echo apply_filters( 'flatsome_product_labels', '', $post, $product, $badge_style); ?>
+<?php echo apply_filters( 'silver_product_labels', '', $post, $product, $badge_style); ?>
 </div>

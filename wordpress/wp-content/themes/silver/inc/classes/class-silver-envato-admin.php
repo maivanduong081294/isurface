@@ -1,8 +1,8 @@
 <?php
 /**
- * Flatsome_Envato_Admin class.
+ * Silver_Envato_Admin class.
  *
- * @package Flatsome
+ * @package Silver
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,9 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * The Flatsome Envato.
+ * The Silver Envato.
  */
-final class Flatsome_Envato_Admin {
+final class Silver_Envato_Admin {
 
 	/**
 	 * The single class instance.
@@ -22,10 +22,10 @@ final class Flatsome_Envato_Admin {
 	private static $instance = null;
 
 	/**
-	 * Main Flatsome_Envato_Admin instance
+	 * Main Silver_Envato_Admin instance
 	 *
 	 * @deprecated in favor of get_instance()
-	 * @return Flatsome_Envato_Admin.
+	 * @return Silver_Envato_Admin.
 	 */
 	public static function instance() {
 		_deprecated_function( __METHOD__, '3.19.0', 'get_instance()' );
@@ -33,9 +33,9 @@ final class Flatsome_Envato_Admin {
 	}
 
 	/**
-	 * Main Flatsome_Envato_Admin instance
+	 * Main Silver_Envato_Admin instance
 	 *
-	 * @return Flatsome_Envato_Admin.
+	 * @return Silver_Envato_Admin.
 	 */
 	public static function get_instance() {
 		if ( is_null( self::$instance ) ) {
@@ -46,31 +46,31 @@ final class Flatsome_Envato_Admin {
 	}
 
 	/**
-	 * The Flatsome_Registration instance.
+	 * The Silver_Registration instance.
 	 *
-	 * @var Flatsome_Registration
+	 * @var Silver_Registration
 	 */
 	private $registration = null;
 
 	/**
 	 * Setup instance properties
 	 *
-	 * @param Flatsome_Registration $registration The Flatsome_Registration instance.
+	 * @param Silver_Registration $registration The Silver_Registration instance.
 	 */
 	public function __construct( $registration ) {
 		$this->registration = $registration;
 
 		add_action( 'admin_menu', array( $this, 'add_pages' ) );
 		add_action( 'current_screen', array( $this, 'render_version_info_iframe' ) );
-		add_action( 'admin_post_flatsome_envato_register', array( $this, 'save_registration_form' ) );
-		add_action( 'wp_ajax_flatsome_registration_dismiss_notice', array( $registration, 'dismiss_notice' ) );
+		add_action( 'admin_post_silver_envato_register', array( $this, 'save_registration_form' ) );
+		add_action( 'wp_ajax_silver_registration_dismiss_notice', array( $registration, 'dismiss_notice' ) );
 	}
 
 	/**
 	 * Add necessary admin pages.
 	 */
 	public function add_pages() {
-		add_submenu_page( '', '', '', 'manage_options', 'flatsome-version-info', '__return_empty_string' );
+		add_submenu_page( '', '', '', 'manage_options', 'silver-version-info', '__return_empty_string' );
 	}
 
 	/**
@@ -79,7 +79,7 @@ final class Flatsome_Envato_Admin {
 	 * @param WP_Screen $screen WordPress admin screen.
 	 */
 	public function render_version_info_iframe( $screen ) {
-		if ( $screen->base === 'admin_page_flatsome-version-info' ) {
+		if ( $screen->base === 'admin_page_silver-version-info' ) {
 			$version = isset( $_GET['version'] ) ? wp_unslash( $_GET['version'] ) : '';
 			include get_template_directory() . '/template-parts/admin/envato/version-info-iframe.php';
 			die;
@@ -130,7 +130,7 @@ final class Flatsome_Envato_Admin {
 		) );
 
 		if ( $code ) {
-			$code = flatsome_hide_chars( $code );
+			$code = silver_hide_chars( $code );
 		} else {
 			$code      = get_transient( 'flatsome_purchase_code' );
 			$confirmed = (bool) get_transient( 'flatsome_registration_confirmed' );
@@ -149,7 +149,7 @@ final class Flatsome_Envato_Admin {
 				$time_left_string = human_readable_duration( gmdate( $time_left_format, $time_left ) );
 
 				// translators: %s: Time left.
-				$error = new WP_Error( 429, $message . ' ' . sprintf( __( 'Please try again in %s.', 'flatsome' ), $time_left_string ) );
+				$error = new WP_Error( 429, $message . ' ' . sprintf( __( 'Please try again in %s.', 'silver' ), $time_left_string ) );
 			}
 		}
 
@@ -169,9 +169,9 @@ final class Flatsome_Envato_Admin {
 	 * Saves the theme registration form.
 	 */
 	public function save_registration_form() {
-		check_admin_referer( 'flatsome_envato_register', 'flatsome_envato_register_nonce' );
+		check_admin_referer( 'silver_envato_register', 'silver_envato_register_nonce' );
 
-		if ( isset( $_POST['flatsome_register'] ) ) {
+		if ( isset( $_POST['silver_register'] ) ) {
 			$code = isset( $_POST['flatsome_purchase_code'] )
 				? sanitize_text_field( wp_unslash( $_POST['flatsome_purchase_code'] ) )
 				: '';
@@ -180,8 +180,8 @@ final class Flatsome_Envato_Admin {
 				? sanitize_text_field( wp_unslash( $_POST['flatsome_purchase_id'] ) )
 				: '';
 
-			$confirmed = isset( $_POST['flatsome_envato_terms'] )
-				? (bool) $_POST['flatsome_envato_terms']
+			$confirmed = isset( $_POST['silver_envato_terms'] )
+				? (bool) $_POST['silver_envato_terms']
 				: false;
 
 			set_transient( 'flatsome_purchase_code', $code, 120 );
@@ -189,16 +189,16 @@ final class Flatsome_Envato_Admin {
 			set_transient( 'flatsome_registration_confirmed', $confirmed, 120 );
 
 			if ( ! $confirmed ) {
-				$result = new WP_Error( 403, __( 'You must agree to the Envato License Terms.', 'flatsome' ) );
+				$result = new WP_Error( 403, __( 'You must agree to the Envato License Terms.', 'silver' ) );
 			} elseif ( $purchase_id ) {
 				$result = $this->registration->register( $purchase_id );
 			} else {
 				$result = $this->registration->register( $code );
 			}
-		} elseif ( isset( $_POST['flatsome_verify'] ) ) {
+		} elseif ( isset( $_POST['silver_verify'] ) ) {
 			$code   = $this->registration->get_code();
 			$result = $this->registration->register( $code );
-		} elseif ( isset( $_POST['flatsome_unregister'] ) ) {
+		} elseif ( isset( $_POST['silver_unregister'] ) ) {
 			$result = $this->registration->unregister();
 
 			delete_option( 'flatsome_update_cache' );

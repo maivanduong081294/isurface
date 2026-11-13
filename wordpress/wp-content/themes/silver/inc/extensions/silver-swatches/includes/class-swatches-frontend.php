@@ -2,17 +2,17 @@
 /**
  * Swatches frontend  class.
  *
- * @package Flatsome\Extensions
+ * @package Silver\Extensions
  */
 
-namespace Flatsome\Extensions;
+namespace Silver\Extensions;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Class Swatches_Frontend
  *
- * @package Flatsome\Extensions
+ * @package Silver\Extensions
  */
 class Swatches_Frontend {
 
@@ -56,7 +56,7 @@ class Swatches_Frontend {
 		add_action( 'wp_head', array( $this, 'add_css' ), 110 );
 
 		add_filter( 'woocommerce_dropdown_variation_attribute_options_html', array( $this, 'get_swatch_html' ), 100, 2 );
-		add_filter( 'flatsome_swatch_html', array( $this, 'swatch_html' ), 5, 4 );
+		add_filter( 'silver_swatch_html', array( $this, 'swatch_html' ), 5, 4 );
 
 		// Add swatches in loop.
 		add_action( 'woocommerce_before_shop_loop_item_title', array( $this, 'box_swatch_list' ) );
@@ -85,12 +85,12 @@ class Swatches_Frontend {
 			filemtime( $css_dir . 'silver-swatches-frontend.css' ),
 			filemtime( $css_dir . 'silver-swatches-frontend-rtl.css' )
 		);
-		wp_enqueue_style( 'flatsome-swatches-frontend', get_template_directory_uri() . '/assets/css/extensions/silver-swatches-frontend.css', array( 'silver-fontawesome' ), $css_version );
-		wp_style_add_data( 'flatsome-swatches-frontend', 'rtl', 'replace' );
+		wp_enqueue_style( 'silver-swatches-frontend', get_template_directory_uri() . '/assets/css/extensions/silver-swatches-frontend.css', array( 'silver-fontawesome' ), $css_version );
+		wp_style_add_data( 'silver-swatches-frontend', 'rtl', 'replace' );
 
-		wp_enqueue_script( 'flatsome-swatches-frontend', get_template_directory_uri() . '/assets/js/extensions/silver-swatches-frontend.js', array(
+		wp_enqueue_script( 'silver-swatches-frontend', get_template_directory_uri() . '/assets/js/extensions/silver-swatches-frontend.js', array(
 			'jquery',
-			'flatsome-js',
+			'silver-js',
 		), swatches()->version, true );
 	}
 
@@ -135,11 +135,11 @@ class Swatches_Frontend {
 			return;
 		}
 
-		$css  = '<style id="flatsome-swatches-css">';
+		$css  = '<style id="silver-swatches-css">';
 		$css .= $output;
 		$css .= '</style>';
 
-		echo flatsome_minify_css( $css ); // phpcs:ignore WordPress.Security.EscapeOutput
+		echo silver_minify_css( $css ); // phpcs:ignore WordPress.Security.EscapeOutput
 	}
 
 	/**
@@ -194,7 +194,7 @@ class Swatches_Frontend {
 				if ( ! in_array( $term->slug, $options, true ) ) {
 					continue;
 				}
-				$swatches .= apply_filters( 'flatsome_swatch_html', '', $term, $attr->attribute_type, $args );
+				$swatches .= apply_filters( 'silver_swatch_html', '', $term, $attr->attribute_type, $args );
 			}
 		}
 
@@ -207,7 +207,7 @@ class Swatches_Frontend {
 				'aria-labelledby'     => esc_attr( $attribute ),
 			];
 
-			$swatches = '<div ' . flatsome_html_atts( $swatches_atts ) . '>' . $swatches . '</div>';
+			$swatches = '<div ' . silver_html_atts( $swatches_atts ) . '>' . $swatches . '</div>';
 			$html     = '<div class="' . esc_attr( implode( ' ', $selector_classes ) ) . '">' . $html . '</div>' . $swatches;
 		}
 
@@ -228,7 +228,7 @@ class Swatches_Frontend {
 		$selected     = sanitize_title( $args['selected'] ) == $term->slug ? 'selected' : '';
 		$aria_checked = ! empty( $selected ) ? 'true' : 'false';
 		$name         = esc_html( apply_filters( 'woocommerce_variation_option_name', $term->name, $term, $args['attribute'], $args['product'] ) );
-		$img_size     = apply_filters( 'flatsome_swatch_image_size', 'woocommerce_gallery_thumbnail', $term );
+		$img_size     = apply_filters( 'silver_swatch_image_size', 'woocommerce_gallery_thumbnail', $term );
 		$classes      = array( 'ux-swatch' );
 		$thumb        = '';
 		$tooltip      = '';
@@ -365,7 +365,7 @@ class Swatches_Frontend {
 	public function box_swatch_list() {
 		global $product;
 
-		$attribute = apply_filters( 'flatsome_swatches_box_attribute', $this->get_swatches_box_attribute(), $product );
+		$attribute = apply_filters( 'silver_swatches_box_attribute', $this->get_swatches_box_attribute(), $product );
 
 		if ( ! $attribute ) {
 			return;
@@ -384,8 +384,8 @@ class Swatches_Frontend {
 		}
 
 		$attr_options  = swatches()->get_attribute_option_by_name( $attribute_name );
-		$cache_enabled = apply_filters( 'flatsome_swatches_cache_enabled', true );
-		$transient     = 'flatsome_swatches_cache_' . $id;
+		$cache_enabled = apply_filters( 'silver_swatches_cache_enabled', true );
+		$transient     = 'silver_swatches_cache_' . $id;
 		$classes       = array( 'ux-swatches', 'ux-swatches-in-loop' );
 
 		if ( $cache_enabled ) {
@@ -398,7 +398,7 @@ class Swatches_Frontend {
 			/** @var $product \WC_Product_Variable */ // phpcs:ignore Generic.Commenting.DocComment.MissingShort
 			$available_variations = $product->get_available_variations();
 			if ( $cache_enabled ) {
-				set_transient( $transient, $available_variations, apply_filters( 'flatsome_swatches_cache_time', WEEK_IN_SECONDS ) );
+				set_transient( $transient, $available_variations, apply_filters( 'silver_swatches_cache_time', WEEK_IN_SECONDS ) );
 			}
 		}
 
@@ -412,7 +412,7 @@ class Swatches_Frontend {
 			return;
 		}
 
-		if ( count( $swatches_to_show ) < (int) apply_filters( 'flatsome_swatches_box_display_min_count', 1, $product, $attribute ) ) {
+		if ( count( $swatches_to_show ) < (int) apply_filters( 'silver_swatches_box_display_min_count', 1, $product, $attribute ) ) {
 			return;
 		}
 
@@ -425,7 +425,7 @@ class Swatches_Frontend {
 		if ( get_theme_mod( 'swatches_box_size' ) ) $classes[] = 'ux-swatches--' . get_theme_mod( 'swatches_box_size' );
 
 		// Start ux-swatches.
-		$html .= '<div ' . flatsome_html_atts( [
+		$html .= '<div ' . silver_html_atts( [
 			'class' => $classes,
 			'role'  => 'radiogroup',
 		] ) . '>';
@@ -452,7 +452,7 @@ class Swatches_Frontend {
 			$color_classes     = array( 'ux-swatch__color' );
 			$term              = get_term_by( 'slug', $key, $attribute_name );
 			$name              = esc_html( apply_filters( 'woocommerce_variation_option_name', $term->name, $term, $attribute_name, $product ) );
-			$img_size          = apply_filters( 'flatsome_swatch_image_size', 'woocommerce_gallery_thumbnail', $term );
+			$img_size          = apply_filters( 'silver_swatch_image_size', 'woocommerce_gallery_thumbnail', $term );
 			$swatch_atts       = array();
 			$type_tmp          = $attribute->type;
 			$swatch_inner_html = '';
@@ -512,7 +512,7 @@ class Swatches_Frontend {
 				if ( $index === $swatch_limit ) {
 					$remaining_count = $swatch_count - $swatch_limit;
 					/* translators: %d: number of additional options */
-					$html .= '<button type="button" class="ux-swatches__limiter" aria-label="' . esc_attr( sprintf( _n( 'Show %d more option', 'Show %d more options', $remaining_count, 'flatsome' ), $remaining_count ) ) . '" aria-expanded="false">+' . $remaining_count . '</button>';
+					$html .= '<button type="button" class="ux-swatches__limiter" aria-label="' . esc_attr( sprintf( _n( 'Show %d more option', 'Show %d more options', $remaining_count, 'silver' ), $remaining_count ) ) . '" aria-expanded="false">+' . $remaining_count . '</button>';
 				}
 			}
 
@@ -524,7 +524,7 @@ class Swatches_Frontend {
 			$swatch_atts['tabindex']            = '0';
 			$swatch_atts['class']               = $swatch_classes;
 
-			$html .= '<div ' . flatsome_html_atts( $swatch_atts ) . '>' . $swatch_inner_html . '<span class="ux-swatch__text">' . $name . '</span></div>';
+			$html .= '<div ' . silver_html_atts( $swatch_atts ) . '>' . $swatch_inner_html . '<span class="ux-swatch__text">' . $name . '</span></div>';
 
 			$index ++;
 		}
@@ -758,7 +758,7 @@ class Swatches_Frontend {
 		}
 
 		$classes  = array( 'ux-swatch-widget-layered-nav-list__graphic' );
-		$img_size = apply_filters( 'flatsome_swatch_image_size', 'woocommerce_gallery_thumbnail', $term );
+		$img_size = apply_filters( 'silver_swatch_image_size', 'woocommerce_gallery_thumbnail', $term );
 
 		if ( get_theme_mod( 'swatches_box_shape' ) ) {
 			$classes[] = 'ux-swatches--' . get_theme_mod( 'swatches_box_shape' );
@@ -807,11 +807,11 @@ class Swatches_Frontend {
 	 * @param int $post_id Post ID.
 	 */
 	public function cache_clear_save_post( $post_id ) {
-		if ( ! apply_filters( 'flatsome_swatches_cache_enabled', true ) ) {
+		if ( ! apply_filters( 'silver_swatches_cache_enabled', true ) ) {
 			return;
 		}
 
-		$transient = 'flatsome_swatches_cache_' . $post_id;
+		$transient = 'silver_swatches_cache_' . $post_id;
 
 		delete_transient( $transient );
 	}
@@ -822,11 +822,11 @@ class Swatches_Frontend {
 	 * @param \WC_Product $product Product object.
 	 */
 	public function cache_clear_product_object_save( $product ) {
-		if ( ! apply_filters( 'flatsome_swatches_cache_enabled', true ) ) {
+		if ( ! apply_filters( 'silver_swatches_cache_enabled', true ) ) {
 			return;
 		}
 		$post_id   = $product->get_id();
-		$transient = 'flatsome_swatches_cache_' . $post_id;
+		$transient = 'silver_swatches_cache_' . $post_id;
 		delete_transient( $transient );
 	}
 

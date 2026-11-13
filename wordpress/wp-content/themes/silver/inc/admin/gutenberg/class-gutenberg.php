@@ -4,18 +4,18 @@
  *
  * @author     UX Themes
  * @category   Gutenberg
- * @package    Flatsome\Admin
+ * @package    Silver\Admin
  * @since      3.7.0
  */
 
-namespace Flatsome\Admin;
+namespace Silver\Admin;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Class Gutenberg
  *
- * @package Flatsome\Admin
+ * @package Silver\Admin
  */
 class Gutenberg {
 
@@ -89,7 +89,7 @@ class Gutenberg {
 	 * Register and enqueue main styles.
 	 */
 	public function enqueue_styles() {
-		wp_enqueue_style( 'flatsome-gutenberg', $this->assets . '/css/style.css', [], $this->version );
+		wp_enqueue_style( 'silver-gutenberg', $this->assets . '/css/style.css', [], $this->version );
 	}
 
 	/**
@@ -109,23 +109,23 @@ class Gutenberg {
 		if ( ! $this->is_post_type_gutenberg( $typenow ) ) {
 			return;
 		}
-		wp_enqueue_script( 'flatsome-gutenberg-edit-button', $this->assets . '/js/edit-button.js', array( 'wp-edit-post', 'wp-dom-ready' ), $this->version, true );
+		wp_enqueue_script( 'silver-gutenberg-edit-button', $this->assets . '/js/edit-button.js', array( 'wp-edit-post', 'wp-dom-ready' ), $this->version, true );
 
 		$page_id = get_the_ID();
 
 		$params = [
 			'edit_button' => [
 				'enabled' => $this->is_edit_button_visible( $page_id ),
-				'text'    => __( 'Edit with UX Builder', 'flatsome' ),
+				'text'    => __( 'Edit with UX Builder', 'silver' ),
 				'url'     => ux_builder_edit_url( $page_id ),
 			],
 		];
 
-		wp_localize_script( 'flatsome-gutenberg-edit-button', 'flatsome_gutenberg', $params );
+		wp_localize_script( 'silver-gutenberg-edit-button', 'silver_gutenberg', $params );
 	}
 
 	/**
-	 * Generates the `window.flatsomeBlockSettings` object.
+	 * Generates the `window.silverBlockSettings` object.
 	 */
 	public function add_block_settings() {
 		$blocks_js      = $this->assets . '/js/blocks.js';
@@ -137,11 +137,11 @@ class Gutenberg {
 			'wp-components',
 			'wp-block-editor',
 		);
-		wp_enqueue_script( 'flatsome-gutenberg-blocks', $blocks_js, $blocks_deps, $this->version, true );
+		wp_enqueue_script( 'silver-gutenberg-blocks', $blocks_js, $blocks_deps, $this->version, true );
 	}
 
 	public function add_page_layout() {
-		if ( ! flatsome_wp_version_check( '6.3' ) ) {
+		if ( ! silver_wp_version_check( '6.3' ) ) {
 			return; // We register meta boxes for WordPress 6.2 and below.
 		}
 		$script = $this->assets . '/js/page-layout.js';
@@ -154,7 +154,7 @@ class Gutenberg {
 			'wp-components',
 			'wp-dom-ready',
 		);
-		wp_enqueue_script( 'flatsome-gutenberg-post-layout', $script, $deps, $this->version, true );
+		wp_enqueue_script( 'silver-gutenberg-post-layout', $script, $deps, $this->version, true );
 	}
 
 	/**

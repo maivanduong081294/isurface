@@ -4,8 +4,8 @@ add_ux_builder_shortcode( 'map', array(
   'type' => 'container',
   'name' => __( 'Map' ),
   'category' => __( 'Content' ),
-  'thumbnail' =>  flatsome_ux_builder_thumbnail( 'map' ),
-  'template' => flatsome_ux_builder_template( 'map.html' ),
+  'thumbnail' =>  silver_ux_builder_thumbnail( 'map' ),
+  'template' => silver_ux_builder_template( 'map.html' ),
   'wrap' => false,
   'scripts' => array(
     'google-maps' => '//maps.google.com/maps/api/js?key='. trim( get_theme_mod( 'google_map_api', '' ) ),

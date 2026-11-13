@@ -11,16 +11,16 @@
  * the readme will list any important changes.
  *
  * @see              https://woocommerce.com/document/template-structure/
- * @package          Flatsome\Templates
+ * @package          Silver\Templates
  * @version          9.9.0
- * @flatsome-version 3.20.0
+ * @silver-version 3.20.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-$panel_bg_color            = get_theme_mod( 'account_login_lightbox_side_panel_bg_color', Flatsome_Default::COLOR_PRIMARY );
+$panel_bg_color            = get_theme_mod( 'account_login_lightbox_side_panel_bg_color', Silver_Default::COLOR_PRIMARY );
 $panel_bg_image            = get_theme_mod( 'account_login_lightbox_side_panel_bg_image' );
 $panel_bg_overlay          = get_theme_mod( 'account_login_lightbox_side_panel_bg_overlay' );
 $css_panel_bg_args         = array();
@@ -101,7 +101,7 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 			<div class="col-2 xlarge-6 col">
 
 				<div class="account-register-inner">
-					<?php echo flatsome_apply_shortcode( 'block', array( 'id' => $block ) ); ?>
+					<?php echo silver_apply_shortcode( 'block', array( 'id' => $block ) ); ?>
 				</div>
 
 			</div>
@@ -117,8 +117,8 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 				<div class="account-register-inner inner-padding relative flex-col flex-grow dark text-center">
 
 					<h2 class="uppercase h3"><?php esc_html_e( 'Register', 'woocommerce' ); ?></h2>
-					<p><?php esc_html_e( "Don't have an account? Register one!", 'flatsome' ); ?></p>
-					<a href="<?php echo esc_url( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ); ?>" class="button white is-outline"><?php esc_html_e( 'Register an Account', 'flatsome' ); ?></a>
+					<p><?php esc_html_e( "Don't have an account? Register one!", 'silver' ); ?></p>
+					<a href="<?php echo esc_url( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ); ?>" class="button white is-outline"><?php esc_html_e( 'Register an Account', 'silver' ); ?></a>
 
 				</div>
 

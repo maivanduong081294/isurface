@@ -10,6 +10,12 @@
 // caller's scope: the closure keeps its variables out of it.
 return ( function () {
 	$colors = array(
+		// "None": removes the color, e.g. on a larger screen when the mobile
+		// value would otherwise be inherited (an empty value means "inherit").
+		array(
+			'title' => 'None',
+			'value' => 'transparent',
+		),
 		array(
 			'title' => 'Dark',
 			'value' => 'rgb(0,0,0)',

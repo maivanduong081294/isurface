@@ -4,22 +4,32 @@
  * Header Top
  *************/
 
-Flatsome_Option::add_section( 'top_bar', array(
-	'title'       => __( 'Top Bar', 'flatsome-admin' ),
+Silver_Option::add_section( 'top_bar', array(
+	'title'       => __( 'Top Bar', 'silver' ),
 	'panel'       => 'header',
-	//'description' => __( 'This is the section description', 'flatsome-admin' ),
+	//'description' => __( 'This is the section description', 'silver' ),
 ) );
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option', array(
+	'type'        => 'select',
+	'settings'    => 'header_top_block',
+	'label'       => __( 'Top Bar UX Block', 'silver' ),
+	'description' => __( 'Select a UX Block to render the whole Top Bar. Leave empty to use the default elements.', 'silver' ),
+	'section'     => 'top_bar',
+	'default'     => 0,
+	'choices'     => silver_get_block_list_by_id( array( 'option_none' => '-- None --' ) ),
+) );
+
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'checkbox',
 	'settings'     => 'topbar_show',
-	//'transport' => flatsome_customizer_transport(),
-	'label'       => __( 'Enable Top Bar', 'flatsome-admin' ),
+	//'transport' => silver_customizer_transport(),
+	'label'       => __( 'Enable Top Bar', 'silver' ),
 	'section'     => 'top_bar',
 	'default'     => 1,
 ));
 
-Flatsome_Option::add_field( '', array(
+Silver_Option::add_field( '', array(
 	'type'     => 'custom',
 	'settings' => 'custom_title_header_top_layout',
 	'section'  => 'top_bar',
@@ -33,10 +43,10 @@ Flatsome_Option::add_field( '', array(
 	'default'  => '<div class="options-title-divider">Layout</div>',
 ) );
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'slider',
 	'settings'     => 'header_top_height',
-	'label'       => __( 'Height', 'flatsome-admin' ),
+	'label'       => __( 'Height', 'silver' ),
 	'section'     => 'top_bar',
 	'active_callback' => array(
 		array(
@@ -51,14 +61,14 @@ Flatsome_Option::add_field( 'option',  array(
 		'max'  => 100,
 		'step' => 1
 	),
-	'transport' => flatsome_customizer_transport()
+	'transport' => silver_customizer_transport()
 ));
 
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'radio-image',
 	'settings'     => 'topbar_color',
-	'label'       => __( 'Text Color', 'flatsome-admin' ),
+	'label'       => __( 'Text Color', 'silver' ),
 	'section'     => 'top_bar',
 	'active_callback' => array(
 		array(
@@ -68,7 +78,7 @@ Flatsome_Option::add_field( 'option',  array(
 		),
 	),
 	'default'     => 'dark',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'choices'     => array(
 		'dark' => $image_url . 'text-light.svg',
 		'light' => $image_url . 'text-dark.svg'
@@ -76,12 +86,12 @@ Flatsome_Option::add_field( 'option',  array(
 ));
 
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
     'type'        => 'color-alpha',
     'settings'     => 'topbar_bg',
-    'label'       => __( 'Background Color', 'flatsome-admin' ),
-    //'description' => __( 'This is the control description', 'flatsome-admin' ),
-    //'help'        => __( 'This is some extra help. You can use this to add some additional instructions for users. The main description should go in the "description" of the field, this is only to be used for help tips.', 'flatsome-admin' ),
+    'label'       => __( 'Background Color', 'silver' ),
+    //'description' => __( 'This is the control description', 'silver' ),
+    //'help'        => __( 'This is some extra help. You can use this to add some additional instructions for users. The main description should go in the "description" of the field, this is only to be used for help tips.', 'silver' ),
     'section'     => 'top_bar',
     'active_callback' => array(
 	    array(
@@ -91,7 +101,7 @@ Flatsome_Option::add_field( 'option',  array(
 	    ),
     ),
     'default' => '',
-    'transport' => flatsome_customizer_transport(),
+    'transport' => silver_customizer_transport(),
 	'js_vars'   => array(
 		array(
 			'element'  => '.header-top',
@@ -101,7 +111,7 @@ Flatsome_Option::add_field( 'option',  array(
 	)
 ));
 
-Flatsome_Option::add_field( '', array(
+Silver_Option::add_field( '', array(
 	'type'     => 'custom',
 	'settings' => 'custom_title_header_top_nav',
 	'section'  => 'top_bar',
@@ -115,10 +125,10 @@ Flatsome_Option::add_field( '', array(
 	'default'  => '<div class="options-title-divider">Navigation</div>',
 ) );
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'radio-image',
 	'settings'     => 'nav_style_top',
-	'label'       => __( 'Navigation Style', 'flatsome-admin' ),
+	'label'       => __( 'Navigation Style', 'silver' ),
 	'section'     => 'top_bar',
 	'active_callback' => array(
 		array(
@@ -128,16 +138,16 @@ Flatsome_Option::add_field( 'option',  array(
 		),
 	),
 	'default'     => 'divided',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'choices'     => $nav_styles_img
 ));
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'checkbox',
 	'settings'  => 'nav_top_uppercase',
-	'label'     => __( 'Uppercase', 'flatsome-admin' ),
+	'label'     => __( 'Uppercase', 'silver' ),
 	'section'   => 'top_bar',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'active_callback' => array(
 		array(
 			'setting'  => 'topbar_show',
@@ -148,10 +158,10 @@ Flatsome_Option::add_field( 'option', array(
 	'default'   => 0,
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'checkbox',
 	'settings' => 'nav_top_body_overlay',
-	'label'    => __( 'Add overlay on hover', 'flatsome-admin' ),
+	'label'    => __( 'Add overlay on hover', 'silver' ),
 	'section'  => 'top_bar',
 	'active_callback' => array(
 		array(
@@ -163,12 +173,12 @@ Flatsome_Option::add_field( 'option', array(
 	'default'  => 0,
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'slider',
 	'settings'  => 'nav_height_top',
-	'label'     => __( 'Nav Height', 'flatsome-admin' ),
+	'label'     => __( 'Nav Height', 'silver' ),
 	'section'   => 'top_bar',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'active_callback' => array(
 		array(
 			'setting'  => 'topbar_show',
@@ -184,12 +194,12 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'        => 'color',
 	'settings'    => 'type_nav_top_color',
-	'label'       => __( 'Nav Color', 'flatsome-admin' ),
+	'label'       => __( 'Nav Color', 'silver' ),
 	'section'     => 'top_bar',
-	'transport'   => flatsome_customizer_transport(),
+	'transport'   => silver_customizer_transport(),
 	'active_callback' => array(
 		array(
 			'setting'  => 'topbar_show',
@@ -199,12 +209,12 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'        => 'color',
 	'settings'    => 'type_nav_top_color_hover',
-	'label'       => __( 'Nav Color :hover', 'flatsome-admin' ),
+	'label'       => __( 'Nav Color :hover', 'silver' ),
 	'section'     => 'top_bar',
-	'transport'   => flatsome_customizer_transport(),
+	'transport'   => silver_customizer_transport(),
 	'active_callback' => array(
 		array(
 			'setting'  => 'topbar_show',

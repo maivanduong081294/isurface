@@ -13,7 +13,7 @@
  * @see              https://woocommerce.com/document/template-structure/
  * @package          WooCommerce\Templates
  * @version          10.3.0
- * @flatsome-version 3.20.3
+ * @silver-version 3.20.3
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -66,7 +66,7 @@ if ( $related_products ) :
 			</h3>
 		<?php endif; ?>
 
-		<?php get_flatsome_repeater_start( $repeater ); ?>
+		<?php get_silver_repeater_start( $repeater ); ?>
 
 		<?php foreach ( $related_products as $related_product ) :
 			$post_object = get_post( $related_product->get_id() );
@@ -77,7 +77,7 @@ if ( $related_products ) :
 		endforeach;
 		?>
 
-		<?php get_flatsome_repeater_end( $repeater ); ?>
+		<?php get_silver_repeater_end( $repeater ); ?>
 
 	</div>
 	<?php

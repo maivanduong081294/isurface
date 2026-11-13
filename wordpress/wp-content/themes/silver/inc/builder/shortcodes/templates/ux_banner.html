@@ -6,7 +6,7 @@
     <div class="banner-bg fill"  data-parallax-container=".banner" data-parallax-background
         ng-attr-data-parallax="-{{ shortcode.options.parallax }}" >
 
-	  <img ng-if="shortcode.options.bg" class="bg" ng-style="{ 'objectPosition': shortcode.options.bgPos }" wp-attachment="shortcode.options.bg" wp-attachment-size="shortcode.options.bgSize" alt="" />
+	  <img ng-if="shortcode.options.bg && shortcode.options.bgVisible !== 'hide'" class="bg" ng-style="{ 'objectPosition': shortcode.options.bgPos }" wp-attachment="shortcode.options.bg" wp-attachment-size="shortcode.options.bgSize" alt="" />
 
       <video ng-if="shortcode.options.videoMp4"
       class="video-bg no-click {{shortcode.options.videoVisibility}}"
@@ -35,10 +35,10 @@
     </div><!-- .banner-bg -->
 
     <div ng-if="shortcode.options.dividerTop" class="ux-shape-divider ux-shape-divider--top ux-shape-divider--style-{{shortcode.options.dividerTop}}" ng-class="{'ux-shape-divider--flip': shortcode.options.dividerTopFlip == 'true','ux-shape-divider--to-front': shortcode.options.dividerTopToFront == 'true'}">
-      <ng-include ng-if="$ctrl.store.flatsomeUrl" src="$ctrl.store.flatsomeUrl + '/assets/img/dividers/' + shortcode.options.dividerTop + '.svg'"></ng-include>
+      <ng-include ng-if="$ctrl.store.silverUrl" src="$ctrl.store.silverUrl + '/assets/img/dividers/' + shortcode.options.dividerTop + '.svg'"></ng-include>
     </div>
     <div ng-if="shortcode.options.divider" class="ux-shape-divider ux-shape-divider--bottom ux-shape-divider--style-{{shortcode.options.divider}}" ng-class="{'ux-shape-divider--flip': shortcode.options.dividerFlip == 'true','ux-shape-divider--to-front': shortcode.options.dividerToFront == 'true'}">
-      <ng-include ng-if="$ctrl.store.flatsomeUrl" src="$ctrl.store.flatsomeUrl + '/assets/img/dividers/' + shortcode.options.divider + '.svg'"></ng-include>
+      <ng-include ng-if="$ctrl.store.silverUrl" src="$ctrl.store.silverUrl + '/assets/img/dividers/' + shortcode.options.divider + '.svg'"></ng-include>
     </div>
 
     <div class="banner-layers container">

@@ -1,9 +1,9 @@
 <?php
 /**
- * Flatsome Engine Room.
+ * Silver Engine Room.
  * This is where all Theme Functions runs.
  *
- * @package flatsome
+ * @package silver
  */
 
 require get_template_directory() . '/inc/functions/function-branding.php';
@@ -66,6 +66,7 @@ require get_template_directory() . '/inc/functions/function-presets.php';
 require get_template_directory() . '/inc/helpers/helpers-frontend.php';
 require get_template_directory() . '/inc/helpers/helpers-shortcode.php';
 require get_template_directory() . '/inc/helpers/helpers-grid.php';
+require get_template_directory() . '/inc/helpers/helpers-responsive.php';
 require get_template_directory() . '/inc/helpers/helpers-icons.php';
 if ( is_woocommerce_activated() ) { require get_template_directory() . '/inc/helpers/helpers-woocommerce.php'; }
 
@@ -89,10 +90,11 @@ if(is_admin()){
   require get_template_directory() . '/inc/admin/classes/class-features.php';
   require get_template_directory() . '/inc/structure/structure-admin.php';
   require get_template_directory() . '/inc/admin/gutenberg/class-gutenberg.php';
+  require get_template_directory() . '/inc/admin/backend/term-thumbnail.php';
 }
 
 /**
- * Flatsome Shortcodes.
+ * Silver Shortcodes.
  */
 
 require get_template_directory() . '/inc/shortcodes/row.php';
@@ -140,6 +142,13 @@ require get_template_directory() . '/inc/shortcodes/ux_container.php';
 require get_template_directory() . '/inc/shortcodes/ux_text.php';
 require get_template_directory() . '/inc/shortcodes/ux_lottie.php';
 
+require get_template_directory() . '/inc/shortcodes/post_item.php';
+require get_template_directory() . '/inc/shortcodes/ux_posts.php';
+require get_template_directory() . '/inc/shortcodes/ux_mega_menu.php';
+require get_template_directory() . '/inc/shortcodes/ux_shortcode.php';
+require get_template_directory() . '/inc/shortcodes/ux_counter.php';
+require get_template_directory() . '/inc/shortcodes/ux_terms.php';
+
 if(is_portfolio_activated()){
   require get_template_directory() . '/inc/shortcodes/portfolio.php';
 }
@@ -150,10 +159,11 @@ if (is_woocommerce_activated()) {
   require get_template_directory() . '/inc/shortcodes/product_flip.php';
   require get_template_directory() . '/inc/shortcodes/product_categories.php';
   require get_template_directory() . '/inc/shortcodes/custom-product.php';
+  require get_template_directory() . '/inc/shortcodes/ux_quick_cart.php';
 }
 
 /**
- * Flatsome Blocks
+ * Silver Blocks
  */
 if ( function_exists( 'register_block_type' ) ) {
   require get_template_directory() . '/inc/blocks/uxbuilder/index.php';
@@ -198,7 +208,7 @@ if ( is_woocommerce_activated() ) {
 
 
 /**
- * Flatsome Theme Widgets
+ * Silver Theme Widgets
  */
 require get_template_directory() . '/inc/widgets/widget-recent-posts.php';
 require get_template_directory() . '/inc/widgets/widget-blocks.php';

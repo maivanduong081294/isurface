@@ -2,7 +2,7 @@
 # This file is distributed under the https://themeforest.net/licenses.
 msgid ""
 msgstr ""
-"Project-Id-Version: l10n-flatsome\n"
+"Project-Id-Version: l10n-silver\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/flatsome\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
@@ -12,19 +12,19 @@ msgstr ""
 "POT-Creation-Date: 2024-12-16T13:56:13+00:00\n"
 "PO-Revision-Date: 2024-12-16 14:00\n"
 "X-Generator: WP-CLI 2.10.0\n"
-"X-Domain: flatsome\n"
+"X-Domain: silver\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Crowdin-Project: l10n-flatsome\n"
+"X-Crowdin-Project: l10n-silver\n"
 "X-Crowdin-Project-ID: 561865\n"
 "X-Crowdin-Language: vi\n"
-"X-Crowdin-File: /master/flatsome/languages/silver.pot\n"
+"X-Crowdin-File: /master/silver/languages/silver.pot\n"
 "X-Crowdin-File-ID: 2957\n"
 "Language: vi_VN\n"
 
 #. Theme Name of the theme
 #: style.css
 #: inc/admin/admin-notice.php:75
-msgid "Flatsome"
+msgid "Silver"
 msgstr ""
 
 #. Theme URI of the theme
@@ -122,12 +122,12 @@ msgid "Activate Theme"
 msgstr "Kích hoạt giao diện"
 
 #: inc/admin/admin-notice.php:21
-msgid "<a href=\"%s\">Please enter your purchase code</a> to activate Flatsome and get one-click updates."
-msgstr "<a href=\"%s\">Vui lòng nhập mã mua hàng của bạn</a> để kích hoạt Flatsome và nhận các bản cập nhật bằng một cú nhấp chuột."
+msgid "<a href=\"%s\">Please enter your purchase code</a> to activate Silver and get one-click updates."
+msgstr "<a href=\"%s\">Vui lòng nhập mã mua hàng của bạn</a> để kích hoạt Silver và nhận các bản cập nhật bằng một cú nhấp chuột."
 
 #: inc/admin/admin-notice.php:32
-msgid "Flatsome issues"
-msgstr "Sự cố Flatsome"
+msgid "Silver issues"
+msgstr "Sự cố Silver"
 
 #: inc/admin/admin-notice.php:38
 #: inc/functions/function-site-health.php:53
@@ -143,8 +143,8 @@ msgstr "Quản lý giấy phép của bạn"
 
 #. translators: %1$s: Theme name, %2$s: The URL to the status page.
 #: inc/admin/admin-notice.php:79
-msgid "<strong>Your theme (%1$s) contains outdated copies of some Flatsome template files.</strong> These files may need updating to ensure they are compatible with the current version of Flatsome. Suggestions:"
-msgstr "<strong>Giao diện của bạn (%1$s) chứa các bản sao lỗi thời của một số tệp mẫu Flatsome.</strong> Các tệp này có thể cần cập nhật để đảm bảo chúng tương thích với phiên bản Flatsome hiện tại. Gợi ý:"
+msgid "<strong>Your theme (%1$s) contains outdated copies of some Silver template files.</strong> These files may need updating to ensure they are compatible with the current version of Silver. Suggestions:"
+msgstr "<strong>Giao diện của bạn (%1$s) chứa các bản sao lỗi thời của một số tệp mẫu Silver.</strong> Các tệp này có thể cần cập nhật để đảm bảo chúng tương thích với phiên bản Silver hiện tại. Gợi ý:"
 
 #: inc/admin/admin-notice.php:82
 msgid "If you copied over a template file to change something, then you will need to copy the new version of the template and apply your changes again."
@@ -188,8 +188,8 @@ msgid "Super Admin"
 msgstr "Quản trị viên cấp cao"
 
 #: inc/admin/backend/menu/class-menu.php:89
-msgid "Flatsome menu item options"
-msgstr "Tùy chọn mục menu Flatsome"
+msgid "Silver menu item options"
+msgstr "Tùy chọn mục menu Silver"
 
 #: inc/admin/backend/menu/class-menu.php:93
 msgid "Menu dropdown"
@@ -384,8 +384,8 @@ msgid "Displays whether or not the theme is registered."
 msgstr "Hiển thị giao diện có được đăng ký hay không."
 
 #: inc/admin/classes/class-status.php:623
-msgid "You should register Flatsome with a purchase code"
-msgstr "Bạn nên đăng ký Flatsome bằng mã mua hàng"
+msgid "You should register Silver with a purchase code"
+msgstr "Bạn nên đăng ký Silver bằng mã mua hàng"
 
 #: inc/admin/classes/class-status.php:629
 msgid "Child theme"
@@ -397,8 +397,8 @@ msgstr "Hiển thị giao diện đang hoạt động có phải là giao diện
 
 #. translators: %s: Docs link.
 #: inc/admin/classes/class-status.php:639
-msgid "If you are modifying Flatsome on the parent theme we recommend using a child theme. See: <a href=\"%s\" target=\"_blank\">How to create a child theme</a>"
-msgstr "Nếu bạn đang sửa đổi Flatsome trên giao diện cha, chúng tôi khuyên bạn nên sử dụng giao diện con. Xem: <a href=\"%s\" target=\"_blank\">Cách tạo giao diện con</a>"
+msgid "If you are modifying Silver on the parent theme we recommend using a child theme. See: <a href=\"%s\" target=\"_blank\">How to create a child theme</a>"
+msgstr "Nếu bạn đang sửa đổi Silver trên giao diện cha, chúng tôi khuyên bạn nên sử dụng giao diện con. Xem: <a href=\"%s\" target=\"_blank\">Cách tạo giao diện con</a>"
 
 #: inc/admin/classes/class-status.php:645
 msgid "Release channel"
@@ -563,12 +563,12 @@ msgid "Error messages should not be shown to visitors."
 msgstr "Thông báo lỗi không nên hiển thị cho khách truy cập."
 
 #: inc/admin/classes/class-status.php:956
-msgid "Flatsome database version"
-msgstr "Phiên bản cơ sở dữ liệu Flatsome"
+msgid "Silver database version"
+msgstr "Phiên bản cơ sở dữ liệu Silver"
 
 #: inc/admin/classes/class-status.php:958
-msgid "The database version for Flatsome. This should be the same as the parent theme version."
-msgstr "Phiên bản cơ sở dữ liệu cho Flatsome. Điều này phải giống với phiên bản giao diện cha."
+msgid "The database version for Silver. This should be the same as the parent theme version."
+msgstr "Phiên bản cơ sở dữ liệu cho Silver. Điều này phải giống với phiên bản giao diện cha."
 
 #: inc/admin/classes/class-status.php:965
 msgid "This should be the same as the parent theme version."
@@ -579,8 +579,8 @@ msgid "Overrides"
 msgstr "Ghi đè"
 
 #: inc/admin/classes/class-status.php:995
-msgid "This section shows any files that are overriding the default Flatsome templates."
-msgstr "Phần này hiển thị bất kỳ tệp nào đang ghi đè các mẫu Flatsome mặc định."
+msgid "This section shows any files that are overriding the default Silver templates."
+msgstr "Phần này hiển thị bất kỳ tệp nào đang ghi đè các mẫu Silver mặc định."
 
 #. translators: %1$s: Template name, %2$s: Template version, %3$s: Core version.
 #: inc/admin/classes/class-status.php:1008
@@ -973,16 +973,16 @@ msgid "Sorry, an error occurred. Please try again."
 msgstr "Xin lỗi, đã xảy ra lỗi. Vui lòng thử lại."
 
 #: inc/classes/class-uxthemes-api.php:124
-msgid "Flatsome was unable to get the latest version. Your site might have changed domain after you registered it."
-msgstr "Flatsome không thể nhận phiên bản mới nhất. Trang web của bạn có thể đã thay đổi tên miền sau khi bạn đăng ký."
+msgid "Silver was unable to get the latest version. Your site might have changed domain after you registered it."
+msgstr "Silver không thể nhận phiên bản mới nhất. Trang web của bạn có thể đã thay đổi tên miền sau khi bạn đăng ký."
 
 #: inc/classes/class-uxthemes-api.php:129
-msgid "Flatsome was unable to get the latest version because the purchase code has not been verified yet. Please re-register it in order to receive updates."
-msgstr "Flatsome không thể nhận phiên bản mới nhất vì mã mua hàng chưa được xác minh. Vui lòng đăng ký lại để nhận bản cập nhật."
+msgid "Silver was unable to get the latest version because the purchase code has not been verified yet. Please re-register it in order to receive updates."
+msgstr "Silver không thể nhận phiên bản mới nhất vì mã mua hàng chưa được xác minh. Vui lòng đăng ký lại để nhận bản cập nhật."
 
 #: inc/classes/class-uxthemes-api.php:134
-msgid "The purchase code is malformed or does not belong to a Flatsome sale."
-msgstr "Mã mua hàng không đúng định dạng hoặc không thuộc về giao dịch mua Flatsome."
+msgid "The purchase code is malformed or does not belong to a Silver sale."
+msgstr "Mã mua hàng không đúng định dạng hoặc không thuộc về giao dịch mua Silver."
 
 #. translators: %s: License manager link attributes.
 #: inc/classes/class-uxthemes-api.php:138
@@ -991,12 +991,12 @@ msgstr "Đăng ký không được tìm thấy cho <a%s>tài khoản của bạn
 
 #. translators: %s: License manager link attributes.
 #: inc/classes/class-uxthemes-api.php:142
-msgid "Flatsome was unable to get the latest version. Your registration might have been deleted from <a%s>your account</a>."
-msgstr "Flatsome không thể nhận phiên bản mới nhất. Đăng ký của bạn có thể đã bị xóa khỏi <a%s>tài khoản của bạn</a>."
+msgid "Silver was unable to get the latest version. Your registration might have been deleted from <a%s>your account</a>."
+msgstr "Silver không thể nhận phiên bản mới nhất. Đăng ký của bạn có thể đã bị xóa khỏi <a%s>tài khoản của bạn</a>."
 
 #: inc/classes/class-uxthemes-api.php:145
-msgid "Flatsome was unable to get the latest version. Your purchase code is malformed."
-msgstr "Flatsome không thể nhận phiên bản mới nhất. Mã mua hàng của bạn không đúng định dạng."
+msgid "Silver was unable to get the latest version. Your purchase code is malformed."
+msgstr "Silver không thể nhận phiên bản mới nhất. Mã mua hàng của bạn không đúng định dạng."
 
 #. translators: %s: License manager link attributes.
 #: inc/classes/class-uxthemes-api.php:151
@@ -1013,12 +1013,12 @@ msgid "Your purchase code has been blocked. Please contact support to resolve th
 msgstr "Mã mua hàng của bạn đã bị chặn. Vui lòng liên hệ với bộ phận hỗ trợ để giải quyết sự cố."
 
 #: inc/classes/class-uxthemes-api.php:160
-msgid "The purchase code does not belong to a Flatsome sale."
-msgstr "Mã mua hàng không thuộc về giao dịch mua Flatsome."
+msgid "The purchase code does not belong to a Silver sale."
+msgstr "Mã mua hàng không thuộc về giao dịch mua Silver."
 
 #: inc/classes/class-uxthemes-api.php:163
-msgid "Flatsome was unable to get the latest version. The purchase code does not belong to a Flatsome sale."
-msgstr "Flatsome không thể nhận phiên bản mới nhất. Mã mua hàng không thuộc về giao dịch mua Flatsome."
+msgid "Silver was unable to get the latest version. The purchase code does not belong to a Silver sale."
+msgstr "Silver không thể nhận phiên bản mới nhất. Mã mua hàng không thuộc về giao dịch mua Silver."
 
 #: inc/classes/class-uxthemes-api.php:165
 msgid "The requested resource no longer exists."
@@ -1206,28 +1206,28 @@ msgid "Toggle"
 msgstr "Chuyển đổi"
 
 #: inc/functions/function-site-health.php:11
-msgid "Flatsome registration"
-msgstr "Đăng ký Flatsome"
+msgid "Silver registration"
+msgstr "Đăng ký Silver"
 
 #: inc/functions/function-site-health.php:28
-msgid "Flatsome is registered"
-msgstr "Flatsome đã được đăng ký"
+msgid "Silver is registered"
+msgstr "Silver đã được đăng ký"
 
 #: inc/functions/function-site-health.php:34
-msgid "Register Flatsome to receive updates."
-msgstr "Đăng ký Flatsome để nhận bản cập nhật."
+msgid "Register Silver to receive updates."
+msgstr "Đăng ký Silver để nhận bản cập nhật."
 
 #: inc/functions/function-site-health.php:40
-msgid "Flatsome is not registered"
-msgstr "Flatsome chưa được đăng ký"
+msgid "Silver is not registered"
+msgstr "Silver chưa được đăng ký"
 
 #: inc/functions/function-site-health.php:44
 msgid "Register now"
 msgstr "Đăng ký ngay"
 
 #: inc/functions/function-site-health.php:48
-msgid "Flatsome was unable to receive the latest update"
-msgstr "Flatsome không thể nhận bản cập nhật mới nhất"
+msgid "Silver was unable to receive the latest update"
+msgstr "Silver không thể nhận bản cập nhật mới nhất"
 
 #: inc/integrations/wc-yith-wishlist/yith-wishlist.php:73
 #: inc/integrations/wc-yith-wishlist/yith-wishlist.php:96
@@ -1466,8 +1466,8 @@ msgid "Display a UX Block."
 msgstr "Hiển thị khối UX."
 
 #: inc/widgets/widget-blocks.php:21
-msgid "Flatsome UX Blocks"
-msgstr "Khối UX Flatsome"
+msgid "Silver UX Blocks"
+msgstr "Khối UX Silver"
 
 #: inc/widgets/widget-blocks.php:85
 #: inc/widgets/widget-recent-posts.php:129
@@ -1476,12 +1476,12 @@ msgid "Title"
 msgstr "Tiêu đề"
 
 #: inc/widgets/widget-recent-posts.php:18
-msgid "Display recent posts in Flatsome format."
-msgstr "Hiển thị các bài đăng gần đây theo định dạng Flatsome."
+msgid "Display recent posts in Silver format."
+msgstr "Hiển thị các bài đăng gần đây theo định dạng Silver."
 
 #: inc/widgets/widget-recent-posts.php:22
-msgid "Flatsome Recent Posts"
-msgstr "Bài đăng gần đây Flatsome"
+msgid "Silver Recent Posts"
+msgstr "Bài đăng gần đây Silver"
 
 #: inc/widgets/widget-recent-posts.php:49
 msgid "Recent Posts"
@@ -1716,24 +1716,24 @@ msgstr "Gửi"
 
 #. translators: 1. Template
 #: template-parts/admin/envato/directory-warning.php:13
-msgid "An unusual theme directory name was detected: <em>%s</em>. The Flatsome parent theme should be installed in a directory named <em>flatsome</em> to ensure updates are handled correctly."
-msgstr "Phát hiện tên thư mục giao diện bất thường: <em>%s</em>. Giao diện cha Flatsome nên được cài đặt trong thư mục có tên <em>flatsome</em> để đảm bảo các bản cập nhật được xử lý chính xác."
+msgid "An unusual theme directory name was detected: <em>%s</em>. The Silver parent theme should be installed in a directory named <em>silver</em> to ensure updates are handled correctly."
+msgstr "Phát hiện tên thư mục giao diện bất thường: <em>%s</em>. Giao diện cha Silver nên được cài đặt trong thư mục có tên <em>silver</em> để đảm bảo các bản cập nhật được xử lý chính xác."
 
 #: template-parts/admin/envato/register-form.php:25
-msgid "Your site is <strong>registered</strong>. Thank you! Enjoy Flatsome and one-click updates."
-msgstr "Trang web của bạn đã được <strong>đăng ký</strong>. Cảm ơn bạn! Tận hưởng Flatsome và các bản cập nhật bằng một cú nhấp chuột."
+msgid "Your site is <strong>registered</strong>. Thank you! Enjoy Silver and one-click updates."
+msgstr "Trang web của bạn đã được <strong>đăng ký</strong>. Cảm ơn bạn! Tận hưởng Silver và các bản cập nhật bằng một cú nhấp chuột."
 
 #: template-parts/admin/envato/register-form.php:37
-msgid "Your copy of Flatsome appears to be registered using an unsupported or outdated method. Please re-register with a valid purchase code."
-msgstr "Bản sao Flatsome của bạn dường như đã được đăng ký bằng phương pháp không được hỗ trợ hoặc lỗi thời. Vui lòng đăng ký lại bằng mã mua hàng hợp lệ."
+msgid "Your copy of Silver appears to be registered using an unsupported or outdated method. Please re-register with a valid purchase code."
+msgstr "Bản sao Silver của bạn dường như đã được đăng ký bằng phương pháp không được hỗ trợ hoặc lỗi thời. Vui lòng đăng ký lại bằng mã mua hàng hợp lệ."
 
 #: template-parts/admin/envato/register-form.php:52
 msgid "Registered domain:"
 msgstr "Tên miền đã đăng ký:"
 
 #: template-parts/admin/envato/register-form.php:110
-msgid "Are you sure you want to unregister Flatsome?"
-msgstr "Bạn có chắc chắn muốn hủy đăng ký Flatsome?"
+msgid "Are you sure you want to unregister Silver?"
+msgstr "Bạn có chắc chắn muốn hủy đăng ký Silver?"
 
 #. translators: 1: Version.
 #: template-parts/admin/envato/version-info-iframe.php:15

@@ -15,7 +15,7 @@
  * @see              https://woocommerce.com/document/template-structure/
  * @package          WooCommerce\Templates
  * @version          11.0.0
- * @flatsome-version 3.20.9
+ * @silver-version 3.20.9
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -89,10 +89,10 @@ do_action( 'woocommerce_before_mini_cart' ); ?>
 		?>
 	</ul>
 
-	<?php do_action( 'flatsome_after_mini_cart_contents' ); ?>
+	<?php do_action( 'silver_after_mini_cart_contents' ); ?>
 
 	<div class="ux-mini-cart-footer">
-		<?php do_action( 'flatsome_before_mini_cart_total' ); ?>
+		<?php do_action( 'silver_before_mini_cart_total' ); ?>
 
 		<p class="woocommerce-mini-cart__total total">
 			<?php
@@ -115,9 +115,9 @@ do_action( 'woocommerce_before_mini_cart' ); ?>
 <?php else : ?>
 
 	<div class="ux-mini-cart-empty flex flex-row-col text-center pt pb">
-		<?php do_action( 'flatsome_before_mini_cart_empty_message' ); ?>
+		<?php do_action( 'silver_before_mini_cart_empty_message' ); ?>
 		<p class="woocommerce-mini-cart__empty-message empty"><?php esc_html_e( 'No products in the cart.', 'woocommerce' ); ?></p>
-		<?php do_action( 'flatsome_after_mini_cart_empty_message' ); ?>
+		<?php do_action( 'silver_after_mini_cart_empty_message' ); ?>
 	</div>
 
 <?php endif; ?>

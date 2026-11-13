@@ -49,4 +49,3 @@ Không commit file cấu hình, mật khẩu, private key hoặc secrets.
 - Kiểm tra cú pháp hoặc test phù hợp với thay đổi.
 - Tóm tắt file đã sửa.
 - Nêu rõ các lệnh người dùng cần chạy tiếp theo.
-

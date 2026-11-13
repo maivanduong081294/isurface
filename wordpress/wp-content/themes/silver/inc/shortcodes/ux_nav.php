@@ -30,6 +30,18 @@ function ux_navigation($atts) {
       if($style) $classes[] = 'nav-'.$style;
       if($align) $classes[] = 'text-'.$align.' nav-'.$align;
 
+      // Responsive text align (larger screens).
+      if ( silver_responsive_has_overrides( (array) $atts, 'align' ) ) {
+        if ( ! $_id ) $_id = 'nav-' . wp_rand();
+        $nav_map = array();
+        foreach ( silver_responsive_map( 'text_align' ) as $value => $declaration ) {
+          $nav_map[ $value ] = $declaration . '; ' . silver_responsive_map( 'nav_align' )[ $value ];
+        }
+        echo silver_responsive_style_tag( $_id, (array) $atts, array( // phpcs:ignore WordPress.Security.EscapeOutput
+          'align' => array( 'selector' => '> .nav', 'only_overrides' => true, 'default' => 'left', 'map' => $nav_map ),
+        ) );
+      }
+
       echo '<div' . ( $_id ? ' id="' . esc_attr( $_id ) . '"' : '' ) . ' class="nav-wrapper">';
       echo '<ul class="'.esc_attr(implode(' ',$classes)).'">';
 

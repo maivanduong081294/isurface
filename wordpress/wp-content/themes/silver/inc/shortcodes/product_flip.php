@@ -1,6 +1,6 @@
 <?php
 
-// Flatsome Products
+// Silver Products
 function ux_product_flip($atts, $content = null, $tag = '' ) {
   $sliderrandomid = rand();
   extract(ux_builder_shortcode_atts(array(
@@ -76,7 +76,7 @@ function ux_product_flip($atts, $content = null, $tag = '' ) {
 
   if ( $products->have_posts() ) : ?>
           <div class="row"><div class="xlarge-12 col">
-          <div style="background-color:#FFF;" class="slider flipContainer slider-nav-circle <?php echo esc_attr( implode( ' ', $slider_classes ) );?>"<?php echo flatsome_slider_options_attr( array( 'wrapAround' => true, 'contain' => true ) ); ?>>
+          <div style="background-color:#FFF;" class="slider flipContainer slider-nav-circle <?php echo esc_attr( implode( ' ', $slider_classes ) );?>"<?php echo silver_slider_options_attr( array( 'wrapAround' => true, 'contain' => true ) ); ?>>
           <?php while ( $products->have_posts() ) : $products->the_post(); ?>
               <div class="<?php echo esc_attr( implode( ' ', $slide_classes ) );?>" style="background-color:#FFF;"><?php wc_get_template_part( 'content', 'product-flipbook' ); ?></div>
           <?php endwhile; // end of the loop. ?>

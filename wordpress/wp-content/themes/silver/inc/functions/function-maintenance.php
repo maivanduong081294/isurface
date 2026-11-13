@@ -5,7 +5,7 @@
  *
  * @return void
  */
-function flatsome_maintenance_mode() {
+function silver_maintenance_mode() {
 	// Exit if not active.
 	if ( ! get_theme_mod( 'maintenance_mode', 0 ) ) {
 		return;
@@ -26,7 +26,7 @@ function flatsome_maintenance_mode() {
 		return;
 	}
 
-	$args = apply_filters( 'flatsome_maintenance_mode', [
+	$args = apply_filters( 'silver_maintenance_mode', [
 		'access_mode' => 'roles',
 	] );
 
@@ -84,7 +84,7 @@ function flatsome_maintenance_mode() {
 
 	// Remove unnecessary templates.
 	remove_action( 'wp_footer', 'woocommerce_demo_store' );
-	remove_action( 'wp_footer', 'flatsome_cookie_notice_template' );
+	remove_action( 'wp_footer', 'silver_cookie_notice_template' );
 
 	// Clear Cachify Cache.
 	if ( has_action( 'cachify_flush_cache' ) ) {
@@ -112,4 +112,4 @@ function flatsome_maintenance_mode() {
 	die();
 }
 
-add_action( 'template_redirect', 'flatsome_maintenance_mode' );
+add_action( 'template_redirect', 'silver_maintenance_mode' );

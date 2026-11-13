@@ -152,9 +152,9 @@ function ux_builder_shortcode_atts($pairs, $atts, $shortcode = '')
     array_key_exists('link', $pairs)
     && ! empty($atts['link_type'])
     && $atts['link_type'] !== 'custom'
-    && function_exists('flatsome_get_link_data')
+    && function_exists('silver_get_link_data')
   ) {
-    $link_data    = flatsome_get_link_data($atts);
+    $link_data    = silver_get_link_data($atts);
     $atts['link'] = $link_data['url'];
   }
 

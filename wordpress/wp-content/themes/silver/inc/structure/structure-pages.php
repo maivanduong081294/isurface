@@ -1,10 +1,10 @@
 <?php
 /**
- * Flatsome Structure
+ * Silver Structure
  *
  * Page Structure.
  *
- * @package  Flatsome\Structures
+ * @package  Silver\Structures
  */
 
 /**
@@ -12,7 +12,7 @@
  *
  * @return void
  */
-function flatsome_page_top_excerpt() {
+function silver_page_top_excerpt() {
 	if ( get_theme_mod( 'page_top_excerpt', 1 ) && has_excerpt() ) { ?>
 		<div class="page-header-excerpt">
 			<?php the_excerpt(); ?>
@@ -20,27 +20,27 @@ function flatsome_page_top_excerpt() {
 		<?php
 	}
 }
-add_action( 'flatsome_before_page', 'flatsome_page_top_excerpt', 20 );
+add_action( 'silver_before_page', 'silver_page_top_excerpt', 20 );
 
 /**
  * Adds opening wrappers to the password protection form if page is password protected.
  *
  * @return void
  */
-function flatsome_page_passord_required_top() {
+function silver_page_passord_required_top() {
 	if ( post_password_required() ) echo '<div class="page-title"></div><div class="container password-required">';
 }
-add_action( 'flatsome_before_page', 'flatsome_page_passord_required_top', -99 );
+add_action( 'silver_before_page', 'silver_page_passord_required_top', -99 );
 
 /**
  * Adds closing wrappers to the password protection form if page is password protected.
  *
  * @return void
  */
-function flatsome_page_passord_required_bottom() {
+function silver_page_passord_required_bottom() {
 	if ( post_password_required() ) echo '</div>';
 }
-add_action( 'flatsome_after_page', 'flatsome_page_passord_required_bottom', 99 );
+add_action( 'silver_after_page', 'silver_page_passord_required_bottom', 99 );
 
 /**
  * Adds classes to Pages.
@@ -48,7 +48,7 @@ add_action( 'flatsome_after_page', 'flatsome_page_passord_required_bottom', 99 )
  * @param array $classes Classes.
  * @return array.
  */
-function flatsome_page_header_options( $classes ) {
+function silver_page_header_options( $classes ) {
 
 	// Header classes for pages.
 	if ( is_page() ) {
@@ -74,7 +74,7 @@ function flatsome_page_header_options( $classes ) {
 	}
 	return $classes;
 }
-add_filter( 'flatsome_header_class', 'flatsome_page_header_options', 10 );
+add_filter( 'silver_header_class', 'silver_page_header_options', 10 );
 
 /**
  * Pages SubNav.
@@ -85,7 +85,7 @@ add_filter( 'flatsome_header_class', 'flatsome_page_header_options', 10 );
  * @param string $string HTML codes of SubNav.
  * @return void.
  */
-function get_flatsome_subnav( $style = '', $string = '' ) {
+function get_silver_subnav( $style = '', $string = '' ) {
 	if ( is_page() ) {
 		global $post;
 		if ( is_page() && $post->post_parent )
@@ -110,11 +110,11 @@ function get_flatsome_subnav( $style = '', $string = '' ) {
  *
  * @return string Modified HTML output.
  */
-function flatsome_wp_link_pages_link( $link, $i ) {
+function silver_wp_link_pages_link( $link, $i ) {
 	return '<li>' . $link . '</li>';
 }
 
-add_filter( 'wp_link_pages_link', 'flatsome_wp_link_pages_link', 10, 2 );
+add_filter( 'wp_link_pages_link', 'silver_wp_link_pages_link', 10, 2 );
 
 /**
  * Filters the arguments used in retrieving page links for paginated posts.
@@ -123,22 +123,22 @@ add_filter( 'wp_link_pages_link', 'flatsome_wp_link_pages_link', 10, 2 );
  *
  * @return array Modified parameters.
  */
-function flatsome_wp_link_pages_args( $params ) {
+function silver_wp_link_pages_args( $params ) {
 	$params['before'] = '<div class="page-links"><ul class="page-numbers nav-pagination links text-center pb">';
 	$params['after']  = '</ul></div>';
 
 	return $params;
 }
 
-add_filter( 'wp_link_pages_args', 'flatsome_wp_link_pages_args' );
+add_filter( 'wp_link_pages_args', 'silver_wp_link_pages_args' );
 
 /**
  * The formatted output of a list of pages.
  * Displays page links for paginated pages with <!--nextpage-->
  */
-function flatsome_wp_link_pages() {
+function silver_wp_link_pages() {
 	wp_link_pages();
 }
 
-add_action( 'flatsome_after_page', 'flatsome_wp_link_pages' );
+add_action( 'silver_after_page', 'silver_wp_link_pages' );
 

@@ -7,19 +7,34 @@ return array(
         'bg' => array(
           'type' => 'image',
           'heading' => __( 'Image' ),
+          'responsive' => true,
           'thumb_size' => 'bg_size',
           'bg_position' => 'bg_pos',
+        ),
+        // Hide the image on a screen: an empty image there means "inherit".
+        'bg_visible' => array(
+          'type' => 'radio-buttons',
+          'heading' => __( 'Image visibility' ),
+          'responsive' => true,
+          'default' => 'show',
+          'conditions' => 'bg',
+          'options' => array(
+          	'show' => array( 'title' => 'Show' ),
+          	'hide' => array( 'title' => 'Hide' ),
+          ),
         ),
         'bg_size'=> array(
           'type' => 'select',
           'heading' => 'Size',
+          'responsive' => true,
           'default' => 'large',
           'conditions' => 'bg',
-          'options' => flatsome_ux_builder_image_sizes(),
+          'options' => silver_ux_builder_image_sizes(),
         ),
         'bg_color' => array(
           'type' => 'colorpicker',
           'heading' => __('Color'),
+          'responsive' => true,
           'format' => 'rgb',
           'position' => 'bottom right',
           'helpers' => require( __DIR__ . '/../helpers/colors.php' ),
@@ -37,6 +52,7 @@ return array(
           'conditions' => 'bg',
           'type' => 'textfield',
           'heading' => __('Position'),
+          'responsive' => true,
         ),
         'hover' => array(
           'conditions' => 'bg',

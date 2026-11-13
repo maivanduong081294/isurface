@@ -13,7 +13,7 @@
  * @see              https://woocommerce.com/document/template-structure/
  * @package          WooCommerce\Templates
  * @version          9.7.0
- * @flatsome-version 3.19.10
+ * @silver-version 3.19.10
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -62,8 +62,8 @@ $tab_style = get_theme_mod( 'product_display' );
 				);
 				$pagination = str_replace( 'page-numbers', 'page-number', $pagination );
 				$pagination = str_replace( "<ul class='page-number'>", '<ul class="page-numbers nav-pagination links text-center">', $pagination );
-				$pagination = str_replace( '<a class="next page-number', '<a aria-label="' . esc_attr__( 'Next', 'flatsome' ) . '" class="next page-number', $pagination );
-				$pagination = str_replace( '<a class="prev page-number', '<a aria-label="' . esc_attr__( 'Previous', 'flatsome' ) . '" class="prev page-number', $pagination );
+				$pagination = str_replace( '<a class="next page-number', '<a aria-label="' . esc_attr__( 'Next', 'silver' ) . '" class="next page-number', $pagination );
+				$pagination = str_replace( '<a class="prev page-number', '<a aria-label="' . esc_attr__( 'Previous', 'silver' ) . '" class="prev page-number', $pagination );
 				echo $pagination;
 				echo '</nav>';
 			endif;

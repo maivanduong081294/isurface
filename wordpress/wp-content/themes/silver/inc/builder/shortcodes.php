@@ -56,6 +56,12 @@ require_once __DIR__ . '/shortcodes/ux_nav.php';
 require_once __DIR__ . '/shortcodes/ux_stack.php';
 require_once __DIR__ . '/shortcodes/ux_container.php';
 require_once __DIR__ . '/shortcodes/ux_lottie.php';
+require_once __DIR__ . '/shortcodes/post_item.php';
+require_once __DIR__ . '/shortcodes/ux_posts.php';
+require_once __DIR__ . '/shortcodes/ux_mega_menu.php';
+require_once __DIR__ . '/shortcodes/ux_shortcode.php';
+require_once __DIR__ . '/shortcodes/ux_counter.php';
+require_once __DIR__ . '/shortcodes/ux_terms.php';
 
 if ( get_theme_mod( 'fl_portfolio', 1 ) ) {
 	require_once __DIR__ . '/shortcodes/ux_portfolio.php';
@@ -75,6 +81,7 @@ if ( class_exists( 'WooCommerce' ) ) {
 	require_once __DIR__ . '/shortcodes/ux_product_categories.php';
 	require_once __DIR__ . '/shortcodes/ux_products.php';
 	require_once __DIR__ . '/shortcodes/ux_products_list.php';
+	require_once __DIR__ . '/shortcodes/ux_quick_cart.php';
 
 	// Custom product layout shortcodes should be included
 	// if main post in builder is a product and custom layout
@@ -86,7 +93,7 @@ if ( class_exists( 'WooCommerce' ) ) {
 	$is_saving    = isset( $_POST['action'] ) && $_POST['action'] == 'ux_builder_save';
 	$is_copying_shortcode = isset( $_POST['action'] ) && $_POST['action'] == 'ux_builder_copy_as_shortcode';
 
-	if ( ( $is_product && flatsome_product_block( $post->ID ) ) || $is_rendering || $is_saving || $is_copying_shortcode ) {
+	if ( ( $is_product && silver_product_block( $post->ID ) ) || $is_rendering || $is_saving || $is_copying_shortcode ) {
 		require_once __DIR__ . '/shortcodes/custom-product.php';
 	}
 }

@@ -13,7 +13,7 @@
  * @see              https://woocommerce.com/document/template-structure/
  * @package          WooCommerce\Templates
  * @version          9.4.0
- * @flatsome-version 3.19.9
+ * @silver-version 3.19.9
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -79,7 +79,7 @@ if ( get_theme_mod( 'facebook_login_checkout', 0 ) && get_option( 'woocommerce_e
 		</div>
 
 		<div class="xlarge-5 col">
-			<?php flatsome_sticky_column_open( 'checkout_sticky_sidebar' ); ?>
+			<?php silver_sticky_column_open( 'checkout_sticky_sidebar' ); ?>
 
 					<div class="col-inner <?php echo esc_attr( $sidebar_classes ); ?>">
 						<div class="checkout-sidebar sm-touch-scroll">
@@ -98,7 +98,7 @@ if ( get_theme_mod( 'facebook_login_checkout', 0 ) && get_option( 'woocommerce_e
 						</div>
 					</div>
 
-			<?php flatsome_sticky_column_close( 'checkout_sticky_sidebar' ); ?>
+			<?php silver_sticky_column_close( 'checkout_sticky_sidebar' ); ?>
 		</div>
 
 	</div>

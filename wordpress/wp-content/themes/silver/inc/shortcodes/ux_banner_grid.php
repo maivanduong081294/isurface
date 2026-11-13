@@ -1,6 +1,6 @@
 <?php
 // [ux_banner_grid]
-function flatsome_banner_grid($atts, $content = null) {
+function silver_banner_grid($atts, $content = null) {
     extract( ux_builder_shortcode_atts( array(
     '_id' => 'banner-grid-'.rand(),
     'class' => '',
@@ -22,7 +22,7 @@ function flatsome_banner_grid($atts, $content = null) {
 
     if ( $class ) $classes[] = $class;
     if ( $visibility ) $classes[] = $visibility;
-	if ( flatsome_is_multi_gallery( 'banner-grid' ) ) $classes[] = 'lightbox-multi-gallery';
+	if ( silver_is_multi_gallery( 'banner-grid' ) ) $classes[] = 'lightbox-multi-gallery';
 
     // Fix old
     if($padding == '0px'){
@@ -38,7 +38,7 @@ function flatsome_banner_grid($atts, $content = null) {
     if($width == 'full-width') $classes[] = 'row-full-width';
 
     // Run masonry script
-    wp_enqueue_script( 'flatsome-masonry-js');
+    wp_enqueue_script( 'silver-masonry-js');
     ob_start();
   ?>
   <div class="banner-grid-wrapper">
@@ -51,9 +51,9 @@ function flatsome_banner_grid($atts, $content = null) {
               $pattern = get_shortcode_regex();
               $columns = 0;
               $current_grid = 0;
-              $grid = flatsome_get_grid($grid);
+              $grid = silver_get_grid($grid);
               $grid_total = count($grid);
-              flatsome_get_grid_height(array('sm' => $height, 'md' => $height__md, 'ml' => $height__ml, 'lg' => $height__lg), $_id);
+              silver_get_grid_height(array('sm' => $height, 'md' => $height__md, 'ml' => $height__ml, 'lg' => $height__lg), $_id);
 
               if (preg_match_all( '/'. $pattern .'/s', $content, $matches )
                   && array_key_exists( 2, $matches )
@@ -67,7 +67,21 @@ function flatsome_banner_grid($atts, $content = null) {
             }
           ?>
   </div>
-  <?php flatsome_get_grid_height(array('sm' => $height, 'md' => $height__md, 'ml' => $height__ml, 'lg' => $height__lg), $_id); ?>
+  <?php silver_get_grid_height(array('sm' => $height, 'md' => $height__md, 'ml' => $height__ml, 'lg' => $height__lg), $_id); ?>
+  <?php
+  // Responsive width (larger screens).
+  echo silver_responsive_style_tag( $_id, (array) $atts, array(
+    'width' => array(
+      'selector'       => '',
+      'only_overrides' => true,
+      'default'        => 'container',
+      'map'            => array(
+        'container'  => 'max-width: ' . silver_responsive_container_width( in_array( $spacing, array( 'collapse', 'small', 'large' ), true ) ? $spacing : '' ),
+        'full-width' => 'max-width: 100%',
+      ),
+    ),
+  ) );
+  ?>
   </div>
   <?php
   // Get banner grid styles
@@ -75,7 +89,7 @@ function flatsome_banner_grid($atts, $content = null) {
   ob_end_clean();
   return $content;
 }
-add_shortcode('ux_banner_grid', 'flatsome_banner_grid');
+add_shortcode('ux_banner_grid', 'silver_banner_grid');
 
 
 // [col_grid]

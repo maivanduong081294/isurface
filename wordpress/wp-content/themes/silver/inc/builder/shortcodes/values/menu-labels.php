@@ -2,7 +2,7 @@
 /**
  * Builder menu label list
  *
- * @package flatsome
+ * @package silver
  */
 
 return array(

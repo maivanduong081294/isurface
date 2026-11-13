@@ -3,20 +3,20 @@
  * WP SEO integration
  *
  * @author      UX Themes
- * @package     Flatsome\Integrations
+ * @package     Silver\Integrations
  * @since       3.7.0
  */
 
-namespace Flatsome\Integrations;
+namespace Silver\Integrations;
 
-use Flatsome_Shortcode_Image_Extractor;
+use Silver_Shortcode_Image_Extractor;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Class WP_Seo
  *
- * @package Flatsome\Integrations
+ * @package Silver\Integrations
  */
 class WP_Seo {
 
@@ -41,19 +41,19 @@ class WP_Seo {
 	public function integrate() {
 		// Primary term.
 		if ( get_theme_mod( 'wpseo_primary_term' ) ) {
-			add_filter( 'flatsome_woocommerce_shop_loop_category', [ $this, 'get_primary_term' ], 10, 2 );
+			add_filter( 'silver_woocommerce_shop_loop_category', [ $this, 'get_primary_term' ], 10, 2 );
 			add_filter( 'woocommerce_product_categories_widget_main_term', [ $this, 'make_primary_term_current_category' ] );
 		}
 		if ( get_theme_mod( 'wpseo_manages_product_layout_priority' ) ) {
-			add_filter( 'flatsome_product_block_primary_term_id', [ $this, 'get_primary_term_id' ], 10, 2 );
+			add_filter( 'silver_product_block_primary_term_id', [ $this, 'get_primary_term_id' ], 10, 2 );
 		}
 		// Breadcrumb.
 		if ( get_theme_mod( 'wpseo_breadcrumb' ) ) {
-			remove_action( 'flatsome_breadcrumb', 'woocommerce_breadcrumb', 20 );
-			add_action( 'flatsome_breadcrumb', [ $this, 'yoast_breadcrumb' ], 20, 2 );
+			remove_action( 'silver_breadcrumb', 'woocommerce_breadcrumb', 20 );
+			add_action( 'silver_breadcrumb', [ $this, 'yoast_breadcrumb' ], 20, 2 );
 
 			// Manipulate last crumb.
-			if ( is_woocommerce_activated() && get_theme_mod( 'wpseo_breadcrumb_remove_last', 1 ) && apply_filters( 'flatsome_wpseo_breadcrumb_remove_last', is_product() ) ) {
+			if ( is_woocommerce_activated() && get_theme_mod( 'wpseo_breadcrumb_remove_last', 1 ) && apply_filters( 'silver_wpseo_breadcrumb_remove_last', is_product() ) ) {
 				add_filter( 'wpseo_breadcrumb_links', [ $this, 'remove_last_crumb' ] );
 				add_filter( 'wpseo_breadcrumb_single_link', [ $this, 'add_link_to_last_crumb' ], 10, 2 );
 			}
@@ -196,7 +196,7 @@ class WP_Seo {
 
 		$content = $post->post_content;
 
-		$image_extractor = Flatsome_Shortcode_Image_Extractor::get_instance();
+		$image_extractor = Silver_Shortcode_Image_Extractor::get_instance();
 
 		$extracted_images = $image_extractor->extract_images( $content );
 		if ( ! empty( $extracted_images ) ) {

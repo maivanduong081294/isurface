@@ -3,7 +3,7 @@
  * Polylang integration.
  *
  * @author      UX Themes
- * @package     Flatsome/Integrations
+ * @package     Silver/Integrations
  */
 
 defined( 'ABSPATH' ) || exit;

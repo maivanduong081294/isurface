@@ -2,8 +2,8 @@
 /**
  * Account user.
  *
- * @package          Flatsome/WooCommerce/Templates
- * @flatsome-version 3.16.0
+ * @package          Silver/WooCommerce/Templates
+ * @silver-version 3.16.0
  */
 
 ?>
@@ -22,5 +22,5 @@
 		<em class="user-id op-5"><?php echo '#'.$user_id;?></em>
 	</span>
 
-	<?php do_action('flatsome_after_account_user'); ?>
+	<?php do_action('silver_after_account_user'); ?>
 </div>

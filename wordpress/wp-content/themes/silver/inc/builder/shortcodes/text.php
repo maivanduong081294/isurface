@@ -5,9 +5,9 @@ add_ux_builder_shortcode( 'text', array(
     'name' => __( 'Text', 'ux-builder'),
     'category' => __( 'Content' ),
     'compile' => false,
-    'thumbnail' =>  flatsome_ux_builder_thumbnail( 'text' ),
+    'thumbnail' =>  silver_ux_builder_thumbnail( 'text' ),
     'template_shortcode' => "[ux_text{options}]\n\n{content}\n[/ux_text]\n",
-    'template' => flatsome_ux_builder_template( 'text.html' ),
+    'template' => silver_ux_builder_template( 'text.html' ),
     'directives' => array( 'ux-text-editor' ),
     'priority' => 1,
 

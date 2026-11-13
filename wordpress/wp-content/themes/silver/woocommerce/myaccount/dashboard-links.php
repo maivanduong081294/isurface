@@ -2,8 +2,8 @@
 /**
  * Dashboard links
  *
- * @package          Flatsome/WooCommerce/Templates
- * @flatsome-version 3.20.0
+ * @package          Silver/WooCommerce/Templates
+ * @silver-version 3.20.0
  */
 
 ?>
@@ -28,6 +28,6 @@
       <a href="<?php echo esc_url( wc_get_account_endpoint_url( $endpoint ) ); ?>"><?php echo esc_html( $label ); ?></a>
     </li>
   <?php endforeach; ?>
-  <?php do_action('flatsome_account_links'); ?>
+  <?php do_action('silver_account_links'); ?>
 <?php } ?>
 </ul>

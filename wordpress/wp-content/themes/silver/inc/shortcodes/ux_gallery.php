@@ -62,7 +62,7 @@ function ux_gallery($atts) {
       $classes_box = array('box','has-hover','gallery-box');
       $classes_image = array('box-image');
       $classes_text = array('box-text');
-      $is_multi_gallery = flatsome_is_multi_gallery( 'gallery' );
+      $is_multi_gallery = silver_is_multi_gallery( 'gallery' );
 
       // Create Grid
       if($type == 'grid'){
@@ -71,9 +71,9 @@ function ux_gallery($atts) {
         if($style !== 'shade') $style = 'overlay';
         $columns = null;
         $current_grid = 0;
-        $grid = flatsome_get_grid($grid);
+        $grid = silver_get_grid($grid);
         $grid_total = count($grid);
-        flatsome_get_grid_height($grid_height, $_id);
+        silver_get_grid_height($grid_height, $_id);
       }
       if($type == 'slider-full'){
         $columns = null;
@@ -95,6 +95,8 @@ function ux_gallery($atts) {
       if($image_hover_alt)  $classes_image[] = 'image-'.$image_hover_alt;
       if($depth) $classes_image[] = 'box-shadow-'.$depth;
       if($depth_hover) $classes_image[] = 'box-shadow-'.$depth_hover.'-hover';
+      // Responsive image size: the smallest screen with a value is the base.
+      $image_height = silver_responsive_base( $atts, 'image_height' ) ?: $image_height;
       if($image_height) $classes_image[] = 'image-cover';
 
       // Text classes
@@ -119,6 +121,7 @@ function ux_gallery($atts) {
 
       // Repeater options
       $repeater['id'] = $_id;
+      $repeater['responsive_atts'] = array_merge( (array) $atts, array( 'col_spacing' => $col_spacing, 'text_align' => $text_align ) );
       $repeater['type'] = $type;
       $repeater['style'] = $style;
       $repeater['class'] = implode ( ' ', $classes );
@@ -153,7 +156,7 @@ function ux_gallery($atts) {
       }
 
 
-      get_flatsome_repeater_start($repeater);
+      get_silver_repeater_start($repeater);
 
       foreach ( $attachments as $id => $attachment ) {
 
@@ -212,7 +215,7 @@ function ux_gallery($atts) {
                 <?php if($has_video) { ?>
                     <div class="absolute no-click x50 y50 md-x50 md-y50 xl-x50 xl-y50 text-shadow-2">
                         <div class="overlay-icon">
-                            <?php echo get_flatsome_icon( 'icon-play' ); ?>
+                            <?php echo get_silver_icon( 'icon-play' ); ?>
                         </div>
                     </div>
                 <?php } ?>
@@ -226,7 +229,7 @@ function ux_gallery($atts) {
          </div><?php
     } // Loop
 
-    get_flatsome_repeater_end($repeater);
+    get_silver_repeater_end($repeater);
 
     $content = ob_get_contents();
     ob_end_clean();

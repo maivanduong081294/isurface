@@ -1,15 +1,15 @@
 <?php
 /**
- * Flatsome Included Plugins
+ * Silver Included Plugins
  *
  * @author   UX Themes
- * @package  Flatsome/Functions
+ * @package  Silver/Functions
  */
 
 /**
  * Calls tgmpa() with $plugins & $config arrays
  */
-function flatsome_register_required_plugins() {
+function silver_register_required_plugins() {
 	$wc_required = wp_get_theme( get_template() )->get( 'WC requires at least' );
 	/**
 	 * Array of plugin arrays. Required keys are name and slug.
@@ -89,4 +89,4 @@ function flatsome_register_required_plugins() {
 
 require get_template_directory() . '/inc/classes/class-tgm-plugin-activation.php';
 
-add_action( 'tgmpa_register', 'flatsome_register_required_plugins' );
+add_action( 'tgmpa_register', 'silver_register_required_plugins' );

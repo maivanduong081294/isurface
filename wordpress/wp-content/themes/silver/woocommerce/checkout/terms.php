@@ -4,7 +4,7 @@
  *
  * @package          WooCommerce/Templates
  * @version          3.4.0
- * @flatsome-version 3.18.0
+ * @silver-version 3.18.0
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -30,7 +30,7 @@ if ( apply_filters( 'woocommerce_checkout_show_terms', true ) && function_exists
 				<label class="woocommerce-form__label woocommerce-form__label-for-checkbox checkbox">
 				<input type="checkbox" class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox" name="terms" <?php checked( apply_filters( 'woocommerce_terms_is_checked_default', isset( $_POST['terms'] ) ), true ); // WPCS: input var ok, csrf ok. ?> id="terms" />
 					<?php if ( $link_style = get_theme_mod( 'checkout_terms_and_conditions' ) ) : ?>
-						<span class="woocommerce-terms-and-conditions-checkbox-text"><?php flatsome_terms_and_conditions_checkbox_text( $link_style ); ?></span>&nbsp;<span class="required">*</span>
+						<span class="woocommerce-terms-and-conditions-checkbox-text"><?php silver_terms_and_conditions_checkbox_text( $link_style ); ?></span>&nbsp;<span class="required">*</span>
 					<?php else : ?>
 						<span class="woocommerce-terms-and-conditions-checkbox-text"><?php wc_terms_and_conditions_checkbox_text(); ?></span>&nbsp;<span class="required">*</span>
 					<?php endif; ?>

@@ -2,8 +2,8 @@
 
 add_ux_builder_shortcode( 'ux_nav', array(
   'name' => __( 'Navigation','ux-builder'),
-  'category'  => __( 'Content', 'flatsome' ),
-  'thumbnail' =>  flatsome_ux_builder_thumbnail( 'nav' ),
+  'category'  => __( 'Content', 'silver' ),
+  'thumbnail' =>  silver_ux_builder_thumbnail( 'nav' ),
   'options' => array(
      'parent' => array(
           'type' => 'select',
@@ -27,6 +27,7 @@ add_ux_builder_shortcode( 'ux_nav', array(
         'options' => require( __DIR__ . '/values/nav-styles.php' ),
     ),
     'align' => array(
+        'responsive' => true,
         'type' => 'radio-buttons',
         'heading' => 'Text align',
         'default' => 'left',

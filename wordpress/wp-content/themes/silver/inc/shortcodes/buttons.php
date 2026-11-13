@@ -52,8 +52,8 @@ function button_shortcode($atts, $content = null)
 	}
 
 	$attributes = array();
-	$icon_left  = $icon && $icon_pos == 'left' ? get_flatsome_icon($icon) : '';
-	$icon_right = $icon && $icon_pos !== 'left' ? get_flatsome_icon($icon) : '';
+	$icon_left  = $icon && $icon_pos == 'left' ? get_silver_icon($icon) : '';
+	$icon_right = $icon && $icon_pos !== 'left' ? get_silver_icon($icon) : '';
 
 	if ($as === 'button') {
 		$link               = null;
@@ -103,7 +103,7 @@ function button_shortcode($atts, $content = null)
 	}
 	if ($link) {
 		// Smart links.
-		$link               = flatsome_smart_links($link);
+		$link               = silver_smart_links($link);
 		$attributes['href'] = esc_url($link);
 		if ($target) {
 			$attributes['target'] = esc_attr($target);
@@ -131,10 +131,10 @@ function button_shortcode($atts, $content = null)
 	));
 
 	$attributes['class'] = esc_attr(implode(' ', $classes));
-	$attributes          = flatsome_html_atts($attributes);
+	$attributes          = silver_html_atts($attributes);
 
 	// Template is located in template-parts/shortcodes.
-	return flatsome_template('shortcodes/button', get_defined_vars());
+	return silver_template('shortcodes/button', get_defined_vars());
 }
 
 add_shortcode('button', 'button_shortcode');
@@ -153,7 +153,7 @@ function facebook_login_shortcode($atts, $content = null)
 	$facebook_url = add_query_arg(array('loginSocial' => 'facebook'), wp_login_url());
 ?>
 	<a href="<?php echo esc_url($facebook_url); ?>" class="button <?php echo esc_attr($size); ?> facebook-button" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="facebook" data-popupwidth="475" data-popupheight="175">
-		<?php echo get_flatsome_icon('icon-facebook'); ?>
+		<?php echo get_silver_icon('icon-facebook'); ?>
 		<?php echo wp_kses_post($text); ?>
 	</a>
 <?php
@@ -180,7 +180,7 @@ function ux_phone($atts, $content = null)
 	ob_start();
 
 	echo '<div class="header-button">';
-	echo flatsome_apply_shortcode('button', array(
+	echo silver_apply_shortcode('button', array(
 		'style'    => 'outline',
 		'class'    => 'circle',
 		'icon'     => 'icon-phone',
@@ -215,7 +215,7 @@ function ux_header_button($atts, $content = null)
 	ob_start();
 
 	echo '<div class="header-button">';
-	echo flatsome_apply_shortcode('button', array(
+	echo silver_apply_shortcode('button', array(
 		'style'   => 'outline',
 		'class'   => 'circle',
 		'text'    => $atts['text'],
@@ -251,14 +251,14 @@ function ux_video_button($atts, $content = null)
 		'href'       => esc_url($video),
 		'class'      => 'button open-video icon circle is-outline is-xlarge',
 		'role'       => 'button',
-		'aria-label' => esc_attr__('Open video in lightbox', 'flatsome'),
+		'aria-label' => esc_attr__('Open video in lightbox', 'silver'),
 	);
 
 	return sprintf(
 		'<div %s><a %s>%s</a></div>',
-		flatsome_html_atts($wrapper_atts),
-		flatsome_html_atts($link_atts),
-		get_flatsome_icon('icon-play', '1.5em')
+		silver_html_atts($wrapper_atts),
+		silver_html_atts($link_atts),
+		get_silver_icon('icon-play', '1.5em')
 	);
 }
 

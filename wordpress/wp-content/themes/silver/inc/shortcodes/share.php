@@ -3,7 +3,7 @@
 /**
  * Registers the `share` shortcode.
  *
- * @package flatsome
+ * @package silver
  */
 
 /**
@@ -15,7 +15,7 @@
  *
  * @return string
  */
-function flatsome_share($atts, $content = null, $tag = '')
+function silver_share($atts, $content = null, $tag = '')
 {
 	extract(ux_builder_shortcode_atts(
 		array(
@@ -42,9 +42,19 @@ function flatsome_share($atts, $content = null, $tag = '')
 
 	if ($class) $wrapper_class[] = $class;
 	if ($visibility) $wrapper_class[] = $visibility;
-	if ($align) {
+	// "inline" is the default (explicit value for responsive options).
+	if ($align && $align !== 'inline') {
 		$wrapper_class[] = 'full-width';
 		$wrapper_class[] = 'text-' . $align;
+	}
+
+	// Responsive align (larger screens).
+	$responsive_style = '';
+	if (silver_responsive_has_overrides((array) $atts, 'align')) {
+		if (! $_id) $_id = 'share-' . wp_rand();
+		$responsive_style = silver_responsive_style_tag($_id, (array) $atts, array(
+			'align' => array('selector' => '', 'only_overrides' => true, 'default' => 'inline', 'important' => false, 'map' => silver_responsive_map('icons_align')),
+		));
 	}
 	if ($style) $wrapper_class[] = 'icon-style-' . $style;
 
@@ -73,7 +83,7 @@ function flatsome_share($atts, $content = null, $tag = '')
 	// Get custom theme style.
 	if (! $style) $style = get_theme_mod('social_icons_style', 'outline');
 
-	$classes = get_flatsome_icon_class($style);
+	$classes = get_silver_icon_class($style);
 
 	// Tooltip.
 	if ($tooltip === 'true') $classes .= ' tooltip';
@@ -92,17 +102,17 @@ function flatsome_share($atts, $content = null, $tag = '')
 		$share = $fix_share;
 	}
 
-	$share_links = apply_filters('flatsome_share_links', array(
+	$share_links = apply_filters('silver_share_links', array(
 		'whatsapp'  => array(
 			'enabled'  => in_array('whatsapp', $share, true),
 			'atts'     => array(
 				'href'        => 'whatsapp://send?text=' . $whatsapp_text,
 				'data-action' => 'share/whatsapp/share',
 				'class'       => $classes . ' whatsapp show-for-medium',
-				'title'       => esc_attr__('Share on WhatsApp', 'flatsome'),
-				'aria-label'  => esc_attr__('Share on WhatsApp', 'flatsome'),
+				'title'       => esc_attr__('Share on WhatsApp', 'silver'),
+				'aria-label'  => esc_attr__('Share on WhatsApp', 'silver'),
 			),
-			'icon'     => get_flatsome_icon('icon-whatsapp'),
+			'icon'     => get_silver_icon('icon-whatsapp'),
 			'priority' => 10,
 		),
 		'facebook'  => array(
@@ -114,10 +124,10 @@ function flatsome_share($atts, $content = null, $tag = '')
 				'rel'        => 'noopener nofollow',
 				'target'     => '_blank',
 				'class'      => $classes . ' facebook',
-				'title'      => esc_attr__('Share on Facebook', 'flatsome'),
-				'aria-label' => esc_attr__('Share on Facebook', 'flatsome'),
+				'title'      => esc_attr__('Share on Facebook', 'silver'),
+				'aria-label' => esc_attr__('Share on Facebook', 'silver'),
 			),
-			'icon'     => get_flatsome_icon('icon-facebook'),
+			'icon'     => get_silver_icon('icon-facebook'),
 			'priority' => 20,
 		),
 		'x'         => array(
@@ -128,10 +138,10 @@ function flatsome_share($atts, $content = null, $tag = '')
 				'rel'        => 'noopener nofollow',
 				'target'     => '_blank',
 				'class'      => $classes . ' x',
-				'title'      => esc_attr__('Share on X', 'flatsome'),
-				'aria-label' => esc_attr__('Share on X', 'flatsome'),
+				'title'      => esc_attr__('Share on X', 'silver'),
+				'aria-label' => esc_attr__('Share on X', 'silver'),
 			),
-			'icon'     => get_flatsome_icon('icon-x'),
+			'icon'     => get_silver_icon('icon-x'),
 			'priority' => 30,
 		),
 		'twitter'   => array(
@@ -142,10 +152,10 @@ function flatsome_share($atts, $content = null, $tag = '')
 				'rel'        => 'noopener nofollow',
 				'target'     => '_blank',
 				'class'      => $classes . ' twitter',
-				'title'      => esc_attr__('Share on Twitter', 'flatsome'),
-				'aria-label' => esc_attr__('Share on Twitter', 'flatsome'),
+				'title'      => esc_attr__('Share on Twitter', 'silver'),
+				'aria-label' => esc_attr__('Share on Twitter', 'silver'),
 			),
-			'icon'     => get_flatsome_icon('icon-twitter'),
+			'icon'     => get_silver_icon('icon-twitter'),
 			'priority' => 30,
 		),
 		'threads'   => array(
@@ -158,10 +168,10 @@ function flatsome_share($atts, $content = null, $tag = '')
 				'rel'        => 'noopener nofollow',
 				'target'     => '_blank',
 				'class'      => $classes . ' threads',
-				'title'      => esc_attr__('Share on Threads', 'flatsome'),
-				'aria-label' => esc_attr__('Share on Threads', 'flatsome'),
+				'title'      => esc_attr__('Share on Threads', 'silver'),
+				'aria-label' => esc_attr__('Share on Threads', 'silver'),
 			),
-			'icon'     => get_flatsome_icon('icon-threads'),
+			'icon'     => get_silver_icon('icon-threads'),
 			'priority' => 35,
 		),
 		'email'     => array(
@@ -170,14 +180,14 @@ function flatsome_share($atts, $content = null, $tag = '')
 				'href'       => add_query_arg(array(
 					'subject' => $post_title,
 					/* translators: %s: the share link. */
-					'body'    => rawurlencode(sprintf(esc_html__('Check this out: %s', 'flatsome'), $link)),
+					'body'    => rawurlencode(sprintf(esc_html__('Check this out: %s', 'silver'), $link)),
 				), 'mailto:'),
 				'rel'        => 'nofollow',
 				'class'      => $classes . ' email',
-				'title'      => esc_attr__('Email to a Friend', 'flatsome'),
-				'aria-label' => esc_attr__('Email to a Friend', 'flatsome'),
+				'title'      => esc_attr__('Email to a Friend', 'silver'),
+				'aria-label' => esc_attr__('Email to a Friend', 'silver'),
 			),
-			'icon'     => get_flatsome_icon('icon-envelop'),
+			'icon'     => get_silver_icon('icon-envelop'),
 			'priority' => 40,
 		),
 		'pinterest' => array(
@@ -192,10 +202,10 @@ function flatsome_share($atts, $content = null, $tag = '')
 				'rel'        => 'noopener nofollow',
 				'target'     => '_blank',
 				'class'      => $classes . ' pinterest',
-				'title'      => esc_attr__('Pin on Pinterest', 'flatsome'),
-				'aria-label' => esc_attr__('Pin on Pinterest', 'flatsome'),
+				'title'      => esc_attr__('Pin on Pinterest', 'silver'),
+				'aria-label' => esc_attr__('Pin on Pinterest', 'silver'),
 			),
-			'icon'     => get_flatsome_icon('icon-pinterest'),
+			'icon'     => get_silver_icon('icon-pinterest'),
 			'priority' => 50,
 		),
 		'vk'        => array(
@@ -206,10 +216,10 @@ function flatsome_share($atts, $content = null, $tag = '')
 				'onclick'    => $window_open,
 				'rel'        => 'noopener nofollow',
 				'class'      => $classes . ' vk',
-				'title'      => esc_attr__('Share on VKontakte', 'flatsome'),
-				'aria-label' => esc_attr__('Share on VKontakte', 'flatsome'),
+				'title'      => esc_attr__('Share on VKontakte', 'silver'),
+				'aria-label' => esc_attr__('Share on VKontakte', 'silver'),
 			),
-			'icon'     => get_flatsome_icon('icon-vk'),
+			'icon'     => get_silver_icon('icon-vk'),
 			'priority' => 60,
 		),
 		'linkedin'  => array(
@@ -220,10 +230,10 @@ function flatsome_share($atts, $content = null, $tag = '')
 				'rel'        => 'noopener nofollow',
 				'target'     => '_blank',
 				'class'      => $classes . ' linkedin',
-				'title'      => esc_attr__('Share on LinkedIn', 'flatsome'),
-				'aria-label' => esc_attr__('Share on LinkedIn', 'flatsome'),
+				'title'      => esc_attr__('Share on LinkedIn', 'silver'),
+				'aria-label' => esc_attr__('Share on LinkedIn', 'silver'),
 			),
-			'icon'     => get_flatsome_icon('icon-linkedin'),
+			'icon'     => get_silver_icon('icon-linkedin'),
 			'priority' => 70,
 		),
 		'tumblr'    => array(
@@ -234,10 +244,10 @@ function flatsome_share($atts, $content = null, $tag = '')
 				'rel'        => 'noopener nofollow',
 				'class'      => $classes . ' tumblr',
 				'onclick'    => $window_open,
-				'title'      => esc_attr__('Share on Tumblr', 'flatsome'),
-				'aria-label' => esc_attr__('Share on Tumblr', 'flatsome'),
+				'title'      => esc_attr__('Share on Tumblr', 'silver'),
+				'aria-label' => esc_attr__('Share on Tumblr', 'silver'),
 			),
-			'icon'     => get_flatsome_icon('icon-tumblr'),
+			'icon'     => get_silver_icon('icon-tumblr'),
 			'priority' => 80,
 		),
 		'telegram'  => array(
@@ -248,10 +258,10 @@ function flatsome_share($atts, $content = null, $tag = '')
 				'rel'        => 'noopener nofollow',
 				'target'     => '_blank',
 				'class'      => $classes . ' telegram',
-				'title'      => esc_attr__('Share on Telegram', 'flatsome'),
-				'aria-label' => esc_attr__('Share on Telegram', 'flatsome'),
+				'title'      => esc_attr__('Share on Telegram', 'silver'),
+				'aria-label' => esc_attr__('Share on Telegram', 'silver'),
 			),
-			'icon'     => get_flatsome_icon('icon-telegram'),
+			'icon'     => get_silver_icon('icon-telegram'),
 			'priority' => 90,
 		),
 	), array( // phpcs:ignore PEAR.Functions.FunctionCallSignature.Indent
@@ -263,7 +273,7 @@ function flatsome_share($atts, $content = null, $tag = '')
 	));
 
 	// Sort links based on priority.
-	uasort($share_links, 'flatsome_sort_on_priority');
+	uasort($share_links, 'silver_sort_on_priority');
 	ob_start();
 ?>
 	<div<?php if ($_id) : ?> id="<?php echo esc_attr($_id); ?>"<?php endif; ?> class="<?php echo esc_attr(implode(' ', $wrapper_class)); ?>" <?php echo $scale; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
@@ -274,7 +284,7 @@ function flatsome_share($atts, $content = null, $tag = '')
 			if (isset($share_link['enabled']) && $share_link['enabled'] == false) continue;
 			printf(
 				'<a %1$s>%2$s</a>',
-				flatsome_html_atts($share_link['atts']),
+				silver_html_atts($share_link['atts']),
 				! empty($share_link['icon']) ? $share_link['icon'] : '' // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			);
 		}
@@ -283,7 +293,7 @@ function flatsome_share($atts, $content = null, $tag = '')
 <?php
 	$content = ob_get_clean();
 
-	return flatsome_sanitize_whitespace_chars($content);
+	return silver_sanitize_whitespace_chars($content) . $responsive_style;
 }
 
-add_shortcode('share', 'flatsome_share');
+add_shortcode('share', 'silver_share');

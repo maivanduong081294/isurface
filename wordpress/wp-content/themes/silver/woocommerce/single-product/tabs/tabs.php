@@ -13,7 +13,7 @@
  * @see              https://woocommerce.com/document/template-structure/
  * @package          WooCommerce\Templates
  * @version          9.9.0
- * @flatsome-version 3.19.13
+ * @silver-version 3.19.13
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -51,7 +51,7 @@ $panel_count = 0;
 if ( ! empty( $product_tabs ) ) : ?>
 
 	<div class="woocommerce-tabs wc-tabs-wrapper container tabbed-content">
-		<ul class="tabs wc-tabs product-tabs small-nav-collapse <?php flatsome_product_tabs_classes(); ?>" role="tablist">
+		<ul class="tabs wc-tabs product-tabs small-nav-collapse <?php silver_product_tabs_classes(); ?>" role="tablist">
 			<?php foreach ( $product_tabs as $key => $product_tab ) : ?>
 				<li role="presentation" class="<?php echo esc_attr( $key ); ?>_tab <?php if ( $tab_count == 0 ) echo 'active'; ?>" id="tab-title-<?php echo esc_attr( $key ); ?>">
 					<a href="#tab-<?php echo esc_attr( $key ); ?>" role="tab" aria-selected="<?php echo $tab_count == 0 ? 'true' : 'false'; ?>" aria-controls="tab-<?php echo esc_attr( $key ); ?>"<?php echo $tab_count != 0 ? ' tabindex="-1"' : ''; ?>>
@@ -64,7 +64,7 @@ if ( ! empty( $product_tabs ) ) : ?>
 		<div class="tab-panels">
 			<?php foreach ( $product_tabs as $key => $product_tab ) : ?>
 				<div class="woocommerce-Tabs-panel woocommerce-Tabs-panel--<?php echo esc_attr( $key ); ?> panel entry-content <?php if ( $panel_count == 0 ) echo 'active'; ?>" id="tab-<?php echo esc_attr( $key ); ?>" role="tabpanel" aria-labelledby="tab-title-<?php echo esc_attr( $key ); ?>">
-					<?php if ( $key == 'description' && ux_builder_is_active() ) echo flatsome_dummy_text(); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+					<?php if ( $key == 'description' && ux_builder_is_active() ) echo silver_dummy_text(); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 					<?php
 					if ( isset( $product_tab['callback'] ) ) {
 						call_user_func( $product_tab['callback'], $key, $product_tab );

@@ -1,11 +1,11 @@
 <?php
 
-Flatsome_Option::add_section( 'woocommerce_product_catalog', array(
+Silver_Option::add_section( 'woocommerce_product_catalog', array(
   'title' => __( 'Product Catalog', 'woocommerce' ),
   'panel' => 'woocommerce',
 ) );
 
-Flatsome_Option::add_field( '', array(
+Silver_Option::add_field( '', array(
 	'type'     => 'custom',
 	'settings' => 'custom_title_category_homepage',
 	'label'    => '',
@@ -13,25 +13,25 @@ Flatsome_Option::add_field( '', array(
 	'default'  => '<div class="options-title-divider">Shop Page</div>',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'        => 'textarea',
 	'settings'    => 'html_shop_page',
-	'label'       => __( 'Shop Page Header', 'flatsome-admin' ),
-	'description' => __( 'Enter HTML that should be placed on top of main shop page. Shortcodes are allowed. This will replace Shop Homepage Header', 'flatsome-admin' ),
+	'label'       => __( 'Shop Page Header', 'silver' ),
+	'description' => __( 'Enter HTML that should be placed on top of main shop page. Shortcodes are allowed. This will replace Shop Homepage Header', 'silver' ),
 	'section'     => 'woocommerce_product_catalog',
 	'default'     => '',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'        => 'textarea',
 	'settings'    => 'html_shop_page_content',
-	'label'       => __( 'Shop Page Content', 'flatsome-admin' ),
-	'description' => __( 'Enter HTML/Shortcodes that should replace Shop Homepage content.', 'flatsome-admin' ),
+	'label'       => __( 'Shop Page Content', 'silver' ),
+	'description' => __( 'Enter HTML/Shortcodes that should replace Shop Homepage content.', 'silver' ),
 	'section'     => 'woocommerce_product_catalog',
 	'default'     => '',
 ) );
 
-Flatsome_Option::add_field( '', array(
+Silver_Option::add_field( '', array(
 	'type'     => 'custom',
 	'settings' => 'custom_title_category_layout',
 	'label'    => '',
@@ -39,10 +39,10 @@ Flatsome_Option::add_field( '', array(
 	'default'  => '<div class="options-title-divider">Catalog Layout</div>',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'radio-image',
 	'settings' => 'category_sidebar',
-	'label'    => __( 'Layout', 'flatsome-admin' ),
+	'label'    => __( 'Layout', 'silver' ),
 	'section'  => 'woocommerce_product_catalog',
 	'default'  => 'left-sidebar',
 	'choices'  => array(
@@ -53,10 +53,10 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'            => 'checkbox',
 	'settings'        => 'category_sticky_sidebar',
-	'label'           => __( 'Sticky sidebar', 'flatsome-admin' ),
+	'label'           => __( 'Sticky sidebar', 'silver' ),
 	'section'         => 'woocommerce_product_catalog',
 	'active_callback' => array(
 		array(
@@ -73,15 +73,15 @@ Flatsome_Option::add_field( 'option', array(
 	'default'         => 0,
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'            => 'select',
 	'settings'        => 'category_sticky_sidebar_mode',
-	'label'           => __( 'Sticky mode', 'flatsome-admin' ),
+	'label'           => __( 'Sticky mode', 'silver' ),
 	'section'         => 'woocommerce_product_catalog',
 	'default'         => '',
 	'choices'         => array(
-		''           => __( 'CSS (native)', 'flatsome-admin' ),
-		'javascript' => __( 'JavaScript (enhanced)', 'flatsome-admin' ),
+		''           => __( 'CSS (native)', 'silver' ),
+		'javascript' => __( 'JavaScript (enhanced)', 'silver' ),
 	),
 	'active_callback' => array(
 		array(
@@ -102,12 +102,12 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'radio-image',
 	'settings'  => 'category_grid_style',
-	'label'     => __( 'List Style', 'flatsome-admin' ),
+	'label'     => __( 'List Style', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'default'   => 'grid',
 	'choices'   => array(
 		'grid'    => $image_url . 'category-style-grid.svg',
@@ -116,19 +116,19 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'        => 'checkbox',
 	'settings'    => 'category_force_image_height',
-	'label'       => __( 'EQUAL IMAGE HEIGHTS', 'flatsome-admin' ),
+	'label'       => __( 'EQUAL IMAGE HEIGHTS', 'silver' ),
 	'description' => 'Force all images to have the same height',
 	'section'     => 'woocommerce_product_catalog',
 	'default'     => false,
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'            => 'slider',
 	'settings'        => 'category_image_height',
-	'label'           => __( 'Equal Image height', 'flatsome-admin' ),
+	'label'           => __( 'Equal Image height', 'silver' ),
 	'description'     => 'Change the image height in %. (100% = 1:1)',
 	'section'         => 'woocommerce_product_catalog',
 	'active_callback' => array(
@@ -138,7 +138,7 @@ Flatsome_Option::add_field( 'option', array(
 			'value'    => true,
 		),
 	),
-	'transport'       => flatsome_customizer_transport(),
+	'transport'       => silver_customizer_transport(),
 	'default'         => 100,
 	'choices'         => array(
 		'min'  => 50,
@@ -148,7 +148,7 @@ Flatsome_Option::add_field( 'option', array(
 ) );
 
 
-Flatsome_Option::add_field( '', array(
+Silver_Option::add_field( '', array(
     'type'        => 'custom',
     'settings' => 'custom_html_woocommerce_image_shortcut_category',
     'label'       => '',
@@ -156,20 +156,20 @@ Flatsome_Option::add_field( '', array(
     'default'     => '<button style="margin-top: 15px; margin-bottom:15px" class="button button-primary" data-to-section="woocommerce_product_images">Thumbnail Image Settings →</button>',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'text',
 	'settings'  => 'products_pr_page',
-	'transport' => flatsome_customizer_transport(),
-	'label'     => __( 'Products per Page', 'flatsome-admin' ),
+	'transport' => silver_customizer_transport(),
+	'label'     => __( 'Products per Page', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
 	'default'   => 12,
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'slider',
 	'settings'  => 'category_row_count',
-	'transport' => flatsome_customizer_transport(),
-	'label'     => __( 'Products per row - Desktop', 'flatsome-admin' ),
+	'transport' => silver_customizer_transport(),
+	'label'     => __( 'Products per row - Desktop', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
 	'default'   => 3,
 	'choices'   => array(
@@ -179,12 +179,12 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'slider',
 	'settings'  => 'category_row_count_tablet',
-	'label'     => __( 'Products per row - Tablet', 'flatsome-admin' ),
+	'label'     => __( 'Products per row - Tablet', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'default'   => 3,
 	'choices'   => array(
 		'min'  => 1,
@@ -193,12 +193,12 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'slider',
 	'settings'  => 'category_row_count_mobile',
-	'label'     => __( 'Products per row - Mobile', 'flatsome-admin' ),
+	'label'     => __( 'Products per row - Mobile', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'default'   => 2,
 	'choices'   => array(
 		'min'  => 1,
@@ -207,7 +207,7 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( '', array(
+Silver_Option::add_field( '', array(
 	'type'     => 'custom',
 	'settings' => 'custom_title_category_header',
 	'label'    => '',
@@ -215,12 +215,12 @@ Flatsome_Option::add_field( '', array(
 	'default'  => '<div class="options-title-divider">Header</div>',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'radio-image',
 	'settings'  => 'category_title_style',
-	'label'     => __( 'Title Style', 'flatsome-admin' ),
+	'label'     => __( 'Title Style', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'default'   => '',
 	'choices'   => array(
 		''                => $image_url . 'category-title.svg',
@@ -229,20 +229,20 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'checkbox',
 	'settings'  => 'category_show_title',
-	'transport' => flatsome_customizer_transport(),
-	'label'     => __( 'Show title', 'flatsome-admin' ),
+	'transport' => silver_customizer_transport(),
+	'label'     => __( 'Show title', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
 	'default'   => '0',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'            => 'checkbox',
 	'settings'        => 'breadcrumb_home',
-	'transport'       => flatsome_customizer_transport(),
-	'label'           => __( 'Show home link in breadcrumb', 'flatsome-admin' ),
+	'transport'       => silver_customizer_transport(),
+	'label'           => __( 'Show home link in breadcrumb', 'silver' ),
 	'section'         => 'woocommerce_product_catalog',
 	'active_callback' => function () {
 		$wpseo     = class_exists( 'WPSEO_Options' ) && get_theme_mod( 'wpseo_breadcrumb' ) ? true : false;
@@ -253,85 +253,85 @@ Flatsome_Option::add_field( 'option', array(
 	'default'         => 1,
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'checkbox',
 	'settings'  => 'category_show_result_count',
-	'transport' => flatsome_customizer_transport(),
-	'label'     => esc_html__( 'Show result count', 'flatsome' ),
+	'transport' => silver_customizer_transport(),
+	'label'     => esc_html__( 'Show result count', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
 	'default'   => 1,
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'checkbox',
 	'settings'  => 'category_show_catalog_ordering',
-	'transport' => flatsome_customizer_transport(),
-	'label'     => esc_html__( 'Show catalog ordering', 'flatsome' ),
+	'transport' => silver_customizer_transport(),
+	'label'     => esc_html__( 'Show catalog ordering', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
 	'default'   => 1,
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'checkbox',
 	'settings' => 'category_header_transparent',
-	'label'    => __( 'Transparent Header', 'flatsome-admin' ),
+	'label'    => __( 'Transparent Header', 'silver' ),
 	'section'  => 'woocommerce_product_catalog',
 	'default'  => '0',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'checkbox',
 	'settings'  => 'header_shop_bg_featured',
-	'transport' => flatsome_customizer_transport(),
-	'help'      => __( 'Use Featured Images from categories and products as background. Will fallback to default Shop Title background if nothing is set.', 'flatsome-admin' ),
-	'label'     => __( 'Featured Image as Background', 'flatsome-admin' ),
+	'transport' => silver_customizer_transport(),
+	'help'      => __( 'Use Featured Images from categories and products as background. Will fallback to default Shop Title background if nothing is set.', 'silver' ),
+	'label'     => __( 'Featured Image as Background', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
 	'default'   => 1,
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'image',
 	'settings'  => 'header_shop_bg_image',
-	'transport' => flatsome_customizer_transport(),
-	'label'     => __( 'Shop Title Background', 'flatsome-admin' ),
+	'transport' => silver_customizer_transport(),
+	'label'     => __( 'Shop Title Background', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
 	'default'   => '',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'color-alpha',
 	'alpha'     => true,
 	'settings'  => 'header_shop_bg_color',
-	'transport' => flatsome_customizer_transport(),
-	'label'     => __( 'Title Background Color', 'flatsome-admin' ),
+	'transport' => silver_customizer_transport(),
+	'label'     => __( 'Title Background Color', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
 	'default'   => 'rgba(0,0,0,.3)',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'text',
 	'settings'  => 'category_filter_text',
-	'transport' => flatsome_customizer_transport(),
-	'label'     => __( 'Custom Filter Text', 'flatsome-admin' ),
+	'transport' => silver_customizer_transport(),
+	'label'     => __( 'Custom Filter Text', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
 	'default'   => '',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'radio-image',
 	'settings'  => 'category_filter_overlay_position',
-	'label'     => __( 'Filter Overlay Position', 'flatsome-admin' ),
+	'label'     => __( 'Filter Overlay Position', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'default'   => 'left',
 	'choices'   => array(
-		'left'   => flatsome_customizer_images_uri() . '/overlay-left.svg',
-		'right'  => flatsome_customizer_images_uri() . '/overlay-right.svg',
-		'center' => flatsome_customizer_images_uri() . '/overlay-center.svg',
+		'left'   => silver_customizer_images_uri() . '/overlay-left.svg',
+		'right'  => silver_customizer_images_uri() . '/overlay-right.svg',
+		'center' => silver_customizer_images_uri() . '/overlay-center.svg',
 	),
 ) );
 
-Flatsome_Option::add_field( '', array(
+Silver_Option::add_field( '', array(
 	'type'     => 'custom',
 	'settings' => 'custom_title_category_breadcrumbs',
 	'label'    => '',
@@ -339,21 +339,21 @@ Flatsome_Option::add_field( '', array(
 	'default'  => '<div class="options-title-divider">Breadcrumbs</div>',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'select',
 	'settings' => 'breadcrumb_size',
-	'label'    => __( 'Breadcrumb Size', 'flatsome-admin' ),
-	'help'     => __( 'Change size of breadcrumb on product categories. Useful if you have long breadcrumbs.', 'flatsome-admin' ),
+	'label'    => __( 'Breadcrumb Size', 'silver' ),
+	'help'     => __( 'Change size of breadcrumb on product categories. Useful if you have long breadcrumbs.', 'silver' ),
 	'section'  => 'woocommerce_product_catalog',
 	'default'  => 'large',
 	'choices'  => $sizes,
 ) );
 
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'radio-buttonset',
 	'settings' => 'breadcrumb_case',
-	'label'    => esc_attr__( 'Breadcrumbs Case', 'flatsome-admin' ),
+	'label'    => esc_attr__( 'Breadcrumbs Case', 'silver' ),
 	'section'  => 'woocommerce_product_catalog',
 	'default'  => 'uppercase',
 	'choices'  => array(
@@ -362,7 +362,7 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( '', array(
+Silver_Option::add_field( '', array(
 	'type'     => 'custom',
 	'settings' => 'custom_title_category_category_box',
 	'label'    => '',
@@ -370,12 +370,12 @@ Flatsome_Option::add_field( '', array(
 	'default'  => '<div class="options-title-divider">Category Box</div>',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'radio-image',
 	'settings'  => 'cat_style',
-	'label'     => __( 'Category Box Style', 'flatsome-admin' ),
+	'label'     => __( 'Category Box Style', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'default'   => 'badge',
 	'choices'   => array(
 		'normal'  => $image_url . 'category-box.svg',
@@ -388,16 +388,16 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'checkbox',
 	'settings'  => 'category_show_count',
-	'transport' => flatsome_customizer_transport(),
-	'label'     => __( 'Show product count', 'flatsome-admin' ),
+	'transport' => silver_customizer_transport(),
+	'label'     => __( 'Show product count', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
 	'default'   => 1,
 ) );
 
-Flatsome_Option::add_field( '', array(
+Silver_Option::add_field( '', array(
 	'type'     => 'custom',
 	'settings' => 'custom_title_category_product_box',
 	'label'    => '',
@@ -405,12 +405,12 @@ Flatsome_Option::add_field( '', array(
 	'default'  => '<div class="options-title-divider">Product Box</div>',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'radio-image',
 	'settings'  => 'grid_style',
-	'label'     => __( 'Grid Style', 'flatsome-admin' ),
+	'label'     => __( 'Grid Style', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'default'   => 'grid1',
 	'choices'   => array(
 		'grid1' => $image_url . 'product-box.svg',
@@ -419,17 +419,17 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'select',
 	'settings'  => 'product_hover',
-	'transport' => flatsome_customizer_transport(),
-	'label'     => __( 'Product Image Hover style', 'flatsome-admin' ),
+	'transport' => silver_customizer_transport(),
+	'label'     => __( 'Product Image Hover style', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
 	'default'   => 'fade_in_back',
 	'choices'   => array(
-		'none'         => __( 'None', 'flatsome-admin' ),
-		'fade_in_back' => __( 'Back Image - Fade In', 'flatsome-admin' ),
-		'zoom_in'      => __( 'Back Image - Zoom In', 'flatsome-admin' ),
+		'none'         => __( 'None', 'silver' ),
+		'fade_in_back' => __( 'Back Image - Fade In', 'silver' ),
+		'zoom_in'      => __( 'Back Image - Zoom In', 'silver' ),
 		'zoom'         => 'Zoom',
 		'zoom-fade'    => 'Zoom Fade',
 		'blur'         => 'Blur',
@@ -441,12 +441,12 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'slider',
 	'settings'  => 'category_shadow',
-	'label'     => __( 'Drop Shadow', 'flatsome-admin' ),
+	'label'     => __( 'Drop Shadow', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'default'   => 0,
 	'choices'   => array(
 		'min'  => 0,
@@ -455,12 +455,12 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'slider',
 	'settings'  => 'category_shadow_hover',
-	'label'     => __( 'Drop Shadow :hover', 'flatsome-admin' ),
+	'label'     => __( 'Drop Shadow :hover', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'default'   => 0,
 	'choices'   => array(
 		'min'  => 0,
@@ -469,12 +469,12 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'radio-image',
 	'settings'  => 'add_to_cart_icon',
-	'label'     => __( 'Add To Cart Button', 'flatsome-admin' ),
+	'label'     => __( 'Add To Cart Button', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'default'   => 'disable',
 	'choices'   => array(
 		'disable' => $image_url . 'product-box.svg',
@@ -483,46 +483,46 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'select',
 	'settings'  => 'add_to_cart_style',
-	'label'     => __( 'Button Style', 'flatsome-admin' ),
+	'label'     => __( 'Button Style', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'default'   => 'outline',
 	'choices'   => array(
-		'flat'      => __( 'Plain', 'flatsome-admin' ),
-		'outline'   => __( 'Outline', 'flatsome-admin' ),
-		'underline' => __( 'Underline', 'flatsome-admin' ),
-		'shade'     => __( 'Shade', 'flatsome-admin' ),
-		'bevel'     => __( 'Bevel', 'flatsome-admin' ),
-		'gloss'     => __( 'Gloss', 'flatsome-admin' ),
+		'flat'      => __( 'Plain', 'silver' ),
+		'outline'   => __( 'Outline', 'silver' ),
+		'underline' => __( 'Underline', 'silver' ),
+		'shade'     => __( 'Shade', 'silver' ),
+		'bevel'     => __( 'Bevel', 'silver' ),
+		'gloss'     => __( 'Gloss', 'silver' ),
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'checkbox',
 	'settings'  => 'product_box_category',
-	'transport' => flatsome_customizer_transport(),
-	'label'     => __( 'Show Category', 'flatsome-admin' ),
+	'transport' => silver_customizer_transport(),
+	'label'     => __( 'Show Category', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
 	'default'   => 1,
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'checkbox',
 	'settings'  => 'product_box_rating',
-	'transport' => flatsome_customizer_transport(),
-	'label'     => __( 'Show Ratings', 'flatsome-admin' ),
+	'transport' => silver_customizer_transport(),
+	'label'     => __( 'Show Ratings', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
 	'default'   => 1,
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'            => 'checkbox',
 	'settings'        => 'product_box_empty_rating',
-	'transport'       => flatsome_customizer_transport(),
-	'label'           => esc_html__( 'Show empty ratings', 'flatsome-admin' ),
+	'transport'       => silver_customizer_transport(),
+	'label'           => esc_html__( 'Show empty ratings', 'silver' ),
 	'section'         => 'woocommerce_product_catalog',
 	'default'         => 0,
 	'active_callback' => array(
@@ -534,11 +534,11 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'            => 'checkbox',
 	'settings'        => 'product_box_review_count',
-	'transport'       => flatsome_customizer_transport(),
-	'label'           => esc_html__( 'Show review count', 'flatsome-admin' ),
+	'transport'       => silver_customizer_transport(),
+	'label'           => esc_html__( 'Show review count', 'silver' ),
 	'section'         => 'woocommerce_product_catalog',
 	'default'         => 0,
 	'active_callback' => array(
@@ -550,39 +550,39 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'checkbox',
 	'settings'  => 'short_description_in_grid',
-	'transport' => flatsome_customizer_transport(),
-	'label'     => __( 'Show Short Description', 'flatsome-admin' ),
+	'transport' => silver_customizer_transport(),
+	'label'     => __( 'Show Short Description', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
 	'default'   => '0',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'checkbox',
 	'settings'  => 'disable_quick_view',
-	'transport' => flatsome_customizer_transport(),
-	'label'     => __( 'Disable Quick View', 'flatsome-admin' ),
+	'transport' => silver_customizer_transport(),
+	'label'     => __( 'Disable Quick View', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
 	'default'   => 0,
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'        => 'checkbox',
 	'settings'    => 'equalize_product_box',
-	'transport'   => flatsome_customizer_transport(),
-	'label'       => esc_attr__( 'Equalize Items', 'flatsome-admin' ),
+	'transport'   => silver_customizer_transport(),
+	'label'       => esc_attr__( 'Equalize Items', 'silver' ),
 	'section'     => 'woocommerce_product_catalog',
 	'default'     => '0',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'radio-image',
 	'settings'  => 'bubble_style',
-	'label'     => __( 'Bubble Style', 'flatsome-admin' ),
+	'label'     => __( 'Bubble Style', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'default'   => 'style1',
 	'choices'   => array(
 		'style1' => $image_url . 'badge-circle.svg',
@@ -591,20 +591,20 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'        => 'checkbox',
 	'settings'    => 'sale_bubble',
-	'transport'   => flatsome_customizer_transport(),
-	'label'       => __( 'Show sale bubble', 'flatsome-admin' ),
+	'transport'   => silver_customizer_transport(),
+	'label'       => __( 'Show sale bubble', 'silver' ),
 	'section'     => 'woocommerce_product_catalog',
 	'default'     => 1,
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'              => 'text',
 	'settings'          => 'sale_bubble_text',
-	'transport'         => flatsome_customizer_transport(),
-	'label'             => __( 'Custom sale bubble text', 'flatsome-admin' ),
+	'transport'         => silver_customizer_transport(),
+	'label'             => __( 'Custom sale bubble text', 'silver' ),
 	'section'           => 'woocommerce_product_catalog',
 	'sanitize_callback' => 'wp_kses_post',
 	'active_callback' => array(
@@ -617,10 +617,10 @@ Flatsome_Option::add_field( 'option', array(
 	'default'           => '',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'checkbox',
 	'settings' => 'sale_bubble_percentage',
-	'label'    => __( 'Enable % instead of "Sale!"', 'flatsome-admin' ),
+	'label'    => __( 'Enable % instead of "Sale!"', 'silver' ),
 	'section'  => 'woocommerce_product_catalog',
 	'active_callback' => array(
 		array(
@@ -632,12 +632,12 @@ Flatsome_Option::add_field( 'option', array(
 	'default'  => '0',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'              => 'text',
 	'settings'          => 'sale_bubble_percentage_formatting',
-	'transport'         => flatsome_customizer_transport(),
-	'label'             => __( 'Sale bubble % formatting', 'flatsome-admin' ),
-	'description'       => __( 'How the discount should be displayed. e.g. -{value}%', 'flatsome-admin' ),
+	'transport'         => silver_customizer_transport(),
+	'label'             => __( 'Sale bubble % formatting', 'silver' ),
+	'description'       => __( 'How the discount should be displayed. e.g. -{value}%', 'silver' ),
 	'section'           => 'woocommerce_product_catalog',
 	'sanitize_callback' => 'wp_kses_post',
 	'active_callback'   => array(
@@ -655,13 +655,13 @@ Flatsome_Option::add_field( 'option', array(
 	'default'           => '-{value}%',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'        => 'number',
 	'settings'    => 'new_bubble_auto',
-	'label'       => __( 'Auto "New" bubble', 'flatsome-admin' ),
-	'description' => __( 'Shown on products witch age is x and lower in days.', 'flatsome-admin' ),
+	'label'       => __( 'Auto "New" bubble', 'silver' ),
+	'description' => __( 'Shown on products witch age is x and lower in days.', 'silver' ),
 	'section'     => 'woocommerce_product_catalog',
-	'transport'   => flatsome_customizer_transport(),
+	'transport'   => silver_customizer_transport(),
 	'default'     => 0,
 	'choices'     => array(
 		'min'  => 0,
@@ -670,7 +670,7 @@ Flatsome_Option::add_field( 'option', array(
 ) );
 
 if ( get_theme_mod( 'swatches' ) ) :
-	Flatsome_Option::add_field( '', array(
+	Silver_Option::add_field( '', array(
 		'type'     => 'custom',
 		'settings' => 'custom_title_category_swatches',
 		'label'    => '',
@@ -678,20 +678,20 @@ if ( get_theme_mod( 'swatches' ) ) :
 		'default'  => '<div class="options-title-divider">Swatches</div>',
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'     => 'select',
 		'settings' => 'swatches_box_attribute',
-		'label'    => __( 'Product attribute', 'flatsome-admin' ),
-		'tooltip'  => __( 'The product (variation) atrribute that swatches will be populated for (usually an attribute that determines colors).', 'flatsome-admin' ),
+		'label'    => __( 'Product attribute', 'silver' ),
+		'tooltip'  => __( 'The product (variation) atrribute that swatches will be populated for (usually an attribute that determines colors).', 'silver' ),
 		'section'  => 'woocommerce_product_catalog',
 		'default'  => '',
-		'choices'  => flatsome_get_product_attribute_taxonomies_list_by_id( array( 'option_none' => '-- None --' ) ),
+		'choices'  => silver_get_product_attribute_taxonomies_list_by_id( array( 'option_none' => '-- None --' ) ),
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'            => 'radio-buttonset',
 		'settings'        => 'swatches_box_layout',
-		'label'           => __( 'Layout', 'flatsome-admin' ),
+		'label'           => __( 'Layout', 'silver' ),
 		'section'         => 'woocommerce_product_catalog',
 		'active_callback' => array(
 			array(
@@ -707,10 +707,10 @@ if ( get_theme_mod( 'swatches' ) ) :
 		),
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'            => 'slider',
 		'settings'        => 'swatches_box_limit',
-		'label'           => __( 'Limit', 'flatsome-admin' ),
+		'label'           => __( 'Limit', 'silver' ),
 		'section'         => 'woocommerce_product_catalog',
 		'active_callback' => array(
 			array(
@@ -732,12 +732,12 @@ if ( get_theme_mod( 'swatches' ) ) :
 		),
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'            => 'radio-buttonset',
 		'settings'        => 'swatches_box_size',
-		'label'           => __( 'Size', 'flatsome-admin' ),
+		'label'           => __( 'Size', 'silver' ),
 		'section'         => 'woocommerce_product_catalog',
-		'transport'       => flatsome_customizer_transport(),
+		'transport'       => silver_customizer_transport(),
 		'active_callback' => array(
 			array(
 				'setting'  => 'swatches_box_attribute',
@@ -755,12 +755,12 @@ if ( get_theme_mod( 'swatches' ) ) :
 		),
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'            => 'radio-buttonset',
 		'settings'        => 'swatches_box_shape',
-		'label'           => __( 'Shape', 'flatsome-admin' ),
+		'label'           => __( 'Shape', 'silver' ),
 		'section'         => 'woocommerce_product_catalog',
-		'transport'       => flatsome_customizer_transport(),
+		'transport'       => silver_customizer_transport(),
 		'active_callback' => array(
 			array(
 				'setting'  => 'swatches_box_attribute',
@@ -776,10 +776,10 @@ if ( get_theme_mod( 'swatches' ) ) :
 		),
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'            => 'radio-buttonset',
 		'settings'        => 'swatches_box_select_event',
-		'label'           => __( 'Select event - Desktop', 'flatsome-admin' ),
+		'label'           => __( 'Select event - Desktop', 'silver' ),
 		'section'         => 'woocommerce_product_catalog',
 		'active_callback' => array(
 			array(
@@ -795,12 +795,12 @@ if ( get_theme_mod( 'swatches' ) ) :
 		),
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'            => 'color',
 		'settings'        => 'swatches_box_color_selected',
-		'transport'       => flatsome_customizer_transport(),
-		'label'           => __( 'Color :selected', 'flatsome' ),
-		'description'     => __( 'Default is Secondary color', 'flatsome-admin' ),
+		'transport'       => silver_customizer_transport(),
+		'label'           => __( 'Color :selected', 'silver' ),
+		'description'     => __( 'Default is Secondary color', 'silver' ),
 		'section'         => 'woocommerce_product_catalog',
 		'active_callback' => array(
 			array(
@@ -812,11 +812,11 @@ if ( get_theme_mod( 'swatches' ) ) :
 		'default'         => '',
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'            => 'select',
 		'settings'        => 'swatches_box_behavior_selected',
-		'label'           => __( 'Behavior :selected', 'flatsome-admin' ),
-		'description'     => __( 'When clicking an already selected swatch.', 'flatsome-admin' ),
+		'label'           => __( 'Behavior :selected', 'silver' ),
+		'description'     => __( 'When clicking an already selected swatch.', 'silver' ),
 		'section'         => 'woocommerce_product_catalog',
 		'active_callback' => array(
 			array(
@@ -832,11 +832,11 @@ if ( get_theme_mod( 'swatches' ) ) :
 		),
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'        => 'checkbox',
 		'settings'    => 'swatches_box_out_of_stock_inactive',
-		'label'       => esc_html__( 'Inactive out of stock', 'flatsome' ),
-		'description' => esc_html__( 'Show out of stock items as inactive.', 'flatsome' ),
+		'label'       => esc_html__( 'Inactive out of stock', 'silver' ),
+		'description' => esc_html__( 'Show out of stock items as inactive.', 'silver' ),
 		'section'     => 'woocommerce_product_catalog',
 		'active_callback' => array(
 			array(
@@ -848,10 +848,10 @@ if ( get_theme_mod( 'swatches' ) ) :
 		'default'     => 0,
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'            => 'checkbox',
 		'settings'        => 'swatches_box_update_urls',
-		'label'           => __( 'Update links to selected variation', 'flatsome-admin' ),
+		'label'           => __( 'Update links to selected variation', 'silver' ),
 		'section'         => 'woocommerce_product_catalog',
 		'active_callback' => array(
 			array(
@@ -863,10 +863,10 @@ if ( get_theme_mod( 'swatches' ) ) :
 		'default'         => 1,
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'            => 'checkbox',
 		'settings'        => 'swatches_box_reset',
-		'label'           => __( 'Auto reset', 'flatsome-admin' ),
+		'label'           => __( 'Auto reset', 'silver' ),
 		'section'         => 'woocommerce_product_catalog',
 		'active_callback' => array(
 			array(
@@ -878,10 +878,10 @@ if ( get_theme_mod( 'swatches' ) ) :
 		'default'         => 0,
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'            => 'checkbox',
 		'settings'        => 'swatches_box_reset_limited',
-		'label'           => __( 'Reset limited', 'flatsome-admin' ),
+		'label'           => __( 'Reset limited', 'silver' ),
 		'section'         => 'woocommerce_product_catalog',
 		'active_callback' => array(
 			array(
@@ -903,11 +903,11 @@ if ( get_theme_mod( 'swatches' ) ) :
 		'default'         => 0,
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'            => 'radio-buttonset',
 		'settings'        => 'swatches_box_reset_extent',
-		'label'           => __( 'Reset extent', 'flatsome-admin' ),
-		'description'     => __( 'The area the pointer should leave for a reset.', 'flatsome-admin' ),
+		'label'           => __( 'Reset extent', 'silver' ),
+		'description'     => __( 'The area the pointer should leave for a reset.', 'silver' ),
 		'section'         => 'woocommerce_product_catalog',
 		'active_callback' => array(
 			array(
@@ -923,16 +923,16 @@ if ( get_theme_mod( 'swatches' ) ) :
 		),
 		'default'         => '',
 		'choices'         => array(
-			''            => __( 'Swatch', 'flatsome-admin' ),
-			'product-box' => __( 'Product box', 'flatsome-admin' ),
+			''            => __( 'Swatch', 'silver' ),
+			'product-box' => __( 'Product box', 'silver' ),
 		),
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'            => 'slider',
 		'settings'        => 'swatches_box_reset_time',
-		'label'           => __( 'Reset time', 'flatsome-admin' ),
-		'description'     => __( 'In milliseconds (1000ms = 1sec).', 'flatsome-admin' ),
+		'label'           => __( 'Reset time', 'silver' ),
+		'description'     => __( 'In milliseconds (1000ms = 1sec).', 'silver' ),
 		'section'         => 'woocommerce_product_catalog',
 		'active_callback' => array(
 			array(

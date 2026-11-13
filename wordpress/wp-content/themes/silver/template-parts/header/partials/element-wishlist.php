@@ -2,8 +2,8 @@
 /**
  * Wishlist element.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.20.0
+ * @package          Silver\Templates
+ * @silver-version 3.20.0
  */
 
 if ( ! class_exists( 'YITH_WCWL' ) ) {
@@ -16,17 +16,17 @@ $wishlist_title        = get_theme_mod( 'wishlist_title', '1' );
 $count                 = function_exists( 'yith_wcwl_wishlists' ) ? yith_wcwl_wishlists()->count_items_in_wishlist() : YITH_WCWL()->count_products();
 $has_items             = $count > 0;
 $header_wishlist_label = get_theme_mod( 'header_wishlist_label' );
-$header_wishlist_label = ! empty( $header_wishlist_label ) ? $header_wishlist_label : esc_html__( 'Wishlist', 'flatsome' );
+$header_wishlist_label = ! empty( $header_wishlist_label ) ? $header_wishlist_label : esc_html__( 'Wishlist', 'silver' );
 
 $link_atts = [
 	'href'       => YITH_WCWL()->get_wishlist_url(),
 	'class'      => [ 'wishlist-link' ],
-	'title'      => esc_attr__( 'Wishlist', 'flatsome' ),
-	'aria-label' => ! $wishlist_title ? esc_attr__( 'Wishlist', 'flatsome' ) : null,
+	'title'      => esc_attr__( 'Wishlist', 'silver' ),
+	'aria-label' => ! $wishlist_title ? esc_attr__( 'Wishlist', 'silver' ) : null,
 ];
 
 if ( $icon_style ) {
-	$link_atts['class'][] = get_flatsome_icon_class( $icon_style, 'small' );
+	$link_atts['class'][] = get_silver_icon_class( $icon_style, 'small' );
 }
 
 $icon_atts = [
@@ -43,7 +43,7 @@ if ( $has_items ) {
 ?>
 <li class="header-wishlist-icon">
 	<?php if ( $icon_style ) echo '<div class="header-button">'; ?>
-		<a <?php echo flatsome_html_atts( $link_atts ); ?>>
+		<a <?php echo silver_html_atts( $link_atts ); ?>>
 			<?php if ( $wishlist_title ) : ?>
 				<span class="hide-for-medium header-wishlist-title">
 				<?php echo $header_wishlist_label; // phpcs:ignore WordPress.Security.EscapeOutput ?>
@@ -51,7 +51,7 @@ if ( $has_items ) {
 			<?php endif; ?>
 			<?php
 			if ( $icon ) :
-				echo get_flatsome_icon( 'icon-' . $icon, null, $icon_atts );
+				echo get_silver_icon( 'icon-' . $icon, null, $icon_atts );
 			endif;
 			?>
 		</a>

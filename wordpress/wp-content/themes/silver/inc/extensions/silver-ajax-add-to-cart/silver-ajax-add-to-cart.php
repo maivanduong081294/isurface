@@ -1,8 +1,8 @@
 <?php
 /**
- * Flatsome Ajax add to cart extension.
+ * Silver Ajax add to cart extension.
  *
- * @package    Flatsome/Extensions
+ * @package    Silver/Extensions
  * @since      3.17.0
  */
 
@@ -11,22 +11,22 @@ defined( 'ABSPATH' ) || exit;
 /**
  * To be enqueued script.
  */
-function flatsome_ajax_add_to_cart_script() {
+function silver_ajax_add_to_cart_script() {
 	wp_enqueue_script(
-		'flatsome-ajax-add-to-cart-frontend',
+		'silver-ajax-add-to-cart-frontend',
 		get_template_directory_uri() . '/assets/js/extensions/silver-ajax-add-to-cart-frontend.js',
 		array( 'jquery', 'wc-add-to-cart' ),
-		flatsome()->version(),
+		silver()->version(),
 		true
 	);
 }
 
-add_action( 'wp_enqueue_scripts', 'flatsome_ajax_add_to_cart_script' );
+add_action( 'wp_enqueue_scripts', 'silver_ajax_add_to_cart_script' );
 
 /**
  * Single product ajax add to cart.
  */
-function flatsome_ajax_add_to_cart() {
+function silver_ajax_add_to_cart() {
 	$product_id = absint( isset( $_POST['add-to-cart'] ) ? $_POST['add-to-cart'] : 0 );
 
 	ob_start();
@@ -52,5 +52,5 @@ function flatsome_ajax_add_to_cart() {
 	wp_send_json( $data );
 }
 
-add_action( 'wp_ajax_flatsome_ajax_add_to_cart', 'flatsome_ajax_add_to_cart' );
-add_action( 'wp_ajax_nopriv_flatsome_ajax_add_to_cart', 'flatsome_ajax_add_to_cart' );
+add_action( 'wp_ajax_silver_ajax_add_to_cart', 'silver_ajax_add_to_cart' );
+add_action( 'wp_ajax_nopriv_silver_ajax_add_to_cart', 'silver_ajax_add_to_cart' );

@@ -3,41 +3,41 @@
 /* Remove default Hooks */
 remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20 );
 
-/* Add Ordering to Flatsome tools */
+/* Add Ordering to Silver tools */
 remove_action( 'woocommerce_before_shop_loop', 'woocommerce_result_count', 20 );
 remove_action( 'woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30 );
 
 /** $GLOBALS['woocommerce_loop'] will not be set in time otherwise. */
 remove_action( 'woocommerce_before_shop_loop', 'wc_setup_loop' );
-add_action( 'flatsome_category_title_alt', 'wc_setup_loop' );
+add_action( 'silver_category_title_alt', 'wc_setup_loop' );
 
 /**
  * Displays the WooCommerce result count.
  */
-function flatsome_woocommerce_result_count() {
+function silver_woocommerce_result_count() {
 	if ( get_theme_mod( 'category_show_result_count', 1 ) ) {
 		woocommerce_result_count();
 	}
 }
 
-add_action( 'flatsome_category_title_alt', 'flatsome_woocommerce_result_count', 20 );
+add_action( 'silver_category_title_alt', 'silver_woocommerce_result_count', 20 );
 
 /**
  * Displays the WooCommerce catalog ordering.
  */
-function flatsome_woocommerce_catalog_ordering() {
+function silver_woocommerce_catalog_ordering() {
 	if ( get_theme_mod( 'category_show_catalog_ordering', 1 ) ) {
 		woocommerce_catalog_ordering();
 	}
 }
 
-add_action( 'flatsome_category_title_alt', 'flatsome_woocommerce_catalog_ordering', 30 );
+add_action( 'silver_category_title_alt', 'silver_woocommerce_catalog_ordering', 30 );
 
-if ( ! function_exists( 'flatsome_category_header' ) ) {
+if ( ! function_exists( 'silver_category_header' ) ) {
 	/**
 	 * Main category header function
 	 */
-	function flatsome_category_header() {
+	function silver_category_header() {
 		global $wp_query;
 
 		// Set Custom Shop Header.
@@ -76,10 +76,10 @@ if ( ! function_exists( 'flatsome_category_header' ) ) {
 		}
 	}
 }
-add_action( 'flatsome_after_header', 'flatsome_category_header' );
+add_action( 'silver_after_header', 'silver_category_header' );
 
 
-if ( ! function_exists( 'flatsome_category_header_classes' ) ) {
+if ( ! function_exists( 'silver_category_header_classes' ) ) {
 	/**
 	 * Add Transparent Header To Category if Set
 	 *
@@ -87,7 +87,7 @@ if ( ! function_exists( 'flatsome_category_header_classes' ) ) {
 	 *
 	 * @return array
 	 */
-	function flatsome_category_header_classes( $classes ) {
+	function silver_category_header_classes( $classes ) {
 		$transparent = get_theme_mod( 'category_header_transparent', 0 );
 		if ( $transparent && is_shop() || $transparent && is_product_category() || $transparent && is_product_tag() ) {
 			$classes[] = 'transparent has-transparent nav-dark toggle-nav-dark';
@@ -96,25 +96,25 @@ if ( ! function_exists( 'flatsome_category_header_classes' ) ) {
 		return $classes;
 	}
 }
-add_filter( 'flatsome_header_class', 'flatsome_category_header_classes', 10 );
+add_filter( 'silver_header_class', 'silver_category_header_classes', 10 );
 
 
-if ( ! function_exists( 'flatsome_add_category_filter_button' ) ) {
+if ( ! function_exists( 'silver_add_category_filter_button' ) ) {
 	/**
 	 * Add Category Filter button for Mobile and Off Canvas
 	 */
-	function flatsome_add_category_filter_button() {
+	function silver_add_category_filter_button() {
 		wc_get_template_part( 'loop/filter-button' );
 	}
 }
-add_action( 'flatsome_category_title', 'flatsome_add_category_filter_button', 20 );
+add_action( 'silver_category_title', 'silver_add_category_filter_button', 20 );
 
 
-if ( ! function_exists( 'flatsome_category_title' ) ) {
+if ( ! function_exists( 'silver_category_title' ) ) {
 	/**
 	 * Add Category Title if set
 	 */
-	function flatsome_category_title() {
+	function silver_category_title() {
 		if ( ! get_theme_mod( 'category_show_title', 0 ) ) {
 			return;
 		} ?>
@@ -122,15 +122,15 @@ if ( ! function_exists( 'flatsome_category_title' ) ) {
 		<?php
 	}
 }
-add_action( 'flatsome_category_title', 'flatsome_category_title', 1 );
+add_action( 'silver_category_title', 'silver_category_title', 1 );
 
 
-if ( ! function_exists( 'flatsome_shop_loop_tools_breadcrumbs' ) ) {
+if ( ! function_exists( 'silver_shop_loop_tools_breadcrumbs' ) ) {
 	/**
 	 * Add Breadcrumbs
 	 */
-	function flatsome_shop_loop_tools_breadcrumbs() {
+	function silver_shop_loop_tools_breadcrumbs() {
 		wc_get_template_part( 'loop/breadcrumbs' );
 	}
 }
-add_action( 'flatsome_category_title', 'flatsome_shop_loop_tools_breadcrumbs', 10 );
+add_action( 'silver_category_title', 'silver_shop_loop_tools_breadcrumbs', 10 );

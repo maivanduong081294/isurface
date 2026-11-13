@@ -67,12 +67,12 @@ add_action( 'manage_blocks_posts_custom_column', 'my_manage_blocks_columns', 10,
  *
  * @return bool
  */
-function flatsome_blocks_disable_gutenberg( $use_block_editor, $post_type ) {
+function silver_blocks_disable_gutenberg( $use_block_editor, $post_type ) {
 	return $post_type === 'blocks' ? false : $use_block_editor;
 }
 
-add_filter( 'use_block_editor_for_post_type', 'flatsome_blocks_disable_gutenberg', 10, 2 );
-add_filter( 'gutenberg_can_edit_post_type', 'flatsome_blocks_disable_gutenberg', 10, 2 );
+add_filter( 'use_block_editor_for_post_type', 'silver_blocks_disable_gutenberg', 10, 2 );
+add_filter( 'gutenberg_can_edit_post_type', 'silver_blocks_disable_gutenberg', 10, 2 );
 
 
 /**
@@ -131,7 +131,7 @@ function block_shortcode( $atts, $content = null ) {
 
 	if ( is_home() ) $post = get_post( get_option('page_for_posts') );
 
-	$post_id  = flatsome_get_block_id( $id );
+	$post_id  = silver_get_block_id( $id );
 	$the_post = $post_id ? get_post( $post_id, OBJECT, 'display' ) : null;
 
 	if ( $the_post ) {
@@ -146,7 +146,7 @@ function block_shortcode( $atts, $content = null ) {
 		     && ! is_customize_preview()
 		     && function_exists( 'ux_builder_is_active' )
 		     && ! ux_builder_is_active()
-			 && apply_filters( 'flatsome_show_block_edit_tooltip', true ) ) {
+			 && apply_filters( 'silver_show_block_edit_tooltip', true ) ) {
 			$edit_link         = ux_builder_edit_url( $post->ID, $post_id );
 			$edit_link_backend = admin_url( 'post.php?post=' . $post_id . '&action=edit' );
 			$html              = '<div class="block-edit-link" data-title="Edit Block: ' . get_the_title( $post_id ) . '"   data-backend="' . esc_url( $edit_link_backend )
@@ -182,7 +182,7 @@ if ( ! function_exists( 'blocks_categories' ) ) {
 	add_action( 'init', 'blocks_categories', 0 );
 }
 
-function flatsome_blocks_taxonomy_filters() {
+function silver_blocks_taxonomy_filters() {
 	global $typenow;
 
 	// An array of all the taxonomies you want to display. Use the taxonomy name or slug
@@ -215,6 +215,6 @@ function flatsome_blocks_taxonomy_filters() {
 	}
 }
 
-add_action( 'restrict_manage_posts', 'flatsome_blocks_taxonomy_filters' );
+add_action( 'restrict_manage_posts', 'silver_blocks_taxonomy_filters' );
 
 

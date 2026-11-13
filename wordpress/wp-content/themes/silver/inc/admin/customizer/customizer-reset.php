@@ -2,10 +2,10 @@
 
 // Options for resetting Customizer
 
-if ( ! class_exists( 'Flatsome_Customizer_Reset' ) ) {
-  final class Flatsome_Customizer_Reset {
+if ( ! class_exists( 'Silver_Customizer_Reset' ) ) {
+  final class Silver_Customizer_Reset {
     /**
-     * @var Flatsome_Customizer_Reset
+     * @var Silver_Customizer_Reset
      */
     private static $instance = null;
 
@@ -34,10 +34,10 @@ if ( ! class_exists( 'Flatsome_Customizer_Reset' ) ) {
       $theme   = wp_get_theme( get_template() );
       $version = $theme->get( 'Version' );
 
-      wp_enqueue_script( 'flatsome-customizer-reset', $uri . '/inc/admin/customizer/js/customizer-reset.js', array(), $version, true );
-      wp_localize_script( 'flatsome-customizer-reset', '_FlatsomeCustomizerReset', array(
-        'reset'   => __( 'Reset', 'flatsome-admin' ),
-        'confirm' => __( "Attention! This will remove all customizations ever made via customizer to this theme!\n\nThis action is irreversible!", 'flatsome-admin' ),
+      wp_enqueue_script( 'silver-customizer-reset', $uri . '/inc/admin/customizer/js/customizer-reset.js', array(), $version, true );
+      wp_localize_script( 'silver-customizer-reset', '_SilverCustomizerReset', array(
+        'reset'   => __( 'Reset', 'silver' ),
+        'confirm' => __( "Attention! This will remove all customizations ever made via customizer to this theme!\n\nThis action is irreversible!", 'silver' ),
         'nonce'   => array(
           'reset' => wp_create_nonce( 'customizer-reset' ),
         )
@@ -79,7 +79,7 @@ if ( ! class_exists( 'Flatsome_Customizer_Reset' ) ) {
 
 	  public function clear_typography_cache() {
 		  try {
-			  $fonts_dir = flatsome_get_fonts_dir();
+			  $fonts_dir = silver_get_fonts_dir();
 
 			  delete_transient( 'kirki_remote_url_contents' );
 			  delete_option( 'kirki_downloaded_font_files' );
@@ -119,4 +119,4 @@ if ( ! class_exists( 'Flatsome_Customizer_Reset' ) ) {
   }
 }
 
-Flatsome_Customizer_Reset::get_instance();
+Silver_Customizer_Reset::get_instance();

@@ -7,10 +7,10 @@
  * @author           WooThemes
  * @package          WooCommerce/Templates
  * @version          1.6.4
- * @flatsome-version 3.16.0
+ * @silver-version 3.16.0
  */
 
-global $product, $woocommerce_loop, $flatsome_opt;
+global $product, $woocommerce_loop, $silver_opt;
 
 /* PRODUCT QUICK VIEW HOOKS */
 add_action( 'woocommerce_single_product_flipbook_summary', 'woocommerce_template_single_price', 10 );

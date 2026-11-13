@@ -2,17 +2,17 @@
 /**
  * Swatches admin class.
  *
- * @package Flatsome\Extensions
+ * @package Silver\Extensions
  */
 
-namespace Flatsome\Extensions;
+namespace Silver\Extensions;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Class Swatches_Admin
  *
- * @package Flatsome\Extensions
+ * @package Silver\Extensions
  */
 class Swatches_Admin {
 
@@ -56,7 +56,7 @@ class Swatches_Admin {
 		add_action( 'admin_print_scripts', array( $this, 'enqueue_scripts' ) );
 
 		// Add option fields.
-		add_action( 'flatsome_product_attribute_term_fields', array( $this, 'attribute_term_field' ), 10, 3 );
+		add_action( 'silver_product_attribute_term_fields', array( $this, 'attribute_term_field' ), 10, 3 );
 		add_action( 'woocommerce_after_add_attribute_fields', array( $this, 'attribute_fields' ) );
 		add_action( 'woocommerce_after_edit_attribute_fields', array( $this, 'attribute_fields' ) );
 
@@ -84,33 +84,33 @@ class Swatches_Admin {
 		?>
 
 		<?php echo $table ? '<tr class="form-field"><th scope="row" valign="top">' : '<div class="form-field">'; ?>
-		<label for="attribute_swatch_size"><?php esc_html_e( 'Swatch size', 'flatsome' ); ?></label>
+		<label for="attribute_swatch_size"><?php esc_html_e( 'Swatch size', 'silver' ); ?></label>
 		<?php if ( $table ) echo '</th><td>'; ?>
 		<select name="attribute_swatch_size" id="attribute_swatch_size">
-			<option value="x-small" <?php selected( $swatch_size, 'x-small' ); ?>><?php esc_html_e( 'X Small', 'flatsome' ); ?></option>
-			<option value="small" <?php selected( $swatch_size, 'small' ); ?>><?php esc_html_e( 'Small', 'flatsome' ); ?></option>
-			<option value="" <?php selected( $swatch_size, '' ); ?>><?php esc_html_e( 'Medium', 'flatsome' ); ?></option>
-			<option value="large" <?php selected( $swatch_size, 'large' ); ?>><?php esc_html_e( 'Large', 'flatsome' ); ?></option>
-			<option value="x-large" <?php selected( $swatch_size, 'x-large' ); ?>><?php esc_html_e( 'X Large', 'flatsome' ); ?></option>
+			<option value="x-small" <?php selected( $swatch_size, 'x-small' ); ?>><?php esc_html_e( 'X Small', 'silver' ); ?></option>
+			<option value="small" <?php selected( $swatch_size, 'small' ); ?>><?php esc_html_e( 'Small', 'silver' ); ?></option>
+			<option value="" <?php selected( $swatch_size, '' ); ?>><?php esc_html_e( 'Medium', 'silver' ); ?></option>
+			<option value="large" <?php selected( $swatch_size, 'large' ); ?>><?php esc_html_e( 'Large', 'silver' ); ?></option>
+			<option value="x-large" <?php selected( $swatch_size, 'x-large' ); ?>><?php esc_html_e( 'X Large', 'silver' ); ?></option>
 		</select>
-		<p class="description"><?php esc_html_e( 'Determines the size of the swatches.', 'flatsome' ); ?></p>
+		<p class="description"><?php esc_html_e( 'Determines the size of the swatches.', 'silver' ); ?></p>
 		<?php echo $table ? '</td></tr>' : '</div>'; ?>
 
 		<?php echo $table ? '<tr class="form-field"><th scope="row" valign="top">' : '<div class="form-field">'; ?>
-		<label for="attribute_swatch_shape"><?php esc_html_e( 'Swatch shape', 'flatsome' ); ?></label>
+		<label for="attribute_swatch_shape"><?php esc_html_e( 'Swatch shape', 'silver' ); ?></label>
 		<?php if ( $table ) echo '</th><td>'; ?>
 		<select name="attribute_swatch_shape" id="attribute_swatch_shape">
-			<option value=""><?php esc_html_e( 'Square', 'flatsome' ); ?></option>
-			<option value="rounded" <?php selected( $swatch_shape, 'rounded' ); ?>><?php esc_html_e( 'Rounded', 'flatsome' ); ?></option>
-			<option value="circle" <?php selected( $swatch_shape, 'circle' ); ?>><?php esc_html_e( 'Circle', 'flatsome' ); ?></option>
+			<option value=""><?php esc_html_e( 'Square', 'silver' ); ?></option>
+			<option value="rounded" <?php selected( $swatch_shape, 'rounded' ); ?>><?php esc_html_e( 'Rounded', 'silver' ); ?></option>
+			<option value="circle" <?php selected( $swatch_shape, 'circle' ); ?>><?php esc_html_e( 'Circle', 'silver' ); ?></option>
 		</select>
-		<p class="description"><?php esc_html_e( 'Determines the shape of the swatches.', 'flatsome' ); ?></p>
+		<p class="description"><?php esc_html_e( 'Determines the shape of the swatches.', 'silver' ); ?></p>
 		<?php echo $table ? '</td></tr>' : '</div>'; ?>
 
 		<?php echo $table ? '<tr class="form-field"><th scope="row" valign="top">' : '<div class="form-field">'; ?>
-		<?php echo $table ? '<label for="attribute_swatch_variation_images">' . esc_html__( 'Use variation images?', 'flatsome' ) . '</label></th><td>' : '<label for="attribute_swatch_variation_images">'; ?>
-		<input name="attribute_swatch_variation_images" id="attribute_swatch_variation_images" type="checkbox" value="1" <?php checked( $variation_images ); ?>><?php if ( ! $table ) echo esc_html__( 'Use variation images?', 'flatsome' ) . '</label>'; ?>
-		<p class="description"><?php esc_html_e( 'Enable this if you want swatches for this attribute to be auto filled with variation images.', 'flatsome' ); ?></p>
+		<?php echo $table ? '<label for="attribute_swatch_variation_images">' . esc_html__( 'Use variation images?', 'silver' ) . '</label></th><td>' : '<label for="attribute_swatch_variation_images">'; ?>
+		<input name="attribute_swatch_variation_images" id="attribute_swatch_variation_images" type="checkbox" value="1" <?php checked( $variation_images ); ?>><?php if ( ! $table ) echo esc_html__( 'Use variation images?', 'silver' ) . '</label>'; ?>
+		<p class="description"><?php esc_html_e( 'Enable this if you want swatches for this attribute to be auto filled with variation images.', 'silver' ); ?></p>
 		<?php echo $table ? '</td></tr>' : '</div>'; ?>
 		<?php
 	}
@@ -158,16 +158,16 @@ class Swatches_Admin {
 
 		wp_enqueue_media();
 
-		wp_enqueue_style( 'flatsome-swatches-admin', get_template_directory_uri() . '/assets/css/extensions/silver-swatches-admin.css', array( 'wp-color-picker' ), swatches()->version );
-		wp_enqueue_script( 'flatsome-swatches-admin', get_template_directory_uri() . '/assets/js/extensions/silver-swatches-admin.js', array(
+		wp_enqueue_style( 'silver-swatches-admin', get_template_directory_uri() . '/assets/css/extensions/silver-swatches-admin.css', array( 'wp-color-picker' ), swatches()->version );
+		wp_enqueue_script( 'silver-swatches-admin', get_template_directory_uri() . '/assets/js/extensions/silver-swatches-admin.js', array(
 			'jquery',
 			'wp-color-picker',
 			'wp-util',
 		), swatches()->version, true );
 
 		wp_localize_script(
-			'flatsome-swatches-admin',
-			'flatsome_swatches',
+			'silver-swatches-admin',
+			'silver_swatches',
 			array(
 				'placeholder' => wc_placeholder_img_src(),
 			)
@@ -182,7 +182,7 @@ class Swatches_Admin {
 	public function add_attribute_term_fields( $taxonomy ) {
 		$attr = swatches()->get_attribute( $taxonomy );
 
-		do_action( 'flatsome_product_attribute_term_fields', $attr->attribute_type, '', 'add' );
+		do_action( 'silver_product_attribute_term_fields', $attr->attribute_type, '', 'add' );
 	}
 
 	/**
@@ -195,7 +195,7 @@ class Swatches_Admin {
 		$attr  = swatches()->get_attribute( $taxonomy );
 		$value = get_term_meta( $term->term_id, $attr->attribute_type, true );
 
-		do_action( 'flatsome_product_attribute_term_fields', $attr->attribute_type, $value, 'edit' );
+		do_action( 'silver_product_attribute_term_fields', $attr->attribute_type, $value, 'edit' );
 	}
 
 	/**
@@ -234,8 +234,8 @@ class Swatches_Admin {
 				</div>
 				<div style="line-height:35px;">
 					<input type="hidden" class="ux-swatches-term-image" name="<?php echo esc_attr( $name ); ?>" value="<?php echo esc_attr( $value ); ?>" />
-					<button type="button" class="ux-swatches-upload-image-button button"><?php esc_html_e( 'Select image', 'flatsome' ); ?></button>
-					<button type="button" class="ux-swatches-remove-image-button button <?php echo $value ? '' : 'hidden'; ?>"><?php esc_html_e( 'Remove', 'flatsome' ); ?></button>
+					<button type="button" class="ux-swatches-upload-image-button button"><?php esc_html_e( 'Select image', 'silver' ); ?></button>
+					<button type="button" class="ux-swatches-remove-image-button button <?php echo $value ? '' : 'hidden'; ?>"><?php esc_html_e( 'Remove', 'silver' ); ?></button>
 				</div>
 				<p>The swatch image.</p>
 				<?php
@@ -350,7 +350,7 @@ class Swatches_Admin {
 
 		$new_columns                      = array();
 		$new_columns['cb']                = $columns['cb'];
-		$new_columns['ux_swatch_preview'] = __( 'Value', 'flatsome' );
+		$new_columns['ux_swatch_preview'] = __( 'Value', 'silver' );
 
 		unset( $columns['cb'] );
 

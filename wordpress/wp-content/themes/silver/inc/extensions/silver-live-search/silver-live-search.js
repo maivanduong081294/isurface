@@ -14,7 +14,7 @@ jQuery(document).ready(function ($) {
 
          var append = $(this).find('.live-search-results');
          var search_categories = $(this).find('.search_categories');
-         var serviceUrl = flatsomeVars.ajaxurl + '?action=flatsome_ajax_search_products';
+         var serviceUrl = silverVars.ajaxurl + '?action=silver_ajax_search_products';
          var product_cat = '';
 
         if (search_categories.length && search_categories.val() !== '') {
@@ -26,7 +26,7 @@ jQuery(document).ready(function ($) {
             appendTo        : append,
             triggerSelectOnValidInput: false,
             serviceUrl      : serviceUrl,
-            deferRequestBy  : parseInt(flatsomeVars.options.search_result_latency),
+            deferRequestBy  : parseInt(silverVars.options.search_result_latency),
             onSearchStart   : function () {
               $('.submit-button').removeClass('loading');
               $('.submit-button').addClass('loading');

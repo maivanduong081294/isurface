@@ -2,7 +2,7 @@
 
 add_ux_builder_shortcode( 'gap', array(
     'name' => __( 'Gap' ),
-    'thumbnail' =>  flatsome_ux_builder_thumbnail( 'gap' ),
+    'thumbnail' =>  silver_ux_builder_thumbnail( 'gap' ),
     'info' => '{{ height }}',
     'allow_in' => array('text_box'),
     'wrap' => false,

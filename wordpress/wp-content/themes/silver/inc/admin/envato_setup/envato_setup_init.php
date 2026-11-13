@@ -3,8 +3,8 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 
-add_filter('envato_setup_logo_image','flatsome_envato_setup_logo_image');
-function flatsome_envato_setup_logo_image($old_image_url){
+add_filter('envato_setup_logo_image','silver_envato_setup_logo_image');
+function silver_envato_setup_logo_image($old_image_url){
 	return silver_theme_logo_url();
 }
 

@@ -17,7 +17,7 @@ function ux_builder_mode() {
  * @return  boolean
  */
 function ux_builder_is_active() {
-  if ( defined( 'FLATSOME_TESTSUITE' ) ) {
+  if ( defined( 'SILVER_TESTSUITE' ) ) {
     return true;
   }
 

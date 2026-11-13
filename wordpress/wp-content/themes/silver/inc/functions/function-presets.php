@@ -1,6 +1,6 @@
 <?php
 
-function get_flatsome_header_presets() {
+function get_silver_header_presets() {
 	return array(
 		'header-default'              => array(
 			'label'    => __( 'Header Default', 'kirki' ),

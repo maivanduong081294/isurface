@@ -7,7 +7,7 @@
  *
  * @return array List of roles matching defaults or `$args`.
  */
-function flatsome_get_role_list( $args = '' ) {
+function silver_get_role_list( $args = '' ) {
 	require_once ABSPATH . 'wp-admin/includes/user.php';
 
 	$defaults = [
@@ -20,7 +20,7 @@ function flatsome_get_role_list( $args = '' ) {
 	$_roles = get_editable_roles();
 
 	$_roles = is_multisite()
-		? array( 'super_admin' => array( 'name' => esc_html__( 'Super Admin', 'flatsome' ) ) ) + $_roles
+		? array( 'super_admin' => array( 'name' => esc_html__( 'Super Admin', 'silver' ) ) ) + $_roles
 		: $_roles;
 
 	foreach ( $_roles as $_roles_slug => $_roles_data ) {

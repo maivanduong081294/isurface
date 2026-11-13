@@ -2,8 +2,8 @@
 /**
  * Search form element.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.19.9
+ * @package          Silver\Templates
+ * @silver-version 3.19.9
  */
 
 ?>

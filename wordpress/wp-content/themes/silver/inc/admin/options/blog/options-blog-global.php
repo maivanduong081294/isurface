@@ -1,22 +1,22 @@
 <?php
 
-Flatsome_Option::add_section( 'blog-global', array(
-	'title' => __( 'Blog Global', 'flatsome-admin' ),
+Silver_Option::add_section( 'blog-global', array(
+	'title' => __( 'Blog Global', 'silver' ),
 	'panel' => 'blog',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'checkbox',
 	'settings' => 'blog_badge',
-	'label'    => __( 'Show Date Box', 'flatsome-admin' ),
+	'label'    => __( 'Show Date Box', 'silver' ),
 	'section'  => 'blog-global',
 	'default'  => 1,
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'            => 'radio-image',
 	'settings'        => 'blog_badge_style',
-	'label'           => __( 'Date Box Style', 'flatsome-admin' ),
+	'label'           => __( 'Date Box Style', 'silver' ),
 	'section'         => 'blog-global',
 	'default'         => 'outline',
 	'active_callback' => array(
@@ -34,11 +34,11 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'        => 'text',
 	'settings'    => 'blog_excerpt_suffix',
-	'label'       => __( 'Blog Excerpt Suffix', 'flatsome-admin' ),
-	'description' => __( 'Choose custom post excerpt suffix. Default [...]', 'flatsome-admin' ),
+	'label'       => __( 'Blog Excerpt Suffix', 'silver' ),
+	'description' => __( 'Choose custom post excerpt suffix. Default [...]', 'silver' ),
 	'section'     => 'blog-global',
 	'default'     => ' [...]',
 ) );

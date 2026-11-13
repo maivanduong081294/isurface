@@ -2,13 +2,13 @@
 /**
  * Mini cart cross-sells.
  *
- * @package          Flatsome/WooCommerce/Templates
- * @flatsome-version 3.18.0
+ * @package          Silver/WooCommerce/Templates
+ * @silver-version 3.18.0
  */
 
 ?>
 
-<?php do_action( 'flatsome_before_mini_cart_cross_sells' ); ?>
+<?php do_action( 'silver_before_mini_cart_cross_sells' ); ?>
 
 <?php if ( $cross_sells ) : ?>
 	<div class="ux-mini-cart-cross-sells ux-mini-cart-widget">
@@ -39,4 +39,4 @@
 	</div>
 <?php endif; ?>
 
-<?php do_action( 'flatsome_after_mini_cart_cross_sells' ); ?>
+<?php do_action( 'silver_after_mini_cart_cross_sells' ); ?>

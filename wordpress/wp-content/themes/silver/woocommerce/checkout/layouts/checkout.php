@@ -2,8 +2,8 @@
 /**
  * Default checkout layout.
  *
- * @package          Flatsome/WooCommerce/Templates
- * @flatsome-version 3.16.0
+ * @package          Silver/WooCommerce/Templates
+ * @silver-version 3.16.0
  */
 
 get_header(); ?>

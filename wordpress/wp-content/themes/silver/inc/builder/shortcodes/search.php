@@ -4,7 +4,7 @@
 add_ux_builder_shortcode( 'search', array(
   'name' => __( 'Search Box' ),
   'category' => __( 'Content' ),
-  'thumbnail' => flatsome_ux_builder_thumbnail( 'search' ),
+  'thumbnail' => silver_ux_builder_thumbnail( 'search' ),
   'wrap' => false,
   'allow_in' => array('text_box'),
   'presets' => array(

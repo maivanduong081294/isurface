@@ -3,7 +3,7 @@
 add_ux_builder_shortcode( 'video_button', array(
   'name' => __( 'Video Button' ),
   'category' => __( 'Content' ),
-  'thumbnail' =>  flatsome_ux_builder_thumbnail( 'play' ),
+  'thumbnail' =>  silver_ux_builder_thumbnail( 'play' ),
 
   'options' => array(
       'video' => array(

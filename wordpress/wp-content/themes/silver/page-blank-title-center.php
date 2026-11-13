@@ -2,14 +2,14 @@
 /**
  * Template name: Page - Container - Center Title
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.16.0
+ * @package          Silver\Templates
+ * @silver-version 3.16.0
  */
 
 get_header();
 ?>
 
-<?php do_action( 'flatsome_before_page' ); ?>
+<?php do_action( 'silver_before_page' ); ?>
 
 <div class="row page-wrapper">
 	<div id="content" class="xlarge-12 col" role="main">
@@ -35,6 +35,6 @@ get_header();
 	</div>
 </div>
 
-<?php do_action( 'flatsome_after_page' ); ?>
+<?php do_action( 'silver_after_page' ); ?>
 
 <?php get_footer(); ?>

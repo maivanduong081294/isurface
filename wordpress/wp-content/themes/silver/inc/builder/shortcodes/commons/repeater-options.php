@@ -32,9 +32,10 @@ return array(
         'type' => 'select',
         'heading' => 'Width',
         'conditions' => 'type !== "slider-full"',
-        'default' => '',
+        'responsive' => true,
+        'default' => 'container',
         'options' => array(
-            '' => 'Container',
+            'container' => 'Container',
             'full-width' => 'Full Width',
         )
     ),

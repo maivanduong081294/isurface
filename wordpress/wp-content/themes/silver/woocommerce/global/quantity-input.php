@@ -13,7 +13,7 @@
  * @see              https://woocommerce.com/document/template-structure/
  * @package          WooCommerce\Templates
  * @version          10.1.0
- * @flatsome-version 3.20.0
+ * @silver-version 3.20.0
  *
  * @var bool   $readonly If the input should be set to readonly mode.
  * @var string $type     The input type attribute.
@@ -28,11 +28,11 @@ if ( fl_woocommerce_version_check( '7.4.0' ) ) :
 	$reduce_quantity_label = ! empty( $args['product_name'] )
 		// translators: %s is the name of the product in cart.
 		? sprintf( __( 'Reduce quantity of %s', 'woocommerce' ), wp_strip_all_tags( $args['product_name'] ) )
-		: __( 'Decrease quantity', 'flatsome' );
+		: __( 'Decrease quantity', 'silver' );
 	$increase_quantity_label = ! empty( $args['product_name'] )
 		// translators: %s is the name of the product in cart.
 		? sprintf( __( 'Increase quantity of %s', 'woocommerce' ), wp_strip_all_tags( $args['product_name'] ) )
-		: __( 'Increase quantity', 'flatsome' );
+		: __( 'Increase quantity', 'silver' );
 
 	$qty_start       = '<input type="button" value="-" class="ux-quantity__button ux-quantity__button--minus button minus is-form" aria-label="' . esc_attr( $reduce_quantity_label ) . '">';
 	$qty_end         = '<input type="button" value="+" class="ux-quantity__button ux-quantity__button--plus button plus is-form" aria-label="' . esc_attr( $increase_quantity_label ) . '">';

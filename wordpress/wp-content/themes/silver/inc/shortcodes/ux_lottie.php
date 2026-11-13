@@ -2,7 +2,7 @@
 /**
  * Registers the `ux_lottie` shortcode.
  *
- * @package Flatsome
+ * @package Silver
  */
 
 /**
@@ -14,7 +14,7 @@
  *
  * @return string
  */
-function flatsome_render_ux_lottie_shortcode( $atts, $content, $tag ) {
+function silver_render_ux_lottie_shortcode( $atts, $content, $tag ) {
 	$atts = ux_builder_shortcode_atts(
 		array(
 			'_id'                => '',
@@ -96,9 +96,9 @@ function flatsome_render_ux_lottie_shortcode( $atts, $content, $tag ) {
 	ob_start();
 
 	?>
-	<div <?php echo flatsome_html_atts( $element_atts ); ?>>
-		<?php if ( ! empty( $atts['link'] ) ) printf( '<a %s>', flatsome_html_atts( $link_atts ) ); ?>
-		<lottie-player <?php echo flatsome_html_atts( $player_atts ); ?>></lottie-player>
+	<div <?php echo silver_html_atts( $element_atts ); ?>>
+		<?php if ( ! empty( $atts['link'] ) ) printf( '<a %s>', silver_html_atts( $link_atts ) ); ?>
+		<lottie-player <?php echo silver_html_atts( $player_atts ); ?>></lottie-player>
 		<?php if ( ! empty( $atts['link'] ) ) echo '</a>'; ?>
 		<?php
 		echo ux_builder_element_style_tag(
@@ -130,4 +130,4 @@ function flatsome_render_ux_lottie_shortcode( $atts, $content, $tag ) {
 	return ob_get_clean();
 }
 
-add_shortcode( 'ux_lottie', 'flatsome_render_ux_lottie_shortcode' );
+add_shortcode( 'ux_lottie', 'silver_render_ux_lottie_shortcode' );

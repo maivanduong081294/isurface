@@ -4,7 +4,7 @@ add_ux_builder_shortcode( 'col', array(
     'type' => 'container',
     'name' => __( 'Column', 'ux-builder' ),
     'category' => __( 'Layout' ),
-    'template' => flatsome_ux_builder_template( 'col.html' ),
+    'template' => silver_ux_builder_template( 'col.html' ),
     'tools' => 'shortcodes/col/col-tools.directive.html',
     'info' => '{{ span }}/12 {{ label }}',
     'require' => array( 'row' ),
@@ -36,6 +36,33 @@ add_ux_builder_shortcode( 'col', array(
             'default' => 12,
             'max' => 12,
             'min' => 1,
+        ),
+
+        // Width mode per screen: the 1-12 grid above, the width of the
+        // content (auto) or a custom width (px, %, rem...).
+        'width_mode' => array(
+            'type' => 'radio-buttons',
+            'heading' => 'Width mode',
+            'full_width' => true,
+            'responsive' => true,
+            'default' => 'grid',
+            'options' => array(
+                'grid'   => array( 'title' => 'Grid' ),
+                'auto'   => array( 'title' => 'Auto' ),
+                'custom' => array( 'title' => 'Custom' ),
+            ),
+        ),
+
+        'custom_width' => array(
+            'type' => 'scrubfield',
+            'heading' => 'Custom width',
+            'responsive' => true,
+            'conditions' => 'width_mode === "custom"',
+            'default' => '',
+            'placeholder' => '300px',
+            'min' => 0,
+            'max' => 2000,
+            'step' => 1,
         ),
 
         'force_first' => array(
@@ -77,6 +104,7 @@ add_ux_builder_shortcode( 'col', array(
         'align' => array(
             'type' => 'radio-buttons',
             'heading' => 'Text align',
+            'responsive' => true,
             'default' => '',
             'options' => require( __DIR__ . '/values/align-radios.php' ),
         ),
@@ -84,6 +112,7 @@ add_ux_builder_shortcode( 'col', array(
         'bg_color' => array(
             'type' => 'colorpicker',
             'heading' => __('Bg Color'),
+            'responsive' => true,
             'format' => 'rgb',
             'alpha' => true,
             'position' => 'bottom right',
@@ -100,10 +129,11 @@ add_ux_builder_shortcode( 'col', array(
         'color' => array(
             'type' => 'radio-buttons',
             'heading' => 'Color',
-            'default' => '',
+            'responsive' => true,
+            'default' => 'dark',
             'options' => array(
                 'light'   => array( 'title' => 'Light'),
-                ''  => array( 'title' => 'Dark'),
+                'dark'  => array( 'title' => 'Dark'),
             ),
         ),
 	    'sticky' => array(

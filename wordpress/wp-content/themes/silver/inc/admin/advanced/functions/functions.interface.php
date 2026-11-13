@@ -55,7 +55,7 @@ function optionsframework_admin_init()
  */
 function optionsframework_add_admin() {
 
-    $of_page =  add_submenu_page('flatsome-panel', '', 'Advanced', 'edit_theme_options', 'optionsframework', 'optionsframework_options_page');
+    $of_page =  add_submenu_page('silver-panel', '', 'Advanced', 'edit_theme_options', 'optionsframework', 'optionsframework_options_page');
 
 	// Add framework functionaily to the head individually
 	add_action("admin_print_scripts-$of_page", 'of_load_only');
@@ -121,11 +121,11 @@ function of_load_only() {
 	wp_enqueue_script( 'tipsy', ADMIN_DIR . 'assets/js/jquery.tipsy.js', array( 'jquery' ), $version, true );
 	wp_enqueue_script( 'cookie', ADMIN_DIR . 'assets/js/cookie.js', 'jquery', $version, true );
 	wp_enqueue_script( 'smof', ADMIN_DIR . 'assets/js/smof.js', array( 'jquery' ), $version, true );
-	wp_enqueue_script( 'flatsome-advanced', ADMIN_DIR . 'assets/js/index.js', array( 'wp-dom-ready', 'wp-escape-html' ), $version, true );
+	wp_enqueue_script( 'silver-advanced', ADMIN_DIR . 'assets/js/index.js', array( 'wp-dom-ready', 'wp-escape-html' ), $version, true );
 
-	$data = array( 'nonce' => wp_create_nonce( 'flatsome_advanced' ) );
+	$data = array( 'nonce' => wp_create_nonce( 'silver_advanced' ) );
 
-	wp_add_inline_script( 'flatsome-advanced', 'var flatsomeAdvancedData = ' . wp_json_encode( $data ), 'before' );
+	wp_add_inline_script( 'silver-advanced', 'var silverAdvancedData = ' . wp_json_encode( $data ), 'before' );
 
 	// Enqueue colorpicker scripts for versions below 3.5 for compatibility.
 	if ( ! wp_script_is( 'wp-color-picker', 'registered' ) ) {

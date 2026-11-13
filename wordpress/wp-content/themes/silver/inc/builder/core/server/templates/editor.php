@@ -20,7 +20,7 @@
   <app-loader></app-loader>
   <draggable-helper></draggable-helper>
   <context-menu></context-menu>
-  <flatsome-studio></flatsome-studio>
+  <silver-studio></silver-studio>
 
   <?php wp_print_scripts( $ux_builder_scripts ) ?>
 </body>

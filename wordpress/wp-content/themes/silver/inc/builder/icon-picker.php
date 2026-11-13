@@ -5,7 +5,7 @@
  * Registers the "icon" option type and loads the grid picker popup
  * (search, style tabs, preview) in the UX Builder editor.
  *
- * @package flatsome
+ * @package silver
  */
 
 /**

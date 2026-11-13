@@ -2,8 +2,8 @@
 /**
  * Product gallery thumbnails.
  *
- * @package          Flatsome/WooCommerce/Templates
- * @flatsome-version 3.20.8
+ * @package          Silver/WooCommerce/Templates
+ * @silver-version 3.20.8
  */
 
 global $post, $product;
@@ -13,7 +13,7 @@ $post_thumbnail = has_post_thumbnail();
 $thumb_count    = count( $attachment_ids );
 
 if ( $post_thumbnail ) $thumb_count++;
-$render_without_attachments = apply_filters( 'flatsome_single_product_thumbnails_render_without_attachments', false, $product, array( 'thumb_count' => $thumb_count ) );
+$render_without_attachments = apply_filters( 'silver_single_product_thumbnails_render_without_attachments', false, $product, array( 'thumb_count' => $thumb_count ) );
 
 // Disable thumbnails if there is only one extra image.
 if ( $post_thumbnail && $thumb_count == 1 && ! $render_without_attachments ) {
@@ -40,10 +40,10 @@ if ( $attachment_ids || $render_without_attachments ) {
 	}
 
 	$gallery_class[] = 'slider row row-small row-slider slider-nav-small small-columns-4';
-	$gallery_class   = apply_filters( 'flatsome_single_product_thumbnails_classes', $gallery_class );
+	$gallery_class   = apply_filters( 'silver_single_product_thumbnails_classes', $gallery_class );
 	?>
 	<div class="<?php echo esc_attr( implode( ' ', $gallery_class ) ); ?>"<?php
-		echo flatsome_slider_options_attr( array(
+		echo silver_slider_options_attr( array(
 			'cellAlign' => $thumb_cell_align,
 			'asNavFor'  => '.product-gallery-slider',
 			'pageDots'  => false,

@@ -2,8 +2,8 @@
 /**
  * Newsletter sidebar element.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.20.0
+ * @package          Silver\Templates
+ * @silver-version 3.20.0
  */
 
 $label     = get_theme_mod( 'header_newsletter_label', 'Newsletter' );
@@ -19,8 +19,8 @@ $link_atts = [
 ];
 ?>
 <li class="header-newsletter-item has-icon">
-	<a <?php echo flatsome_html_atts( $link_atts ); ?>>
-		<?php echo get_flatsome_icon( 'icon-envelop' ); ?>
+	<a <?php echo silver_html_atts( $link_atts ); ?>>
+		<?php echo get_silver_icon( 'icon-envelop' ); ?>
 		<span class="header-newsletter-title">
 			<?php echo $label; ?>
 		</span>

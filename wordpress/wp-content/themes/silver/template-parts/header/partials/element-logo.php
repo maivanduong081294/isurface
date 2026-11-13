@@ -2,8 +2,8 @@
 /**
  * Logo element.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.19.9
+ * @package          Silver\Templates
+ * @silver-version 3.19.9
  */
 
 $site_logo_id        = get_theme_mod( 'site_logo', silver_theme_logo_url() );

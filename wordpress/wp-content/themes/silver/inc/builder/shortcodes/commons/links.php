@@ -4,11 +4,11 @@
  *
  * File này được require ở nhiều shortcode, nên phần dựng option được đưa vào
  * một hàm có cache để chỉ truy vấn post type / taxonomy đúng một lần mỗi request.
- * Giá trị lưu ra shortcode được đổi thành URL bởi flatsome_get_link_data().
+ * Giá trị lưu ra shortcode được đổi thành URL bởi silver_get_link_data().
  */
 
-if (! function_exists('flatsome_ux_builder_link_options')) {
-  function flatsome_ux_builder_link_options()
+if (! function_exists('silver_ux_builder_link_options')) {
+  function silver_ux_builder_link_options()
   {
     static $group = null;
 
@@ -84,7 +84,7 @@ if (! function_exists('flatsome_ux_builder_link_options')) {
             'type'       => 'select',
             'heading'    => __('Taxonomy'),
             // Giá trị mặc định không được lưu ra shortcode, nên phải khớp với
-            // taxonomy mặc định trong flatsome_get_link_data().
+            // taxonomy mặc định trong silver_get_link_data().
             'default'    => 'category',
             'conditions' => 'link_type === "term"',
             'options'    => $tax_options,
@@ -120,4 +120,4 @@ if (! function_exists('flatsome_ux_builder_link_options')) {
   }
 }
 
-return flatsome_ux_builder_link_options();
+return silver_ux_builder_link_options();

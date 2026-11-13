@@ -2,11 +2,11 @@
 /**
  * Cart sidebar element.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.20.0
+ * @package          Silver\Templates
+ * @silver-version 3.20.0
  */
 
-if ( is_woocommerce_activated() && flatsome_is_wc_cart_available() ) {
+if ( is_woocommerce_activated() && silver_is_wc_cart_available() ) {
 	// Get Cart replacement for `catalog_mode`.
 	if ( get_theme_mod( 'catalog_mode' ) ) {
 		get_template_part( 'template-parts/header/partials/element', 'cart-replace' );
@@ -52,7 +52,7 @@ if ( is_woocommerce_activated() && flatsome_is_wc_cart_available() ) {
 						<?php if($custom_cart_content) {
 							echo '<div class="header-cart-content">'.do_shortcode($custom_cart_content).'</div>'; }
 						?>
-						<?php do_action('flatsome_cart_sidebar'); ?>
+						<?php do_action('silver_cart_sidebar'); ?>
 				</div>
 			</div>
 		</li>

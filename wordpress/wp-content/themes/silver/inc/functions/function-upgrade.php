@@ -1,8 +1,8 @@
 <?php
 
-// Fix options for next Flatsome version.
+// Fix options for next Silver version.
 
-function flatsome_is_upgrading(){
+function silver_is_upgrading(){
   // Check if old depricated (not available in v3) option exist.
   $is_old = get_theme_mod('nav_position');
   if(!empty($is_old)) return true;
@@ -11,37 +11,37 @@ function flatsome_is_upgrading(){
 /**
  * Fix content when upgrading to major version 3.0
  */
-function flatsome_fix_old_content(){
+function silver_fix_old_content(){
 
-   // Upgrade to flatsome 3.0
+   // Upgrade to silver 3.0
    if(get_theme_mod('flatsome_version') < 3){
 
       $options = get_theme_mods();
 
       // Check if old content is installed
-      if(flatsome_is_upgrading()){
+      if(silver_is_upgrading()){
         set_theme_mod('flatsome_fallback', 1);
         update_option('envato_setup_complete', time());
       } else {
         set_theme_mod('flatsome_fallback', 0);
       }
 
-     if(!isset($options['topbar_elements_left'])) set_theme_mod('topbar_elements_left', flatsome_topbar_elements_left());
-     if(!isset($options['topbar_elements_right'])) set_theme_mod('topbar_elements_right', flatsome_topbar_elements_right());
-     if(!isset($options['header_elements_left'])) set_theme_mod('header_elements_left', flatsome_header_elements_left());
-     if(!isset($options['header_elements_right'])) set_theme_mod('header_elements_right', flatsome_header_elements_right());
+     if(!isset($options['topbar_elements_left'])) set_theme_mod('topbar_elements_left', silver_topbar_elements_left());
+     if(!isset($options['topbar_elements_right'])) set_theme_mod('topbar_elements_right', silver_topbar_elements_right());
+     if(!isset($options['header_elements_left'])) set_theme_mod('header_elements_left', silver_header_elements_left());
+     if(!isset($options['header_elements_right'])) set_theme_mod('header_elements_right', silver_header_elements_right());
 
-     if(!isset($options['header_elements_bottom_left'])) set_theme_mod('header_elements_bottom_left', flatsome_header_elements_bottom_left());
-     if(!isset($options['header_elements_bottom_center'])) set_theme_mod('header_elements_bottom_center', flatsome_header_elements_bottom_center());
-     if(!isset($options['header_elements_bottom_right'])) set_theme_mod('header_elements_bottom_right', flatsome_header_elements_bottom_right());
+     if(!isset($options['header_elements_bottom_left'])) set_theme_mod('header_elements_bottom_left', silver_header_elements_bottom_left());
+     if(!isset($options['header_elements_bottom_center'])) set_theme_mod('header_elements_bottom_center', silver_header_elements_bottom_center());
+     if(!isset($options['header_elements_bottom_right'])) set_theme_mod('header_elements_bottom_right', silver_header_elements_bottom_right());
 
-     if(!isset($options['header_mobile_elements_left'])) set_theme_mod('header_mobile_elements_left', flatsome_header_mobile_elements_left());
-     if(!isset($options['header_mobile_elements_right'])) set_theme_mod('header_mobile_elements_right', flatsome_header_mobile_elements_right());
-     if(!isset($options['header_mobile_elements_top'])) set_theme_mod('header_mobile_elements_top', flatsome_header_mobile_elements_top());
+     if(!isset($options['header_mobile_elements_left'])) set_theme_mod('header_mobile_elements_left', silver_header_mobile_elements_left());
+     if(!isset($options['header_mobile_elements_right'])) set_theme_mod('header_mobile_elements_right', silver_header_mobile_elements_right());
+     if(!isset($options['header_mobile_elements_top'])) set_theme_mod('header_mobile_elements_top', silver_header_mobile_elements_top());
 
-     if(!isset($options['mobile_sidebar'])) set_theme_mod('mobile_sidebar', flatsome_header_mobile_sidebar());
-     if(!isset($options['product_layout'])) set_theme_mod('product_layout', flatsome_product_layout());
-     if(!flatsome_is_upgrading()) set_theme_mod('payment_icons_placement', 'footer');
+     if(!isset($options['mobile_sidebar'])) set_theme_mod('mobile_sidebar', silver_header_mobile_sidebar());
+     if(!isset($options['product_layout'])) set_theme_mod('product_layout', silver_product_layout());
+     if(!silver_is_upgrading()) set_theme_mod('payment_icons_placement', 'footer');
 
      // Set follow icons
      if(!isset($options['follow_twitter'])) set_theme_mod('follow_twitter','http://url');
@@ -52,13 +52,13 @@ function flatsome_fix_old_content(){
      set_theme_mod('flatsome_version', 3);
    }
 }
-add_action( 'after_setup_theme', 'flatsome_fix_old_content');
+add_action( 'after_setup_theme', 'silver_fix_old_content');
 
 $old_nav = get_theme_mod('nav_position');
 $old_nav_topbar = get_theme_mod('topbar_show');
 $old_search = get_theme_mod('search_pos');
 
-function flatsome_topbar_elements_left(){
+function silver_topbar_elements_left(){
   global $old_nav, $old_nav_topbar;
   if($old_nav && !$old_nav_topbar) return array();
 
@@ -67,7 +67,7 @@ function flatsome_topbar_elements_left(){
   return $options;
 }
 
-function flatsome_topbar_elements_right(){
+function silver_topbar_elements_right(){
   global $old_nav, $old_nav_topbar;
   if($old_nav && !$old_nav_topbar) return array();
 
@@ -92,7 +92,7 @@ function flatsome_topbar_elements_right(){
 
 
 // Header Main Left
-function flatsome_header_elements_left(){
+function silver_header_elements_left(){
   global $old_nav, $old_search;
   $options = array();
 
@@ -113,7 +113,7 @@ function flatsome_header_elements_left(){
 }
 
 // Header Main Right
-function flatsome_header_elements_right(){
+function silver_header_elements_right(){
   global $old_nav, $old_search;
   $cart = get_theme_mod('show_cart');
   $account = get_theme_mod('myaccount_dropdown');
@@ -145,7 +145,7 @@ function flatsome_header_elements_right(){
 }
 
 // Header Bottom Left
-function flatsome_header_elements_bottom_left(){
+function silver_header_elements_bottom_left(){
   global $old_nav, $old_search;
   $options = array();
   if($old_nav && $old_nav == 'bottom') $options[] = 'nav';
@@ -154,7 +154,7 @@ function flatsome_header_elements_bottom_left(){
 }
 
 // Header Bottom Center
-function flatsome_header_elements_bottom_center(){
+function silver_header_elements_bottom_center(){
   global $old_nav, $old_search;
   $options = array();
   if($old_nav) {
@@ -166,7 +166,7 @@ function flatsome_header_elements_bottom_center(){
 }
 
 // Header Bottom Right
-function flatsome_header_elements_bottom_right(){
+function silver_header_elements_bottom_right(){
   global $old_nav, $old_search;
   $options = array();
 
@@ -179,13 +179,13 @@ function flatsome_header_elements_bottom_right(){
 
 
 // Mobile Left
-function flatsome_header_mobile_elements_left(){
+function silver_header_mobile_elements_left(){
    $options = array('menu-icon');
    return $options;
 }
 
 // Mobile Sidebar
-function flatsome_header_mobile_sidebar(){
+function silver_header_mobile_sidebar(){
   global $old_nav, $old_nav_topbar;
   $options = array('search-form','nav',);
   $account = get_theme_mod('myaccount_dropdown');
@@ -209,7 +209,7 @@ function flatsome_header_mobile_sidebar(){
 }
 
 // Mobile right
-function flatsome_header_mobile_elements_right(){
+function silver_header_mobile_elements_right(){
   global $old_nav, $old_search;
    $options = array();
 
@@ -223,7 +223,7 @@ function flatsome_header_mobile_elements_right(){
 }
 
 // Mobile Top
-function flatsome_header_mobile_elements_top(){
+function silver_header_mobile_elements_top(){
    global $old_nav, $is_topbar;
    if($old_nav && !$is_topbar) return array();
 
@@ -233,7 +233,7 @@ function flatsome_header_mobile_elements_top(){
 }
 
 // Fix old product sidebar layout
-function flatsome_product_layout() {
+function silver_product_layout() {
   $old_sidebar = get_theme_mod( 'product_sidebar' );
   if( isset( $old_sidebar ) ) {
     if( $old_sidebar === 'no_sidebar' ) {

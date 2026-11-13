@@ -2,17 +2,17 @@
 /**
  * Swatches product admin class.
  *
- * @package Flatsome\Extensions
+ * @package Silver\Extensions
  */
 
-namespace Flatsome\Extensions;
+namespace Silver\Extensions;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Class Swatches_Admin_Product
  *
- * @package Flatsome\Extensions
+ * @package Silver\Extensions
  */
 class Swatches_Admin_Product {
 

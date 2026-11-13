@@ -6,8 +6,8 @@ add_ux_builder_shortcode( 'ux_banner_grid', array(
     'image' => '',
     'wrap' => false,
     'category' => __( 'Layout' ),
-    'template' => flatsome_ux_builder_template( 'ux_banner_grid.html' ),
-    'thumbnail' =>  flatsome_ux_builder_thumbnail( 'grid' ),
+    'template' => silver_ux_builder_template( 'ux_banner_grid.html' ),
+    'thumbnail' =>  silver_ux_builder_thumbnail( 'grid' ),
     'allow' => array( 'col_grid' ),
     'info' => '{{ label }}',
     'directives' => array( 'ux-banner-grid' ),
@@ -15,7 +15,7 @@ add_ux_builder_shortcode( 'ux_banner_grid', array(
     'addable_spots' => array(),
 
     'scripts' => array(
-        'flatsome-packery' => get_template_directory_uri() . '/assets/libs/packery.pkgd.min.js',
+        'silver-packery' => get_template_directory_uri() . '/assets/libs/packery.pkgd.min.js',
     ),
 
     // Override children data.
@@ -26,47 +26,47 @@ add_ux_builder_shortcode( 'ux_banner_grid', array(
     'presets' => array(
         array(
         'name' => __( 'Grid 1' ),
-        'thumbnail' =>  flatsome_ux_builder_thumbnail( 'grids/grid-1' ),
+        'thumbnail' =>  silver_ux_builder_thumbnail( 'grids/grid-1' ),
         'content' => '[ux_banner_grid] [col_grid span__lg="6"] [/col_grid] [col_grid span__lg="3"] [/col_grid] [col_grid span__lg="3" height="1-2"] [/col_grid] [col_grid span__lg="3" height="1-2"] [/col_grid] [/ux_banner_grid]'
         ),
         array(
         'name' => __( 'Grid 2' ),
-        'thumbnail' =>  flatsome_ux_builder_thumbnail( 'grids/grid-2' ),
+        'thumbnail' =>  silver_ux_builder_thumbnail( 'grids/grid-2' ),
         'content' => '[ux_banner_grid] [col_grid height="2-3"] [/col_grid] [col_grid span__lg="4" height="1-3"] [/col_grid] [col_grid span__lg="4" height="1-3"] [/col_grid] [col_grid span__lg="4" height="1-3"] [/col_grid] [/ux_banner_grid]'
         ),
         array(
         'name' => __( 'Grid 3' ),
-        'thumbnail' =>  flatsome_ux_builder_thumbnail( 'grids/grid-3' ),
+        'thumbnail' =>  silver_ux_builder_thumbnail( 'grids/grid-3' ),
         'content' => '[ux_banner_grid] [col_grid span__lg="6"] [/col_grid] [col_grid span__lg="3" height="1-2"] [/col_grid] [col_grid span__lg="3" height="1-2"] [/col_grid] [col_grid span__lg="3" height="1-2"] [/col_grid] [col_grid span__lg="3" height="1-2"] [/col_grid] [/ux_banner_grid]'
         ),
         array(
         'name' => __( 'Grid 4' ),
-        'thumbnail' =>  flatsome_ux_builder_thumbnail( 'grids/grid-4' ),
+        'thumbnail' =>  silver_ux_builder_thumbnail( 'grids/grid-4' ),
         'content' => '[ux_banner_grid] [col_grid span__lg="9"] [/col_grid] [col_grid span__lg="3" height="1-2"] [/col_grid] [col_grid span__lg="3" height="1-2"] [/col_grid] [/ux_banner_grid]'
         ),
         array(
         'name' => __( 'Grid 5' ),
-        'thumbnail' =>  flatsome_ux_builder_thumbnail( 'grids/grid-5' ),
+        'thumbnail' =>  silver_ux_builder_thumbnail( 'grids/grid-5' ),
         'content' => '[ux_banner_grid] [col_grid span__lg="3"] [/col_grid] [col_grid span__lg="6"] [/col_grid] [col_grid span__lg="3" height="1-2"] [/col_grid] [col_grid span__lg="3" height="1-2"] [/col_grid] [/ux_banner_grid]'
         ),
         array(
         'name' => __( 'Grid 6' ),
-        'thumbnail' =>  flatsome_ux_builder_thumbnail( 'grids/grid-6' ),
+        'thumbnail' =>  silver_ux_builder_thumbnail( 'grids/grid-6' ),
         'content' => '[ux_banner_grid] [col_grid span__lg="4" height="1-3"] [/col_grid] [col_grid span__lg="8"] [/col_grid] [col_grid span__lg="4" height="1-3"] [/col_grid] [col_grid span__lg="4" height="1-3"] [/col_grid] [/ux_banner_grid]'
         ),
         array(
         'name' => __( 'Grid 7' ),
-        'thumbnail' =>  flatsome_ux_builder_thumbnail( 'grids/grid-7' ),
+        'thumbnail' =>  silver_ux_builder_thumbnail( 'grids/grid-7' ),
         'content' => '[ux_banner_grid] [col_grid span__lg="8" height="2-3"] [/col_grid] [col_grid span__lg="4" height="1-3"] [/col_grid] [col_grid span__lg="4" height="2-3"] [/col_grid] [col_grid span__lg="8" height="1-3"] [/col_grid] [/ux_banner_grid]'
         ),
         array(
         'name' => __( 'Grid 8' ),
-        'thumbnail' =>  flatsome_ux_builder_thumbnail( 'grids/grid-8' ),
+        'thumbnail' =>  silver_ux_builder_thumbnail( 'grids/grid-8' ),
         'content' => '[ux_banner_grid] [col_grid span__lg="6" height="2-3"] [/col_grid] [col_grid span__lg="6" height="1-2"] [/col_grid] [col_grid span__lg="3" height="1-2"] [/col_grid] [col_grid span__lg="3" height="1-2"] [/col_grid] [col_grid span__lg="6" height="1-3"] [/col_grid] [/ux_banner_grid]'
         ),
         array(
         'name' => __( 'Grid 9' ),
-        'thumbnail' =>  flatsome_ux_builder_thumbnail( 'grids/grid-9' ),
+        'thumbnail' =>  silver_ux_builder_thumbnail( 'grids/grid-9' ),
         'content' => '[ux_banner_grid] [col_grid span__lg="6"] [/col_grid] [col_grid span__lg="6" height="1-2"] [/col_grid] [col_grid span__lg="3" height="1-2"] [/col_grid] [col_grid span__lg="3" height="1-2"] [/col_grid] [/ux_banner_grid]'
         ),
     ),
@@ -106,9 +106,10 @@ add_ux_builder_shortcode( 'ux_banner_grid', array(
         'width' => array(
         'type' => 'select',
         'heading' => 'Width',
-        'default' => '',
+        'responsive' => true,
+        'default' => 'container',
         'options' => array(
-                '' => 'Container',
+                'container' => 'Container',
                 'full-width' => 'Full Width',
             )
         ),

@@ -1,8 +1,8 @@
 <?php
 /**
- * Flatsome_Envato class.
+ * Silver_Envato class.
  *
- * @package Flatsome
+ * @package Silver
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,9 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * The Flatsome Envato.
+ * The Silver Envato.
  */
-final class Flatsome_Envato {
+final class Silver_Envato {
 
 	/**
 	 * The single class instance.
@@ -24,14 +24,14 @@ final class Flatsome_Envato {
 	/**
 	 * The registration instance.
 	 *
-	 * @var Flatsome_Base_Registration
+	 * @var Silver_Base_Registration
 	 */
 	public $registration;
 
 	/**
 	 * The admin instance.
 	 *
-	 * @var Flatsome_Envato_Admin
+	 * @var Silver_Envato_Admin
 	 */
 	public $admin;
 
@@ -41,14 +41,14 @@ final class Flatsome_Envato {
 	private function __construct() {
 		$api = new UxThemes_API();
 
-		if ( get_option( flatsome_theme_key() . '_wup_purchase_code' ) ) {
-			$this->registration = new Flatsome_WUpdates_Registration( $api );
+		if ( get_option( silver_theme_key() . '_wup_purchase_code' ) ) {
+			$this->registration = new Silver_WUpdates_Registration( $api );
 		} else {
-			$this->registration = new Flatsome_Registration( $api );
+			$this->registration = new Silver_Registration( $api );
 		}
 
 		if ( is_admin() ) {
-			$this->admin = new Flatsome_Envato_Admin( $this->registration );
+			$this->admin = new Silver_Envato_Admin( $this->registration );
 		}
 	}
 
@@ -71,9 +71,9 @@ final class Flatsome_Envato {
 	}
 
 	/**
-	 * Main Flatsome_Envato instance
+	 * Main Silver_Envato instance
 	 *
-	 * @return Flatsome_Envato
+	 * @return Silver_Envato
 	 */
 	public static function get_instance() {
 		if ( is_null( self::$instance ) ) {

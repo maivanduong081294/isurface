@@ -1,7 +1,7 @@
 <?php
 
 // Add Transparent Header if set
-function flatsome_portfolio_header_classes($classes){
+function silver_portfolio_header_classes($classes){
     // Add transparent header to product page if set.
     if(is_singular( 'featured_item' ) && get_theme_mod( 'portfolio_title_transparent', 0 )){
          $classes[] = 'transparent has-transparent nav-dark toggle-nav-dark';
@@ -14,40 +14,40 @@ function flatsome_portfolio_header_classes($classes){
     return $classes;
 }
 
-add_filter('flatsome_header_class','flatsome_portfolio_header_classes', 10);
+add_filter('silver_header_class','silver_portfolio_header_classes', 10);
 
 
 
-function flatsome_next_post_link_portfolio() {
+function silver_next_post_link_portfolio() {
     global $post;
     $next_post = get_next_post(true,'','featured_item_category');
     if ( is_a( $next_post , 'WP_Post' ) ) { ?>
           <a title="<?php echo get_the_title( $next_post->ID ); ?>" class="prev-link plain" href="<?php echo get_the_permalink( $next_post->ID ); ?>">
           <?php echo get_the_title($next_post->ID);?>
-          <?php echo get_flatsome_icon('icon-angle-right');?>
+          <?php echo get_silver_icon('icon-angle-right');?>
           </a>
     <?php }
 }
 
-function flatsome_previous_post_link_portfolio() {
+function silver_previous_post_link_portfolio() {
     global $post;
     $prev_post = get_previous_post(true,'','featured_item_category');
     if ( is_a( $prev_post , 'WP_Post' ) ) { ?>
 
         <a title="<?php echo get_the_title( $prev_post->ID ); ?>" class="next-link plain" href="<?php echo get_the_permalink( $prev_post->ID ); ?>">
-         <?php echo get_flatsome_icon('icon-angle-left');?>
+         <?php echo get_silver_icon('icon-angle-left');?>
          <?php echo get_the_title($prev_post->ID);?>
         </a>
 
     <?php }
 }
 
-function get_flatsome_portfolio_breadcrumbs(){
+function get_silver_portfolio_breadcrumbs(){
     global $page;
     echo '<div class="breadcrumbs"><a href="';
     echo get_option('home');
     echo '">';
-    echo _x( 'Home', 'breadcrumb', 'flatsome' );
+    echo _x( 'Home', 'breadcrumb', 'silver' );
     echo "</a>";
     echo "<span class='divider'>/</span>";
 	if ( get_theme_mod( 'featured_items_page' ) && ! is_page() ) {

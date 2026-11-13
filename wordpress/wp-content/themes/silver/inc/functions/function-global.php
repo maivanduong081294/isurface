@@ -1,19 +1,19 @@
 <?php
 
 /**
- * Get the Flatsome instance.
+ * Get the Silver instance.
  *
- * @return Flatsome
+ * @return Silver
  */
-function flatsome() {
-	return Flatsome::get_instance();
+function silver() {
+	return Silver::get_instance();
 }
 
 /**
- * Get the Flatsome Envato instance.
+ * Get the Silver Envato instance.
  */
 function flatsome_envato() {
-	return Flatsome_Envato::get_instance();
+	return Silver_Envato::get_instance();
 }
 
 /**
@@ -24,8 +24,8 @@ function flatsome_envato() {
  * @param array  $dependencies Extra dependencies.
  * @return void
  */
-function flatsome_register_asset( $handle, $entrypoint, $dependencies = array() ) {
-	$entrypoint   = preg_replace( '~(^|/)flatsome(?=[.-]|$)~', '$1silver', $entrypoint );
+function silver_register_asset( $handle, $entrypoint, $dependencies = array() ) {
+	$entrypoint   = preg_replace( '~(^|/)silver(?=[.-]|$)~', '$1silver', $entrypoint );
 	$filename     = "js/$entrypoint.js";
 	$theme        = wp_get_theme( get_template() );
 	$version      = $theme->get( 'Version' );
@@ -57,13 +57,13 @@ function flatsome_register_asset( $handle, $entrypoint, $dependencies = array() 
  * @param array  $dependencies Extra dependencies.
  * @return void
  */
-function flatsome_enqueue_asset( $handle, $entrypoint, $dependencies = array() ) {
-	flatsome_register_asset( $handle, $entrypoint, $dependencies );
+function silver_enqueue_asset( $handle, $entrypoint, $dependencies = array() ) {
+	silver_register_asset( $handle, $entrypoint, $dependencies );
 	wp_enqueue_script( $handle );
 }
 
-if(!function_exists('flatsome_dummy_image')) {
-  function flatsome_dummy_image() {
+if(!function_exists('silver_dummy_image')) {
+  function silver_dummy_image() {
     return get_template_directory_uri().'/assets/img/missing.jpg';
   }
 }
@@ -75,7 +75,7 @@ if(!function_exists('flatsome_dummy_image')) {
  *
  * @return bool Returns true if WP version is equal or higher then given version.
  */
-function flatsome_wp_version_check( $version = '5.4' ) {
+function silver_wp_version_check( $version = '5.4' ) {
 	global $wp_version;
 	if ( version_compare( $wp_version, $version, '>=' ) ) {
 		return true;
@@ -96,24 +96,24 @@ if( ! function_exists('fl_woocommerce_version_check') ){
 }
 
 /* Get Site URL shortcode */
-if( ! function_exists( 'flatsome_site_path' ) ) {
-  function flatsome_site_path(){
+if( ! function_exists( 'silver_site_path' ) ) {
+  function silver_site_path(){
     return site_url();
   }
 }
-add_shortcode('site_url', 'flatsome_site_path');
-add_shortcode('site_url_secure', 'flatsome_site_path');
+add_shortcode('site_url', 'silver_site_path');
+add_shortcode('site_url_secure', 'silver_site_path');
 
 
 /* Get Year */
-if( ! function_exists( 'flatsome_show_current_year' ) ) {
-  function flatsome_show_current_year(){
+if( ! function_exists( 'silver_show_current_year' ) ) {
+  function silver_show_current_year(){
       return date('Y');
   }
 }
-add_shortcode('ux_current_year', 'flatsome_show_current_year');
+add_shortcode('ux_current_year', 'silver_show_current_year');
 
-function flatsome_get_post_type_items($post_type, $args_extended=array()) {
+function silver_get_post_type_items($post_type, $args_extended=array()) {
   global $post;
   $old_post = $post;
   $return = false;
@@ -148,7 +148,7 @@ function flatsome_get_post_type_items($post_type, $args_extended=array()) {
   return $return;
 }
 
-function flatsome_is_request( $type ) {
+function silver_is_request( $type ) {
   switch ( $type ) {
     case 'admin' :
       return is_admin();
@@ -159,17 +159,17 @@ function flatsome_is_request( $type ) {
   }
 }
 
-function flatsome_api_url() {
+function silver_api_url() {
   $api_url = 'https://flatsome-api.netlify.com';
 
-  if ( defined( 'FLATSOME_API_URL' ) && FLATSOME_API_URL ) {
-    $api_url = FLATSOME_API_URL;
+  if ( defined( 'SILVER_API_URL' ) && SILVER_API_URL ) {
+    $api_url = SILVER_API_URL;
   }
 
   return $api_url;
 }
 
-function flatsome_facebook_accounts() {
+function silver_facebook_accounts() {
   $theme_mod = get_theme_mod( 'facebook_accounts', array() );
 
   return array_filter( $theme_mod, function ( $account ) {
@@ -184,12 +184,12 @@ function flatsome_facebook_accounts() {
  *
  * @return string
  */
-function flatsome_facebook_api_version() {
+function silver_facebook_api_version() {
   return 'v14.0';
 }
 
 // Get block id by ID or slug.
-function flatsome_get_block_id( $post_id ) {
+function silver_get_block_id( $post_id ) {
   global $wpdb;
 
   if ( empty ( $post_id ) ) {
@@ -230,7 +230,7 @@ function flatsome_get_block_id( $post_id ) {
  *
  * @return array|false List of blocks matching defaults or `$args`.
  */
-function flatsome_get_block_list_by_id( $args = '' ) {
+function silver_get_block_list_by_id( $args = '' ) {
 
 	$defaults = array(
 		'option_none' => '',
@@ -243,7 +243,7 @@ function flatsome_get_block_list_by_id( $args = '' ) {
 	if ( $parsed_args['option_none'] ) {
 		$blocks = array( 0 => $parsed_args['option_none'] );
 	}
-	$posts = flatsome_get_post_type_items( 'blocks' );
+	$posts = silver_get_post_type_items( 'blocks' );
 	if ( $posts ) {
 		foreach ( $posts as $value ) {
 			$blocks[ $value->ID ] = $value->post_title;
@@ -264,7 +264,7 @@ function flatsome_get_block_list_by_id( $args = '' ) {
  *
  * @return WP_Post|array|null WP_Post (or array) on success, or null on failure.
  */
-function flatsome_get_page_by_title( $page_title, $output = OBJECT, $post_type = 'page' ) {
+function silver_get_page_by_title( $page_title, $output = OBJECT, $post_type = 'page' ) {
 	$args  = array(
 		'title'                  => $page_title,
 		'post_type'              => $post_type,
@@ -295,7 +295,7 @@ function flatsome_get_page_by_title( $page_title, $output = OBJECT, $post_type =
  *
  * @return bool|string If a shortcode tag doesn't exist => false, if exists => the result of the shortcode.
  */
-function flatsome_apply_shortcode( $tag, $atts = array(), $content = null ) {
+function silver_apply_shortcode( $tag, $atts = array(), $content = null ) {
 	global $shortcode_tags;
 
 	if ( ! isset( $shortcode_tags[ $tag ] ) ) return false;
@@ -310,7 +310,7 @@ function flatsome_apply_shortcode( $tag, $atts = array(), $content = null ) {
  * @param int    $visible_chars How many characters to show.
  * @return string
  */
-function flatsome_hide_chars( $string, $visible_chars = 4 ) {
+function silver_hide_chars( $string, $visible_chars = 4 ) {
 	if ( ! is_string( $string ) ) {
 		$string = '';
 	}
@@ -335,7 +335,7 @@ function flatsome_hide_chars( $string, $visible_chars = 4 ) {
  * @param string $slug Optional theme slug.
  * @return string
  */
-function flatsome_theme_key( $slug = null ) {
+function silver_theme_key( $slug = null ) {
 	if ( empty( $slug ) ) {
 		$slug = basename( get_template_directory() );
 	}
@@ -355,7 +355,7 @@ function flatsome_theme_key( $slug = null ) {
  *
  * @return bool
  */
-function flatsome_sort_on_priority( $a, $b ) {
+function silver_sort_on_priority( $a, $b ) {
 	if ( ! isset( $a['priority'], $b['priority'] ) ) {
 		return - 1;
 	}
@@ -376,9 +376,9 @@ function flatsome_sort_on_priority( $a, $b ) {
  * @return string|array
  * @see wc_clean()
  */
-function flatsome_clean( $data ) {
+function silver_clean( $data ) {
 	if ( is_array( $data ) ) {
-		return array_map( 'flatsome_clean', $data );
+		return array_map( 'silver_clean', $data );
 	} else {
 		return is_scalar( $data ) ? sanitize_text_field( $data ) : $data;
 	}
@@ -389,7 +389,7 @@ function flatsome_clean( $data ) {
  *
  * @return string The directory path for the theme uploaded fonts.
  */
-function flatsome_get_fonts_dir() {
+function silver_get_fonts_dir() {
 	return WP_CONTENT_DIR . '/fonts';
 }
 
@@ -398,7 +398,7 @@ function flatsome_get_fonts_dir() {
  *
  * @return bool
  */
-function flatsome_is_support_expired() {
+function silver_is_support_expired() {
 	// _deprecated_function( __FUNCTION__, '3.14' );
 	return true;
 }
@@ -410,7 +410,7 @@ function flatsome_is_support_expired() {
  *
  * @return bool True if invalid false otherwise.
  */
-function flatsome_is_invalid_support_time( $support_ends ) {
+function silver_is_invalid_support_time( $support_ends ) {
 	// _deprecated_function( __FUNCTION__, '3.14' );
 	return false;
 }
@@ -420,102 +420,102 @@ function flatsome_is_invalid_support_time( $support_ends ) {
  *
  * @return bool
  */
-function flatsome_is_theme_enabled() {
+function silver_is_theme_enabled() {
 	return flatsome_envato()->registration->is_registered();
 }
 
 /**
- * Flatsome Payment Icons List.
+ * Silver Payment Icons List.
  *
- * Returns a list of Flatsome Payment Icons.
+ * Returns a list of Silver Payment Icons.
  *
  * @return array Payment Icons list.
  */
-function flatsome_get_payment_icons_list() {
-	return apply_filters( 'flatsome_payment_icons', array(
-		'amazon'          => __( 'Amazon', 'flatsome-admin' ),
-		'americanexpress' => __( 'American Express', 'flatsome-admin' ),
-		'applepay'        => __( 'Apple Pay', 'flatsome-admin' ),
-		'afterpay'        => __( 'AfterPay', 'flatsome-admin' ),
-		'afterpay-2'      => __( 'AfterPay 2', 'flatsome-admin' ),
-		'alipay'          => __( 'Alipay', 'flatsome-admin' ),
-		'atm'             => __( 'Atm', 'flatsome-admin' ),
-		'bancontact'      => __( 'Bancontact', 'flatsome-admin' ),
-		'bankomat'        => __( 'Bankomat', 'flatsome-admin' ),
-		'banktransfer'    => __( 'Bank Transfer', 'flatsome-admin' ),
-		'belfius'         => __( 'Belfius', 'flatsome-admin' ),
-		'bitcoin'         => __( 'BitCoin', 'flatsome-admin' ),
-		'braintree'       => __( 'Braintree', 'flatsome-admin' ),
-		'cartasi'         => __( 'CartaSi', 'flatsome-admin' ),
-		'cashcloud'       => __( 'CashCloud', 'flatsome-admin' ),
-		'cashondelivery'  => __( 'Cash On Delivery', 'flatsome-admin' ),
-		'cashonpickup'    => __( 'Cash on Pickup', 'flatsome-admin' ),
-		'cbc'             => __( 'CBC', 'flatsome-admin' ),
-		'cirrus'          => __( 'Cirrus', 'flatsome-admin' ),
-		'clickandbuy'     => __( 'Click and Buy', 'flatsome-admin' ),
-		'creditcard'      => __( 'Credit Card', 'flatsome-admin' ),
-		'creditcard2'     => __( 'Credit Card 2', 'flatsome-admin' ),
-		'dancard'         => __( 'DanKort', 'flatsome-admin' ),
-		'dinnersclub'     => __( 'Dinners Club', 'flatsome-admin' ),
-		'discover'        => __( 'Discover', 'flatsome-admin' ),
-		'elo'             => __( 'Elo', 'flatsome-admin' ),
-		'eps'             => __( 'Eps', 'flatsome-admin' ),
-		'facture'         => __( 'Facture', 'flatsome-admin' ),
-		'fattura'         => __( 'Fattura', 'flatsome-admin' ),
-		'flattr'          => __( 'Flattr', 'flatsome-admin' ),
-		'giropay'         => __( 'GiroPay', 'flatsome-admin' ),
-		'googlepay'       => __( 'Google Pay', 'flatsome-admin' ),
-		'googlewallet'    => __( 'Google Wallet', 'flatsome-admin' ), // Deprecated, changed to Google Pay.
-		'hiper'           => __( 'Hiper', 'flatsome-admin' ),
-		'ideal'           => __( 'IDeal', 'flatsome-admin' ),
-		'interac'         => __( 'Interac', 'flatsome-admin' ),
-		'invoice'         => __( 'Invoice', 'flatsome-admin' ),
-		'jcb'             => __( 'JCB', 'flatsome-admin' ),
-		'kbc'             => __( 'KBC', 'flatsome-admin' ),
-		'klarna'          => __( 'Klarna', 'flatsome-admin' ),
-		'maestro'         => __( 'Maestro', 'flatsome-admin' ),
-		'mastercard'      => __( 'MasterCard', 'flatsome-admin' ),
-		'mastercard-2'    => __( 'MasterCard 2', 'flatsome-admin' ),
-		'mir'             => __( 'Mir', 'flatsome-admin' ),
-		'moip'            => __( 'Moip', 'flatsome-admin' ),
-		'mollie'          => __( 'Mollie', 'flatsome-admin' ),
-		'ogone'           => __( 'Ogone', 'flatsome-admin' ),
-		'paybox'          => __( 'Paybox', 'flatsome-admin' ),
-		'paylife'         => __( 'Paylife', 'flatsome-admin' ),
-		'paymill'         => __( 'PayMill', 'flatsome-admin' ),
-		'paypal'          => __( 'PayPal', 'flatsome-admin' ),
-		'paypal-2'        => __( 'PayPal 2', 'flatsome-admin' ),
-		'paysafe'         => __( 'PaySafe', 'flatsome-admin' ),
-		'paysera'         => __( 'Paysera', 'flatsome-admin' ),
-		'payshop'         => __( 'PayShop', 'flatsome-admin' ),
-		'paytm'           => __( 'Paytm', 'flatsome-admin' ),
-		'payu'            => __( 'PayU', 'flatsome-admin' ),
-		'postepay'        => __( 'Postepay', 'flatsome-admin' ),
-		'quick'           => __( 'Quick', 'flatsome-admin' ),
-		'rechung'         => __( 'Rechung', 'flatsome-admin' ),
-		'revolut'         => __( 'Revolut', 'flatsome-admin' ),
-		'ripple'          => __( 'Ripple', 'flatsome-admin' ),
-		'rupay'           => __( 'RuPay', 'flatsome-admin' ),
-		'sage'            => __( 'Sage', 'flatsome-admin' ),
-		'sepa'            => __( 'Sepa', 'flatsome-admin' ),
-		'six'             => __( 'Six', 'flatsome-admin' ),
-		'skrill'          => __( 'Skrill', 'flatsome-admin' ),
-		'sofort'          => __( 'Sofort', 'flatsome-admin' ),
-		'square'          => __( 'Square', 'flatsome-admin' ),
-		'stripe'          => __( 'Stripe', 'flatsome-admin' ),
-		'swish'           => __( 'Swish (SE)', 'flatsome-admin' ),
-		'truste'          => __( 'Truste', 'flatsome-admin' ),
-		'twint'           => __( 'Twint', 'flatsome-admin' ),
-		'unionpay'        => __( 'UnionPay', 'flatsome-admin' ),
-		'venmo'           => __( 'Venmo', 'flatsome-admin' ),
-		'verisign'        => __( 'VeriSign', 'flatsome-admin' ),
-		'vipps'           => __( 'Vipps', 'flatsome-admin' ),
-		'visa'            => __( 'Visa', 'flatsome-admin' ),
-		'visa1'           => __( 'Visa 2', 'flatsome-admin' ),
-		'visaelectron'    => __( 'Visa Electron', 'flatsome-admin' ),
-		'wero'            => __( 'Wero', 'flatsome-admin' ),
-		'westernunion'    => __( 'Western Union', 'flatsome-admin' ),
-		'wirecard'        => __( 'Wirecard', 'flatsome-admin' ),
+function silver_get_payment_icons_list() {
+	return apply_filters( 'silver_payment_icons', array(
+		'amazon'          => __( 'Amazon', 'silver' ),
+		'americanexpress' => __( 'American Express', 'silver' ),
+		'applepay'        => __( 'Apple Pay', 'silver' ),
+		'afterpay'        => __( 'AfterPay', 'silver' ),
+		'afterpay-2'      => __( 'AfterPay 2', 'silver' ),
+		'alipay'          => __( 'Alipay', 'silver' ),
+		'atm'             => __( 'Atm', 'silver' ),
+		'bancontact'      => __( 'Bancontact', 'silver' ),
+		'bankomat'        => __( 'Bankomat', 'silver' ),
+		'banktransfer'    => __( 'Bank Transfer', 'silver' ),
+		'belfius'         => __( 'Belfius', 'silver' ),
+		'bitcoin'         => __( 'BitCoin', 'silver' ),
+		'braintree'       => __( 'Braintree', 'silver' ),
+		'cartasi'         => __( 'CartaSi', 'silver' ),
+		'cashcloud'       => __( 'CashCloud', 'silver' ),
+		'cashondelivery'  => __( 'Cash On Delivery', 'silver' ),
+		'cashonpickup'    => __( 'Cash on Pickup', 'silver' ),
+		'cbc'             => __( 'CBC', 'silver' ),
+		'cirrus'          => __( 'Cirrus', 'silver' ),
+		'clickandbuy'     => __( 'Click and Buy', 'silver' ),
+		'creditcard'      => __( 'Credit Card', 'silver' ),
+		'creditcard2'     => __( 'Credit Card 2', 'silver' ),
+		'dancard'         => __( 'DanKort', 'silver' ),
+		'dinnersclub'     => __( 'Dinners Club', 'silver' ),
+		'discover'        => __( 'Discover', 'silver' ),
+		'elo'             => __( 'Elo', 'silver' ),
+		'eps'             => __( 'Eps', 'silver' ),
+		'facture'         => __( 'Facture', 'silver' ),
+		'fattura'         => __( 'Fattura', 'silver' ),
+		'flattr'          => __( 'Flattr', 'silver' ),
+		'giropay'         => __( 'GiroPay', 'silver' ),
+		'googlepay'       => __( 'Google Pay', 'silver' ),
+		'googlewallet'    => __( 'Google Wallet', 'silver' ), // Deprecated, changed to Google Pay.
+		'hiper'           => __( 'Hiper', 'silver' ),
+		'ideal'           => __( 'IDeal', 'silver' ),
+		'interac'         => __( 'Interac', 'silver' ),
+		'invoice'         => __( 'Invoice', 'silver' ),
+		'jcb'             => __( 'JCB', 'silver' ),
+		'kbc'             => __( 'KBC', 'silver' ),
+		'klarna'          => __( 'Klarna', 'silver' ),
+		'maestro'         => __( 'Maestro', 'silver' ),
+		'mastercard'      => __( 'MasterCard', 'silver' ),
+		'mastercard-2'    => __( 'MasterCard 2', 'silver' ),
+		'mir'             => __( 'Mir', 'silver' ),
+		'moip'            => __( 'Moip', 'silver' ),
+		'mollie'          => __( 'Mollie', 'silver' ),
+		'ogone'           => __( 'Ogone', 'silver' ),
+		'paybox'          => __( 'Paybox', 'silver' ),
+		'paylife'         => __( 'Paylife', 'silver' ),
+		'paymill'         => __( 'PayMill', 'silver' ),
+		'paypal'          => __( 'PayPal', 'silver' ),
+		'paypal-2'        => __( 'PayPal 2', 'silver' ),
+		'paysafe'         => __( 'PaySafe', 'silver' ),
+		'paysera'         => __( 'Paysera', 'silver' ),
+		'payshop'         => __( 'PayShop', 'silver' ),
+		'paytm'           => __( 'Paytm', 'silver' ),
+		'payu'            => __( 'PayU', 'silver' ),
+		'postepay'        => __( 'Postepay', 'silver' ),
+		'quick'           => __( 'Quick', 'silver' ),
+		'rechung'         => __( 'Rechung', 'silver' ),
+		'revolut'         => __( 'Revolut', 'silver' ),
+		'ripple'          => __( 'Ripple', 'silver' ),
+		'rupay'           => __( 'RuPay', 'silver' ),
+		'sage'            => __( 'Sage', 'silver' ),
+		'sepa'            => __( 'Sepa', 'silver' ),
+		'six'             => __( 'Six', 'silver' ),
+		'skrill'          => __( 'Skrill', 'silver' ),
+		'sofort'          => __( 'Sofort', 'silver' ),
+		'square'          => __( 'Square', 'silver' ),
+		'stripe'          => __( 'Stripe', 'silver' ),
+		'swish'           => __( 'Swish (SE)', 'silver' ),
+		'truste'          => __( 'Truste', 'silver' ),
+		'twint'           => __( 'Twint', 'silver' ),
+		'unionpay'        => __( 'UnionPay', 'silver' ),
+		'venmo'           => __( 'Venmo', 'silver' ),
+		'verisign'        => __( 'VeriSign', 'silver' ),
+		'vipps'           => __( 'Vipps', 'silver' ),
+		'visa'            => __( 'Visa', 'silver' ),
+		'visa1'           => __( 'Visa 2', 'silver' ),
+		'visaelectron'    => __( 'Visa Electron', 'silver' ),
+		'wero'            => __( 'Wero', 'silver' ),
+		'westernunion'    => __( 'Western Union', 'silver' ),
+		'wirecard'        => __( 'Wirecard', 'silver' ),
 	) );
 }
 
@@ -547,7 +547,7 @@ function flatsome_get_payment_icons_list() {
  * }
  * @return string HTML img element or empty string on failure.
  */
-function flatsome_get_attachment_image_no_srcset( $attachment_id, $size = 'thumbnail', $icon = false, $attr = '' ) {
+function silver_get_attachment_image_no_srcset( $attachment_id, $size = 'thumbnail', $icon = false, $attr = '' ) {
 	add_filter( 'wp_calculate_image_srcset_meta', '__return_null' );
 	$html = wp_get_attachment_image( $attachment_id, $size, $icon, $attr );
 	remove_filter( 'wp_calculate_image_srcset_meta', '__return_null' );

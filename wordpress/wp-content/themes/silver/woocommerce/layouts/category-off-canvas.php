@@ -2,8 +2,8 @@
 /**
  * Category layout with off canvas sidebar.
  *
- * @package          Flatsome/WooCommerce/Templates
- * @flatsome-version 3.18.7
+ * @package          Silver/WooCommerce/Templates
+ * @silver-version 3.18.7
  */
 
 ?>
@@ -11,7 +11,7 @@
 
 		<div class="col xlarge-12">
 		<?php
-		do_action( 'flatsome_products_before' );
+		do_action( 'silver_products_before' );
 
 		/**
 		* Hook: woocommerce_before_main_content.
@@ -83,11 +83,11 @@
 
 		<?php
 		/**
-		 * Hook: flatsome_products_after.
+		 * Hook: silver_products_after.
 		 *
-		 * @hooked flatsome_products_footer_content - 10
+		 * @hooked silver_products_footer_content - 10
 		 */
-		do_action( 'flatsome_products_after' );
+		do_action( 'silver_products_after' );
 		/**
 		 * Hook: woocommerce_after_main_content.
 		 *

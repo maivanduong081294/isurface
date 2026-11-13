@@ -5,7 +5,7 @@
  * Adds a button to the right toolbar that shows the layout being edited
  * without the sidebar and the editing tools.
  *
- * @package flatsome
+ * @package silver
  */
 
 /**

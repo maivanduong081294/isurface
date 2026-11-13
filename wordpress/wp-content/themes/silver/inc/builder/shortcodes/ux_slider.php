@@ -7,8 +7,8 @@ add_ux_builder_shortcode( 'ux_slider', array(
     'message' => __( 'Add slides here' ),
     'directives' => array( 'ux-slider' ),
     'allow' => array( 'ux_banner','ux_image','ux_lottie','section','row','ux_banner_grid','logo'),
-    'template' => flatsome_ux_builder_template( 'ux_slider.html' ),
-    'thumbnail' =>  flatsome_ux_builder_thumbnail( 'slider' ),
+    'template' => silver_ux_builder_template( 'ux_slider.html' ),
+    'thumbnail' =>  silver_ux_builder_thumbnail( 'slider' ),
     'tools' => 'shortcodes/ux_slider/ux-slider-tools.directive.html',
     'wrap'   => false,
     'info' => '{{ label }}',
@@ -89,6 +89,7 @@ add_ux_builder_shortcode( 'ux_slider', array(
               'conditions' => 'type !== "fade"',
             ),
             'bg_color' => array(
+              'responsive' => true,
               'type' => 'colorpicker',
               'heading' => __('Bg Color'),
               'format' => 'rgb',

@@ -13,7 +13,7 @@
  * @see              https://woocommerce.com/document/template-structure/
  * @package          WooCommerce\Templates
  * @version          9.8.0
- * @flatsome-version 3.19.12
+ * @silver-version 3.19.12
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -43,6 +43,6 @@ if ( $attachment_ids && $product->get_image_id() ) {
 		 * @param string $html          Product image thumbnail HTML string.
 		 * @param int    $attachment_id Attachment ID.
 		 */
-		echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', flatsome_wc_get_gallery_image_html( $attachment_id, false, $image_size, $key ), $attachment_id ); // PHPCS:Ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', silver_wc_get_gallery_image_html( $attachment_id, false, $image_size, $key ), $attachment_id ); // PHPCS:Ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

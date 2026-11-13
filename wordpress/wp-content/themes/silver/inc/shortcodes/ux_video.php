@@ -1,5 +1,5 @@
 <?php // [ux_video]
-function flatsome_video($atts) {
+function silver_video($atts) {
 
     extract( ux_builder_shortcode_atts( array(
         '_id' => '',
@@ -25,6 +25,15 @@ function flatsome_video($atts) {
       array( 'attribute' => 'padding-top', 'value' => $height),
     );
 
-    return '<div'.( $_id ? ' id="'.esc_attr( $_id ).'"' : '' ).' class="'.esc_attr(implode(' ', $classes)).'" '.get_shortcode_inline_css($height).'>'.$video.'</div>';
+    // Responsive height (larger screens).
+    $responsive_style = '';
+    if ( silver_responsive_has_overrides( (array) $atts, 'height' ) ) {
+      if ( ! $_id ) $_id = 'video-' . wp_rand();
+      $responsive_style = silver_responsive_style_tag( $_id, (array) $atts, array(
+        'height' => array( 'selector' => '', 'property' => 'padding-top', 'only_overrides' => true, 'default' => '56.25%' ),
+      ) );
+    }
+
+    return '<div'.( $_id ? ' id="'.esc_attr( $_id ).'"' : '' ).' class="'.esc_attr(implode(' ', $classes)).'" '.get_shortcode_inline_css($height).'>'.$video.$responsive_style.'</div>';
 }
-add_shortcode("ux_video", "flatsome_video");
+add_shortcode("ux_video", "silver_video");

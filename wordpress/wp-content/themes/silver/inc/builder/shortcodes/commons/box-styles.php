@@ -13,6 +13,7 @@ return array(
         'options' => array(
 
             'image_height' => array(
+                'responsive' => true,
               'type' => 'scrubfield',
               'heading' => __('Height'),
               'conditions' => 'type !== "grid"',
@@ -29,6 +30,7 @@ return array(
             ),
 
             'image_width' => array(
+                'responsive' => true,
                 'type' => 'slider',
                 'heading' => __( 'Width' ),
                 'unit' => '%',
@@ -58,7 +60,7 @@ return array(
                 'type' => 'select',
                 'heading' => __( 'Size' ),
                 'default' => '',
-                'options' => flatsome_ux_builder_image_sizes(
+                'options' => silver_ux_builder_image_sizes(
                     array(
                         '' => 'Default'
                     )
@@ -112,6 +114,7 @@ return array(
         'options' => array(
 
             'text_pos' => array(
+                'responsive' => true,
                 'type' => 'select',
                 'heading' => __( 'Position' ),
                 'conditions' => 'style === "vertical" || style === "shade" || style === "overlay"',
@@ -125,6 +128,7 @@ return array(
             ),
 
             'text_align' => array(
+                'responsive' => true,
                 'type' => 'radio-buttons',
                 'heading' => __( 'Align' ),
                 'default' => $default_text_align,
@@ -154,7 +158,9 @@ return array(
             ),
 
             'text_bg' => array(
+                'responsive' => true,
                 'type' => 'colorpicker',
+                'helpers' => require( __DIR__ . '/../helpers/colors.php' ),
                 'heading' => __( 'Bg Color' ),
                 'default' => '',
                 'alpha' => true,
@@ -167,6 +173,7 @@ return array(
             ),
 
             'text_color' => array(
+                'responsive' => true,
                 'type' => 'radio-buttons',
                 'heading' => __( 'Color' ),
                 'conditions' => 'style !== "shade" && style !== "overlay"',

@@ -1,8 +1,8 @@
 <?php
 /**
- * Flatsome_Registration class.
+ * Silver_Registration class.
  *
- * @package Flatsome
+ * @package Silver
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,9 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * The Flatsome registration.
+ * The Silver registration.
  */
-final class Flatsome_WUpdates_Registration extends Flatsome_Base_Registration {
+final class Silver_WUpdates_Registration extends Silver_Base_Registration {
 
 	/**
 	 * Setup instance.
@@ -24,13 +24,13 @@ final class Flatsome_WUpdates_Registration extends Flatsome_Base_Registration {
 	}
 
 	/**
-	 * Registers Flatsome.
+	 * Registers Silver.
 	 *
 	 * @param string $code Purchase code.
 	 * @return array|WP_error
 	 */
 	public function register( $code ) {
-		$registration = new Flatsome_Registration( $this->api );
+		$registration = new Silver_Registration( $this->api );
 		$result       = $registration->register( $code );
 
 		if ( is_wp_error( $result ) ) {
@@ -57,12 +57,12 @@ final class Flatsome_WUpdates_Registration extends Flatsome_Base_Registration {
 	}
 
 	/**
-	 * Get latest Flatsome version.
+	 * Get latest Silver version.
 	 *
 	 * @return string|WP_error
 	 */
 	public function get_latest_version() {
-		return new WP_Error( 'not-verified', __( 'Purchase code not verified.', 'flatsome' ) );
+		return new WP_Error( 'not-verified', __( 'Purchase code not verified.', 'silver' ) );
 	}
 
 	/**
@@ -72,11 +72,11 @@ final class Flatsome_WUpdates_Registration extends Flatsome_Base_Registration {
 	 * @return string|WP_error
 	 */
 	public function get_download_url( $version ) {
-		return new WP_Error( 'not-verified', __( 'Purchase code not verified.', 'flatsome' ) );
+		return new WP_Error( 'not-verified', __( 'Purchase code not verified.', 'silver' ) );
 	}
 
 	/**
-	 * Checks whether Flatsome is registered or not.
+	 * Checks whether Silver is registered or not.
 	 *
 	 * @return boolean
 	 */
@@ -97,7 +97,7 @@ final class Flatsome_WUpdates_Registration extends Flatsome_Base_Registration {
 	 * Delete options.
 	 */
 	public function delete_options() {
-		$slug = flatsome_theme_key();
+		$slug = silver_theme_key();
 
 		delete_option( $slug . '_wup_buyer' );
 		delete_option( $slug . '_wup_sold_at' );
@@ -115,6 +115,6 @@ final class Flatsome_WUpdates_Registration extends Flatsome_Base_Registration {
 	 * @return boolean
 	 */
 	public function get_code() {
-		return get_option( flatsome_theme_key() . '_wup_purchase_code', '' );
+		return get_option( silver_theme_key() . '_wup_purchase_code', '' );
 	}
 }

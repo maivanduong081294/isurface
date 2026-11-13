@@ -3,7 +3,7 @@
 /**
  * Add Button to Grid Tools
  */
-function flatsome_lightbox_button() {
+function silver_lightbox_button() {
 	if ( get_theme_mod( 'disable_quick_view', 0 ) ) {
 		return;
 	}
@@ -22,25 +22,25 @@ function flatsome_lightbox_button() {
 		'aria-expanded' => 'false',
 	];
 
-	echo '<a ' . flatsome_html_atts( $atts ) . '>' . esc_html__( 'Quick View', 'flatsome' ) . '</a>';
+	echo '<a ' . silver_html_atts( $atts ) . '>' . esc_html__( 'Quick View', 'silver' ) . '</a>';
 }
 
-add_action( 'flatsome_product_box_actions', 'flatsome_lightbox_button', 50 );
+add_action( 'silver_product_box_actions', 'silver_lightbox_button', 50 );
 
 /* Add stuff to lightbox */
-add_action( 'flatsome_single_product_lightbox_summary', 'woocommerce_template_single_price', 10 );
-add_action( 'flatsome_single_product_lightbox_summary', 'woocommerce_template_single_excerpt', 20 );
-add_action( 'flatsome_single_product_lightbox_summary', 'woocommerce_template_single_add_to_cart', 30 );
-add_action( 'flatsome_single_product_lightbox_product_gallery', 'woocommerce_show_product_sale_flash', 20 );
+add_action( 'silver_single_product_lightbox_summary', 'woocommerce_template_single_price', 10 );
+add_action( 'silver_single_product_lightbox_summary', 'woocommerce_template_single_excerpt', 20 );
+add_action( 'silver_single_product_lightbox_summary', 'woocommerce_template_single_add_to_cart', 30 );
+add_action( 'silver_single_product_lightbox_product_gallery', 'woocommerce_show_product_sale_flash', 20 );
 
 if ( get_theme_mod( 'product_info_meta', 1 ) ) {
-	add_action( 'flatsome_single_product_lightbox_summary', 'woocommerce_template_single_meta', 40 );
+	add_action( 'silver_single_product_lightbox_summary', 'woocommerce_template_single_meta', 40 );
 }
 
 /**
  * Quick View Output
  */
-function flatsome_quickview() {
+function silver_quickview() {
 	global $post, $product;
 
 	if ( ! isset( $_POST['product'] ) ) {
@@ -70,5 +70,5 @@ function flatsome_quickview() {
 	wp_die();
 }
 
-add_action( 'wp_ajax_flatsome_quickview', 'flatsome_quickview' );
-add_action( 'wp_ajax_nopriv_flatsome_quickview', 'flatsome_quickview' );
+add_action( 'wp_ajax_silver_quickview', 'silver_quickview' );
+add_action( 'wp_ajax_nopriv_silver_quickview', 'silver_quickview' );

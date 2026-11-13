@@ -1,9 +1,9 @@
 /* eslint-disable no-undef, no-var */
 
 wp.domReady(function () {
-  var button = document.getElementById('flatsome-instagram-access-token-submit')
-  var token = document.getElementById('flatsome-instagram-access-token-value')
-  var errors = document.getElementById('flatsome-instagram-errors')
+  var button = document.getElementById('silver-instagram-access-token-submit')
+  var token = document.getElementById('silver-instagram-access-token-value')
+  var errors = document.getElementById('silver-instagram-errors')
 
   var abortController = null
 
@@ -33,9 +33,9 @@ wp.domReady(function () {
 
     abortController = new AbortController()
 
-    data.append('action', 'flatsome_validate_instagram_access_token')
+    data.append('action', 'silver_validate_instagram_access_token')
     data.append('access_token', token.value)
-    data.append('nonce', window.flatsomeAdvancedData.nonce)
+    data.append('nonce', window.silverAdvancedData.nonce)
 
     setEditable(false)
 
@@ -74,7 +74,7 @@ wp.domReady(function () {
   }
 
   function addAccount (data) {
-    var tbody = document.querySelector('.flatsome-instagram-accounts__body')
+    var tbody = document.querySelector('.silver-instagram-accounts__body')
     var tr = document.querySelector('[data-instagram-account="' + data.username + '"]')
     var id = wp.escapeHtml.escapeAttribute(data.id)
     var username = wp.escapeHtml.escapeAttribute(data.username)

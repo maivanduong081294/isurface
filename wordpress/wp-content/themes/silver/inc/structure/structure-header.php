@@ -1,10 +1,10 @@
 <?php
 /**
- * Flatsome Structure.
+ * Silver Structure.
  *
  * Header Structure.
  *
- * @package Flatsome\Structures
+ * @package Silver\Structures
  */
 
 
@@ -13,11 +13,11 @@
  *
  * @return void
  */
-function flatsome_viewport_meta() {
-	echo apply_filters( 'flatsome_viewport_meta', '<meta name="viewport" content="width=device-width, initial-scale=1" />' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+function silver_viewport_meta() {
+	echo apply_filters( 'silver_viewport_meta', '<meta name="viewport" content="width=device-width, initial-scale=1" />' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
-add_action( 'wp_head', 'flatsome_viewport_meta', 1 );
+add_action( 'wp_head', 'silver_viewport_meta', 1 );
 
 /**
  * Header Navigation.
@@ -27,12 +27,12 @@ add_action( 'wp_head', 'flatsome_viewport_meta', 1 );
  *
  * @return void
  */
-function flatsome_header_nav( $nav, $walker = false ) {
+function silver_header_nav( $nav, $walker = false ) {
 
 	$admin_url = get_admin_url() . 'customize.php?url=' . get_permalink() . '&autofocus%5Bsection%5D=menu_locations';
 
 	// Check if has Custom mobile menu.
-	if ($nav == 'primary' && $walker == 'FlatsomeNavSidebar' && has_nav_menu( 'primary_mobile' )) $nav = 'primary_mobile';
+	if ($nav == 'primary' && $walker == 'SilverNavSidebar' && has_nav_menu( 'primary_mobile' )) $nav = 'primary_mobile';
 
 	// If single page.
 	$page_template                  = get_post_meta( get_the_ID(), '_wp_page_template', true );
@@ -69,12 +69,12 @@ function flatsome_header_nav( $nav, $walker = false ) {
  *
  * @return void
  */
-function flatsome_header_elements( $options, $type = '' ) {
+function silver_header_elements( $options, $type = '' ) {
 	// Get options.
 	$get_options = get_theme_mod( $options );
 
-	$walker                         = 'FlatsomeNavDropdown';
-	if ($type == 'sidebar') $walker = 'FlatsomeNavSidebar';
+	$walker                         = 'SilverNavDropdown';
+	if ($type == 'sidebar') $walker = 'SilverNavSidebar';
 
 	// Set options.
 	if ( is_array( $get_options ) ) {
@@ -84,24 +84,24 @@ function flatsome_header_elements( $options, $type = '' ) {
 			if ( $value == 'divider' || $value == 'divider_2' || $value == 'divider_3' || $value == 'divider_4' || $value == 'divider_5' ) {
 				echo '<li class="header-divider"></li>';
 			} elseif ( $value == 'html' || $value == 'html-2' || $value == 'html-3' || $value == 'html-4' || $value == 'html-5' ) {
-				flatsome_get_header_html_element( $value );
+				silver_get_header_html_element( $value );
 			} elseif ( $value == 'block-1' || $value == 'block-2' || $value == 'block-3' || $value == 'block-4' ) {
 				echo do_shortcode( '<li class="header-block"><div class="header-block-' . $value . '">[block id="' . get_theme_mod( 'header-' . $value ) . '"]</div></li>' );
 			} elseif ( $value == 'nav-top' ) {
-				flatsome_header_nav( 'top_bar_nav', $walker );
+				silver_header_nav( 'top_bar_nav', $walker );
 			} elseif ( $value == 'nav' ) {
-				flatsome_header_nav( 'primary', $walker );
+				silver_header_nav( 'primary', $walker );
 			} elseif ( $value == 'nav-secondary' ) {
-				flatsome_header_nav( 'secondary', $walker );
+				silver_header_nav( 'secondary', $walker );
 			} elseif ( $value == 'nav-vertical' && $type === 'sidebar' ) {
-				flatsome_header_nav( 'vertical', $walker );
+				silver_header_nav( 'vertical', $walker );
 			} elseif ( $value == 'wpml' ) {
 				get_template_part( 'template-parts/header/partials/element-languages', $type );
 			} else {
 				get_template_part( 'template-parts/header/partials/element-' . $value, $type );
 			}
 			// Hooked Elements.
-			do_action( 'flatsome_header_elements', $value );
+			do_action( 'silver_header_elements', $value );
 		}
 	}
 }
@@ -113,7 +113,7 @@ function flatsome_header_elements( $options, $type = '' ) {
  *
  * @return void
  */
-function flatsome_get_header_html_element( $value ) {
+function silver_get_header_html_element( $value ) {
 	$mod = array(
 		'name'    => '',
 		'default' => '',
@@ -134,11 +134,11 @@ function flatsome_get_header_html_element( $value ) {
 }
 
 /**
- * FlatsomeNavDropdown Class.
+ * SilverNavDropdown Class.
  *
  * Extends Walker_Nav_Menu Class.
  */
-class FlatsomeNavDropdown extends Walker_Nav_Menu {
+class SilverNavDropdown extends Walker_Nav_Menu {
 
 	/**
 	 * The URL to the privacy policy page.
@@ -152,7 +152,7 @@ class FlatsomeNavDropdown extends Walker_Nav_Menu {
 	 * Constructor.
 	 */
 	public function __construct() {
-		if ( flatsome_wp_version_check( '6.8' ) && method_exists( 'Walker_Nav_Menu', '__construct' ) ) {
+		if ( silver_wp_version_check( '6.8' ) && method_exists( 'Walker_Nav_Menu', '__construct' ) ) {
 			parent::__construct();
 		}
 		$this->privacy_policy_url = get_privacy_policy_url();
@@ -299,10 +299,10 @@ class FlatsomeNavDropdown extends Walker_Nav_Menu {
 			$classes[] = 'nav-dropdown-col';
 		}
 
-		// LEGACY Add flatsome Icons.
+		// LEGACY Add silver Icons.
 		$menu_icon = '';
 		if ( isset( $classes[0] ) && strpos( $classes[0], 'icon-' ) !== false ) {
-			$menu_icon  = get_flatsome_icon( $classes[0] );
+			$menu_icon  = get_silver_icon( $classes[0] );
 			$classes[0] = 'has-icon-left';
 		}
 
@@ -496,7 +496,7 @@ class FlatsomeNavDropdown extends Walker_Nav_Menu {
 			// Add down arrow.
 			$arrow_icon = '';
 			if ( $is_top_level && ( $is_block_menu || $menu_item->has_children ) ) {
-				$arrow_icon = get_flatsome_icon( 'icon-angle-down' );
+				$arrow_icon = get_silver_icon( 'icon-angle-down' );
 			}
 
 			$item_output .= $arrow_icon . '</a>';
@@ -508,7 +508,7 @@ class FlatsomeNavDropdown extends Walker_Nav_Menu {
 				$dropdown_classes = implode( ' ', $dropdown_classes );
 
 				$item_output .= '<div class="' . esc_attr( $dropdown_classes ) . '">';
-				$item_output .= flatsome_apply_shortcode( 'block', array( 'id' => $block ) );
+				$item_output .= silver_apply_shortcode( 'block', array( 'id' => $block ) );
 				$item_output .= '</div>';
 			}
 			if ( $design == 'custom-size' && ! empty( $width ) ) {
@@ -603,13 +603,13 @@ class FlatsomeNavDropdown extends Walker_Nav_Menu {
 }
 
 /**
- * FlatsomeNavSidebar Class.
+ * SilverNavSidebar Class.
  *
  * Extends Walker_Nav_Menu Class.
  *
  * Sidebar Navigation Walker.
  */
-class FlatsomeNavSidebar extends Walker_Nav_Menu {
+class SilverNavSidebar extends Walker_Nav_Menu {
 
 	/**
 	 * The URL to the privacy policy page.
@@ -623,7 +623,7 @@ class FlatsomeNavSidebar extends Walker_Nav_Menu {
 	 * Constructor.
 	 */
 	public function __construct() {
-		if ( flatsome_wp_version_check( '6.8' ) && method_exists( 'Walker_Nav_Menu', '__construct' ) ) {
+		if ( silver_wp_version_check( '6.8' ) && method_exists( 'Walker_Nav_Menu', '__construct' ) ) {
 			parent::__construct();
 		}
 		$this->privacy_policy_url = get_privacy_policy_url();
@@ -934,34 +934,34 @@ class FlatsomeNavSidebar extends Walker_Nav_Menu {
 }
 
 /**
- * Flatsome header classes.
+ * Silver header classes.
  *
  * @return void
  */
-function flatsome_header_classes() {
+function silver_header_classes() {
 	// Add / remove hooked classes.
-	echo implode( ' ', apply_filters( 'flatsome_header_class', array() ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo implode( ' ', apply_filters( 'silver_header_class', array() ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 /**
- * Flatsome main classes.
+ * Silver main classes.
  *
  * @return void
  */
-function flatsome_main_classes() {
+function silver_main_classes() {
 	// Add / remove hooked classes.
-	echo implode( ' ', apply_filters( 'flatsome_main_class', array() ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo implode( ' ', apply_filters( 'silver_main_class', array() ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 /**
- * Flatsome header title classes.
+ * Silver header title classes.
  *
  * @param bool $echo Optional. Whether to echo the classes or not. Default true.
  *
  * @return string|void If $echo is true, the classes will be echoed. If $echo is false, the classes will be returned.
  */
-function flatsome_header_title_classes( $echo = true ) {
-	$class = implode( ' ', apply_filters( 'flatsome_header_title_class', array() ) );
+function silver_header_title_classes( $echo = true ) {
+	$class = implode( ' ', apply_filters( 'silver_header_title_class', array() ) );
 	if ( $echo ) {
 		echo $class; // phpcs:ignore WordPress.Security.EscapeOutput
 	} else {
@@ -970,13 +970,13 @@ function flatsome_header_title_classes( $echo = true ) {
 }
 
 /**
- * Flatsome add main classes.
+ * Silver add main classes.
  *
  * @param array $classes Current classes.
  *
  * @return array $classes
  */
-function flatsome_add_main_classes( $classes ) {
+function silver_add_main_classes( $classes ) {
 	// Dark content.
 	if ( get_theme_mod( 'content_color' ) == 'dark' ) {
 		$classes[] = 'dark dark-page-wrapper';
@@ -984,16 +984,16 @@ function flatsome_add_main_classes( $classes ) {
 
 	return $classes;
 }
-add_filter( 'flatsome_main_class', 'flatsome_add_main_classes', 10 );
+add_filter( 'silver_main_class', 'silver_add_main_classes', 10 );
 
 /**
- * Flatsome sticky header classes.
+ * Silver sticky header classes.
  *
  * @param array $classes Current classes.
  *
  * @return array $classes
  */
-function flatsome_sticky_headers( $classes ) {
+function silver_sticky_headers( $classes ) {
 
 	$disable_sticky = false;
 
@@ -1021,24 +1021,59 @@ function flatsome_sticky_headers( $classes ) {
 	return $classes;
 }
 
-add_filter( 'flatsome_header_class', 'flatsome_sticky_headers', 11 );
+add_filter( 'silver_header_class', 'silver_sticky_headers', 11 );
 
 
 
 
 
 /**
+ * Get selected UX Block ID for a header area.
+ *
+ * @param string $position Header area: top, main or bottom.
+ *
+ * @return int Block ID, 0 if none selected or block not published.
+ */
+function silver_header_block_id( $position ) {
+	$block_id = absint( get_theme_mod( 'header_' . $position . '_block', 0 ) );
+
+	if ( ! $block_id || 'publish' !== get_post_status( $block_id ) || 'blocks' !== get_post_type( $block_id ) ) {
+		return 0;
+	}
+
+	return $block_id;
+}
+
+/**
+ * Render selected UX Block for a header area.
+ *
+ * @param string $position Header area: top, main or bottom.
+ *
+ * @return void
+ */
+function silver_header_block( $position ) {
+	$block_id = silver_header_block_id( $position );
+
+	if ( $block_id ) {
+		echo do_shortcode( '[block id="' . $block_id . '"]' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+}
+
+/**
  * Checks if top bar has elements for desktop and/or mobile.
  *
  * @return array $screens
  */
-function flatsome_has_top_bar() {
+function silver_has_top_bar() {
 	$screens = array(
 		'large'  => false,
 		'mobile' => false,
 	);
 	if ( get_theme_mod( 'topbar_show', 1 ) ) {
-		if ( get_theme_mod( 'topbar_elements_center' ) || get_theme_mod( 'topbar_elements_left' ) || get_theme_mod( 'topbar_elements_right' ) ) {
+		if ( silver_header_block_id( 'top' ) ) {
+			$screens['large']  = true;
+			$screens['mobile'] = true;
+		} elseif ( get_theme_mod( 'topbar_elements_center' ) || get_theme_mod( 'topbar_elements_left' ) || get_theme_mod( 'topbar_elements_right' ) ) {
 			$screens['large'] = true;
 		}
 		if ( get_theme_mod( 'header_mobile_elements_top' ) ) {
@@ -1056,16 +1091,21 @@ function flatsome_has_top_bar() {
  *
  * @return array $screens
  */
-function flatsome_has_bottom_bar() {
+function silver_has_bottom_bar() {
 	$screens = array(
 		'large'  => false,
 		'mobile' => false,
 	);
-	if ( get_theme_mod( 'header_elements_bottom_left' ) || get_theme_mod( 'header_elements_bottom_center' ) || get_theme_mod( 'header_elements_bottom_right' ) ) {
-		$screens['large'] = true;
-	}
-	if ( get_theme_mod( 'header_mobile_elements_bottom' ) ) {
+	if ( silver_header_block_id( 'bottom' ) ) {
+		$screens['large']  = true;
 		$screens['mobile'] = true;
+	} else {
+		if ( get_theme_mod( 'header_elements_bottom_left' ) || get_theme_mod( 'header_elements_bottom_center' ) || get_theme_mod( 'header_elements_bottom_right' ) ) {
+			$screens['large'] = true;
+		}
+		if ( get_theme_mod( 'header_mobile_elements_bottom' ) ) {
+			$screens['mobile'] = true;
+		}
 	}
 	$screens['large_or_mobile'] = $screens['large'] || $screens['mobile'];
 	$screens['mobile_only']     = ! $screens['large'] && $screens['mobile'];
@@ -1105,11 +1145,14 @@ function header_inner_class( $position ) {
 	if ( $position == 'top' ) {
 		if ( ! get_theme_mod( 'topbar_sticky' )) $classes[]               = 'hide-for-sticky';
 		if (get_theme_mod( 'topbar_color', 'dark' ) == 'dark') $classes[] = 'nav-dark';
-		if (get_theme_mod( 'topbar_elements_center' )) $classes[]         = 'flex-has-center';
-		if ( ! get_theme_mod( 'header_mobile_elements_top' ) ) {
-			$classes[] = 'hide-for-medium';
-		} elseif ( get_theme_mod( 'header_mobile_elements_top' ) && flatsome_has_top_bar()['mobile_only'] ) {
-			$classes[] = 'show-for-medium';
+		// UX Block is shown on all screens, element-based classes are skipped.
+		if ( ! silver_header_block_id( 'top' ) ) {
+			if (get_theme_mod( 'topbar_elements_center' )) $classes[] = 'flex-has-center';
+			if ( ! get_theme_mod( 'header_mobile_elements_top' ) ) {
+				$classes[] = 'hide-for-medium';
+			} elseif ( silver_has_top_bar()['mobile_only'] ) {
+				$classes[] = 'show-for-medium';
+			}
 		}
 	}
 
@@ -1118,11 +1161,14 @@ function header_inner_class( $position ) {
 		if ( ! get_theme_mod( 'bottombar_sticky', 1 )) $classes[]              = 'hide-for-sticky';
 		if (get_theme_mod( 'nav_position_color' ) == 'dark') $classes[]        = 'nav-dark';
 		if (get_theme_mod( 'nav_position_color' ) == 'dark-header') $classes[] = 'nav-dark';
-		if (get_theme_mod( 'header_elements_bottom_center' )) $classes[]       = 'flex-has-center';
-		if ( ! get_theme_mod( 'header_mobile_elements_bottom' ) ) {
-			$classes[] = 'hide-for-medium';
-		} elseif ( get_theme_mod( 'header_mobile_elements_bottom' ) && flatsome_has_bottom_bar()['mobile_only'] ) {
-			$classes[] = 'show-for-medium';
+		// UX Block is shown on all screens, element-based classes are skipped.
+		if ( ! silver_header_block_id( 'bottom' ) ) {
+			if (get_theme_mod( 'header_elements_bottom_center' )) $classes[] = 'flex-has-center';
+			if ( ! get_theme_mod( 'header_mobile_elements_bottom' ) ) {
+				$classes[] = 'hide-for-medium';
+			} elseif ( silver_has_bottom_bar()['mobile_only'] ) {
+				$classes[] = 'show-for-medium';
+			}
 		}
 	}
 
@@ -1149,7 +1195,7 @@ function header_inner_class( $position ) {
  *
  * @return void
  */
-function flatsome_nav_classes( $position ) {
+function silver_nav_classes( $position ) {
 	$classes[] = null;
 
 	if ( $position == 'main' ) {
@@ -1183,11 +1229,11 @@ function flatsome_nav_classes( $position ) {
 }
 
 /**
- * Flatsome HTML classes.
+ * Silver HTML classes.
  *
  * @return void
  */
-function flatsome_html_classes() {
+function silver_html_classes() {
 
 	// Change Body Layouts.
 	$classes[] = 'loading-site no-js';
@@ -1205,7 +1251,7 @@ function flatsome_html_classes() {
  *
  * @return array $classes
  */
-function flatsome_body_classes( $classes ) {
+function silver_body_classes( $classes ) {
 
 	// Change Body Layouts.
 	if (get_theme_mod( 'body_layout' ))  $classes[]                   = get_theme_mod( 'body_layout' );
@@ -1241,14 +1287,14 @@ function flatsome_body_classes( $classes ) {
 
 	return $classes;
 }
-add_filter( 'body_class', 'flatsome_body_classes' );
+add_filter( 'body_class', 'silver_body_classes' );
 
 /**
- * Flatsome Dropdown classes.
+ * Silver Dropdown classes.
  *
  * @return void
  */
-function flatsome_dropdown_classes() {
+function silver_dropdown_classes() {
 	$class_names = array();
 
 	// Add Dropdown Styles.
@@ -1264,7 +1310,7 @@ function flatsome_dropdown_classes() {
  *
  * @return void
  */
-function flatsome_add_header_backgrounds() {
+function silver_add_header_backgrounds() {
 	$page_template = get_post_meta( get_the_ID(), '_wp_page_template', true );
 
 	// Add BG image.
@@ -1278,48 +1324,48 @@ function flatsome_add_header_backgrounds() {
 		echo '<div class="shade shade-top hide-for-sticky fill"></div>';
 	}
 }
-add_action( 'flatsome_header_background', 'flatsome_add_header_backgrounds', 10 );
+add_action( 'silver_header_background', 'silver_add_header_backgrounds', 10 );
 
 /**
  * Add js class to header if JS is enabled.
  *
  * @return void
  */
-function flatsome_javascript_detection() {
+function silver_javascript_detection() {
 	echo "<script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>\n";
 }
-add_action( 'wp_head', 'flatsome_javascript_detection', 0 );
+add_action( 'wp_head', 'silver_javascript_detection', 0 );
 
 /**
  * Insert custom header script.
  *
  * @return void
  */
-function flatsome_custom_header_js() {
+function silver_custom_header_js() {
 	if ( get_theme_mod( 'html_scripts_header' ) && ! is_admin() ) {
 		echo get_theme_mod( 'html_scripts_header' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
-add_action( 'wp_head', 'flatsome_custom_header_js' );
+add_action( 'wp_head', 'silver_custom_header_js' );
 
 /**
  * Insert custom body top script.
  *
  * @return void
  */
-function flatsome_after_body_open() {
+function silver_after_body_open() {
 	if ( get_theme_mod( 'html_scripts_after_body' ) && ! is_admin() ) {
 		echo get_theme_mod( 'html_scripts_after_body' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
-add_action( 'flatsome_after_body_open', 'flatsome_after_body_open' );
+add_action( 'silver_after_body_open', 'silver_after_body_open' );
 
 /**
  * Set logo position.
  *
  * @return void
  */
-function flatsome_logo_position() {
+function silver_logo_position() {
 	$classes   = array();
 	$classes[] = 'logo-' . get_theme_mod( 'logo_position', 'left' );
 
@@ -1334,7 +1380,7 @@ function flatsome_logo_position() {
  *
  * @return void
  */
-function flatsome_html_after_header() {
+function silver_html_after_header() {
 	if ( get_theme_mod( 'html_after_header' ) ) {
 		// AFTER HEADER HTML BLOCK.
 		echo '<div class="header-block block-html-after-header z-1" style="position:relative;top:-1px;">';
@@ -1342,7 +1388,7 @@ function flatsome_html_after_header() {
 		echo '</div>';
 	}
 }
-add_action( 'flatsome_after_header', 'flatsome_html_after_header', 1 );
+add_action( 'silver_after_header', 'silver_html_after_header', 1 );
 
 if ( get_theme_mod( 'site_loader' ) ) {
 	/**
@@ -1350,14 +1396,14 @@ if ( get_theme_mod( 'site_loader' ) ) {
 	 *
 	 * @return void
 	 */
-	function flatsome_add_page_loader() {
+	function silver_add_page_loader() {
 		if ( get_theme_mod( 'site_loader' ) == 'home' && is_front_page() ) {
 			get_template_part( 'template-parts/header/page-loader' );
 		} elseif ( get_theme_mod( 'site_loader' ) == 'all' ) {
 			get_template_part( 'template-parts/header/page-loader' );
 		}
 	}
-	add_action( 'flatsome_before_header', 'flatsome_add_page_loader', 1 );
+	add_action( 'silver_before_header', 'silver_add_page_loader', 1 );
 }
 
 if ( ! function_exists( 'wp_body_open' ) ) {

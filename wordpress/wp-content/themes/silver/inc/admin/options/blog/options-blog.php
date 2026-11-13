@@ -1,7 +1,7 @@
 <?php
 
-Flatsome_Option::add_panel( 'blog', array(
-	'title'       => __( 'Blog', 'flatsome-admin' ),
+Silver_Option::add_panel( 'blog', array(
+	'title'       => __( 'Blog', 'silver' ),
 ) );
 
 include_once( dirname( __FILE__ ) . '/options-blog-global.php' );
@@ -11,7 +11,7 @@ include_once(dirname( __FILE__ ).'/options-blog-single.php');
 include_once(dirname( __FILE__ ).'/options-blog-featured.php');
 
 
-function flatsome_refresh_blog_partials( WP_Customize_Manager $wp_customize ) {
+function silver_refresh_blog_partials( WP_Customize_Manager $wp_customize ) {
 
   // Abort if selective refresh is not available.
   if ( ! isset( $wp_customize->selective_refresh ) ) {
@@ -44,4 +44,4 @@ function flatsome_refresh_blog_partials( WP_Customize_Manager $wp_customize ) {
 	) );
 
 }
-add_action( 'customize_register', 'flatsome_refresh_blog_partials' );
+add_action( 'customize_register', 'silver_refresh_blog_partials' );

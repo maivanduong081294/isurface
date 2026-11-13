@@ -17,7 +17,7 @@ class Upsell_Widget extends WP_Widget {
 		parent::__construct(
 	 		'upsell_widget', // Base ID
 			'Silver Upsell Products', // Name
-			array( 'description' => __( 'Add upsell products to product pages.', 'flatsome' ), ) // Args
+			array( 'description' => __( 'Add upsell products to product pages.', 'silver' ), ) // Args
 		);
 	}
 
@@ -45,7 +45,7 @@ class Upsell_Widget extends WP_Widget {
 			$title = apply_filters( 'widget_title', $instance['title'] );
 		}
 		else {
-			$title = __( 'Complete the look', 'flatsome' );
+			$title = __( 'Complete the look', 'silver' );
 		}
 
 		$meta_query = WC()->query->get_meta_query();
@@ -113,11 +113,11 @@ class Upsell_Widget extends WP_Widget {
 			$title = $instance[ 'title' ];
 		}
 		else {
-			$title = __( 'Complete the look', 'flatsome' );
+			$title = __( 'Complete the look', 'silver' );
 		}
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title','flatsome'); ?>:</label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title','silver'); ?>:</label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
 		</p>
 		<?php

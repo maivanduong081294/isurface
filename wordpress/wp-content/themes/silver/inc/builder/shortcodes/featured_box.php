@@ -5,7 +5,7 @@ add_ux_builder_shortcode( 'featured_box',
 		'type'      => 'container',
 		'name'      => __( 'Icon Box' ),
 		'category'  => __( 'Content' ),
-		'thumbnail' => flatsome_ux_builder_thumbnail( 'icon_box' ),
+		'thumbnail' => silver_ux_builder_thumbnail( 'icon_box' ),
 		'wrap'      => false,
 		'presets'   => array(
 			array(

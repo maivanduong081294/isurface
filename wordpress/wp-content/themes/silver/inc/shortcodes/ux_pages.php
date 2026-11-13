@@ -92,9 +92,9 @@ function ux_pages($atts) {
         if($style !== 'shade') $style = 'overlay';
         $columns = 0;
         $current_grid = 0;
-        $grid = flatsome_get_grid($grid);
+        $grid = silver_get_grid($grid);
         $grid_total = count($grid);
-        flatsome_get_grid_height($grid_height, $_id);
+        silver_get_grid_height($grid_height, $_id);
       }
 
       // Add Animations
@@ -111,6 +111,8 @@ function ux_pages($atts) {
       // Set image styles
       if($image_hover)  $classes_image[] = 'image-'.$image_hover;
       if($image_hover_alt)  $classes_image[] = 'image-'.$image_hover_alt;
+      // Responsive image size: the smallest screen with a value is the base.
+      $image_height = silver_responsive_base( $atts, 'image_height' ) ?: $image_height;
       if($image_height) $classes_image[] = 'image-cover';
 
       // Text classes
@@ -138,6 +140,7 @@ function ux_pages($atts) {
 
       // Repeater options
       $repeater['id'] = $_id;
+      $repeater['responsive_atts'] = array_merge( (array) $atts, array( 'col_spacing' => $col_spacing, 'text_align' => $text_align ) );
       $repeater['type'] = $type;
       $repeater['style'] = $style;
       $repeater['class'] = $class;
@@ -159,7 +162,7 @@ function ux_pages($atts) {
       $repeater['depth'] = $depth;
       $repeater['depth_hover'] = $depth_hover;
 
-      get_flatsome_repeater_start($repeater);
+      get_silver_repeater_start($repeater);
 
       foreach (  $childpages as $page ) {
 

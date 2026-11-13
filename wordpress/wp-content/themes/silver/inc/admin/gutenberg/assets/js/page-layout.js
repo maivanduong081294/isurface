@@ -4,7 +4,7 @@ wp.domReady(function () {
   var SelectControl = wp.components.SelectControl
   var PluginDocumentSettingPanel = wp.editPost.PluginDocumentSettingPanel
 
-  wp.plugins.registerPlugin('flatsome-page-layout', {
+  wp.plugins.registerPlugin('silver-page-layout', {
     render: function () {
       var dispatch = wp.data.useDispatch('core/editor')
       var selected = wp.data.useSelect(function (select) {
@@ -23,7 +23,7 @@ wp.domReady(function () {
       return el(
         PluginDocumentSettingPanel,
         {
-          name: 'flatsome-page-layout',
+          name: 'silver-page-layout',
           title: 'Page Layout'
         },
         el(SelectControl, {

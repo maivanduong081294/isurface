@@ -2,8 +2,8 @@
 /**
  * Template name: Page - Full Width - Parallax Title
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.18.0
+ * @package          Silver\Templates
+ * @silver-version 3.18.0
  */
 
 get_header(); ?>

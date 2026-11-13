@@ -1,6 +1,6 @@
 <?php
 
-$facebook_accounts = flatsome_facebook_accounts();
+$facebook_accounts = silver_facebook_accounts();
 $default_account   = ! empty( $facebook_accounts )
 	? array_keys( $facebook_accounts )[0]
 	: '';
@@ -113,7 +113,7 @@ $options['layout_options']['options']['type']['options']        = array(
 add_ux_builder_shortcode( 'ux_instagram_feed', array(
   'name'      => __( 'Instagram Feed' ),
   'category'  => __( 'Content' ),
-  'thumbnail' => flatsome_ux_builder_thumbnail( 'instagram_feed' ),
+  'thumbnail' => silver_ux_builder_thumbnail( 'instagram_feed' ),
   'presets'   => array(
     array(
       'name'    => __( 'Default' ),

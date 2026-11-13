@@ -3,8 +3,8 @@
 add_ux_builder_shortcode( 'button', array(
 	'name'      => __( 'Button', 'ux-builder' ),
 	'category'  => __( 'Content', 'ux-builder' ),
-	'template'  => flatsome_ux_builder_template( 'button.html' ),
-	'thumbnail' => flatsome_ux_builder_thumbnail( 'button' ),
+	'template'  => silver_ux_builder_template( 'button.html' ),
+	'thumbnail' => silver_ux_builder_thumbnail( 'button' ),
 	'info'      => '{{ text }}',
 	'inline'    => true,
 	'wrap'      => false,
@@ -12,52 +12,52 @@ add_ux_builder_shortcode( 'button', array(
 	'presets'   => array(
 		array(
 			'name'      => __( 'Simple', 'ux-builder' ),
-			'thumbnail' => flatsome_ux_builder_thumbnail( 'button-simple' ),
+			'thumbnail' => silver_ux_builder_thumbnail( 'button-simple' ),
 			'content'   => '[button text="Click me!"]',
 		),
 		array(
 			'name'      => __( 'Round', 'ux-builder' ),
-			'thumbnail' => flatsome_ux_builder_thumbnail( 'button-round' ),
+			'thumbnail' => silver_ux_builder_thumbnail( 'button-round' ),
 			'content'   => '[button text="Click me!" radius="10"]',
 		),
 		array(
 			'name'      => __( 'Circle', 'ux-builder' ),
-			'thumbnail' => flatsome_ux_builder_thumbnail( 'button-circle' ),
+			'thumbnail' => silver_ux_builder_thumbnail( 'button-circle' ),
 			'content'   => '[button text="Click me!" radius="99"]',
 		),
 		array(
 			'name'      => __( 'Outline', 'ux-builder' ),
-			'thumbnail' => flatsome_ux_builder_thumbnail( 'button-outline' ),
+			'thumbnail' => silver_ux_builder_thumbnail( 'button-outline' ),
 			'content'   => '[button text="Click me!" style="outline"]',
 		),
 		array(
 			'name'      => __( 'Outline Round', 'ux-builder' ),
-			'thumbnail' => flatsome_ux_builder_thumbnail( 'button-outline-round' ),
+			'thumbnail' => silver_ux_builder_thumbnail( 'button-outline-round' ),
 			'content'   => '[button text="Click me!" style="outline" radius="10"]',
 		),
 		array(
 			'name'      => __( 'Outline Circle', 'ux-builder' ),
-			'thumbnail' => flatsome_ux_builder_thumbnail( 'button-outline-circle' ),
+			'thumbnail' => silver_ux_builder_thumbnail( 'button-outline-circle' ),
 			'content'   => '[button text="Click me!" style="outline" radius="99"]',
 		),
 		array(
 			'name'      => __( 'Simple Link', 'ux-builder' ),
-			'thumbnail' => flatsome_ux_builder_thumbnail( 'button-link' ),
+			'thumbnail' => silver_ux_builder_thumbnail( 'button-link' ),
 			'content'   => '[button text="Click me!"  style="link"]',
 		),
 		array(
 			'name'      => __( 'Underline', 'ux-builder' ),
-			'thumbnail' => flatsome_ux_builder_thumbnail( 'button-underline' ),
+			'thumbnail' => silver_ux_builder_thumbnail( 'button-underline' ),
 			'content'   => '[button text="Click me!"  style="underline"]',
 		),
 		array(
 			'name'      => __( 'CTA - Small', 'ux-builder' ),
-			'thumbnail' => flatsome_ux_builder_thumbnail( 'button-call-to-action' ),
+			'thumbnail' => silver_ux_builder_thumbnail( 'button-call-to-action' ),
 			'content'   => '[button text="Click me!" style="shade" depth="3" depth_hover="5" radius="5"]',
 		),
 		array(
 			'name'      => __( 'CTA - Large', 'ux-builder' ),
-			'thumbnail' => flatsome_ux_builder_thumbnail( 'button-call-to-action-large' ),
+			'thumbnail' => silver_ux_builder_thumbnail( 'button-call-to-action-large' ),
 			'content'   => '[button text="Click me!" style="shade" size="larger" depth="4" depth_hover="5" radius="10"]',
 		),
 	),

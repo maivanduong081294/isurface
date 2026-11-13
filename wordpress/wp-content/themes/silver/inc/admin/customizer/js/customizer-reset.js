@@ -1,7 +1,7 @@
 jQuery(function ($) {
-	const $resetButton = jQuery('#flatsome-customizer-reset')
+	const $resetButton = jQuery('#silver-customizer-reset')
 	const $clearTypographyCache = jQuery(
-		'#flatsome-customizer-clear-typography-cache'
+		'#silver-customizer-clear-typography-cache'
 	)
 
 	$resetButton.on('click', function (event) {
@@ -10,10 +10,10 @@ jQuery(function ($) {
 		var data = {
 			wp_customize: 'on',
 			action: 'customizer_reset',
-			nonce: _FlatsomeCustomizerReset.nonce.reset,
+			nonce: _SilverCustomizerReset.nonce.reset,
 		}
 
-		var r = confirm(_FlatsomeCustomizerReset.confirm)
+		var r = confirm(_SilverCustomizerReset.confirm)
 
 		if (!r) return
 
@@ -31,7 +31,7 @@ jQuery(function ($) {
 		const data = {
 			wp_customize: 'on',
 			action: 'customizer_clear_typography_cache',
-			nonce: _FlatsomeCustomizerReset.nonce.reset,
+			nonce: _SilverCustomizerReset.nonce.reset,
 		}
 
 		const r = confirm(

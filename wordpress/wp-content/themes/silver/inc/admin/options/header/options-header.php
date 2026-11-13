@@ -5,9 +5,9 @@
  * Header Panel
  *************/
 
-Flatsome_Option::add_panel( 'header', array(
-	'title'       => __( 'Header', 'flatsome-admin' ),
-	'description' => __( 'Change Theme Header Options here.', 'flatsome-admin' ),
+Silver_Option::add_panel( 'header', array(
+	'title'       => __( 'Header', 'silver' ),
+	'description' => __( 'Change Theme Header Options here.', 'silver' ),
 ) );
 
 

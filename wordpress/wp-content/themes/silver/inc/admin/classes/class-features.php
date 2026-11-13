@@ -2,15 +2,15 @@
 /**
  * Features main class.
  *
- * @package Flatsome\Admin
+ * @package Silver\Admin
  */
 
-namespace Flatsome\Admin;
+namespace Silver\Admin;
 
 /**
  * Features Class
  *
- * @package Flatsome\Admin
+ * @package Silver\Admin
  */
 final class Features {
 
@@ -26,17 +26,17 @@ final class Features {
 	 */
 	private function __construct() {
 		add_settings_section(
-			'flatsome_features_section',
-			__( 'Features', 'flatsome' ),
+			'silver_features_section',
+			__( 'Features', 'silver' ),
 			[ $this, 'render_features_section' ],
-			'flatsome-features'
+			'silver-features'
 		);
 
 		add_settings_section(
-			'flatsome_experimental_features_section',
-			__( 'Experimental features', 'flatsome' ),
+			'silver_experimental_features_section',
+			__( 'Experimental features', 'silver' ),
 			[ $this, 'render_experimental_features_section' ],
-			'flatsome-features'
+			'silver-features'
 		);
 
 		$this->add_features(
@@ -45,7 +45,7 @@ final class Features {
 			]
 		);
 
-		register_setting( 'flatsome-features', 'flatsome_features' );
+		register_setting( 'silver-features', 'flatsome_features' );
 	}
 
 	/**
@@ -59,8 +59,8 @@ final class Features {
 				$id,
 				$args['title'],
 				[ $this,  'render_field' ],
-				'flatsome-features',
-				'flatsome_' . $args['section'] . '_section',
+				'silver-features',
+				'silver_' . $args['section'] . '_section',
 				array_merge( $args, [ 'id' => $id ] )
 			);
 		}
@@ -77,10 +77,10 @@ final class Features {
 	public function render_experimental_features_section() {
 		global $wp_settings_fields;
 
-		if ( empty( $wp_settings_fields['flatsome-features']['flatsome_experimental_features_section'] ) ) {
-			echo '<p><em>' . esc_html__( 'There are currently no experimental features in development.', 'flatsome' ) . '</em></p>';
+		if ( empty( $wp_settings_fields['silver-features']['silver_experimental_features_section'] ) ) {
+			echo '<p><em>' . esc_html__( 'There are currently no experimental features in development.', 'silver' ) . '</em></p>';
 		} else {
-			echo '<p class="description">' . esc_html__( "Features that are testable while they're in development. These features are likely to change, so avoid using them in production.", 'flatsome' ) . '</p>';
+			echo '<p class="description">' . esc_html__( "Features that are testable while they're in development. These features are likely to change, so avoid using them in production.", 'silver' ) . '</p>';
 		}
 	}
 
@@ -92,8 +92,8 @@ final class Features {
 	public function render_field( array $args ) {
 		global $wp_version;
 
-		$value = flatsome_is_feature_enabled( $args['id'] ) ? 1 : 0;
-		$id    = 'flatsome-feature-' . $args['id'];
+		$value = silver_is_feature_enabled( $args['id'] ) ? 1 : 0;
+		$id    = 'silver-feature-' . $args['id'];
 
 		$is_php_supported = isset( $args['requires_php'] ) ? version_compare( PHP_VERSION, $args['requires_php'], '>=' ) : true;
 		$is_wp_supported  = isset( $args['requires_at_least'] ) ? version_compare( $wp_version, $args['requires_at_least'], '>=' ) : true;
@@ -129,11 +129,11 @@ final class Features {
 			echo '<div style="' . esc_attr( $styles ) . '">';
 			if ( ! $is_php_supported ) {
 				// translators: %s: PHP version.
-				echo '<p class="description">' . sprintf( esc_html__( 'This feature requires PHP version %s or higher.', 'flatsome' ), $args['requires_php'] ) . '</p>';
+				echo '<p class="description">' . sprintf( esc_html__( 'This feature requires PHP version %s or higher.', 'silver' ), $args['requires_php'] ) . '</p>';
 			}
 			if ( ! $is_wp_supported ) {
 				// translators: %s: WordPress version.
-				echo '<p class="description">' . sprintf( esc_html__( 'This feature requires WordPress version %s or higher.', 'flatsome' ), $args['requires_at_least'] ) . '</p>';
+				echo '<p class="description">' . sprintf( esc_html__( 'This feature requires WordPress version %s or higher.', 'silver' ), $args['requires_at_least'] ) . '</p>';
 			}
 			echo '</div>';
 		}

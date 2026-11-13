@@ -2,26 +2,26 @@
 /**
  * Add assets to Customizer
  *
- * @package Flatsome
+ * @package Silver
  */
 
 /**
  * Enqueue custom stylesheets for the Customizer controls.
  */
-function flatsome_enqueue_customizer_stylesheet() {
-	flatsome_enqueue_asset( 'flatsome-customizer-admin-js', 'admin/customizer-admin' );
-	wp_enqueue_style( 'flatsome-header-builder-css', get_template_directory_uri() . '/assets/css/admin/admin-header-builder.css', [], flatsome()->version() );
-	wp_enqueue_style( 'flatsome-customizer-admin', get_template_directory_uri() . '/assets/css/admin/admin-customizer.css', [], flatsome()->version() );
+function silver_enqueue_customizer_stylesheet() {
+	silver_enqueue_asset( 'silver-customizer-admin-js', 'admin/customizer-admin' );
+	wp_enqueue_style( 'silver-header-builder-css', get_template_directory_uri() . '/assets/css/admin/admin-header-builder.css', [], silver()->version() );
+	wp_enqueue_style( 'silver-customizer-admin', get_template_directory_uri() . '/assets/css/admin/admin-customizer.css', [], silver()->version() );
 }
 
-add_action( 'customize_controls_print_styles', 'flatsome_enqueue_customizer_stylesheet' );
+add_action( 'customize_controls_print_styles', 'silver_enqueue_customizer_stylesheet' );
 
 /**
  * Enqueue custom stylesheets and scripts for the Customizer live preview.
  */
-function flatsome_customizer_live_preview() {
-	flatsome_enqueue_asset( 'flatsome-customizer-frontend-js', 'admin/customizer-frontend' );
-	wp_enqueue_style( 'flatsome-customizer-preview', get_template_directory_uri() . '/assets/css/admin/admin-frontend.css', [], flatsome()->version() );
+function silver_customizer_live_preview() {
+	silver_enqueue_asset( 'silver-customizer-frontend-js', 'admin/customizer-frontend' );
+	wp_enqueue_style( 'silver-customizer-preview', get_template_directory_uri() . '/assets/css/admin/admin-frontend.css', [], silver()->version() );
 }
 
-add_action( 'customize_preview_init', 'flatsome_customizer_live_preview' );
+add_action( 'customize_preview_init', 'silver_customizer_live_preview' );

@@ -62,16 +62,16 @@ class Featured_Item_Post_Type {
 	 */
 	protected function register_post_type() {
 		$labels = array(
-			'name'               => __( 'Portfolio', 'flatsome-admin' ),
-			'singular_name'      => __( 'Portfolio', 'flatsome-admin' ),
-			'add_new'            => __( 'Add New', 'flatsome-admin' ),
-			'add_new_item'       => __( 'Add New', 'flatsome-admin' ),
-			'edit_item'          => __( 'Edit Portfolio', 'flatsome-admin' ),
-			'new_item'           => __( 'Add New Portfolio', 'flatsome-admin' ),
-			'view_item'          => __( 'View Portfolio', 'flatsome-admin' ),
-			'search_items'       => __( 'Search Portfolio', 'flatsome-admin' ),
-			'not_found'          => __( 'No items found', 'flatsome-admin' ),
-			'not_found_in_trash' => __( 'No items found in trash', 'flatsome-admin' ),
+			'name'               => __( 'Portfolio', 'silver' ),
+			'singular_name'      => __( 'Portfolio', 'silver' ),
+			'add_new'            => __( 'Add New', 'silver' ),
+			'add_new_item'       => __( 'Add New', 'silver' ),
+			'edit_item'          => __( 'Edit Portfolio', 'silver' ),
+			'new_item'           => __( 'Add New Portfolio', 'silver' ),
+			'view_item'          => __( 'View Portfolio', 'silver' ),
+			'search_items'       => __( 'Search Portfolio', 'silver' ),
+			'not_found'          => __( 'No items found', 'silver' ),
+			'not_found_in_trash' => __( 'No items found in trash', 'silver' ),
 		);
 
 		$args = array(
@@ -108,22 +108,22 @@ class Featured_Item_Post_Type {
 	 */
 	protected function register_taxonomy_tag() {
 		$labels = array(
-			'name'                       => __( 'Portfolio Tags', 'flatsome-admin' ),
-			'singular_name'              => __( 'Tag', 'flatsome-admin' ),
-			'menu_name'                  => __( 'Tags', 'flatsome-admin' ),
-			'edit_item'                  => __( 'Edit Tag', 'flatsome-admin' ),
-			'update_item'                => __( 'Update Tag', 'flatsome-admin' ),
-			'add_new_item'               => __( 'Add New Tag', 'flatsome-admin' ),
-			'new_item_name'              => __( 'New Tag Name', 'flatsome-admin' ),
-			'parent_item'                => __( 'Parent Tag', 'flatsome-admin' ),
-			'parent_item_colon'          => __( 'Parent Tag:', 'flatsome-admin' ),
-			'all_items'                  => __( 'All Tags', 'flatsome-admin' ),
-			'search_items'               => __( 'Search Tags', 'flatsome-admin' ),
-			'popular_items'              => __( 'Popular Tags', 'flatsome-admin' ),
-			'separate_items_with_commas' => __( 'Separate tags with commas', 'flatsome-admin' ),
-			'add_or_remove_items'        => __( 'Add or remove tags', 'flatsome-admin' ),
-			'choose_from_most_used'      => __( 'Choose from the most used tags', 'flatsome-admin' ),
-			'not_found'                  => __( 'No tags found.', 'flatsome-admin' ),
+			'name'                       => __( 'Portfolio Tags', 'silver' ),
+			'singular_name'              => __( 'Tag', 'silver' ),
+			'menu_name'                  => __( 'Tags', 'silver' ),
+			'edit_item'                  => __( 'Edit Tag', 'silver' ),
+			'update_item'                => __( 'Update Tag', 'silver' ),
+			'add_new_item'               => __( 'Add New Tag', 'silver' ),
+			'new_item_name'              => __( 'New Tag Name', 'silver' ),
+			'parent_item'                => __( 'Parent Tag', 'silver' ),
+			'parent_item_colon'          => __( 'Parent Tag:', 'silver' ),
+			'all_items'                  => __( 'All Tags', 'silver' ),
+			'search_items'               => __( 'Search Tags', 'silver' ),
+			'popular_items'              => __( 'Popular Tags', 'silver' ),
+			'separate_items_with_commas' => __( 'Separate tags with commas', 'silver' ),
+			'add_or_remove_items'        => __( 'Add or remove tags', 'silver' ),
+			'choose_from_most_used'      => __( 'Choose from the most used tags', 'silver' ),
+			'not_found'                  => __( 'No tags found.', 'silver' ),
 		);
 
 		$args = array(
@@ -153,22 +153,22 @@ class Featured_Item_Post_Type {
 
 
 		$labels = array(
-			'name'                       => __( 'Portfolio Categories', 'flatsome-admin' ),
-			'singular_name'              => __( 'Category', 'flatsome-admin' ),
-			'menu_name'                  => __( 'Categories', 'flatsome-admin' ),
-			'edit_item'                  => __( 'Edit Category', 'flatsome-admin' ),
-			'update_item'                => __( 'Update Category', 'flatsome-admin' ),
-			'add_new_item'               => __( 'Add New Category', 'flatsome-admin' ),
-			'new_item_name'              => __( 'New Category Name', 'flatsome-admin' ),
-			'parent_item'                => __( 'Parent Category', 'flatsome-admin' ),
-			'parent_item_colon'          => __( 'Parent Category:', 'flatsome-admin' ),
-			'all_items'                  => __( 'All Categories', 'flatsome-admin' ),
-			'search_items'               => __( 'Search Categories', 'flatsome-admin' ),
-			'popular_items'              => __( 'Popular Categories', 'flatsome-admin' ),
-			'separate_items_with_commas' => __( 'Separate categories with commas', 'flatsome-admin' ),
-			'add_or_remove_items'        => __( 'Add or remove categories', 'flatsome-admin' ),
-			'choose_from_most_used'      => __( 'Choose from the most used categories', 'flatsome-admin' ),
-			'not_found'                  => __( 'No categories found.', 'flatsome-admin' ),
+			'name'                       => __( 'Portfolio Categories', 'silver' ),
+			'singular_name'              => __( 'Category', 'silver' ),
+			'menu_name'                  => __( 'Categories', 'silver' ),
+			'edit_item'                  => __( 'Edit Category', 'silver' ),
+			'update_item'                => __( 'Update Category', 'silver' ),
+			'add_new_item'               => __( 'Add New Category', 'silver' ),
+			'new_item_name'              => __( 'New Category Name', 'silver' ),
+			'parent_item'                => __( 'Parent Category', 'silver' ),
+			'parent_item_colon'          => __( 'Parent Category:', 'silver' ),
+			'all_items'                  => __( 'All Categories', 'silver' ),
+			'search_items'               => __( 'Search Categories', 'silver' ),
+			'popular_items'              => __( 'Popular Categories', 'silver' ),
+			'separate_items_with_commas' => __( 'Separate categories with commas', 'silver' ),
+			'add_or_remove_items'        => __( 'Add or remove categories', 'silver' ),
+			'choose_from_most_used'      => __( 'Choose from the most used categories', 'silver' ),
+			'not_found'                  => __( 'No categories found.', 'silver' ),
 		);
 
 		$args = array(
@@ -266,7 +266,7 @@ class Featured_Item_Post_Type {
 	 * @return array Amended columns.
 	 */
 	public function add_thumbnail_column( $columns ) {
-		$column_thumbnail = array( 'thumbnail' => __( 'Thumbnail', 'flatsome-admin' ) );
+		$column_thumbnail = array( 'thumbnail' => __( 'Thumbnail', 'silver' ) );
 		return array_slice( $columns, 0, 2, true ) + $column_thumbnail + array_slice( $columns, 1, null, true );
 	}
 

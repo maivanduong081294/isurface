@@ -2,14 +2,14 @@
 /**
  * Checkout focused layout.
  *
- * @package          Flatsome/WooCommerce/Templates
- * @flatsome-version 3.16.0
+ * @package          Silver/WooCommerce/Templates
+ * @silver-version 3.16.0
  */
 
 do_action( 'get_header', null, array() );
 ?>
 <!DOCTYPE html>
-<html <?php language_attributes(); ?> class="<?php flatsome_html_classes(); ?>">
+<html <?php language_attributes(); ?> class="<?php silver_html_classes(); ?>">
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>"/>
 	<link rel="profile" href="http://gmpg.org/xfn/11"/>
@@ -20,12 +20,12 @@ do_action( 'get_header', null, array() );
 
 <body <?php body_class(); ?>>
 
-<?php do_action( 'flatsome_after_body_open' ); ?>
+<?php do_action( 'silver_after_body_open' ); ?>
 <?php wp_body_open(); ?>
 
 <div id="main-content" class="site-main" style="max-width:1000px; margin:60px auto 60px auto;">
 
-	<div id="main" class="page-wrapper box-shadow page-checkout <?php flatsome_main_classes(); ?>" style="padding:15px 30px 15px;">
+	<div id="main" class="page-wrapper box-shadow page-checkout <?php silver_main_classes(); ?>" style="padding:15px 30px 15px;">
 
 		<div class="focused-checkout-logo text-center" style="padding-top: 30px; padding-bottom: 30px;">
 			<div id="logo" class="logo"><?php get_template_part( 'template-parts/header/partials/element', 'logo' ); ?></div>

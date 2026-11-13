@@ -2,7 +2,7 @@
 /**
  * Icon helper functions.
  *
- * @package Flatsome
+ * @package Silver
  */
 
 /**
@@ -80,7 +80,7 @@ function silver_fontawesome_icon_map() {
  *
  * @return string Icon markup.
  */
-function get_flatsome_icon( $name, $size = null, $atts = null ) {
+function get_silver_icon( $name, $size = null, $atts = null ) {
 	$default_atts = array(
 		'class'       => [],
 		'aria-hidden' => 'true',
@@ -102,15 +102,15 @@ function get_flatsome_icon( $name, $size = null, $atts = null ) {
 	}
 	$atts['class'][] = esc_attr( $name );
 
-	$icon_html = '<i ' . flatsome_html_atts( $atts ) . '></i>';
+	$icon_html = '<i ' . silver_html_atts( $atts ) . '></i>';
 
-	return apply_filters( 'flatsome_icon', $icon_html, $name, $size, $atts );
+	return apply_filters( 'silver_icon', $icon_html, $name, $size, $atts );
 }
 
 /**
  * Load self-hosted Font Awesome before the theme styles.
  */
-function flatsome_add_icons_css() {
+function silver_add_icons_css() {
 	wp_enqueue_style(
 		'silver-fontawesome',
 		get_template_directory_uri() . '/assets/css/icons/fontawesome/css/all.min.css',
@@ -119,4 +119,4 @@ function flatsome_add_icons_css() {
 	);
 }
 
-add_action( 'wp_enqueue_scripts', 'flatsome_add_icons_css', 90 );
+add_action( 'wp_enqueue_scripts', 'silver_add_icons_css', 90 );

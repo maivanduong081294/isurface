@@ -2,8 +2,8 @@
 /**
  * Quick View.
  *
- * @package          Flatsome/WooCommerce/Templates
- * @flatsome-version 3.19.7
+ * @package          Silver/WooCommerce/Templates
+ * @silver-version 3.19.7
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -17,8 +17,8 @@ if ( post_password_required() ) {
 	return;
 }
 
-do_action( 'flatsome_before_single_product_lightbox' );
-do_action_deprecated( 'wc_quick_view_before_single_product', array(), '3.18.0', 'flatsome_before_single_product_lightbox' );
+do_action( 'silver_before_single_product_lightbox' );
+do_action_deprecated( 'wc_quick_view_before_single_product', array(), '3.18.0', 'silver_before_single_product_lightbox' );
 ?>
 <div class="product-quick-view-container">
 	<div id="product-<?php the_ID(); ?>" <?php wc_product_class( 'row row-collapse mb-0', $product ); ?>>
@@ -55,8 +55,8 @@ do_action_deprecated( 'wc_quick_view_before_single_product', array(), '3.18.0', 
 				?>
 			</div>
 
-			<?php do_action( 'flatsome_single_product_lightbox_product_gallery' ); ?>
-			<?php do_action_deprecated( 'woocommerce_before_single_product_lightbox_summary', array(), '3.18.0', 'flatsome_single_product_lightbox_product_gallery' ); ?>
+			<?php do_action( 'silver_single_product_lightbox_product_gallery' ); ?>
+			<?php do_action_deprecated( 'woocommerce_before_single_product_lightbox_summary', array(), '3.18.0', 'silver_single_product_lightbox_product_gallery' ); ?>
 		</div>
 
 		<div class="product-info summary xlarge-6 col entry-summary" style="font-size:90%;">
@@ -64,13 +64,13 @@ do_action_deprecated( 'wc_quick_view_before_single_product', array(), '3.18.0', 
 				<a class="plain" href="<?php the_permalink(); ?>"><h1><?php the_title(); ?></h1></a>
 				<div class="is-divider small"></div>
 
-				<?php do_action( 'flatsome_single_product_lightbox_summary' ); ?>
-				<?php do_action_deprecated( 'woocommerce_single_product_lightbox_summary', array(), '3.18.0', 'flatsome_single_product_lightbox_summary' ); ?>
+				<?php do_action( 'silver_single_product_lightbox_summary' ); ?>
+				<?php do_action_deprecated( 'woocommerce_single_product_lightbox_summary', array(), '3.18.0', 'silver_single_product_lightbox_summary' ); ?>
 			</div>
 		</div>
 	</div>
 </div>
 
 <?php
-do_action( 'flatsome_after_single_product_lightbox' );
-do_action_deprecated( 'wc_quick_view_after_single_product', array(), '3.18.0', 'flatsome_after_single_product_lightbox' );
+do_action( 'silver_after_single_product_lightbox' );
+do_action_deprecated( 'wc_quick_view_after_single_product', array(), '3.18.0', 'silver_after_single_product_lightbox' );

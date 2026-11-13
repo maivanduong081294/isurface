@@ -1,7 +1,7 @@
 <?php
 
 
-function flatsome_sidebar_shortcode( $atts ){
+function silver_sidebar_shortcode( $atts ){
 
   extract( ux_builder_shortcode_atts( array(
     '_id' => '',
@@ -29,4 +29,4 @@ function flatsome_sidebar_shortcode( $atts ){
 	return '<ul'.( $_id ? ' id="'.esc_attr( $_id ).'"' : '' ).' class="'.esc_attr($classes).'">'.$sidebar.'</ul>';
 
 }
-add_shortcode('ux_sidebar', 'flatsome_sidebar_shortcode');
+add_shortcode('ux_sidebar', 'silver_sidebar_shortcode');

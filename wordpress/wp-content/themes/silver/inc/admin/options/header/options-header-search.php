@@ -4,21 +4,21 @@
  * Search
  *************/
 
-Flatsome_Option::add_section( 'header_search', array(
-	'title'       => __( 'Search', 'flatsome-admin' ),
+Silver_Option::add_section( 'header_search', array(
+	'title'       => __( 'Search', 'silver' ),
 	'panel'       => 'header',
-	//'description' => __( 'This is the section description', 'flatsome-admin' ),
+	//'description' => __( 'This is the section description', 'silver' ),
 ) );
 
 
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'radio-image',
 	'settings'     => 'search_icon_style',
-	'label'       => __( 'Search Icon Style', 'flatsome-admin' ),
+	'label'       => __( 'Search Icon Style', 'silver' ),
 	'section'     => 'header_search',
 	'default'     => '',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'choices'     => array(
 		'' => $image_url . 'search-icon-plain.svg',
 		'outline' => $image_url . 'search-icon-outline.svg',
@@ -29,63 +29,63 @@ Flatsome_Option::add_field( 'option',  array(
 ));
 
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'radio-buttonset',
 	'settings'     => 'header_search_style',
-	'transport' => flatsome_customizer_transport(),
-	'label'       => __( 'Search Icon Type', 'flatsome-admin' ),
-	//'description' => __( 'This is the control description', 'flatsome-admin' ),
-	//'help'        => __( 'This is some extra help. You can use this to add some additional instructions for users. The main description should go in the "description" of the field, this is only to be used for help tips.', 'flatsome-admin' ),
+	'transport' => silver_customizer_transport(),
+	'label'       => __( 'Search Icon Type', 'silver' ),
+	//'description' => __( 'This is the control description', 'silver' ),
+	//'help'        => __( 'This is some extra help. You can use this to add some additional instructions for users. The main description should go in the "description" of the field, this is only to be used for help tips.', 'silver' ),
 	'section'     => 'header_search',
 	'default'     => 'dropdown',
 	'choices'     => array(
-		'dropdown' => __( 'Dropdown', 'flatsome-admin' ),
-		'lightbox' => __( 'Lightbox', 'flatsome-admin' ),
+		'dropdown' => __( 'Dropdown', 'silver' ),
+		'lightbox' => __( 'Lightbox', 'silver' ),
 	),
 ));
 
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'radio-buttonset',
 	'settings'     => 'header_search_form_style',
-	'label'       => __( 'Search Form Style', 'flatsome-admin' ),
-	//'description' => __( 'This is the control description', 'flatsome-admin' ),
-	//'help'        => __( 'This is some extra help. You can use this to add some additional instructions for users. The main description should go in the "description" of the field, this is only to be used for help tips.', 'flatsome-admin' ),
+	'label'       => __( 'Search Form Style', 'silver' ),
+	//'description' => __( 'This is the control description', 'silver' ),
+	//'help'        => __( 'This is some extra help. You can use this to add some additional instructions for users. The main description should go in the "description" of the field, this is only to be used for help tips.', 'silver' ),
 	'section'     => 'header_search',
 	'default'     => '',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'choices'     => array(
-		'' => __( 'Normal', 'flatsome-admin' ),
-		'flat' => __('Flat', 'flatsome-admin' ),
+		'' => __( 'Normal', 'silver' ),
+		'flat' => __('Flat', 'silver' ),
 	),
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
   'type'        => 'text',
   'settings'     => 'search_placeholder',
-  'transport' => flatsome_customizer_transport(),
-  'label'       => __( 'Placeholder text', 'flatsome-admin' ),
+  'transport' => silver_customizer_transport(),
+  'label'       => __( 'Placeholder text', 'silver' ),
   'section'     => 'header_search',
   'placeholder' => 'Search...',
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'checkbox',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'settings'     => 'header_search_categories',
-	'label'       => __( 'Search Categories', 'flatsome-admin' ),
-	'help'        => __( 'Search categories', 'flatsome-admin' ),
+	'label'       => __( 'Search Categories', 'silver' ),
+	'help'        => __( 'Search categories', 'silver' ),
 	'section'     => 'header_search',
 	'default'     => 0,
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'slider',
 	'settings'     => 'header_search_width',
-	'label'       => __( 'Header Search form width', 'flatsome-admin' ),
+	'label'       => __( 'Header Search form width', 'silver' ),
 	'section'     => 'header_search',
 	'default'     => '60',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'choices'     => array(
 		'min'  => 10,
 		'max'  => 100,
@@ -93,7 +93,7 @@ Flatsome_Option::add_field( 'option',  array(
 	)
 ));
 
-function flatsome_refresh_header_search_partials( WP_Customize_Manager $wp_customize ) {
+function silver_refresh_header_search_partials( WP_Customize_Manager $wp_customize ) {
 
 	if ( ! isset( $wp_customize->selective_refresh ) ) {
 	      return;
@@ -117,4 +117,4 @@ function flatsome_refresh_header_search_partials( WP_Customize_Manager $wp_custo
 	    },
 	) );
 }
-add_action( 'customize_register', 'flatsome_refresh_header_search_partials' );
+add_action( 'customize_register', 'silver_refresh_header_search_partials' );

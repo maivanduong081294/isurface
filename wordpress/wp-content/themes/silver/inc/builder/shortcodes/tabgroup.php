@@ -5,8 +5,8 @@ add_ux_builder_shortcode( 'tabgroup', array(
     'name' => __( 'Tabs' ),
     'image' => '',
     'category' => __( 'Content' ),
-    'thumbnail' =>  flatsome_ux_builder_thumbnail( 'tabs' ),
-    'template' => flatsome_ux_builder_template( 'tabgroup.html' ),
+    'thumbnail' =>  silver_ux_builder_thumbnail( 'tabs' ),
+    'template' => silver_ux_builder_template( 'tabgroup.html' ),
     'tools' => 'shortcodes/tabgroup/tabgroup.tools.html',
     'info' => '{{ title }}',
     'allow' => array( 'tab' ),
@@ -74,6 +74,7 @@ add_ux_builder_shortcode( 'tabgroup', array(
         ),
 
         'align' => array(
+            'responsive' => true,
             'type' => 'radio-buttons',
             'heading' => 'Tabs Align',
             'default' => 'left',

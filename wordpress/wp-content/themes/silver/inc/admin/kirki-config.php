@@ -3,14 +3,14 @@
  * Configuration for the Kirki Customizer
  */
 
-if ( ! function_exists( 'flatsome_kirki_update_url' ) ) {
-	function flatsome_kirki_update_url( $config ) {
+if ( ! function_exists( 'silver_kirki_update_url' ) ) {
+	function silver_kirki_update_url( $config ) {
 		$config['url_path'] = get_template_directory_uri() . '/inc/admin/kirki/';
 
 		return $config;
 	}
 }
-add_filter( 'kirki_config', 'flatsome_kirki_update_url' );
+add_filter( 'kirki_config', 'silver_kirki_update_url' );
 
 /**
  * Disable default Kirki modules.
@@ -19,7 +19,7 @@ add_filter( 'kirki_config', 'flatsome_kirki_update_url' );
  *
  * @return array Filtered list of modules.
  */
-function flatsome_kirki_modules( $modules ) {
+function silver_kirki_modules( $modules ) {
 
 	// If Google CDN is enabled we don't load the css module to prevent Kirki generating css and download fonts.
 	if ( get_theme_mod( 'google_fonts_cdn' ) ) {
@@ -35,12 +35,12 @@ function flatsome_kirki_modules( $modules ) {
 	return $modules;
 }
 
-add_filter( 'kirki_modules', 'flatsome_kirki_modules' );
+add_filter( 'kirki_modules', 'silver_kirki_modules' );
 
 /**
  * Custom option sanitize callback.
  */
-function flatsome_custom_sanitize( $content ) {
+function silver_custom_sanitize( $content ) {
 	return $content;
 }
 
@@ -52,7 +52,7 @@ function flatsome_custom_sanitize( $content ) {
  * @return string
  * @see \Kirki_Output_Property_Font_Family
  */
-function flatsome_parse_font_family( $family ) {
+function silver_parse_font_family( $family ) {
 	if ( ! is_string( $family ) ) {
 		return '';
 	}
@@ -81,7 +81,7 @@ function flatsome_parse_font_family( $family ) {
 	return html_entity_decode( $family, ENT_QUOTES );
 }
 
-Flatsome_Option::add_config( 'option', array(
+Silver_Option::add_config( 'option', array(
 	'option_type'    => 'theme_mod',
 	'capability'     => 'edit_theme_options',
 	'disable_output' => false,

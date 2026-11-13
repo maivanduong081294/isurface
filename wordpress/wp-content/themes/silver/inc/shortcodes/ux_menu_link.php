@@ -2,7 +2,7 @@
 /**
  * Registers the `ux_menu_link` shortcode.
  *
- * @package flatsome
+ * @package silver
  */
 
 /**
@@ -14,12 +14,12 @@
  *
  * @return string
  */
-function flatsome_render_ux_menu_link_shortcode( $atts, $content, $tag ) {
+function silver_render_ux_menu_link_shortcode( $atts, $content, $tag ) {
 	global $wp_query;
 
 	// Resolved before the attributes are filtered: the object behind the link
 	// is needed for the active state.
-	$link_data = flatsome_get_link_data( $atts );
+	$link_data = silver_get_link_data( $atts );
 
 	$atts = ux_builder_shortcode_atts(
 		array(
@@ -47,7 +47,7 @@ function flatsome_render_ux_menu_link_shortcode( $atts, $content, $tag ) {
 
 	$classes = array( 'ux-menu-link flex menu-item' );
 	$link    = trim( $atts['link'] );
-	$icon    = $atts['icon'] ? get_flatsome_icon( 'ux-menu-link__icon text-center ' . $atts['icon'] ) : '';
+	$icon    = $atts['icon'] ? get_silver_icon( 'ux-menu-link__icon text-center ' . $atts['icon'] ) : '';
 
 	$is_active = false;
 
@@ -117,7 +117,7 @@ function flatsome_render_ux_menu_link_shortcode( $atts, $content, $tag ) {
 
 	?>
 	<div<?php if ( ! empty( $atts['_id'] ) ) : ?> id="<?php echo esc_attr( $atts['_id'] ); ?>"<?php endif; ?> class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>">
-		<a class="ux-menu-link__link flex" href="<?php echo esc_url( $link ); ?>" <?php echo flatsome_parse_target_rel( $link_atts, true ); ?>>
+		<a class="ux-menu-link__link flex" href="<?php echo esc_url( $link ); ?>" <?php echo silver_parse_target_rel( $link_atts, true ); ?>>
 			<?php echo $icon; ?>
 			<span class="ux-menu-link__text">
 				<?php echo esc_html( $atts['text'] ); ?>
@@ -128,4 +128,4 @@ function flatsome_render_ux_menu_link_shortcode( $atts, $content, $tag ) {
 
 	return ob_get_clean();
 }
-add_shortcode( 'ux_menu_link', 'flatsome_render_ux_menu_link_shortcode' );
+add_shortcode( 'ux_menu_link', 'silver_render_ux_menu_link_shortcode' );

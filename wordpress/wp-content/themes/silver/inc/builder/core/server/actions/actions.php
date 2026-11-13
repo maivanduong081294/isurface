@@ -7,7 +7,7 @@ function ux_builder_register_post_types()
 {
 	register_post_type('ux_template', array(
 		'labels'             => array(
-			'name' => __('UX Templates', 'flatsome'),
+			'name' => __('UX Templates', 'silver'),
 		),
 		'description'        => '',
 		'public'             => false,
@@ -95,7 +95,7 @@ function ux_builder_admin_bar_link()
 
 	// Add link for editing custom product layout block.
 	if ($is_woocommerce && is_product() && array_key_exists('blocks', $post_types)) {
-		$block    = flatsome_product_block($post->ID);
+		$block    = silver_product_block($post->ID);
 		$the_post = $block ? get_post($block['id']) : null;
 		if ($the_post) {
 			$wp_admin_bar->add_menu(array(

@@ -2,16 +2,16 @@
 /**
  * Footer.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.19.9
+ * @package          Silver\Templates
+ * @silver-version 3.19.9
  */
 
-do_action('flatsome_before_footer'); ?>
+do_action('silver_before_footer'); ?>
 
 <!-- FOOTER 1 -->
 <?php if ( is_active_sidebar( 'sidebar-footer-1' ) && get_theme_mod('footer_1', 1) ) : ?>
 <div class="footer-widgets footer footer-1">
-		<div class="<?php echo flatsome_footer_row_style('footer-1'); ?> mb-0">
+		<div class="<?php echo silver_footer_row_style('footer-1'); ?> mb-0">
 	   		<?php dynamic_sidebar('sidebar-footer-1'); ?>
 		</div>
 </div>
@@ -20,12 +20,12 @@ do_action('flatsome_before_footer'); ?>
 <!-- FOOTER 2 -->
 <?php if ( is_active_sidebar( 'sidebar-footer-2' )  && get_theme_mod('footer_2', 1) ) : ?>
 <div class="footer-widgets footer footer-2 <?php if ( get_theme_mod( 'footer_2_color', 'dark' ) == 'dark') echo 'dark'; ?>">
-		<div class="<?php echo flatsome_footer_row_style('footer-2'); ?> mb-0">
+		<div class="<?php echo silver_footer_row_style('footer-2'); ?> mb-0">
 	   		<?php dynamic_sidebar('sidebar-footer-2'); ?>
 		</div>
 </div>
 <?php endif; ?>
 
-<?php do_action('flatsome_after_footer'); ?>
+<?php do_action('silver_after_footer'); ?>
 
 <?php get_template_part('template-parts/footer/footer-absolute'); ?>

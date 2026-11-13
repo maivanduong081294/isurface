@@ -82,7 +82,7 @@ function featured_box( $atts, $content = null ) {
 	ob_start();
 	?>
 
-	<?php if ( $link ) echo '<a class="plain" href="' . esc_url( $link ) . '"' . flatsome_parse_target_rel( $link_atts ) . '>'; ?>
+	<?php if ( $link ) echo '<a class="plain" href="' . esc_url( $link ) . '"' . silver_parse_target_rel( $link_atts ) . '>'; ?>
 	<div<?php if ( $_id ) : ?> id="<?php echo esc_attr( $_id ); ?>"<?php endif; ?> class="icon-box <?php echo esc_attr( $classes ); ?>" <?php if ( $tooltip )
 		echo 'title="' . esc_attr( $tooltip ) . '"' ?> <?php echo get_shortcode_inline_css( $css_args_out ); ?>>
 		<?php if ( $img || $use_icon ) { ?>
@@ -92,9 +92,9 @@ function featured_box( $atts, $content = null ) {
 				<div class="icon">
 					<div class="icon-inner" <?php echo get_shortcode_inline_css( $css_args ); ?>>
 						<?php if ( $use_icon ) : ?>
-							<?php echo get_flatsome_icon( $icon, $icon_size ); ?>
+							<?php echo get_silver_icon( $icon, $icon_size ); ?>
 						<?php else : ?>
-							<?php echo flatsome_get_image( $img, $size = 'medium', $alt = $title, $inline_svg ); ?>
+							<?php echo silver_get_image( $img, $size = 'medium', $alt = $title, $inline_svg ); ?>
 						<?php endif; ?>
 					</div>
 				</div>

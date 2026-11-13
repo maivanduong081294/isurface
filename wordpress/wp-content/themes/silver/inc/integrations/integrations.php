@@ -4,14 +4,14 @@
  *
  * @author     UX Themes
  * @category   Integration
- * @package    Flatsome/Integrations
+ * @package    Silver/Integrations
  */
 
-function flatsome_integration_url() {
+function silver_integration_url() {
 	return get_template_directory() . '/inc/integrations';
 }
 
-function flatsome_integration_uri() {
+function silver_integration_uri() {
 	return get_template_directory_uri() . '/inc/integrations';
 }
 
@@ -20,7 +20,7 @@ global $integrations_uri;
 $integrations_url = get_template_directory() . '/inc/integrations';
 $integrations_uri = get_template_directory_uri() . '/inc/integrations';
 
-function flatsome_integrations_scripts() {
+function silver_integrations_scripts() {
 	global $integrations_uri;
 
 	wp_dequeue_style( 'nextend_fb_connect_stylesheet' );
@@ -31,12 +31,12 @@ function flatsome_integrations_scripts() {
 	// Ninja forms.
 	if ( function_exists( 'Ninja_Forms' ) && ! is_admin() ) {
 		remove_action( 'ninja_forms_display_css', 'ninja_forms_display_css' );
-		wp_enqueue_style( 'flatsome-ninjaforms', $integrations_uri . '/ninjaforms/ninjaforms.css', [], flatsome()->version() );
+		wp_enqueue_style( 'silver-ninjaforms', $integrations_uri . '/ninjaforms/ninjaforms.css', [], silver()->version() );
 	}
 
 }
 
-add_action( 'wp_enqueue_scripts', 'flatsome_integrations_scripts' );
+add_action( 'wp_enqueue_scripts', 'silver_integrations_scripts' );
 
 // Polylang Integration.
 if ( function_exists( 'pll_get_post' ) ) {
@@ -91,42 +91,42 @@ if ( defined( 'SEOPRESS_VERSION' ) ) {
 // WooCommerce Integrations.
 if ( is_woocommerce_activated() ) {
 
-	function flatsome_woocommerce_integrations_scripts() {
+	function silver_woocommerce_integrations_scripts() {
 
 		global $integrations_uri;
-		$version = flatsome()->version();
+		$version = silver()->version();
 
 		if ( is_extension_activated( 'woocommerce_booking' ) ) {
-			wp_enqueue_style( 'flatsome-woocommerce-bookings-style', $integrations_uri . '/wc-bookings/bookings.css', [], $version );
+			wp_enqueue_style( 'silver-woocommerce-bookings-style', $integrations_uri . '/wc-bookings/bookings.css', [], $version );
 		}
 
 		// Extra Product Options.
 		if ( is_extension_activated( 'THEMECOMPLETE_Extra_Product_Options' ) ) {
-			wp_enqueue_style( 'flatsome-woocommerce-extra-product-options', $integrations_uri . '/wc-extra-product-options/extra-product-options.css', [], $version );
+			wp_enqueue_style( 'silver-woocommerce-extra-product-options', $integrations_uri . '/wc-extra-product-options/extra-product-options.css', [], $version );
 		}
 
 		if ( is_extension_activated( 'Easy_booking' ) ) {
-			wp_enqueue_style( 'flatsome-woocommerce-easy-booking', $integrations_uri . '/wc-easy-booking/wc-easy-bookings.css', [], $version );
+			wp_enqueue_style( 'silver-woocommerce-easy-booking', $integrations_uri . '/wc-easy-booking/wc-easy-bookings.css', [], $version );
 		}
 
 		if ( is_extension_activated( 'WC_Bulk_Variations' ) ) {
-			wp_enqueue_style( 'flatsome-woocommerce-bulk-variations', $integrations_uri . '/wc-bulk-variations/bulk-variations.css', [], $version );
+			wp_enqueue_style( 'silver-woocommerce-bulk-variations', $integrations_uri . '/wc-bulk-variations/bulk-variations.css', [], $version );
 		}
 
 		if ( is_extension_activated( 'Fancy_Product_Designer' ) ) {
-			wp_enqueue_style( 'flatsome-fancy-product-designer', $integrations_uri . '/wc-product-designer/product-designer.css', [], $version );
+			wp_enqueue_style( 'silver-fancy-product-designer', $integrations_uri . '/wc-product-designer/product-designer.css', [], $version );
 		}
 
 		if ( is_extension_activated( 'Woocommerce_Advanced_Product_Labels' ) ) {
-			wp_enqueue_style( 'flatsome-woocommerce-advanced-labels', $integrations_uri . '/wc-advanced-product-labels/advanced-product-labels.css', [], $version );
+			wp_enqueue_style( 'silver-woocommerce-advanced-labels', $integrations_uri . '/wc-advanced-product-labels/advanced-product-labels.css', [], $version );
 		}
 
 		if ( is_extension_activated( 'WooCommerce_Product_Filter_Plugin\Plugin' ) ) {
-			wp_enqueue_style( 'flatsome-woocommerce-product-filters', $integrations_uri . '/wc-product-filters/product-filters.css', [], $version );
+			wp_enqueue_style( 'silver-woocommerce-product-filters', $integrations_uri . '/wc-product-filters/product-filters.css', [], $version );
 		}
 	}
 
-	add_action( 'wp_enqueue_scripts', 'flatsome_woocommerce_integrations_scripts' );
+	add_action( 'wp_enqueue_scripts', 'silver_woocommerce_integrations_scripts' );
 
 
 	// Add Yith Wishlist integration.
@@ -161,7 +161,7 @@ if ( is_woocommerce_activated() ) {
 	}
 
 	// Infinitive scroll fix
-	function flatsome_woocommerce_extensions_after_setup() {
+	function silver_woocommerce_extensions_after_setup() {
 		if ( defined( 'YITH_INFS_VERSION' ) ) {
 			$options = get_option( 'yit_infs_options' );
 
@@ -186,5 +186,5 @@ if ( is_woocommerce_activated() ) {
 		}
 	}
 
-	add_action( 'after_switch_theme', 'flatsome_woocommerce_extensions_after_setup', 15 );
+	add_action( 'after_switch_theme', 'silver_woocommerce_extensions_after_setup', 15 );
 }

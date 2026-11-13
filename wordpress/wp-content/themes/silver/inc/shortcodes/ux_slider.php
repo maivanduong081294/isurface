@@ -83,7 +83,7 @@ function shortcode_ux_slider($atts, $content=null) {
     if($hide_nav ==  'true') {$classes[] = 'slider-show-nav';}
 
     // Main slider + thumbnail slider pair ("Thumbnail Slider" options).
-    $thumbnail_class = flatsome_slider_thumbnail_class( $thumb_role, $thumb_key );
+    $thumbnail_class = silver_slider_thumbnail_class( $thumb_role, $thumb_key );
     if ( $thumbnail_class ) $classes[] = $thumbnail_class;
 
     $slider_options = array(
@@ -122,16 +122,22 @@ function shortcode_ux_slider($atts, $content=null) {
 			'property'  => 'max-width',
 			'important' => true,
 		),
+		// Responsive background color; !important beats the inline base value.
+		'bg_color'    => array(
+			'selector'  => '',
+			'property'  => 'background-color',
+			'important' => true,
+		),
 	);
 ?>
 <div class="<?php echo esc_attr( $wrapper_classes ); ?>" id="<?php echo esc_attr( $_id ); ?>" <?php echo get_shortcode_inline_css($css_args); ?>>
-    <div class="<?php echo esc_attr( $classes ); ?>"<?php echo flatsome_slider_options_attr( $slider_options ); ?>>
+    <div class="<?php echo esc_attr( $classes ); ?>"<?php echo silver_slider_options_attr( $slider_options ); ?>>
         <?php echo do_shortcode( $content ); ?>
      </div>
 
      <div class="loading-spin dark large centered"></div>
 
-	<?php echo ux_builder_element_style_tag( $_id, $args, $atts ); ?>
+	<?php echo ux_builder_element_style_tag( $_id, $args, array_merge( array( 'bg_color' => '' ), (array) $atts ) ); ?>
 </div>
 
 <?php

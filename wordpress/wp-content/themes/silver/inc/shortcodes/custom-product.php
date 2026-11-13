@@ -118,13 +118,13 @@ add_shortcode( 'ux_product_hook', function ( $atts ) {
 		return null;
 	}
 
-	$hooks = array_keys( apply_filters( 'flatsome_custom_product_single_product_hooks', [
+	$hooks = array_keys( apply_filters( 'silver_custom_product_single_product_hooks', [
 		'woocommerce_before_single_product_summary' => 'woocommerce_before_single_product_summary',
 		'woocommerce_single_product_summary'        => 'woocommerce_single_product_summary',
 		'woocommerce_after_single_product_summary'  => 'woocommerce_after_single_product_summary',
-		'flatsome_custom_single_product_1'          => 'flatsome_custom_single_product_1',
-		'flatsome_custom_single_product_2'          => 'flatsome_custom_single_product_2',
-		'flatsome_custom_single_product_3'          => 'flatsome_custom_single_product_3',
+		'silver_custom_single_product_1'          => 'silver_custom_single_product_1',
+		'silver_custom_single_product_2'          => 'silver_custom_single_product_2',
+		'silver_custom_single_product_3'          => 'silver_custom_single_product_3',
 	] ) );
 
 	ob_start();
@@ -247,8 +247,17 @@ add_shortcode( 'ux_product_tabs', function ( $atts ) {
 
 	ob_start();
 	wc_get_template_part( 'single-product/tabs/tabs' );
+	$html = ob_get_clean();
 
-	return ob_get_clean();
+	// Responsive tabs align (larger screens): wrap to scope the CSS.
+	if ( silver_responsive_has_overrides( (array) $atts, 'align' ) ) {
+		$id   = 'product-tabs-' . wp_rand();
+		$html = '<div id="' . esc_attr( $id ) . '">' . $html . '</div>' . silver_responsive_style_tag( $id, (array) $atts, array(
+			'align' => array( 'selector' => '.product-tabs', 'only_overrides' => true, 'default' => 'left', 'map' => silver_responsive_map( 'nav_align' ) ),
+		) );
+	}
+
+	return $html;
 } );
 
 
@@ -305,7 +314,7 @@ add_shortcode( 'ux_product_breadcrumbs', function ( $atts ) {
 
 	ob_start();
 	echo '<div class="product-breadcrumb-container is-' . esc_attr( $size ) . '">';
-	flatsome_breadcrumb();
+	silver_breadcrumb();
 	echo '</div>';
 
 	return ob_get_clean();
@@ -321,7 +330,7 @@ add_shortcode( 'ux_product_next_prev_nav', function ( $atts ) {
 	}
 
 	ob_start();
-	flatsome_product_next_prev_nav( $atts['class'] );
+	silver_product_next_prev_nav( $atts['class'] );
 
 	return ob_get_clean();
 } );

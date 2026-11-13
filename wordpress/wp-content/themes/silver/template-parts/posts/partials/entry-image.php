@@ -2,8 +2,8 @@
 /**
  * Post-entry image.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.16.0
+ * @package          Silver\Templates
+ * @silver-version 3.16.0
  */
 
 ?>

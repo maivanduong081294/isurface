@@ -7,7 +7,7 @@
  * @param  array  $vars
  * @return string
  */
-function flatsome_template( $name, array $vars = array() ) {
+function silver_template( $name, array $vars = array() ) {
   $located_template = locate_template( 'template-parts/' . $name . '.php' );
   if ( $located_template != '' ) {
     extract( $vars );
@@ -26,10 +26,10 @@ function flatsome_template( $name, array $vars = array() ) {
  *
  * @return string
  */
-function flatsome_html_atts( array $atts ) {
+function silver_html_atts( array $atts ) {
 	$result = [];
 
-	$atts = apply_filters( 'flatsome_html_atts', $atts );
+	$atts = apply_filters( 'silver_html_atts', $atts );
 
 	foreach ( $atts as $key => $value ) {
 		if ( $value === null || $value === '' ) continue;
@@ -67,7 +67,7 @@ function flatsome_html_atts( array $atts ) {
  *
  * @return array An array with the processed 'target' and 'rel' attributes, merged with the original input attributes.
  */
-function flatsome_process_target_rel_attributes( array $atts ) {
+function silver_process_target_rel_attributes( array $atts ) {
 	if ( empty( $atts['target'] ) && empty( $atts['rel'] ) ) {
 		return $atts;
 	}
@@ -92,7 +92,7 @@ function flatsome_process_target_rel_attributes( array $atts ) {
 	return array_merge( $atts, [ 'rel' => $rel_values ] );
 }
 
-add_filter( 'flatsome_html_atts', 'flatsome_process_target_rel_attributes' );
+add_filter( 'silver_html_atts', 'silver_process_target_rel_attributes' );
 
 /**
  * Filter function, add attributes to the HTML tag.
@@ -101,7 +101,7 @@ add_filter( 'flatsome_html_atts', 'flatsome_process_target_rel_attributes' );
  *
  * @return array An array with the processed attributes.
  */
-function flatsome_html_atts_add_attributes( array $atts ) {
+function silver_html_atts_add_attributes( array $atts ) {
 	if ( empty( $atts['role'] ) ) {
 		return $atts;
 	}
@@ -109,21 +109,21 @@ function flatsome_html_atts_add_attributes( array $atts ) {
 	$data = [];
 
 	if ( $atts['role'] === 'button' ) {
-		$data['data-flatsome-role-button'] = true;
+		$data['data-silver-role-button'] = true;
 	}
 	if ( $atts['role'] === 'radiogroup' ) {
-		$data['data-flatsome-role-radiogroup'] = true;
+		$data['data-silver-role-radiogroup'] = true;
 	}
 
 	return empty( $data ) ? $atts : array_merge( $atts, $data );
 }
 
-add_filter( 'flatsome_html_atts', 'flatsome_html_atts_add_attributes' );
+add_filter( 'silver_html_atts', 'silver_html_atts_add_attributes' );
 
 /**
- * Get Flatsome Icon classes
+ * Get Silver Icon classes
   */
-function get_flatsome_icon_class($style, $size = null){
+function get_silver_icon_class($style, $size = null){
 
     $classes = array();
     if($style == 'small'){ $classes[] = 'icon plain';}
@@ -139,14 +139,14 @@ function get_flatsome_icon_class($style, $size = null){
 /**
  * Minify CSS
   */
-function flatsome_minify_css($css){
+function silver_minify_css($css){
   //$css = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $css);
   $css = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $css);
   return $css;
 }
 
 
-function flatsome_dummy_text(){
+function silver_dummy_text(){
 	$content = '<p><strong>This is a dummy text for demo purpose</strong>. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p><p> Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>';
-	return apply_filters( 'flatsome_dummy_text', $content );
+	return apply_filters( 'silver_dummy_text', $content );
 }

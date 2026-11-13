@@ -5,8 +5,8 @@ add_ux_builder_shortcode( 'accordion', array(
 	'name'      => __( 'Accordion' ),
 	'image'     => '',
 	'category'  => __( 'Content' ),
-	'template'  => flatsome_ux_builder_template( 'accordion.html' ),
-	'thumbnail' => flatsome_ux_builder_thumbnail( 'accordion' ),
+	'template'  => silver_ux_builder_template( 'accordion.html' ),
+	'thumbnail' => silver_ux_builder_thumbnail( 'accordion' ),
 	'info'      => '{{ title }}',
 	'allow'     => array( 'accordion-item' ),
 	'presets' => array(

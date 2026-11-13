@@ -1,9 +1,9 @@
 <?php
 /**
- * The template for displaying search forms in flatsome
+ * The template for displaying search forms in silver
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.16.0
+ * @package          Silver\Templates
+ * @silver-version 3.16.0
  */
 
 $placeholder = __( 'Search', 'woocommerce' ).'&hellip;';
@@ -15,8 +15,8 @@ if(get_theme_mod('search_placeholder')) $placeholder = get_theme_mod('search_pla
 	   	   <input type="search" class="search-field mb-0" name="s" value="<?php echo esc_attr( get_search_query() ); ?>" id="s" placeholder="<?php echo $placeholder; ?>" />
 			</div>
 			<div class="flex-col">
-				<button type="submit" class="ux-search-submit submit-button secondary button icon mb-0" aria-label="<?php esc_attr_e( 'Submit', 'flatsome' ); ?>">
-					<?php echo get_flatsome_icon('icon-search'); ?>
+				<button type="submit" class="ux-search-submit submit-button secondary button icon mb-0" aria-label="<?php esc_attr_e( 'Submit', 'silver' ); ?>">
+					<?php echo get_silver_icon('icon-search'); ?>
 				</button>
 			</div>
 		</div>

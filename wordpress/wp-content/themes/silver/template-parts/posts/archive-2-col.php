@@ -2,8 +2,8 @@
 /**
  * Posts archive 2 column.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.18.0
+ * @package          Silver\Templates
+ * @silver-version 3.18.0
  */
 
 if ( have_posts() ) : ?>
@@ -17,7 +17,7 @@ if ( have_posts() ) : ?>
 		?>
 
 		<?php
-		echo flatsome_apply_shortcode( 'blog_posts', array(
+		echo silver_apply_shortcode( 'blog_posts', array(
 			'type'        => get_theme_mod( 'blog_style_type', 'masonry' ),
 			'depth'       => get_theme_mod( 'blog_posts_depth', 0 ),
 			'depth_hover' => get_theme_mod( 'blog_posts_depth_hover', 0 ),
@@ -28,7 +28,7 @@ if ( have_posts() ) : ?>
 		) );
 		?>
 
-		<?php flatsome_posts_pagination(); ?>
+		<?php silver_posts_pagination(); ?>
 	</div>
 <?php else : ?>
 

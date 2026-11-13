@@ -1,11 +1,11 @@
 /* Silver branding in the WordPress toolbar and admin menu. */
-#wpadminbar #wp-admin-bar-flatsome_panel > .ab-item {
+#wpadminbar #wp-admin-bar-silver_panel > .ab-item {
 	display: flex;
 	align-items: center;
 	gap: 6px;
 }
 
-#wpadminbar #wp-admin-bar-flatsome_panel .silver-admin-bar-logo {
+#wpadminbar #wp-admin-bar-silver_panel .silver-admin-bar-logo {
 	display: block;
 	flex: 0 0 auto;
 	width: 24px;
@@ -15,13 +15,13 @@
 	object-fit: contain;
 }
 
-#adminmenu #toplevel_page_flatsome-panel > .menu-top > .wp-menu-image {
+#adminmenu #toplevel_page_silver-panel > .menu-top > .wp-menu-image {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 
-#adminmenu #toplevel_page_flatsome-panel > .menu-top > .wp-menu-image img {
+#adminmenu #toplevel_page_silver-panel > .menu-top > .wp-menu-image img {
 	display: block;
 	width: 24px;
 	height: 24px;
@@ -33,8 +33,8 @@
 }
 
 @media (min-width: 783px) {
-	#wpadminbar #wp-admin-bar-flatsome_panel .silver-admin-bar-logo,
-	#adminmenu #toplevel_page_flatsome-panel > .menu-top > .wp-menu-image img {
+	#wpadminbar #wp-admin-bar-silver_panel .silver-admin-bar-logo,
+	#adminmenu #toplevel_page_silver-panel > .menu-top > .wp-menu-image img {
 		width: 20px;
 		height: 20px;
 	}

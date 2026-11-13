@@ -1,16 +1,16 @@
 <?php
 
 /**
- * Flatsome Admin Panel
+ * Silver Admin Panel
  */
-class Flatsome_Admin {
+class Silver_Admin {
 
 	/**
 	 * Sets up the welcome screen
 	 */
 	public function __construct() {
-		add_action( 'admin_menu', array( $this, 'flatsome_panel_register_menu' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'flatsome_panel_style' ) );
+		add_action( 'admin_menu', array( $this, 'silver_panel_register_menu' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'silver_panel_style' ) );
 	}
 
 
@@ -19,12 +19,12 @@ class Flatsome_Admin {
 	 *
 	 * @since  1.4.4
 	 */
-	public function flatsome_panel_style() {
+	public function silver_panel_style() {
 		$uri     = get_template_directory_uri();
 		$theme   = wp_get_theme( get_template() );
 		$version = $theme->get( 'Version' );
 
-		wp_enqueue_style( 'flatsome-panel-css', $uri . '/inc/admin/panel/panel.css', array(), $version . '.' . filemtime( get_template_directory() . '/inc/admin/panel/panel.css' ) );
+		wp_enqueue_style( 'silver-panel-css', $uri . '/inc/admin/panel/panel.css', array(), $version . '.' . filemtime( get_template_directory() . '/inc/admin/panel/panel.css' ) );
 	}
 
 	/**
@@ -32,20 +32,20 @@ class Flatsome_Admin {
 	 * @see  add_theme_page()
 	 * @since 1.0.0
 	 */
-	public function flatsome_panel_register_menu() {
-		$flatsome_icon = silver_theme_square_logo_url();
-		add_menu_page( 'Welcome to Silver', 'Silver', 'manage_options', 'flatsome-panel', array( $this, 'flatsome_panel_welcome' ), $flatsome_icon, '2' );
-		add_submenu_page( 'flatsome-panel', 'Status', 'Status', 'manage_options', 'flatsome-panel-status', array( $this, 'flatsome_panel_status' ) );
-		add_submenu_page( 'flatsome-panel', '', 'Theme Options', 'manage_options', 'customize.php' );
+	public function silver_panel_register_menu() {
+		$silver_icon = silver_theme_square_logo_url();
+		add_menu_page( 'Welcome to Silver', 'Silver', 'manage_options', 'silver-panel', array( $this, 'silver_panel_welcome' ), $silver_icon, '2' );
+		add_submenu_page( 'silver-panel', 'Status', 'Status', 'manage_options', 'silver-panel-status', array( $this, 'silver_panel_status' ) );
+		add_submenu_page( 'silver-panel', '', 'Theme Options', 'manage_options', 'customize.php' );
 	}
 
 	/**
 	 * The welcome screen
 	 * @since 1.0.0
 	 */
-	public function flatsome_panel_welcome() {
+	public function silver_panel_welcome() {
 		?>
-		<div class="flatsome-panel">
+		<div class="silver-panel">
 			<div class="wrap about-wrap">
 				<?php require get_template_directory() . '/inc/admin/panel/sections/top.php'; ?>
 				<?php require get_template_directory() . '/inc/admin/panel/sections/tab-activate.php'; ?>
@@ -54,9 +54,9 @@ class Flatsome_Admin {
 		<?php
 	}
 
-	public function flatsome_panel_getting_started() {
+	public function silver_panel_getting_started() {
 		?>
-		<div class="flatsome-panel">
+		<div class="silver-panel">
 			<div class="wrap about-wrap">
 				<?php require get_template_directory() . '/inc/admin/panel/sections/top.php'; ?>
 				<?php require get_template_directory() . '/inc/admin/panel/sections/tab-guide.php'; ?>
@@ -65,9 +65,9 @@ class Flatsome_Admin {
 		<?php
 	}
 
-	public function flatsome_panel_tutorials() {
+	public function silver_panel_tutorials() {
 		?>
-		<div class="flatsome-panel">
+		<div class="silver-panel">
 			<div class="wrap about-wrap">
 				<?php require get_template_directory() . '/inc/admin/panel/sections/top.php'; ?>
 				<?php require get_template_directory() . '/inc/admin/panel/sections/tab-tutorials.php'; ?>
@@ -76,9 +76,9 @@ class Flatsome_Admin {
 		<?php
 	}
 
-	public function flatsome_panel_support() {
+	public function silver_panel_support() {
 		?>
-		<div class="flatsome-panel">
+		<div class="silver-panel">
 			<div class="wrap about-wrap">
 				<?php require get_template_directory() . '/inc/admin/panel/sections/top.php'; ?>
 				<?php require get_template_directory() . '/inc/admin/panel/sections/tab-support.php'; ?>
@@ -87,9 +87,9 @@ class Flatsome_Admin {
 		<?php
 	}
 
-	public function flatsome_panel_status() {
+	public function silver_panel_status() {
 		?>
-		<div class="flatsome-panel">
+		<div class="silver-panel">
 			<div class="wrap about-wrap">
 				<?php require get_template_directory() . '/inc/admin/panel/sections/top.php'; ?>
 				<?php require get_template_directory() . '/inc/admin/panel/sections/tab-status.php'; ?>
@@ -98,9 +98,9 @@ class Flatsome_Admin {
 		<?php
 	}
 
-	public function flatsome_panel_features() {
+	public function silver_panel_features() {
 		?>
-		<div class="flatsome-panel">
+		<div class="silver-panel">
 			<div class="wrap about-wrap">
 				<?php require get_template_directory() . '/inc/admin/panel/sections/top.php'; ?>
 				<?php require get_template_directory() . '/inc/admin/panel/sections/tab-features.php'; ?>
@@ -109,9 +109,9 @@ class Flatsome_Admin {
 		<?php
 	}
 
-	public function flatsome_panel_changelog() {
+	public function silver_panel_changelog() {
 		?>
-		<div class="flatsome-panel">
+		<div class="silver-panel">
 			<div class="wrap about-wrap">
 				<?php require get_template_directory() . '/inc/admin/panel/sections/top.php'; ?>
 				<?php require get_template_directory() . '/inc/admin/panel/sections/tab-changelog.php'; ?>
@@ -120,9 +120,9 @@ class Flatsome_Admin {
 		<?php
 	}
 
-	public function flatsome_panel_license() {
+	public function silver_panel_license() {
 		?>
-		<div class="flatsome-panel">
+		<div class="silver-panel">
 			<div class="wrap about-wrap">
 				<?php require get_template_directory() . '/inc/admin/panel/sections/top.php'; ?>
 				<?php require get_template_directory() . '/inc/admin/panel/sections/tab-license.php'; ?>
@@ -176,4 +176,4 @@ class Flatsome_Admin {
 	}
 }
 
-$GLOBALS['Flatsome_Admin'] = new Flatsome_Admin();
+$GLOBALS['Silver_Admin'] = new Silver_Admin();

@@ -12,7 +12,7 @@ class DoShortcode {
 
     if ( ! wp_verify_nonce( $nonce, 'ux-builder-' . $post_id ) ) {
       echo '<div class="uxb-error">';
-      echo __( 'Sorry, an error occurred while rendering this element.', 'flatsome' );
+      echo __( 'Sorry, an error occurred while rendering this element.', 'silver' );
       echo '</div>';
       die;
     }

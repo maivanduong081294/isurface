@@ -2,7 +2,7 @@
 /**
  * Builder shortcode icon list
  *
- * @package flatsome
+ * @package silver
  */
 
 return array(

@@ -1,0 +1,48 @@
+/* Terms element ([ux_terms]). */
+.ux-terms-link {
+  color: inherit;
+  display: block;
+}
+.ux-terms-image {
+  margin-block-end: 12px;
+}
+.ux-terms-image-inner {
+  background: rgba(0, 0, 0, 0.04);
+  height: 0;
+  overflow: hidden;
+  padding-top: 100%;
+  position: relative;
+}
+.ux-terms-image-inner img,
+.ux-terms-image-inner .ux-terms-placeholder {
+  height: 100%;
+  inset: 0;
+  object-fit: cover;
+  position: absolute;
+  transition: transform 0.3s;
+  width: 100%;
+}
+.ux-terms-fit-contain .ux-terms-image-inner img {
+  object-fit: contain;
+}
+.ux-terms-link:hover .ux-terms-image-inner img {
+  transform: scale(1.04);
+}
+.ux-terms-title {
+  margin-block: 0 0.25em;
+}
+.ux-terms-link:hover .ux-terms-title {
+  color: var(--fs-color-primary);
+}
+.ux-terms-count {
+  display: block;
+  font-size: 0.85em;
+  opacity: 0.7;
+}
+.ux-terms-description {
+  font-size: 0.9em;
+  margin-block-start: 0.5em;
+}
+.ux-terms-description p:last-child {
+  margin-bottom: 0;
+}

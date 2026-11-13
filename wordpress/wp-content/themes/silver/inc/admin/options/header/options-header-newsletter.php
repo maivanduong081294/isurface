@@ -4,76 +4,76 @@
  */
 
 // Add section immediately to keep sort order.
-Flatsome_Option::add_section( 'header_newsletter',
+Silver_Option::add_section( 'header_newsletter',
 	array(
-		'title' => __( 'Newsletter', 'flatsome-admin' ),
+		'title' => __( 'Newsletter', 'silver' ),
 		'panel' => 'header',
 	)
 );
 
-function flatsome_customizer_header_newsletter_options() {
-	Flatsome_Option::add_field( '',
+function silver_customizer_header_newsletter_options() {
+	Silver_Option::add_field( '',
 		array(
 			'type'     => 'custom',
 			'settings' => 'custom_title_header_newsletter_layout',
-			'label'    => __( '', 'flatsome-admin' ),
+			'label'    => __( '', 'silver' ),
 			'section'  => 'header_newsletter',
 			'default'  => '<div class="options-title-divider">Layout</div>',
 		)
 	);
 
-	Flatsome_Option::add_field( 'option',
+	Silver_Option::add_field( 'option',
 		array(
 			'type'      => 'radio-image',
 			'settings'  => 'newsletter_icon_style',
-			'label'     => __( 'Icon Style', 'flatsome-admin' ),
+			'label'     => __( 'Icon Style', 'silver' ),
 			'section'   => 'header_newsletter',
-			'transport' => flatsome_customizer_transport(),
+			'transport' => silver_customizer_transport(),
 			'default'   => 'plain',
 			'choices'   => array(
-				''              => flatsome_customizer_images_uri() . '/disabled.svg',
-				'plain'         => flatsome_customizer_images_uri() . '/account-icon-plain.svg',
-				'fill'          => flatsome_customizer_images_uri() . '/account-icon-fill.svg',
-				'fill-round'    => flatsome_customizer_images_uri() . '/account-icon-fill-round.svg',
-				'outline'       => flatsome_customizer_images_uri() . '/account-icon-outline.svg',
-				'outline-round' => flatsome_customizer_images_uri() . '/account-icon-outline-round.svg',
+				''              => silver_customizer_images_uri() . '/disabled.svg',
+				'plain'         => silver_customizer_images_uri() . '/account-icon-plain.svg',
+				'fill'          => silver_customizer_images_uri() . '/account-icon-fill.svg',
+				'fill-round'    => silver_customizer_images_uri() . '/account-icon-fill-round.svg',
+				'outline'       => silver_customizer_images_uri() . '/account-icon-outline.svg',
+				'outline-round' => silver_customizer_images_uri() . '/account-icon-outline-round.svg',
 			),
 		)
 	);
 
-	Flatsome_Option::add_field( 'option',
+	Silver_Option::add_field( 'option',
 		array(
 			'type'      => 'text',
 			'settings'  => 'header_newsletter_label',
-			'label'     => __( 'Label', 'flatsome-admin' ),
+			'label'     => __( 'Label', 'silver' ),
 			'section'   => 'header_newsletter',
-			'transport' => flatsome_customizer_transport(),
+			'transport' => silver_customizer_transport(),
 			'default'   => 'Newsletter',
 		)
 	);
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'      => 'text',
 		'settings'  => 'header_newsletter_title',
-		'label'     => __( 'Title', 'flatsome-admin' ),
+		'label'     => __( 'Title', 'silver' ),
 		'section'   => 'header_newsletter',
-		'transport' => flatsome_customizer_transport(),
+		'transport' => silver_customizer_transport(),
 		'default'   => 'Sign up for Newsletter',
 	) );
 
-	Flatsome_Option::add_field( 'option',
+	Silver_Option::add_field( 'option',
 		array(
 			'type'        => 'select',
 			'settings'    => 'header_newsletter_block',
-			'label'       => __( 'Newsletter Block', 'flatsome-admin' ),
+			'label'       => __( 'Newsletter Block', 'silver' ),
 			'description' => __( 'Replace newsletter pop-up content with a custom Block that can be edited in UX Builder.' ),
 			'section'     => 'header_newsletter',
 			'default'     => false,
-			'choices'     => flatsome_customizer_blocks(),
+			'choices'     => silver_customizer_blocks(),
 		)
 	);
 
-	Flatsome_Option::add_field( 'option',
+	Silver_Option::add_field( 'option',
 		array(
 			'type'              => 'text',
 			'settings'          => 'header_newsletter_sub_title',
@@ -84,15 +84,15 @@ function flatsome_customizer_header_newsletter_options() {
 					'value'    => false,
 				),
 			),
-			'label'             => __( 'Sub Title', 'flatsome-admin' ),
+			'label'             => __( 'Sub Title', 'silver' ),
 			'section'           => 'header_newsletter',
-			'transport'         => flatsome_customizer_transport(),
-			'sanitize_callback' => 'flatsome_custom_sanitize',
+			'transport'         => silver_customizer_transport(),
+			'sanitize_callback' => 'silver_custom_sanitize',
 			'default'           => 'Signup for our newsletter to get notified about sales and new products. Add any text here or remove it.',
 		)
 	);
 
-	Flatsome_Option::add_field( 'option',
+	Silver_Option::add_field( 'option',
 		array(
 			'type'              => 'text',
 			'settings'          => 'header_newsletter_shortcode',
@@ -103,15 +103,15 @@ function flatsome_customizer_header_newsletter_options() {
 					'value'    => false,
 				),
 			),
-			'label'             => __( 'Form Shortcode', 'flatsome-admin' ),
-			'description'       => __( 'Insert any form shortcode here.', 'flatsome-admin' ),
+			'label'             => __( 'Form Shortcode', 'silver' ),
+			'description'       => __( 'Insert any form shortcode here.', 'silver' ),
 			'section'           => 'header_newsletter',
-			'sanitize_callback' => 'flatsome_custom_sanitize',
-			'transport'         => flatsome_customizer_transport(),
+			'sanitize_callback' => 'silver_custom_sanitize',
+			'transport'         => silver_customizer_transport(),
 		)
 	);
 
-	Flatsome_Option::add_field( 'option',
+	Silver_Option::add_field( 'option',
 		array(
 			'type'            => 'image',
 			'settings'        => 'header_newsletter_bg',
@@ -122,13 +122,13 @@ function flatsome_customizer_header_newsletter_options() {
 					'value'    => false,
 				),
 			),
-			'label'           => __( 'Background Image', 'flatsome-admin' ),
+			'label'           => __( 'Background Image', 'silver' ),
 			'section'         => 'header_newsletter',
-			'transport'       => flatsome_customizer_transport(),
+			'transport'       => silver_customizer_transport(),
 		)
 	);
 
-	Flatsome_Option::add_field( 'option',
+	Silver_Option::add_field( 'option',
 		array(
 			'type'            => 'text',
 			'settings'        => 'header_newsletter_height',
@@ -139,35 +139,35 @@ function flatsome_customizer_header_newsletter_options() {
 					'value'    => false,
 				),
 			),
-			'label'           => __( 'Height', 'flatsome-admin' ),
+			'label'           => __( 'Height', 'silver' ),
 			'section'         => 'header_newsletter',
 			'default'         => '500px',
-			'transport'       => flatsome_customizer_transport(),
+			'transport'       => silver_customizer_transport(),
 		)
 	);
 
-	Flatsome_Option::add_field( '',
+	Silver_Option::add_field( '',
 		array(
 			'type'     => 'custom',
 			'settings' => 'custom_title_header_newsletter_behavior',
-			'label'    => __( '', 'flatsome-admin' ),
+			'label'    => __( '', 'silver' ),
 			'section'  => 'header_newsletter',
 			'default'  => '<div class="options-title-divider">Behavior</div>',
 		)
 	);
 
-	Flatsome_Option::add_field( 'option',
+	Silver_Option::add_field( 'option',
 		array(
 			'type'      => 'checkbox',
 			'settings'  => 'header_newsletter_auto_open',
-			'label'     => __( 'Auto Open', 'flatsome-admin' ),
+			'label'     => __( 'Auto Open', 'silver' ),
 			'section'   => 'header_newsletter',
-			'transport' => flatsome_customizer_transport(),
+			'transport' => silver_customizer_transport(),
 			'default'   => false,
 		)
 	);
 
-	Flatsome_Option::add_field( 'option',
+	Silver_Option::add_field( 'option',
 		array(
 			'type'            => 'slider',
 			'settings'        => 'header_newsletter_auto_timer',
@@ -178,10 +178,10 @@ function flatsome_customizer_header_newsletter_options() {
 					'value'    => true,
 				),
 			),
-			'label'           => __( 'Auto Timer', 'flatsome-admin' ),
-			'description'     => __( 'In milliseconds (1000ms = 1sec).', 'flatsome-admin' ),
+			'label'           => __( 'Auto Timer', 'silver' ),
+			'description'     => __( 'In milliseconds (1000ms = 1sec).', 'silver' ),
 			'section'         => 'header_newsletter',
-			'transport'       => flatsome_customizer_transport(),
+			'transport'       => silver_customizer_transport(),
 			'default'         => 3000,
 			'choices'         => array(
 				'min'  => 1000,
@@ -191,7 +191,7 @@ function flatsome_customizer_header_newsletter_options() {
 		)
 	);
 
-	Flatsome_Option::add_field( 'option',
+	Silver_Option::add_field( 'option',
 		array(
 			'type'            => 'select',
 			'settings'        => 'header_newsletter_auto_show',
@@ -202,19 +202,19 @@ function flatsome_customizer_header_newsletter_options() {
 					'value'    => true,
 				),
 			),
-			'label'           => __( 'Auto Show', 'flatsome-admin' ),
+			'label'           => __( 'Auto Show', 'silver' ),
 			'section'         => 'header_newsletter',
-			'transport'       => flatsome_customizer_transport(),
+			'transport'       => silver_customizer_transport(),
 			'default'         => 'always',
 			'multiple'        => 0,
 			'choices'         => array(
-				'always' => __( 'Always', 'flatsome-admin' ),
-				'once'   => __( 'Once', 'flatsome-admin' ),
+				'always' => __( 'Always', 'silver' ),
+				'once'   => __( 'Once', 'silver' ),
 			),
 		)
 	);
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'            => 'text',
 		'settings'        => 'header_newsletter_version',
 		'active_callback' => array(
@@ -224,16 +224,16 @@ function flatsome_customizer_header_newsletter_options() {
 				'value'    => true,
 			),
 		),
-		'label'           => __( 'Version', 'flatsome-admin' ),
-		'description'     => __( 'Increase the version to reopen a "show once" configured newsletter popup to visitors after making changes to it.', 'flatsome-admin' ),
+		'label'           => __( 'Version', 'silver' ),
+		'description'     => __( 'Increase the version to reopen a "show once" configured newsletter popup to visitors after making changes to it.', 'silver' ),
 		'section'         => 'header_newsletter',
-		'transport'       => flatsome_customizer_transport(),
+		'transport'       => silver_customizer_transport(),
 		'default'         => '1',
 	) );
 }
-add_action( 'init', 'flatsome_customizer_header_newsletter_options' );
+add_action( 'init', 'silver_customizer_header_newsletter_options' );
 
-function flatsome_refresh_header_newsletter_partials( WP_Customize_Manager $wp_customize ) {
+function silver_refresh_header_newsletter_partials( WP_Customize_Manager $wp_customize ) {
 
 	// Abort if selective refresh is not available.
 	if ( ! isset( $wp_customize->selective_refresh ) ) {
@@ -260,4 +260,4 @@ function flatsome_refresh_header_newsletter_partials( WP_Customize_Manager $wp_c
 	);
 }
 
-add_action( 'customize_register', 'flatsome_refresh_header_newsletter_partials' );
+add_action( 'customize_register', 'silver_refresh_header_newsletter_partials' );

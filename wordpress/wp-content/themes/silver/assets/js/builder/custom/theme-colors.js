@@ -22,14 +22,37 @@
 
 	var VARIABLE = /^var\(\s*(--[\w-]+)\s*\)$/;
 
+	// CSS keywords offered as swatches ("None" = transparent, "Default" =
+	// inherit). The picker does not understand them (or turns transparent into
+	// black without alpha), so they are kept like variables.
+	var KEYWORD = /^(inherit|initial|unset|transparent)$/i;
+
+	// Value saved when the color is cleared on a larger screen: an empty value
+	// there means "inherit the smaller screen", so clearing would bring the
+	// mobile color back. Text colors (swatch "Default") go back to the normal
+	// color, other colors become transparent.
+	function clearedValue(option) {
+		var helpers = (option && option.helpers) || [];
+		for (var i = 0; i < helpers.length; i++) {
+			if (helpers[i] && helpers[i].value === 'inherit') {
+				return 'inherit';
+			}
+		}
+		return 'transparent';
+	}
+
 	function isVariable(value) {
-		return typeof value === 'string' && VARIABLE.test(value.trim());
+		return typeof value === 'string' && (VARIABLE.test(value.trim()) || KEYWORD.test(value.trim()));
 	}
 
 	// The color a theme variable stands for; any other value is returned as is.
 	function resolve(value) {
 		if (!isVariable(value)) {
 			return value;
+		}
+
+		if (KEYWORD.test(value.trim())) {
+			return 'transparent';
 		}
 
 		var name = VARIABLE.exec(value.trim())[1];
@@ -43,8 +66,11 @@
 			var directive = $delegate[0];
 			var Base = directive.controller;
 
-			function ThemeColorpicker(app, $element, $scope) {
+			function ThemeColorpicker(app, $element, $scope, store) {
 				var controller = Reflect.construct(Base, [app, $element, $scope], ThemeColorpicker);
+
+				// Breakpoints of the editor (current / default index).
+				controller.uxStore = store;
 				var $input = controller.$colorpicker;
 				var spectrum = $input.spectrum;
 
@@ -88,10 +114,29 @@
 					return;
 				}
 
+				// Cleared (x) on a larger screen while a color is shown: save
+				// "no color" instead of an empty value, which would inherit the
+				// color of the smaller screen again.
+				if (!color && this.model && this.isLargerScreen()) {
+					var cleared = clearedValue(this.option);
+					if (this.model !== cleared) {
+						Base.prototype.setColor.call(this, cleared);
+					}
+					return;
+				}
+
 				Base.prototype.setColor.call(this, color);
 			};
 
-			ThemeColorpicker.$inject = Base.$inject;
+			// Whether the editor shows a screen larger than the default (mobile) one.
+			ThemeColorpicker.prototype.isLargerScreen = function () {
+				var breakpoints = this.uxStore && this.uxStore.breakpoints;
+				return !!(this.option && this.option.responsive && breakpoints
+					&& typeof breakpoints.current === 'number'
+					&& breakpoints.current > (breakpoints['default'] || 0));
+			};
+
+			ThemeColorpicker.$inject = Base.$inject.concat(['store']);
 			directive.controller = ThemeColorpicker;
 
 			return $delegate;

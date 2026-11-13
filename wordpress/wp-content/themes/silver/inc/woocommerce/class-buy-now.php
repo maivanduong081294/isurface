@@ -2,17 +2,17 @@
 /**
  * Buy Now class.
  *
- * @package Flatsome\WooCommerce
+ * @package Silver\WooCommerce
  */
 
-namespace Flatsome\WooCommerce;
+namespace Silver\WooCommerce;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Class BuyNow
  *
- * @package Flatsome\WooCommerce
+ * @package Silver\WooCommerce
  */
 final class BuyNow {
 
@@ -58,7 +58,7 @@ final class BuyNow {
 		add_action( 'wp_loaded', [ $this, 'add_to_cart_action' ], 19 );
 
 		add_filter( 'woocommerce_add_to_cart_redirect', [ $this, 'buy_now_redirect' ], 99 );
-		add_filter( 'flatsome_show_buy_now_button', [ $this, 'show_buy_now_button' ], 10, 2 );
+		add_filter( 'silver_show_buy_now_button', [ $this, 'show_buy_now_button' ], 10, 2 );
 	}
 
 	/**
@@ -76,7 +76,7 @@ final class BuyNow {
 			return;
 		}
 
-		if ( ! apply_filters( 'flatsome_show_buy_now_button', true, $product ) ) {
+		if ( ! apply_filters( 'silver_show_buy_now_button', true, $product ) ) {
 			return;
 		}
 
@@ -96,8 +96,8 @@ final class BuyNow {
 			$button_atts['class'][] = $wc_wp_theme_element_class;
 		}
 		?>
-		<button <?php echo flatsome_html_atts( $button_atts ); ?>>
-			<?php esc_html_e( 'Buy now', 'flatsome' ); ?>
+		<button <?php echo silver_html_atts( $button_atts ); ?>>
+			<?php esc_html_e( 'Buy now', 'silver' ); ?>
 		</button>
 		<?php
 	}

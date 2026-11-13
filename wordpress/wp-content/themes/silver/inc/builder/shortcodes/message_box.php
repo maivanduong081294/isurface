@@ -4,8 +4,8 @@ add_ux_builder_shortcode( 'message_box', array(
     'name' => __( 'Message Box' ),
     'type' => 'container',
     'category' => __( 'Content' ),
-    'thumbnail' =>  flatsome_ux_builder_thumbnail( 'message_box' ),
-    'template' => flatsome_ux_builder_template( 'message_box.html' ),
+    'thumbnail' =>  silver_ux_builder_thumbnail( 'message_box' ),
+    'template' => silver_ux_builder_template( 'message_box.html' ),
      'presets' => array(
         array(
             'name' => __( 'Default' ),
@@ -14,18 +14,34 @@ add_ux_builder_shortcode( 'message_box', array(
     ),
     'options' => array(
         'bg' => array(
+          'responsive' => true,
           'type' => 'image',
           'heading' => __( 'BG Image' ),
           'thumb_size' => 'bg_size',
         ),
+        // Hide the image on a screen: an empty image there means "inherit".
+        'bg_visible' => array(
+          'type' => 'radio-buttons',
+          'heading' => __( 'Image visibility' ),
+          'responsive' => true,
+          'default' => 'show',
+          'conditions' => 'bg',
+          'options' => array(
+          	'show' => array( 'title' => 'Show' ),
+          	'hide' => array( 'title' => 'Hide' ),
+          ),
+        ),
         'bg_color' => array(
+          'responsive' => true,
           'type' => 'colorpicker',
+          'helpers' => require( __DIR__ . '/helpers/colors.php' ),
           'heading' => __('Bg Color'),
           'alpha' => true,
           'format' => 'rgb',
           'position' => 'bottom right',
         ),
         'text_color' => array(
+            'responsive' => true,
             'type' => 'radio-buttons',
             'heading' => __( 'Color' ),
             'default' => 'dark',

@@ -5,7 +5,7 @@
  * Generated from the official Font Awesome metadata (icon-families.json).
  * Each entry: array( css classes, label, style, search terms ).
  *
- * @package flatsome
+ * @package silver
  */
 
 return array(

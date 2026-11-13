@@ -2,8 +2,8 @@
 /**
  * Shop category filter button template
  *
- * @package          Flatsome/WooCommerce/Templates
- * @flatsome-version 3.20.0
+ * @package          Silver/WooCommerce/Templates
+ * @silver-version 3.20.0
  */
 
 $layout = get_theme_mod( 'category_sidebar', 'left-sidebar' );
@@ -36,8 +36,8 @@ $link_atts = [
 ];
 ?>
 <div class="category-filtering category-filter-row <?php echo esc_attr( $class ); ?>">
-	<a <?php echo flatsome_html_atts( $link_atts ); ?>>
-		<?php echo get_flatsome_icon( 'icon-equalizer' ); ?>
+	<a <?php echo silver_html_atts( $link_atts ); ?>>
+		<?php echo get_silver_icon( 'icon-equalizer' ); ?>
 		<strong><?php echo esc_html( $filter_text ); ?></strong>
 	</a>
 	<div class="inline-block">

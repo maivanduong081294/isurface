@@ -14,8 +14,8 @@ add_ux_builder_shortcode( 'ux_hotspot', array(
   'name' => 'Hotspot',
   'category' => __( 'Content' ),
   'require' => 'ux_banner',
-  'thumbnail' =>  flatsome_ux_builder_thumbnail( 'ux_hotspot' ),
-  //'template' => flatsome_ux_builder_template( 'ux_hotspot.html' ),
+  'thumbnail' =>  silver_ux_builder_thumbnail( 'ux_hotspot' ),
+  //'template' => silver_ux_builder_template( 'ux_hotspot.html' ),
   'allow_in' => array('ux_banner'),
   'wrap' => false,
   'options' => array(
@@ -83,6 +83,7 @@ add_ux_builder_shortcode( 'ux_hotspot', array(
           ),
       ),
       'bg_color' => array(
+          'responsive' => true,
           'type' => 'colorpicker',
           'heading' => __('Bg Color'),
           'format' => 'rgb',

@@ -171,7 +171,7 @@ if ( ! class_exists( 'Envato_Theme_Setup_Wizard' ) ) {
 		public function init_globals() {
 			$current_theme = wp_get_theme();
 			$this->theme_name = strtolower( preg_replace( '#[^a-zA-Z]#','',$current_theme->get( 'Name' ) ) );
-			$this->page_slug = apply_filters( 'flatsome_theme_setup_wizard_page_slug', 'flatsome-setup' );
+			$this->page_slug = apply_filters( 'silver_theme_setup_wizard_page_slug', 'silver-setup' );
 			$this->parent_slug = apply_filters( $this->theme_name . '_theme_setup_wizard_parent_slug', '' );
 
 			//If we have parent slug - set correct url
@@ -263,8 +263,8 @@ if ( ! class_exists( 'Envato_Theme_Setup_Wizard' ) ) {
 				return;
 			}
 			delete_transient( '_'.$this->theme_name.'_activation_redirect' );
-			if(flatsome_is_upgrading()){
-				wp_safe_redirect( admin_url('admin.php?page=flatsome-panel') );
+			if(silver_is_upgrading()){
+				wp_safe_redirect( admin_url('admin.php?page=silver-panel') );
 			} else {
 				wp_safe_redirect( admin_url( $this->page_url ) );
 			}
@@ -302,7 +302,7 @@ if ( ! class_exists( 'Envato_Theme_Setup_Wizard' ) ) {
 		 * Add admin menus/screens.
 		 */
 		public function admin_menus() {
-			add_submenu_page('flatsome-panel', __( 'Setup Wizard','envato_setup' ), __( 'Setup Wizard','envato_setup' ), 'manage_options', $this->page_slug,  array( $this, $this->page_slug) );
+			add_submenu_page('silver-panel', __( 'Setup Wizard','envato_setup' ), __( 'Setup Wizard','envato_setup' ), 'manage_options', $this->page_slug,  array( $this, $this->page_slug) );
 		}
 
 
@@ -408,7 +408,7 @@ if ( ! class_exists( 'Envato_Theme_Setup_Wizard' ) ) {
 			wp_enqueue_script( 'media' );
 
 			if (
-				flatsome_wp_version_check( '6.4' ) &&
+				silver_wp_version_check( '6.4' ) &&
 				function_exists( 'wp_enqueue_emoji_styles' )
 			) {
 				wp_enqueue_emoji_styles(); // Removes a deprectation message in WordPress 6.4.
@@ -454,7 +454,7 @@ if ( ! class_exists( 'Envato_Theme_Setup_Wizard' ) ) {
 			<?php do_action( 'admin_print_scripts' ); ?>
 			<?php //do_action( 'admin_head' ); ?>
 		</head>
-		<body class="<?php echo esc_attr( flatsome_admin_body_version_classes( 'envato-setup wp-core-ui admin-color-' . sanitize_html_class( get_user_option( 'admin_color' ), 'modern' ) ) ); ?>">
+		<body class="<?php echo esc_attr( silver_admin_body_version_classes( 'envato-setup wp-core-ui admin-color-' . sanitize_html_class( get_user_option( 'admin_color' ), 'modern' ) ) ); ?>">
 		<h1 id="wc-logo">
 			<?php
 				$image_url = $this->get_site_logo();
@@ -734,13 +734,13 @@ if ( ! class_exists( 'Envato_Theme_Setup_Wizard' ) ) {
 			} else if( get_option('envato_setup_complete', false) ){
 				?>
 				<h1><?php printf( __( 'Welcome to the setup wizard for %s.' ), wp_get_theme()); ?></h1>
-				<p class="lead success"><?php _e('It looks like you already have setup Flatsome.');?></p>
+				<p class="lead success"><?php _e('It looks like you already have setup Silver.');?></p>
 
 				<p class="envato-setup-actions step">
 					<a href="<?php echo esc_url( $this->get_next_step_link() ); ?>"
 						   class="button-primary button button-next button-large"><?php _e( 'Run Setup Wizard Again' ); ?></a>
-					<a href="<?php echo admin_url( 'admin.php?page=flatsome-panel' ); ?>"
-					   class="button button-large"><?php _e( 'Exit to Flatsome Panel' ); ?></a>
+					<a href="<?php echo admin_url( 'admin.php?page=silver-panel' ); ?>"
+					   class="button button-large"><?php _e( 'Exit to Silver Panel' ); ?></a>
 				</p>
 				<?php
 			} else {
@@ -849,7 +849,7 @@ if ( ! class_exists( 'Envato_Theme_Setup_Wizard' ) ) {
 				$plugins = $this->_get_plugins();
 				if ( count( $plugins['all'] ) ) {
 					?>
-					<p class="lead"><?php _e( 'This will install the default plugins included with Flatsome. You can add and remove plugins later on from within WordPress.', 'envato_setup' ); ?></p>
+					<p class="lead"><?php _e( 'This will install the default plugins included with Silver. You can add and remove plugins later on from within WordPress.', 'envato_setup' ); ?></p>
 					<ul class="envato-wizard-plugins">
 						<?php foreach ( $plugins['all'] as $slug => $plugin ) {  ?>
 							<li data-slug="<?php echo esc_attr( $slug );?>"><?php echo esc_html( $plugin['name'] );?>
@@ -1007,7 +1007,7 @@ if ( ! class_exists( 'Envato_Theme_Setup_Wizard' ) ) {
 				<?php if($this->is_possible_upgrade()){ ?>
 					<p><?php _e('It looks like you already have content installed on this website. If you would like to install the default demo content as well you can select it below. Otherwise just choose the upgrade option to ensure everything is up to date.'); ?></p>
 				<?php }else{ ?>
-					<p class="lead"><?php printf( __( 'It\'s time to insert some default content for your new Flatsome website. Choose what you would like inserted below and click Continue. It is recommended to leave everything selected. Once inserted, this content can be managed from the WordPress admin dashboard. ', 'envato_setup' ), '<a href="' . esc_url( admin_url( 'edit.php?post_type=page' ) ) . '" target="_blank">', '</a>' ); ?></p>
+					<p class="lead"><?php printf( __( 'It\'s time to insert some default content for your new Silver website. Choose what you would like inserted below and click Continue. It is recommended to leave everything selected. Once inserted, this content can be managed from the WordPress admin dashboard. ', 'envato_setup' ), '<a href="' . esc_url( admin_url( 'edit.php?post_type=page' ) ) . '" target="_blank">', '</a>' ); ?></p>
 				<?php } ?>
 				<table class="envato-setup-pages" cellspacing="0">
 					<thead>
@@ -1767,28 +1767,28 @@ if ( ! class_exists( 'Envato_Theme_Setup_Wizard' ) ) {
 			}
 
 			// set the blog page and the home page.
-			$shoppage = flatsome_get_page_by_title( 'Shop' );
+			$shoppage = silver_get_page_by_title( 'Shop' );
 			if ( $shoppage ) {
 				update_option( 'woocommerce_shop_page_id',$shoppage->ID );
 			}
-			$shoppage = flatsome_get_page_by_title( 'Cart' );
+			$shoppage = silver_get_page_by_title( 'Cart' );
 			if ( $shoppage ) {
 				update_option( 'woocommerce_cart_page_id',$shoppage->ID );
 			}
-			$shoppage = flatsome_get_page_by_title( 'Checkout' );
+			$shoppage = silver_get_page_by_title( 'Checkout' );
 			if ( $shoppage ) {
 				update_option( 'woocommerce_checkout_page_id',$shoppage->ID );
 			}
-			$shoppage = flatsome_get_page_by_title( 'My Account' );
+			$shoppage = silver_get_page_by_title( 'My Account' );
 			if ( $shoppage ) {
 				update_option( 'woocommerce_myaccount_page_id',$shoppage->ID );
 			}
-			$homepage = flatsome_get_page_by_title( 'Classic Shop' );
+			$homepage = silver_get_page_by_title( 'Classic Shop' );
 			if ( $homepage ) {
 				update_option( 'page_on_front', $homepage->ID );
 				update_option( 'show_on_front', 'page' );
 			}
-			$blogpage = flatsome_get_page_by_title( 'Blog' );
+			$blogpage = silver_get_page_by_title( 'Blog' );
 			if ( $blogpage ) {
 				update_option( 'page_for_posts', $blogpage->ID );
 				update_option( 'show_on_front', 'page' );
@@ -2018,19 +2018,19 @@ if ( ! class_exists( 'Envato_Theme_Setup_Wizard' ) ) {
 		 */
 		public function envato_setup_updates() {
 			?>
-			<h1><?php _e( 'Register Theme', 'flatsome' ); ?></h1>
+			<h1><?php _e( 'Register Theme', 'silver' ); ?></h1>
 
 			<?php echo flatsome_envato()->admin->render_directory_warning(); ?>
 
 			<p class="lead">
 				Enter your Envato purchase code.
 				<a href="<?php echo esc_url( UXTHEMES_ACCOUNT_URL ); ?>" target="_blank" rel="noopener">
-					<?php esc_html_e( 'Manage your licenses', 'flatsome' ); ?>
+					<?php esc_html_e( 'Manage your licenses', 'silver' ); ?>
 					<span class="dashicons dashicons-external" style="vertical-align:middle;font-size:18px;text-decoration: none;"></span>
 				</a>
 			</p>
 
-			<form action="<?php echo admin_url( 'admin-post.php' ); ?>" method="POST" autocomplete="off" onsubmit="return onFlatsomeEnvatoSubmit(this);">
+			<form action="<?php echo admin_url( 'admin-post.php' ); ?>" method="POST" autocomplete="off" onsubmit="return onSilverEnvatoSubmit(this);">
 				<?php wp_nonce_field( 'envato-setup' ); ?>
 
 				<div class="registration-form">
@@ -2043,10 +2043,10 @@ if ( ! class_exists( 'Envato_Theme_Setup_Wizard' ) ) {
 
 				<p class="envato-setup-actions step">
 					<?php if ( flatsome_envato()->registration->is_registered() ) : ?>
-					<a href="<?php echo esc_url_raw( $this->get_next_step_link() ); ?>" class="button button-large button-next button-primary"><?php _e( 'Continue', 'flatsome' ); ?></a>
-					<input type="submit" name="flatsome_unregister" class="button button-large button-next" value="<?php _e( 'Unregister', 'flatsome' ); ?>"/>
+					<a href="<?php echo esc_url_raw( $this->get_next_step_link() ); ?>" class="button button-large button-next button-primary"><?php _e( 'Continue', 'silver' ); ?></a>
+					<input type="submit" name="silver_unregister" class="button button-large button-next" value="<?php _e( 'Unregister', 'silver' ); ?>"/>
 					<?php else : ?>
-					<input type="submit" name="flatsome_register" class="button button-large button-next button-primary" value="<?php _e( 'Register', 'flatsome' ); ?>"/>
+					<input type="submit" name="silver_register" class="button button-large button-next button-primary" value="<?php _e( 'Register', 'silver' ); ?>"/>
 					<?php endif; ?>
 				</p>
 			</form>
@@ -2149,27 +2149,6 @@ if ( ! class_exists( 'Envato_Theme_Setup_Wizard' ) ) {
 			<h1><?php _e( 'Your Website is Ready!', 'envato_setup' ); ?></h1>
 
 			<p class="lead success">Congratulations! The theme has been activated and your website is ready. Login to your WordPress dashboard to make changes and modify any of the default content to suit your needs.</p>
-			<p>Please come back and <a href="https://themeforest.net/downloads" target="_blank">leave a 5-star rating</a> if you are happy with this theme. <br/>Follow <a  href="https://twitter.com/uxthemes" target="_blank">@uxthemes</a> on Twitter to see updates. Thanks! </p>
-
-			<div class="envato-setup-next-steps">
-				<div class="envato-setup-next-steps-first">
-					<h2><?php _e( 'Next Steps', 'envato_setup' ); ?></h2>
-					<ul>
-						<?php if( is_woocommerce_activated() ) { ?><li class="setup-product"><a class="button  button-primary button-large woocommerce-button" href="<?php echo wc_admin_url( '&path=/setup-wizard' );?>"><?php _e( 'Setup WooCommerce (optional)', 'envato_setup' ); ?></a></li><?php } ?>
-						<li class="setup-product"><a class="button button-primary button-large" href="https://www.facebook.com/groups/flatsome/" target="_blank"><?php _e( 'Join Facebook Group', 'envato_setup' ); ?></a></li>
-						<li class="setup-product"><a class="button button-large" href="<?php echo esc_url( home_url() ); ?>"><?php _e( 'View your new website!', 'envato_setup' ); ?></a></li>
-					</ul>
-				</div>
-				<div class="envato-setup-next-steps-last">
-					<h2><?php _e( 'More Resources', 'envato_setup' ); ?></h2>
-					<ul>
-						<li class="documentation"><a href="https://docs.uxthemes.com/"><?php _e( 'Theme Documentation', 'envato_setup' ); ?></a></li>
-						<li class="woocommerce documentation"><a href="https://woocommerce.com/documentation/woocommerce/"><?php _e( 'Learn how to use WooCommerce', 'envato_setup' ); ?></a></li>
-						<li class="howto"><a href="https://wordpress.org/support/"><?php _e( 'Learn how to use WordPress', 'envato_setup' ); ?></a></li>
-						<li class="rating"><a href="https://themeforest.net/downloads"><?php _e( 'Leave an Item Rating', 'envato_setup' ); ?></a></li>
-					</ul>
-				</div>
-			</div>
 			<?php
 		}
 

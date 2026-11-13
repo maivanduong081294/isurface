@@ -1,10 +1,10 @@
 <?php
 /**
- * Flatsome Infinite scroll extension
+ * Silver Infinite scroll extension
  *
  * @author     UX Themes
  * @category   Extension
- * @package    Flatsome/Extensions
+ * @package    Silver/Extensions
  * @since      3.5.0
  */
 
@@ -13,9 +13,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class Flatsome_Infinite_Scroll
+ * Class Silver_Infinite_Scroll
  */
-class Flatsome_Infinite_Scroll {
+class Silver_Infinite_Scroll {
 
 	/**
 	 * Version number
@@ -48,7 +48,7 @@ class Flatsome_Infinite_Scroll {
 	private static $instance;
 
 	/**
-	 * Flatsome_Infinite_Scroll constructor.
+	 * Silver_Infinite_Scroll constructor.
 	 */
 	private function __construct() {
 		$theme         = wp_get_theme( get_template() );
@@ -74,7 +74,7 @@ class Flatsome_Infinite_Scroll {
 	 * Initialize extension
 	 */
 	public function init() {
-		if ( is_admin() || ! flatsome_is_shop_archive() ) {
+		if ( is_admin() || ! silver_is_shop_archive() ) {
 			return;
 		}
 
@@ -91,8 +91,8 @@ class Flatsome_Infinite_Scroll {
 	 */
 	public function add_scripts() {
 		global $extensions_uri;
-		wp_enqueue_script( 'flatsome-infinite-scroll-js', get_template_directory_uri() . '/assets/libs/infinite-scroll.pkgd.min.js', array( 'jquery', 'flatsome-js' ), '4.0.1', true );
-		wp_enqueue_script( 'flatsome-infinite-scroll', $extensions_uri . '/silver-infinite-scroll/silver-infinite-scroll.js', array( 'jquery', 'flatsome-js' ), $this->version, true );
+		wp_enqueue_script( 'silver-infinite-scroll-js', get_template_directory_uri() . '/assets/libs/infinite-scroll.pkgd.min.js', array( 'jquery', 'silver-js' ), '4.0.1', true );
+		wp_enqueue_script( 'silver-infinite-scroll', $extensions_uri . '/silver-infinite-scroll/silver-infinite-scroll.js', array( 'jquery', 'silver-js' ), $this->version, true );
 
 		$params = array(
 			'scroll_threshold' => 400,
@@ -102,7 +102,7 @@ class Flatsome_Infinite_Scroll {
 			'history'          => 'push',
 		);
 
-		wp_localize_script( 'flatsome-infinite-scroll', 'flatsome_infinite_scroll', apply_filters( 'flatsome_infinite_scroll_params', $params ) );
+		wp_localize_script( 'silver-infinite-scroll', 'flatsome_infinite_scroll', apply_filters( 'silver_infinite_scroll_params', $params ) );
 	}
 
 	/**
@@ -126,7 +126,7 @@ class Flatsome_Infinite_Scroll {
 		</style>
 		<?php
 		$css = ob_get_clean();
-		echo flatsome_minify_css( $css ); // @codingStandardsIgnoreLine
+		echo silver_minify_css( $css ); // @codingStandardsIgnoreLine
 	}
 
 	/**
@@ -142,6 +142,6 @@ class Flatsome_Infinite_Scroll {
 }
 
 /**
- * Init Flatsome_Infinite_Scroll
+ * Init Silver_Infinite_Scroll
  */
-Flatsome_Infinite_Scroll::get_instance();
+Silver_Infinite_Scroll::get_instance();

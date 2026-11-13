@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * ensuring that all CSS & fonts still work.
  * It does not handle the customizer options, simply the frontend CSS.
  */
-class Flatsome_Option {
+class Silver_Option {
 
   /**
    * @static
@@ -98,4 +98,4 @@ class Flatsome_Option {
     }
   }
 }
-new Flatsome_Option();
+new Silver_Option();

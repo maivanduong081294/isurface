@@ -2,116 +2,116 @@
 /**
  * Header contact options.
  *
- * @package Flatsome
+ * @package Silver
  */
 
-Flatsome_Option::add_section( 'header_contact', array(
-	'title' => esc_html__( 'Contact', 'flatsome-admin' ),
+Silver_Option::add_section( 'header_contact', array(
+	'title' => esc_html__( 'Contact', 'silver' ),
 	'panel' => 'header',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'radio-buttonset',
 	'settings'  => 'contact_style',
-	'label'     => esc_html__( 'Icon Style', 'flatsome-admin' ),
+	'label'     => esc_html__( 'Icon Style', 'silver' ),
 	'section'   => 'header_contact',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'default'   => 'left',
 	'choices'   => array(
-		'left'  => esc_html__( 'Icons Left', 'flatsome-admin' ),
-		'icons' => esc_html__( 'Icons Only', 'flatsome-admin' ),
+		'left'  => esc_html__( 'Icons Left', 'silver' ),
+		'icons' => esc_html__( 'Icons Only', 'silver' ),
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'text',
 	'settings'  => 'contact_icon_size',
-	'label'     => esc_html__( 'Icon Size', 'flatsome-admin' ),
+	'label'     => esc_html__( 'Icon Size', 'silver' ),
 	'section'   => 'header_contact',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'default'   => '16px',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'text',
 	'settings'  => 'contact_location',
-	'label'     => esc_html__( 'Location', 'flatsome-admin' ),
-	'help'      => esc_html__( 'Type in the location of your place or shop. It will open in a new window on Google Maps', 'flatsome-admin' ),
+	'label'     => esc_html__( 'Location', 'silver' ),
+	'help'      => esc_html__( 'Type in the location of your place or shop. It will open in a new window on Google Maps', 'silver' ),
 	'section'   => 'header_contact',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'default'   => '',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'text',
 	'settings'  => 'contact_location_label',
-	'label'     => esc_html__( 'Location label', 'flatsome-admin' ),
+	'label'     => esc_html__( 'Location label', 'silver' ),
 	'section'   => 'header_contact',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'default'   => '',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'text',
 	'settings'  => 'contact_email',
-	'label'     => esc_html__( 'E-mail', 'flatsome-admin' ),
+	'label'     => esc_html__( 'E-mail', 'silver' ),
 	'section'   => 'header_contact',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'default'   => 'youremail@gmail.com',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'text',
 	'settings'  => 'contact_email_label',
-	'label'     => esc_html__( 'E-mail label', 'flatsome-admin' ),
+	'label'     => esc_html__( 'E-mail label', 'silver' ),
 	'section'   => 'header_contact',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'default'   => '',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'text',
 	'settings'  => 'contact_hours',
-	'label'     => esc_html__( 'Open Hours', 'flatsome-admin' ),
+	'label'     => esc_html__( 'Open Hours', 'silver' ),
 	'section'   => 'header_contact',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'default'   => '08:00 - 17:00',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'textarea',
 	'settings'  => 'contact_hours_details',
-	'label'     => esc_html__( 'Open Hours - Details', 'flatsome-admin' ),
+	'label'     => esc_html__( 'Open Hours - Details', 'silver' ),
 	'section'   => 'header_contact',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'default'   => '',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'text',
 	'settings'  => 'contact_phone',
-	'label'     => esc_html__( 'Phone', 'flatsome-admin' ),
+	'label'     => esc_html__( 'Phone', 'silver' ),
 	'section'   => 'header_contact',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'default'   => '+47 900 99 000',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'text',
 	'settings'  => 'contact_whatsapp',
-	'label'     => esc_html__( 'WhatsApp', 'flatsome-admin' ),
+	'label'     => esc_html__( 'WhatsApp', 'silver' ),
 	'section'   => 'header_contact',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'tooltip'   => 'Use a full phone number only in international format. Omit any plus signs, zeroes, brackets, or dashes when adding the phone number.',
 	'default'   => '',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'text',
 	'settings'  => 'contact_whatsapp_label',
-	'label'     => esc_html__( 'WhatsApp Label', 'flatsome-admin' ),
+	'label'     => esc_html__( 'WhatsApp Label', 'silver' ),
 	'section'   => 'header_contact',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'default'   => '',
 ) );
 
@@ -122,7 +122,7 @@ Flatsome_Option::add_field( 'option', array(
  *
  * @return void
  */
-function flatsome_refresh_header_contact_partials( WP_Customize_Manager $wp_customize ) {
+function silver_refresh_header_contact_partials( WP_Customize_Manager $wp_customize ) {
 
 	if ( ! isset( $wp_customize->selective_refresh ) ) {
 		return;
@@ -150,4 +150,4 @@ function flatsome_refresh_header_contact_partials( WP_Customize_Manager $wp_cust
 	) );
 }
 
-add_action( 'customize_register', 'flatsome_refresh_header_contact_partials' );
+add_action( 'customize_register', 'silver_refresh_header_contact_partials' );

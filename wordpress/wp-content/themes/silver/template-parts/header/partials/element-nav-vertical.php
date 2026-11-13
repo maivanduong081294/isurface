@@ -2,8 +2,8 @@
 /**
  * Header vertical menu template.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.20.0
+ * @package          Silver\Templates
+ * @silver-version 3.20.0
  */
 
 $classes_opener  = array( 'header-vertical-menu__opener' );
@@ -30,10 +30,10 @@ $flyout_atts = [
 ?>
 
 <li class="header-vertical-menu">
-	<div <?php echo flatsome_html_atts( $opener_atts ); ?>>
+	<div <?php echo silver_html_atts( $opener_atts ); ?>>
 		<?php if ( get_theme_mod( 'header_nav_vertical_icon_style', 'plain' ) ) : ?>
 			<span class="header-vertical-menu__icon">
-				<?php echo get_flatsome_icon( 'icon-menu' ); ?>
+				<?php echo get_silver_icon( 'icon-menu' ); ?>
 			</span>
 		<?php endif; ?>
 		<span class="header-vertical-menu__title">
@@ -44,19 +44,19 @@ $flyout_atts = [
 			if ( get_theme_mod( 'header_nav_vertical_text' ) ) :
 				echo esc_html( get_theme_mod( 'header_nav_vertical_text' ) );
 			else :
-				esc_html_e( 'Categories', 'flatsome' );
+				esc_html_e( 'Categories', 'silver' );
 			endif;
 			?>
 		</span>
-		<?php echo get_flatsome_icon( 'icon-angle-down' ); ?>
+		<?php echo get_silver_icon( 'icon-angle-down' ); ?>
 	</div>
-	<div <?php echo flatsome_html_atts( $flyout_atts ); ?>>
+	<div <?php echo silver_html_atts( $flyout_atts ); ?>>
 		<?php
 		if ( has_nav_menu( 'vertical' ) ) {
 			wp_nav_menu( array(
 				'theme_location' => 'vertical',
 				'menu_class'     => 'ux-nav-vertical-menu nav-vertical-fly-out',
-				'walker'         => new FlatsomeNavDropdown(),
+				'walker'         => new SilverNavDropdown(),
 			) );
 		} elseif ( current_user_can( 'edit_theme_options' ) ) {
 			$admin_url = get_admin_url() . 'customize.php?url=' . get_permalink() . '&autofocus%5Bsection%5D=menu_locations';

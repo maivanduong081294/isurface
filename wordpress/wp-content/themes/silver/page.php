@@ -2,8 +2,8 @@
 /**
  * The template for displaying all pages.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.19.9
+ * @package          Silver\Templates
+ * @silver-version 3.19.9
  */
 
 if ( get_theme_mod( 'pages_template', 'default' ) != 'default' ) {
@@ -15,7 +15,7 @@ if ( get_theme_mod( 'pages_template', 'default' ) != 'default' ) {
 } else {
 
 get_header();
-do_action( 'flatsome_before_page' ); ?>
+do_action( 'silver_before_page' ); ?>
 <div id="content" class="content-area page-wrapper" role="main">
 	<div class="row row-main">
 		<div class="xlarge-12 col">
@@ -28,7 +28,7 @@ do_action( 'flatsome_before_page' ); ?>
 				<?php } ?>
 
 				<?php while ( have_posts() ) : the_post(); ?>
-					<?php do_action( 'flatsome_before_page_content' ); ?>
+					<?php do_action( 'silver_before_page_content' ); ?>
 
 						<?php the_content(); ?>
 
@@ -38,7 +38,7 @@ do_action( 'flatsome_before_page' ); ?>
 					}
 					?>
 
-					<?php do_action( 'flatsome_after_page_content' ); ?>
+					<?php do_action( 'silver_after_page_content' ); ?>
 				<?php endwhile; // end of the loop. ?>
 			</div>
 		</div>
@@ -46,7 +46,7 @@ do_action( 'flatsome_before_page' ); ?>
 </div>
 
 <?php
-do_action( 'flatsome_after_page' );
+do_action( 'silver_after_page' );
 get_footer();
 
 }

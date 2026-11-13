@@ -2,9 +2,9 @@
 // PAGE META OPTIONS
 include('meta/meta_box_framework.php');
 
-function flatsome_custom_meta_boxes() {
+function silver_custom_meta_boxes() {
     if (
-      flatsome_wp_version_check( '6.3' ) &&
+      silver_wp_version_check( '6.3' ) &&
       use_block_editor_for_post_type( 'page' ) &&
       ! isset( $_REQUEST['classic-editor'] )
     ) {
@@ -13,7 +13,7 @@ function flatsome_custom_meta_boxes() {
       return;
     }
     $meta_box = array(
-        'id'         => 'flatsome_page_options2', // Meta box ID
+        'id'         => 'silver_page_options2', // Meta box ID
         'title'      => 'Page Layout', // Meta box title
         'pages'      => array('page'), // Post types this meta box should be shown on
         'context'    => 'side', // Meta box context
@@ -37,4 +37,4 @@ function flatsome_custom_meta_boxes() {
     );
     dev7_add_meta_box( $meta_box );
 }
-add_action( 'dev7_meta_boxes', 'flatsome_custom_meta_boxes' );
+add_action( 'dev7_meta_boxes', 'silver_custom_meta_boxes' );

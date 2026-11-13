@@ -51,10 +51,10 @@ function ux_tabgroup( $params, $content = null, $tag = '' ) {
 
 		foreach( $GLOBALS['tabs'] as $key => $tab ){
 			if ( ! empty( $tab['anchor'] ) ) {
-				$id = flatsome_to_dashed( $tab['anchor'] );
+				$id = silver_to_dashed( $tab['anchor'] );
 				$anchor = rawurlencode( $tab['anchor'] );
 			} else {
-				$id = $tab['title'] ? flatsome_to_dashed( $tab['title'] ) : wp_rand();
+				$id = $tab['title'] ? silver_to_dashed( $tab['title'] ) : wp_rand();
 				$anchor = "tab_$id";
 			}
 			$active = $key == 0 ? ' active' : ''; // Set first tab active by default.
@@ -63,7 +63,18 @@ function ux_tabgroup( $params, $content = null, $tag = '' ) {
 			$i++;
 		}
 			if($title) $title = '<h4 class="uppercase text-' . esc_attr( $align ) . '">' . wp_kses_post( $title ) . '</h4>';
-			$return = '
+
+			// Responsive tabs align (larger screens).
+			$responsive_style = '';
+			if ( silver_responsive_has_overrides( (array) $params, 'align' ) ) {
+				if ( ! $_id ) $_id = 'tabs-' . wp_rand();
+				$responsive_style = silver_responsive_style_tag( $_id, (array) $params, array(
+					'align'       => array( 'selector' => '> .nav', 'only_overrides' => true, 'default' => 'left', 'map' => silver_responsive_map( 'nav_align' ) ),
+					'align|title' => array( 'option' => 'align', 'selector' => '> h4', 'only_overrides' => true, 'default' => 'left', 'map' => silver_responsive_map( 'text_align' ) ),
+				) );
+			}
+
+			$return = $responsive_style . '
 		<div' . ( $_id ? ' id="' . esc_attr( $_id ) . '"' : '' ) . ' class="' . esc_attr( implode( ' ', $wrapper_class ) ) . '">
 			'.$title.'
 			<ul class="' . esc_attr( $classes ) . '" role="tablist">'.implode( "\n", $tabs ).'</ul><div class="tab-panels">'.implode( "\n", $panes ).'</div></div>';

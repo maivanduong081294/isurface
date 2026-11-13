@@ -15,7 +15,7 @@ $sizes = array(
 add_ux_builder_shortcode( 'ux_product_gallery', array(
 	'name'      => __( 'Product Gallery' ),
 	'category'  => __( 'Product Page' ),
-	'thumbnail' => flatsome_ux_builder_thumbnail( 'woo_gallery' ),
+	'thumbnail' => silver_ux_builder_thumbnail( 'woo_gallery' ),
 	'overlay'   => true,
 	'wrap'      => true,
 	'priority'  => 9999,
@@ -25,10 +25,10 @@ add_ux_builder_shortcode( 'ux_product_gallery', array(
 			'heading' => 'Style',
 			'default' => 'normal',
 			'options' => array(
-				'normal'     => __( 'Normal', 'flatsome-admin' ),
-				'vertical'   => __( 'Vertical', 'flatsome-admin' ),
-				'full-width' => __( 'Full Width', 'flatsome-admin' ),
-				'stacked'    => __( 'Stacked', 'flatsome-admin' ),
+				'normal'     => __( 'Normal', 'silver' ),
+				'vertical'   => __( 'Vertical', 'silver' ),
+				'full-width' => __( 'Full Width', 'silver' ),
+				'stacked'    => __( 'Stacked', 'silver' ),
 			),
 		),
 		'grid_layout' => array(
@@ -38,10 +38,10 @@ add_ux_builder_shortcode( 'ux_product_gallery', array(
 			'conditions' => 'style == "stacked"',
 			'default'    => '',
 			'options' => array(
-				''      => __( '1 column', 'flatsome-admin' ),
-				'2'     => __( '2 columns', 'flatsome-admin' ),
-				'1-2'   => __( 'Featured - 2 columns', 'flatsome-admin' ),
-				'3-1-2' => __( '3 columns - featured - 2 columns', 'flatsome-admin' ),
+				''      => __( '1 column', 'silver' ),
+				'2'     => __( '2 columns', 'silver' ),
+				'1-2'   => __( 'Featured - 2 columns', 'silver' ),
+				'3-1-2' => __( '3 columns - featured - 2 columns', 'silver' ),
 			),
 		),
 		'slider_type' => array(
@@ -51,8 +51,8 @@ add_ux_builder_shortcode( 'ux_product_gallery', array(
 			'conditions' => 'style == "normal" || style == "vertical" || style == "stacked"',
 			'default'    => '',
 			'options'    => array(
-				''     => array( 'title' => esc_html__( 'Slide', 'flatsome-admin' ) ),
-				'fade' => array( 'title' => esc_html__( 'Fade', 'flatsome-admin' ) ),
+				''     => array( 'title' => esc_html__( 'Slide', 'silver' ) ),
+				'fade' => array( 'title' => esc_html__( 'Fade', 'silver' ) ),
 			),
 		),
 	),
@@ -60,7 +60,7 @@ add_ux_builder_shortcode( 'ux_product_gallery', array(
 
 add_ux_builder_shortcode( 'ux_product_title', array(
 	'name'      => __( 'Product Title' ),
-	'thumbnail' => flatsome_ux_builder_thumbnail( 'woo_title' ),
+	'thumbnail' => silver_ux_builder_thumbnail( 'woo_title' ),
 	'category'  => __( 'Product Page' ),
 	'options'   => array(
 		'size'      => array(
@@ -84,7 +84,7 @@ add_ux_builder_shortcode( 'ux_product_title', array(
 
 add_ux_builder_shortcode( 'ux_product_rating', array(
 	'name'      => __( 'Product Rating' ),
-	'thumbnail' => flatsome_ux_builder_thumbnail( 'woo_rating' ),
+	'thumbnail' => silver_ux_builder_thumbnail( 'woo_rating' ),
 	'wrap'      => true,
 	'category'  => __( 'Product Page' ),
 	'options'   => array(
@@ -98,9 +98,9 @@ add_ux_builder_shortcode( 'ux_product_rating', array(
 			'heading' => 'Review Count Style',
 			'default' => 'inline',
 			'options' => array(
-				'tooltip' => __( 'Tooltip', 'flatsome-admin' ),
-				'stacked' => __( 'Stacked', 'flatsome-admin' ),
-				'inline'  => __( 'Inline', 'flatsome-admin' ),
+				'tooltip' => __( 'Tooltip', 'silver' ),
+				'stacked' => __( 'Stacked', 'silver' ),
+				'inline'  => __( 'Inline', 'silver' ),
 			),
 		),
 	),
@@ -108,7 +108,7 @@ add_ux_builder_shortcode( 'ux_product_rating', array(
 
 add_ux_builder_shortcode( 'ux_product_price', array(
 	'name'      => __( 'Product Price' ),
-	'thumbnail' => flatsome_ux_builder_thumbnail( 'woo_price' ),
+	'thumbnail' => silver_ux_builder_thumbnail( 'woo_price' ),
 	'wrap'      => false,
 	'category'  => __( 'Product Page' ),
 	'options'   => array(
@@ -123,14 +123,14 @@ add_ux_builder_shortcode( 'ux_product_price', array(
 
 add_ux_builder_shortcode( 'ux_product_excerpt', array(
 	'name'      => __( 'Product Short Description' ),
-	'thumbnail' => flatsome_ux_builder_thumbnail( 'woo_short_desc' ),
+	'thumbnail' => silver_ux_builder_thumbnail( 'woo_short_desc' ),
 	'wrap'      => false,
 	'category'  => __( 'Product Page' ),
 ) );
 
 add_ux_builder_shortcode( 'ux_product_add_to_cart', array(
 	'name'      => __( 'Product Add To Cart' ),
-	'thumbnail' => flatsome_ux_builder_thumbnail( 'woo_add_to_cart' ),
+	'thumbnail' => silver_ux_builder_thumbnail( 'woo_add_to_cart' ),
 	'category'  => __( 'Product Page' ),
 	'options'   => array(
 		'style' => array(
@@ -138,9 +138,9 @@ add_ux_builder_shortcode( 'ux_product_add_to_cart', array(
 			'heading' => 'Form Style',
 			'default' => 'normal',
 			'options' => array(
-				'normal' => __( 'Normal', 'flatsome-admin' ),
-				'flat'   => __( 'Flat', 'flatsome-admin' ),
-				'minimal'   => __( 'Minimal', 'flatsome-admin' ),
+				'normal' => __( 'Normal', 'silver' ),
+				'flat'   => __( 'Flat', 'silver' ),
+				'minimal'   => __( 'Minimal', 'silver' ),
 			),
 		),
 		'size'  => array(
@@ -154,22 +154,22 @@ add_ux_builder_shortcode( 'ux_product_add_to_cart', array(
 
 add_ux_builder_shortcode( 'ux_product_meta', array(
 	'name'      => __( 'Product Meta' ),
-	'thumbnail' => flatsome_ux_builder_thumbnail( 'woo_meta' ),
+	'thumbnail' => silver_ux_builder_thumbnail( 'woo_meta' ),
 	'category'  => __( 'Product Page' ),
 ) );
 
 add_ux_builder_shortcode( 'ux_product_upsell', array(
 	'name'      => __( 'Product Up-sells' ),
 	'category'  => __( 'Product Page' ),
-	'thumbnail' => flatsome_ux_builder_thumbnail( 'woo_upsells' ),
+	'thumbnail' => silver_ux_builder_thumbnail( 'woo_upsells' ),
 	'options'   => array(
 		'style' => array(
 			'type'    => 'select',
 			'heading' => 'Style',
 			'default' => 'sidebar',
 			'options' => array(
-				'sidebar' => __( 'List', 'flatsome-admin' ),
-				'grid'    => __( 'Grid', 'flatsome-admin' ),
+				'sidebar' => __( 'List', 'silver' ),
+				'grid'    => __( 'Grid', 'silver' ),
 			),
 		),
 	),
@@ -178,32 +178,33 @@ add_ux_builder_shortcode( 'ux_product_upsell', array(
 add_ux_builder_shortcode( 'ux_product_tabs', array(
 	'name'      => __( 'Product Tabs' ),
 	'category'  => __( 'Product Page' ),
-	'thumbnail' => flatsome_ux_builder_thumbnail( 'woo_tabs' ),
+	'thumbnail' => silver_ux_builder_thumbnail( 'woo_tabs' ),
 	'options'   => array(
 		'style' => array(
 			'type'    => 'select',
 			'heading' => 'Style',
 			'default' => 'tabs',
 			'options' => array(
-				'tabs'          => __( 'Line Tabs', 'flatsome-admin' ),
-				'tabs_normal'         => __( 'Tabs Normal', 'flatsome-admin' ),
-				'line-grow'           => __( 'Line Tabs - Grow', 'flatsome-admin' ),
-				'tabs_vertical'       => __( 'Tabs vertical', 'flatsome-admin' ),
-				'tabs_pills'          => __( 'Pills', 'flatsome-admin' ),
-				'tabs_outline'        => __( 'Outline', 'flatsome-admin' ),
-				'sections'            => __( 'Sections', 'flatsome-admin' ),
-				'accordian'           => __( 'Accordion', 'flatsome-admin' ),
-				'accordian-collapsed' => __( 'Accordion - Collapsed', 'flatsome-admin' ),
+				'tabs'          => __( 'Line Tabs', 'silver' ),
+				'tabs_normal'         => __( 'Tabs Normal', 'silver' ),
+				'line-grow'           => __( 'Line Tabs - Grow', 'silver' ),
+				'tabs_vertical'       => __( 'Tabs vertical', 'silver' ),
+				'tabs_pills'          => __( 'Pills', 'silver' ),
+				'tabs_outline'        => __( 'Outline', 'silver' ),
+				'sections'            => __( 'Sections', 'silver' ),
+				'accordian'           => __( 'Accordion', 'silver' ),
+				'accordian-collapsed' => __( 'Accordion - Collapsed', 'silver' ),
 			),
 		),
 		'align' => array(
+			'responsive' => true,
 			'type'    => 'select',
 			'heading' => 'Align',
 			'default' => 'left',
 			'options' => array(
-				'left'   => __( 'Left', 'flatsome-admin' ),
-				'center' => __( 'Center', 'flatsome-admin' ),
-				'right'  => __( 'Right', 'flatsome-admin' ),
+				'left'   => __( 'Left', 'silver' ),
+				'center' => __( 'Center', 'silver' ),
+				'right'  => __( 'Right', 'silver' ),
 			),
 		),
 	),
@@ -212,15 +213,15 @@ add_ux_builder_shortcode( 'ux_product_tabs', array(
 add_ux_builder_shortcode( 'ux_product_related', array(
 	'name'      => __( 'Product Related' ),
 	'category'  => __( 'Product Page' ),
-	'thumbnail' => flatsome_ux_builder_thumbnail( 'woo_related' ),
+	'thumbnail' => silver_ux_builder_thumbnail( 'woo_related' ),
 	'options'   => array(
 		'style' => array(
 			'type'    => 'select',
 			'heading' => 'Style',
 			'default' => 'slider',
 			'options' => array(
-				'slider' => __( 'Slider', 'flatsome-admin' ),
-				'grid'   => __( 'Grid', 'flatsome-admin' ),
+				'slider' => __( 'Slider', 'silver' ),
+				'grid'   => __( 'Grid', 'silver' ),
 			),
 		),
 	),
@@ -229,19 +230,19 @@ add_ux_builder_shortcode( 'ux_product_related', array(
 add_ux_builder_shortcode( 'ux_product_hook', array(
 	'name'      => __( 'Product Hooks' ),
 	'category'  => __( 'Product Page' ),
-	'thumbnail' => flatsome_ux_builder_thumbnail( 'woo_hooks' ),
+	'thumbnail' => silver_ux_builder_thumbnail( 'woo_hooks' ),
 	'options'   => array(
 		'hook' => array(
 			'type'    => 'select',
 			'heading' => 'Hook',
 			'default' => 'woocommerce_single_product_summary',
-			'options' => apply_filters( 'flatsome_custom_product_single_product_hooks', array(
+			'options' => apply_filters( 'silver_custom_product_single_product_hooks', array(
 				'woocommerce_before_single_product_summary' => 'woocommerce_before_single_product_summary',
 				'woocommerce_single_product_summary'        => 'woocommerce_single_product_summary',
 				'woocommerce_after_single_product_summary'  => 'woocommerce_after_single_product_summary',
-				'flatsome_custom_single_product_1'          => 'flatsome_custom_single_product_1',
-				'flatsome_custom_single_product_2'          => 'flatsome_custom_single_product_2',
-				'flatsome_custom_single_product_3'          => 'flatsome_custom_single_product_3',
+				'silver_custom_single_product_1'          => 'silver_custom_single_product_1',
+				'silver_custom_single_product_2'          => 'silver_custom_single_product_2',
+				'silver_custom_single_product_3'          => 'silver_custom_single_product_3',
 			) ),
 		),
 	),
@@ -249,7 +250,7 @@ add_ux_builder_shortcode( 'ux_product_hook', array(
 
 add_ux_builder_shortcode( 'ux_product_breadcrumbs', array(
 	'name'      => __( 'Product Breadcrumbs' ),
-	'thumbnail' => flatsome_ux_builder_thumbnail( 'woo_breadcrumbs' ),
+	'thumbnail' => silver_ux_builder_thumbnail( 'woo_breadcrumbs' ),
 	'category'  => __( 'Product Page' ),
 	'options'   => array(
 		'size' => array(
@@ -263,7 +264,7 @@ add_ux_builder_shortcode( 'ux_product_breadcrumbs', array(
 
 add_ux_builder_shortcode( 'ux_product_next_prev_nav', array(
 	'name'      => __( 'Product Next/Prev' ),
-	'thumbnail' => flatsome_ux_builder_thumbnail( 'woo_next_prev' ),
+	'thumbnail' => silver_ux_builder_thumbnail( 'woo_next_prev' ),
 	'category'  => __( 'Product Page' ),
 	'options'   => array(
 		'class' => array(

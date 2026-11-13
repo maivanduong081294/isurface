@@ -1,20 +1,20 @@
 <?php
 /**
- * Flatsome_Theme_JSON class.
+ * Silver_Theme_JSON class.
  *
  * @author  UX Themes
- * @package Flatsome
+ * @package Silver
  * @since   3.18.0
  */
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Class Flatsome_Theme_JSON
+ * Class Silver_Theme_JSON
  *
- * @package Flatsome
+ * @package Silver
  */
-final class Flatsome_Theme_JSON {
+final class Silver_Theme_JSON {
 
 	/**
 	 * Initialize.
@@ -50,19 +50,19 @@ final class Flatsome_Theme_JSON {
 		return array(
 			array(
 				'slug'  => 'primary',
-				'color' => get_theme_mod( 'color_primary', Flatsome_Default::COLOR_PRIMARY ),
+				'color' => get_theme_mod( 'color_primary', Silver_Default::COLOR_PRIMARY ),
 			),
 			array(
 				'slug'  => 'secondary',
-				'color' => get_theme_mod( 'color_secondary', Flatsome_Default::COLOR_SECONDARY ),
+				'color' => get_theme_mod( 'color_secondary', Silver_Default::COLOR_SECONDARY ),
 			),
 			array(
 				'slug'  => 'success',
-				'color' => get_theme_mod( 'color_success', Flatsome_Default::COLOR_SUCCESS ),
+				'color' => get_theme_mod( 'color_success', Silver_Default::COLOR_SUCCESS ),
 			),
 			array(
 				'slug'  => 'alert',
-				'color' => get_theme_mod( 'color_alert', Flatsome_Default::COLOR_ALERT ),
+				'color' => get_theme_mod( 'color_alert', Silver_Default::COLOR_ALERT ),
 			),
 		);
 	}

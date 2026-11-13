@@ -4,7 +4,7 @@ add_action( 'widgets_init', 'recent_posts_widget' );
 
 function recent_posts_widget() {
 
-	register_widget( 'Flatsome_Recent_Post_Widget' );
+	register_widget( 'Silver_Recent_Post_Widget' );
 }
 
 /**
@@ -12,14 +12,14 @@ function recent_posts_widget() {
  *
  * @since 2.8.0
  */
-class Flatsome_Recent_Post_Widget extends WP_Widget {
+class Silver_Recent_Post_Widget extends WP_Widget {
 
 	function __construct() {
-		$widget_ops = array( 'classname' => 'flatsome_recent_posts', 'description' => __('Display recent posts in Flatsome format.', 'flatsome'), 'customize_selective_refresh' => true);
+		$widget_ops = array( 'classname' => 'flatsome_recent_posts', 'description' => __('Display recent posts in Silver format.', 'silver'), 'customize_selective_refresh' => true);
 
 		$control_ops = array( 'id_base' => 'flatsome_recent_posts' );
 
-		parent::__construct( 'flatsome_recent_posts', __('Flatsome Recent Posts', 'flatsome'), $widget_ops, $control_ops );
+		parent::__construct( 'flatsome_recent_posts', __('Silver Recent Posts', 'silver'), $widget_ops, $control_ops );
 	}
 
 	function widget($args, $instance) {
@@ -46,7 +46,7 @@ class Flatsome_Recent_Post_Widget extends WP_Widget {
         if ( empty( $instance['date-stamp'] ) ) $instance['date-stamp'] = false;
 		$is_date_stamp = $instance['date-stamp'] ? 'true' : 'false';
 
-		$title = apply_filters('widget_title', empty($instance['title']) ? __('Recent Posts', 'flatsome') : $instance['title'], $instance, $this->id_base);
+		$title = apply_filters('widget_title', empty($instance['title']) ? __('Recent Posts', 'silver') : $instance['title'], $instance, $this->id_base);
 		if ( empty( $instance['number'] ) || ! $number = absint( $instance['number'] ) )
  			$number = 10;
 
@@ -127,18 +127,18 @@ class Flatsome_Recent_Post_Widget extends WP_Widget {
         $instance['date-stamp'] = isset( $instance['date-stamp'] ) ? $instance['date-stamp'] : false;
 
 ?>
-		<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title', 'flatsome' ); ?>:</label>
+		<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title', 'silver' ); ?>:</label>
 		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" /></p>
 
-		<p><label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts to show', 'flatsome' ); ?>:</label>
+		<p><label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts to show', 'silver' ); ?>:</label>
 		<input id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="text" value="<?php echo $number; ?>" size="3" /></p>
 
  		<p><input class="checkbox" type="checkbox" <?php checked($instance['image'], 'on'); ?> id="<?php echo $this->get_field_id('image'); ?>" name="<?php echo $this->get_field_name('image'); ?>" />
-		<label for="<?php echo $this->get_field_id( 'image' ); ?>"><?php _e( 'Show thumbnail', 'flatsome' ); ?></label></p>
+		<label for="<?php echo $this->get_field_id( 'image' ); ?>"><?php _e( 'Show thumbnail', 'silver' ); ?></label></p>
 
         <p><input class="checkbox" type="checkbox" <?php checked($instance['date-stamp'], 'on'); ?> id="<?php echo $this->get_field_id('date-stamp'); ?>" name="<?php echo $this->get_field_name('date-stamp'); ?>" />
-		<label for="<?php echo $this->get_field_id( 'date-stamp' ); ?>"><?php _e( 'Show date stamp on thumbnail', 'flatsome' ); ?></label>
-        <?php echo '<p><small>' . __('* If the "Show Thumbnail" option is disabled or no featured image is set, the date stamp will be displayed.', 'flatsome') . '</small></p>'; ?></p>
+		<label for="<?php echo $this->get_field_id( 'date-stamp' ); ?>"><?php _e( 'Show date stamp on thumbnail', 'silver' ); ?></label>
+        <?php echo '<p><small>' . __('* If the "Show Thumbnail" option is disabled or no featured image is set, the date stamp will be displayed.', 'silver') . '</small></p>'; ?></p>
 
 <?php
 	}

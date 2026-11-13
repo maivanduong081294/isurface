@@ -7,7 +7,7 @@
  * @author           WooThemes
  * @package          WooCommerce/Templates
  * @version          2.3.0
- * @flatsome-version 3.19.9
+ * @silver-version 3.19.9
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( !empty($breadcrumb) ) {
 
-	do_action('flatsome_before_breadcrumb');
+	do_action('silver_before_breadcrumb');
 
 	echo $wrap_before;
 
@@ -50,6 +50,6 @@ if ( !empty($breadcrumb) ) {
 
 	echo $wrap_after;
 
-	do_action('flatsome_after_breadcrumb');
+	do_action('silver_after_breadcrumb');
 
 }

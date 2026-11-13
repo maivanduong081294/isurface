@@ -2,14 +2,14 @@
 /**
  * Checkout simple layout.
  *
- * @package          Flatsome/WooCommerce/Templates
- * @flatsome-version 3.16.0
+ * @package          Silver/WooCommerce/Templates
+ * @silver-version 3.16.0
  */
 
 do_action( 'get_header', null, array() );
 ?>
 <!DOCTYPE html>
-<html <?php language_attributes(); ?> class="<?php flatsome_html_classes(); ?>">
+<html <?php language_attributes(); ?> class="<?php silver_html_classes(); ?>">
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>"/>
 	<link rel="profile" href="http://gmpg.org/xfn/11"/>
@@ -20,12 +20,12 @@ do_action( 'get_header', null, array() );
 
 <body <?php body_class(); ?>>
 
-<?php do_action( 'flatsome_after_body_open' ); ?>
+<?php do_action( 'silver_after_body_open' ); ?>
 <?php wp_body_open(); ?>
 
 <div id="main-content" class="site-main">
 
-	<div id="main" class="page-checkout-simple <?php flatsome_main_classes(); ?>">
+	<div id="main" class="page-checkout-simple <?php silver_main_classes(); ?>">
 
 		<div id="content" role="main">
 			<div class="container">

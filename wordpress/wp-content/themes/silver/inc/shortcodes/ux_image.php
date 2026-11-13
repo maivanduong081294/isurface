@@ -84,7 +84,7 @@ function ux_image( $atts, $content = null ) {
 				$image_overlay = 'rgba(0,0,0,.2)';
 			}
 		}
-		$link_start = '<a class="' . esc_attr( $link_class ) . '" href="' . esc_url( $link ) . '"' . flatsome_parse_target_rel( $link_atts ) . '>';
+		$link_start = '<a class="' . esc_attr( $link_class ) . '" href="' . esc_url( $link ) . '"' . silver_parse_target_rel( $link_atts ) . '>';
 		$link_end   = '</a>';
 	} elseif ( $lightbox ) {
 		$title      = $lightbox_caption ? $image_meta['caption'] : '';
@@ -97,8 +97,8 @@ function ux_image( $atts, $content = null ) {
 		// Do not add positions if builder is active.
 		// They will be set by the onChange handler.
 	} else {
-		$classes[] = flatsome_position_classes( 'x', $position_x, $position_x__md, $position_x__ml, $position_x__lg );
-		$classes[] = flatsome_position_classes( 'y', $position_y, $position_y__md, $position_y__ml, $position_y__lg );
+		$classes[] = silver_position_classes( 'x', $position_x, $position_x__md, $position_x__ml, $position_x__lg );
+		$classes[] = silver_position_classes( 'y', $position_y, $position_y__md, $position_y__ml, $position_y__lg );
 	}
 
 	if ( $image_hover ) {
@@ -107,6 +107,8 @@ function ux_image( $atts, $content = null ) {
 	if ( $image_hover_alt ) {
 		$classes_inner[] = 'image-' . $image_hover_alt;
 	}
+	// Responsive height: the smallest screen with a value is the base.
+	$height = silver_responsive_base( $atts, 'height' ) ?: $height;
 	if ( $height ) {
 		$classes_inner[] = 'image-cover';
 	}
@@ -138,14 +140,14 @@ function ux_image( $atts, $content = null ) {
 		<?php if ( $parallax ) echo '<div ' . $parallax . '>'; ?>
 		<?php if ( $animate ) echo '<div data-animate="' . esc_attr( $animate ) . '">'; ?>
 		<div class="<?php echo esc_attr( $classes_inner ); ?> dark" <?php echo get_shortcode_inline_css( $css_image_height ); ?>>
-			<?php echo flatsome_get_image( $id, $image_size, $caption, false, $image_title ); ?>
+			<?php echo silver_get_image( $id, $image_size, $caption, false, $image_title ); ?>
 			<?php if ( $image_overlay ) { ?>
 				<div class="overlay" style="background-color: <?php echo esc_attr( $image_overlay ); ?>"></div>
 			<?php } ?>
 			<?php if ( $icon ) { ?>
 				<div class="absolute no-click x50 y50 md-x50 md-y50 xl-x50 xl-y50 text-shadow-2">
 					<div class="overlay-icon">
-						<?php echo get_flatsome_icon( 'icon-play' ); ?>
+						<?php echo get_silver_icon( 'icon-play' ); ?>
 					</div>
 				</div>
 			<?php } ?>
@@ -166,6 +168,11 @@ function ux_image( $atts, $content = null ) {
 			),
 		);
 		echo ux_builder_element_style_tag( $_id, $args, $atts );
+
+		// Responsive height (larger screens).
+		echo silver_responsive_style_tag( $_id, $atts, array(
+			'height' => array( 'selector' => '.img-inner', 'property' => 'padding-top', 'only_overrides' => true ),
+		) );
 		?>
 	</div>
 	<?php

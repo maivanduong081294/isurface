@@ -2,13 +2,13 @@
 /**
  * Template name: Page - Full Width
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.18.0
+ * @package          Silver\Templates
+ * @silver-version 3.18.0
  */
 
 get_header(); ?>
 
-<?php do_action( 'flatsome_before_page' ); ?>
+<?php do_action( 'silver_before_page' ); ?>
 
 <div id="content" role="main" class="content-area">
 
@@ -26,6 +26,6 @@ get_header(); ?>
 
 </div>
 
-<?php do_action( 'flatsome_after_page' ); ?>
+<?php do_action( 'silver_after_page' ); ?>
 
 <?php get_footer(); ?>

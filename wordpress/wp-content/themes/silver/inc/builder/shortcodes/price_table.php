@@ -4,7 +4,7 @@ add_ux_builder_shortcode( 'ux_price_table', array(
   'type' => 'container',
   'name' => __( 'Price Table' ),
   'category' => __( 'Content' ),
-  'thumbnail' => flatsome_ux_builder_thumbnail( 'price_table' ),
+  'thumbnail' => silver_ux_builder_thumbnail( 'price_table' ),
   'allow' => array('text','bullet_item','button'),
   'wrap' => false,
   'presets' => array(
@@ -38,19 +38,20 @@ add_ux_builder_shortcode( 'ux_price_table', array(
       'color' => array(
             'type' => 'radio-buttons',
             'heading' => __('Text Color'),
-            'default' => '',
+            'responsive' => true,
+            'default' => 'light',
             'options' => array(
-                ''  => array( 'title' => 'Dark'),
+                'light'  => array( 'title' => 'Dark'),
                 'dark'  => array( 'title' => 'Light'),
             ),
-            'on_change' => array(
-              'recompile' => false,
-              'class' => '{{ value }}',
-            ),
+            // No on_change: the element is re-rendered so the per-screen
+            // CSS (responsive value) is updated in the preview.
       ),
       'bg_color' => array(
         'type' => 'colorpicker',
+        'helpers' => require( __DIR__ . '/helpers/colors.php' ),
         'heading' => __('Bg Color'),
+        'responsive' => true,
         'format' => 'rgb',
         'position' => 'bottom right',
         'on_change' => array(

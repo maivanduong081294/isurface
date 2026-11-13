@@ -2,17 +2,17 @@
 /**
  * Swatches main class.
  *
- * @package Flatsome\Extensions
+ * @package Silver\Extensions
  */
 
-namespace Flatsome\Extensions;
+namespace Silver\Extensions;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Class Swatches
  *
- * @package Flatsome\Extensions
+ * @package Silver\Extensions
  */
 final class Swatches {
 	/**
@@ -48,12 +48,12 @@ final class Swatches {
 	 */
 	public function init() {
 		$this->types = array(
-			'ux_color' => esc_html__( 'UX Color', 'flatsome' ),
-			'ux_image' => esc_html__( 'UX Image', 'flatsome' ),
-			'ux_label' => esc_html__( 'UX Label', 'flatsome' ),
+			'ux_color' => esc_html__( 'UX Color', 'silver' ),
+			'ux_image' => esc_html__( 'UX Image', 'silver' ),
+			'ux_label' => esc_html__( 'UX Label', 'silver' ),
 		);
 
-		$this->version = flatsome()->version();
+		$this->version = silver()->version();
 
 		$this->includes();
 
@@ -177,14 +177,14 @@ final class Swatches {
 	 * Clears all cache.
 	 */
 	public function cache_clear() {
-		if ( ! apply_filters( 'flatsome_swatches_cache_enabled', true ) ) {
+		if ( ! apply_filters( 'silver_swatches_cache_enabled', true ) ) {
 			return;
 		}
 
 		global $wpdb;
 
-		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE `option_name` LIKE ('%\_transient\_flatsome\_swatches%');" );
-		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE `option_name` LIKE ('%\_transient\_timeout\_flatsome\_swatches%');" );
+		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE `option_name` LIKE ('%\_transient\_silver\_swatches%');" );
+		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE `option_name` LIKE ('%\_transient\_timeout\_silver\_swatches%');" );
 	}
 
 	/**
@@ -253,7 +253,7 @@ final class Swatches {
  *
  * @return Swatches
  */
-function flatsome_swatches() {
+function silver_swatches() {
 	_deprecated_function( __FUNCTION__, '3.17', 'swatches' );
 
 	return swatches();

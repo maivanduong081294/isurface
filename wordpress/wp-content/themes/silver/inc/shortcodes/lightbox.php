@@ -26,7 +26,7 @@ function ux_lightbox( $atts, $content = null ) {
 		<script>
 			// Auto open lightboxes
 			jQuery(document).ready(function ($) {
-				/* global flatsomeVars */
+				/* global silverVars */
 				'use strict'
 				var cookieId = '<?php echo 'lightbox_' . esc_js( $id ); ?>'
 				var cookieValue = '<?php echo 'opened_' . esc_js( $version ); ?>'
@@ -34,11 +34,11 @@ function ux_lightbox( $atts, $content = null ) {
 
 				// Auto open lightbox
 				<?php if ( $auto_show == 'always' ) : ?>
-				Flatsome.Cookies.set(cookieId, false)
+				Silver.Cookies.set(cookieId, false)
 				<?php endif; ?>
 
 				// Run lightbox if no cookie is set
-				if (Flatsome.Cookies.get(cookieId) !== cookieValue) {
+				if (Silver.Cookies.get(cookieId) !== cookieValue) {
 
 					// Ensure closing off canvas
 					setTimeout(function () {
@@ -51,8 +51,8 @@ function ux_lightbox( $atts, $content = null ) {
 							$.magnificPopup.open({
 								midClick: true,
 								removalDelay: 300,
-								// closeBtnInside: flatsomeVars.lightbox.close_btn_inside,
-								// closeMarkup: flatsomeVars.lightbox.close_markup,
+								// closeBtnInside: silverVars.lightbox.close_btn_inside,
+								// closeMarkup: silverVars.lightbox.close_markup,
 								items: {
 									src: '#<?php echo esc_js( $id ); ?>',
 									type: 'inline'
@@ -61,7 +61,7 @@ function ux_lightbox( $atts, $content = null ) {
 						})
 					}, timer)
 
-					Flatsome.Cookies.set(cookieId, cookieValue, { expires: 365 })
+					Silver.Cookies.set(cookieId, cookieValue, { expires: 365 })
 				}
 			})
 		</script>

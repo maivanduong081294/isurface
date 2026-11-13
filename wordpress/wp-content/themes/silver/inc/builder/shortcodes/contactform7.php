@@ -10,7 +10,7 @@ foreach(get_posts(array('post_type' => 'wpcf7_contact_form', 'posts_per_page' =>
 add_ux_builder_shortcode( 'contact-form-7', array(
     'name' => __( 'Form (CF7)' ),
     'category' => __( 'Content' ),
-    'thumbnail' =>  flatsome_ux_builder_thumbnail( 'forms' ),
+    'thumbnail' =>  silver_ux_builder_thumbnail( 'forms' ),
     'allow_in' => array('text_box'),
     'options' => array(
         'id' => array(

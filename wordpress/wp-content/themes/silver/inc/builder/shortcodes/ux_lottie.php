@@ -2,51 +2,51 @@
 /**
  * Registers the Lottie animation element in UX Builder.
  *
- * @package Flatsome
+ * @package Silver
  */
 
 $link_options    = require __DIR__ . '/commons/links.php';
 $link_aria_label = array(
 	'link_aria_label' => array(
 		'type'    => 'textfield',
-		'heading' => __( 'Aria label', 'flatsome' ),
+		'heading' => __( 'Aria label', 'silver' ),
 	),
 );
 
-$link_options['options'] = flatsome_ux_builder_array_insert_after( $link_options['options'], 'link', $link_aria_label );
+$link_options['options'] = silver_ux_builder_array_insert_after( $link_options['options'], 'link', $link_aria_label );
 
 add_ux_builder_shortcode( 'ux_lottie', array(
-	'name'      => __( 'Lottie', 'flatsome' ),
-	'category'  => __( 'Content', 'flatsome' ),
-	'thumbnail' => flatsome_ux_builder_thumbnail( 'ux_lottie' ),
-	'template'  => flatsome_ux_builder_template( 'ux_lottie.html' ),
+	'name'      => __( 'Lottie', 'silver' ),
+	'category'  => __( 'Content', 'silver' ),
+	'thumbnail' => silver_ux_builder_thumbnail( 'ux_lottie' ),
+	'template'  => silver_ux_builder_template( 'ux_lottie.html' ),
 	'wrap'      => false,
 	'options'   => array(
 		'path'             => array(
 			'type'        => 'file',
-			'heading'     => __( 'Lottie animation URL', 'flatsome' ),
-			'placeholder' => __( 'Paste animation URL or select file', 'flatsome' ),
+			'heading'     => __( 'Lottie animation URL', 'silver' ),
+			'placeholder' => __( 'Paste animation URL or select file', 'silver' ),
 			'full_width'  => true,
 			'mime_types'  => array( 'application/json', 'text/plain' ),
 			'default'     => '',
 		),
 		'settings_options' => array(
 			'type'    => 'group',
-			'heading' => __( 'Settings', 'flatsome' ),
+			'heading' => __( 'Settings', 'silver' ),
 			'options' => array(
 				'loop'               => array(
 					'type'    => 'checkbox',
-					'heading' => __( 'Loop', 'flatsome' ),
+					'heading' => __( 'Loop', 'silver' ),
 					'default' => 'true',
 				),
 				'autoplay'           => array(
 					'type'    => 'checkbox',
-					'heading' => __( 'Autoplay', 'flatsome' ),
+					'heading' => __( 'Autoplay', 'silver' ),
 					'default' => 'true',
 				),
 				'trigger'            => array(
 					'type'       => 'select',
-					'heading'    => __( 'Trigger', 'flatsome' ),
+					'heading'    => __( 'Trigger', 'silver' ),
 					'conditions' => 'autoplay != "true"',
 					'default'    => '',
 					'options'    => array(
@@ -58,7 +58,7 @@ add_ux_builder_shortcode( 'ux_lottie', array(
 				),
 				'mouseout'           => array(
 					'type'       => 'select',
-					'heading'    => __( 'Mouse out', 'flatsome' ),
+					'heading'    => __( 'Mouse out', 'silver' ),
 					'conditions' => 'autoplay != "true" && trigger == "hover"',
 					'default'    => '',
 					'options'    => array(
@@ -68,7 +68,7 @@ add_ux_builder_shortcode( 'ux_lottie', array(
 				),
 				'speed'              => array(
 					'type'       => 'slider',
-					'heading'    => __( 'Speed', 'flatsome' ),
+					'heading'    => __( 'Speed', 'silver' ),
 					'conditions' => 'autoplay == "true" || trigger == "hover" || trigger == "click"',
 					'default'    => '1',
 					'min'        => '0',
@@ -77,13 +77,13 @@ add_ux_builder_shortcode( 'ux_lottie', array(
 				),
 				'reverse'            => array(
 					'type'       => 'checkbox',
-					'heading'    => __( 'Reverse', 'flatsome' ),
+					'heading'    => __( 'Reverse', 'silver' ),
 					'conditions' => 'autoplay == "true" || trigger == "hover" || trigger == "click"',
 					'default'    => 'false',
 				),
 				'scroll_action_type' => array(
 					'type'       => 'radio-buttons',
-					'heading'    => __( 'Scroll action type', 'flatsome' ),
+					'heading'    => __( 'Scroll action type', 'silver' ),
 					'full_width' => true,
 					'conditions' => 'autoplay != "true" && trigger == "scroll"',
 					'default'    => 'seek',
@@ -95,7 +95,7 @@ add_ux_builder_shortcode( 'ux_lottie', array(
 				),
 				'visibility_start'   => array(
 					'type'        => 'slider',
-					'heading'     => __( 'Visibility start', 'flatsome' ),
+					'heading'     => __( 'Visibility start', 'silver' ),
 					'full_width'  => true,
 					'description' => 'Start in relation to the viewport',
 					'conditions'  => 'autoplay != "true" && trigger == "scroll"',
@@ -107,7 +107,7 @@ add_ux_builder_shortcode( 'ux_lottie', array(
 				),
 				'visibility_end'     => array(
 					'type'        => 'slider',
-					'heading'     => __( 'Visibility end', 'flatsome' ),
+					'heading'     => __( 'Visibility end', 'silver' ),
 					'full_width'  => true,
 					'description' => 'Finish in relation to the viewport',
 					'conditions'  => 'autoplay != "true" && trigger == "scroll"',
@@ -119,7 +119,7 @@ add_ux_builder_shortcode( 'ux_lottie', array(
 				),
 				'start'              => array(
 					'type'       => 'slider',
-					'heading'    => __( 'Frame start', 'flatsome' ),
+					'heading'    => __( 'Frame start', 'silver' ),
 					'full_width' => true,
 					'default'    => '0',
 					'min'        => '0',
@@ -129,7 +129,7 @@ add_ux_builder_shortcode( 'ux_lottie', array(
 				),
 				'end'                => array(
 					'type'       => 'slider',
-					'heading'    => __( 'Frame end', 'flatsome' ),
+					'heading'    => __( 'Frame end', 'silver' ),
 					'full_width' => true,
 					'default'    => '100',
 					'min'        => '0',
@@ -139,32 +139,32 @@ add_ux_builder_shortcode( 'ux_lottie', array(
 				),
 				'controls'           => array(
 					'type'    => 'checkbox',
-					'heading' => __( 'Controls', 'flatsome' ),
+					'heading' => __( 'Controls', 'silver' ),
 					'default' => 'false',
 				),
 			),
 		),
 		'layout_options'   => array(
 			'type'    => 'group',
-			'heading' => __( 'Layout', 'flatsome' ),
+			'heading' => __( 'Layout', 'silver' ),
 			'options' => array(
 				'width'   => array(
 					'type'       => 'scrubfield',
-					'heading'    => __( 'Width', 'flatsome' ),
+					'heading'    => __( 'Width', 'silver' ),
 					'responsive' => true,
 					'default'    => '100%',
 					'min'        => '0',
 				),
 				'height'  => array(
 					'type'       => 'scrubfield',
-					'heading'    => __( 'Height', 'flatsome' ),
+					'heading'    => __( 'Height', 'silver' ),
 					'responsive' => true,
 					'default'    => '300px',
 					'min'        => '0',
 				),
 				'padding' => array(
 					'type'       => 'margins',
-					'heading'    => __( 'Padding', 'flatsome' ),
+					'heading'    => __( 'Padding', 'silver' ),
 					'full_width' => true,
 					'responsive' => true,
 					'min'        => 0,
@@ -172,7 +172,7 @@ add_ux_builder_shortcode( 'ux_lottie', array(
 				),
 				'margin'  => array(
 					'type'       => 'margins',
-					'heading'    => __( 'Margin', 'flatsome' ),
+					'heading'    => __( 'Margin', 'silver' ),
 					'full_width' => true,
 					'responsive' => true,
 					'step'       => 1,

@@ -4,12 +4,12 @@
  * Header Dropdown Style
  *************/
 
-Flatsome_Option::add_section( 'header_dropdown', array(
-	'title' => __( 'Dropdown Style', 'flatsome-admin' ),
+Silver_Option::add_section( 'header_dropdown', array(
+	'title' => __( 'Dropdown Style', 'silver' ),
 	'panel' => 'header',
 ) );
 
-Flatsome_Option::add_field( '', array(
+Silver_Option::add_field( '', array(
 	'type'     => 'custom',
 	'settings' => 'custom_title_header_dropdown_all',
 	'label'    => '',
@@ -17,30 +17,30 @@ Flatsome_Option::add_field( '', array(
 	'default'  => '<div class="options-title-divider">All Dropdowns</div>',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'color-alpha',
 	'settings'  => 'dropdown_bg',
-	'transport' => flatsome_customizer_transport(),
-	'label'     => __( 'Background color', 'flatsome-admin' ),
+	'transport' => silver_customizer_transport(),
+	'label'     => __( 'Background color', 'silver' ),
 	'section'   => 'header_dropdown',
 	'default'   => '',
 ) );
 
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'checkbox',
 	'settings'  => 'dropdown_border_enabled',
-	'transport' => flatsome_customizer_transport(),
-	'label'     => __( 'Add border', 'flatsome-admin' ),
+	'transport' => silver_customizer_transport(),
+	'label'     => __( 'Add border', 'silver' ),
 	'section'   => 'header_dropdown',
 	'default'   => 1,
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'            => 'color-alpha',
 	'settings'        => 'dropdown_border',
-	'transport'       => flatsome_customizer_transport(),
-	'label'           => __( 'Border Color', 'flatsome-admin' ),
+	'transport'       => silver_customizer_transport(),
+	'label'           => __( 'Border Color', 'silver' ),
 	'section'         => 'header_dropdown',
 	'active_callback' => array(
 		array(
@@ -52,19 +52,19 @@ Flatsome_Option::add_field( 'option', array(
 	'default'         => '',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'checkbox',
 	'settings'  => 'dropdown_shadow',
-	'label'     => __( 'Add shadow', 'flatsome-admin' ),
-	'transport' => flatsome_customizer_transport(),
+	'label'     => __( 'Add shadow', 'silver' ),
+	'transport' => silver_customizer_transport(),
 	'section'   => 'header_dropdown',
 	'default'   => 1,
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'slider',
 	'settings'  => 'dropdown_nav_size',
-	'label'     => __( 'Dropdown Content Size (%)', 'flatsome-admin' ),
+	'label'     => __( 'Dropdown Content Size (%)', 'silver' ),
 	'section'   => 'header_dropdown',
 	'default'   => 100,
 	'choices'   => array(
@@ -72,26 +72,26 @@ Flatsome_Option::add_field( 'option', array(
 		'max'  => 200,
 		'step' => 1,
 	),
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'radio-buttonset',
 	'settings'  => 'dropdown_radius',
-	'label'     => __( 'Dropdown radius', 'flatsome-admin' ),
+	'label'     => __( 'Dropdown radius', 'silver' ),
 	'section'   => 'header_dropdown',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'default'   => '0',
 	'choices'   => array(
-		'0'    => __( '0px', 'flatsome-admin' ),
-		'3px'  => __( '3px', 'flatsome-admin' ),
-		'5px'  => __( '5px', 'flatsome-admin' ),
-		'10px' => __( '10px', 'flatsome-admin' ),
-		'15px' => __( '15px', 'flatsome-admin' ),
+		'0'    => __( '0px', 'silver' ),
+		'3px'  => __( '3px', 'silver' ),
+		'5px'  => __( '5px', 'silver' ),
+		'10px' => __( '10px', 'silver' ),
+		'15px' => __( '15px', 'silver' ),
 	),
 ) );
 
-Flatsome_Option::add_field( '', array(
+Silver_Option::add_field( '', array(
 	'type'     => 'custom',
 	'settings' => 'custom_title_header_dropdown_default',
 	'label'    => '',
@@ -99,21 +99,21 @@ Flatsome_Option::add_field( '', array(
 	'default'  => '<div class="options-title-divider">Default Dropdowns</div>',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'        => 'checkbox',
 	'settings'    => 'dropdown_arrow',
-	'label'       => __( 'Add arrow', 'flatsome-admin' ),
-	'description' => __( 'Shows a focusing arrow towards the active menu item.', 'flatsome-admin' ),
-	'transport'   => flatsome_customizer_transport(),
+	'label'       => __( 'Add arrow', 'silver' ),
+	'description' => __( 'Shows a focusing arrow towards the active menu item.', 'silver' ),
+	'transport'   => silver_customizer_transport(),
 	'section'     => 'header_dropdown',
 	'default'     => 1,
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'radio-image',
 	'settings'  => 'dropdown_style',
-	'transport' => flatsome_customizer_transport(),
-	'label'     => __( 'Link Style', 'flatsome-admin' ),
+	'transport' => silver_customizer_transport(),
+	'label'     => __( 'Link Style', 'silver' ),
 	'section'   => 'header_dropdown',
 	'default'   => 'default',
 	'choices'   => array(
@@ -123,33 +123,33 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'radio-buttonset',
 	'settings'  => 'dropdown_text',
-	'label'     => __( 'Text Color', 'flatsome-admin' ),
+	'label'     => __( 'Text Color', 'silver' ),
 	'section'   => 'header_dropdown',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'default'   => 'light',
 	'choices'   => array(
-		'light' => __( 'Dark', 'flatsome-admin' ),
-		'dark'  => __( 'Light', 'flatsome-admin' ),
+		'light' => __( 'Dark', 'silver' ),
+		'dark'  => __( 'Light', 'silver' ),
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'radio-buttonset',
 	'settings'  => 'dropdown_text_style',
-	'transport' => flatsome_customizer_transport(),
-	'label'     => __( 'Text Style', 'flatsome-admin' ),
+	'transport' => silver_customizer_transport(),
+	'label'     => __( 'Text Style', 'silver' ),
 	'section'   => 'header_dropdown',
 	'default'   => 'simple',
 	'choices'   => array(
-		'simple'    => __( 'Simple', 'flatsome-admin' ),
-		'uppercase' => __( 'UPPERCASE', 'flatsome-admin' ),
+		'simple'    => __( 'Simple', 'silver' ),
+		'uppercase' => __( 'UPPERCASE', 'silver' ),
 	),
 ) );
 
-function flatsome_refresh_dropdown_partials( WP_Customize_Manager $wp_customize ) {
+function silver_refresh_dropdown_partials( WP_Customize_Manager $wp_customize ) {
 
 	// Abort if selective refresh is not available.
 	if ( ! isset( $wp_customize->selective_refresh ) ) {
@@ -164,10 +164,10 @@ function flatsome_refresh_dropdown_partials( WP_Customize_Manager $wp_customize 
 			'dropdown_border',
 		),
 		'render_callback'     => function () {
-			flatsome_custom_css();
+			silver_custom_css();
 		},
 	) );
 
 }
 
-add_action( 'customize_register', 'flatsome_refresh_dropdown_partials' );
+add_action( 'customize_register', 'silver_refresh_dropdown_partials' );

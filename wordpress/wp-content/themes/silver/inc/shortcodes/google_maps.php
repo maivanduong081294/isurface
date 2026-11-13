@@ -1,6 +1,6 @@
 <?php
 // [map]
-function flatsome_shortcode_map( $atts, $content = null, $tag = '' ) {
+function silver_shortcode_map( $atts, $content = null, $tag = '' ) {
 
 	$atts = ux_builder_shortcode_atts(array(
 		'_id'                 => 'map-' . wp_rand(),
@@ -41,10 +41,10 @@ function flatsome_shortcode_map( $atts, $content = null, $tag = '' ) {
   $classes = implode(' ', $classes);
 
   $content_classes = array( 'map_inner', 'map-inner', 'last-reset absolute' );
-  $content_classes[] = flatsome_position_classes( 'x', $position_x, $position_x__md, $position_x__ml, $position_x__lg );
-  $content_classes[] = flatsome_position_classes( 'y', $position_y, $position_y__md, $position_y__ml, $position_y__lg );
+  $content_classes[] = silver_position_classes( 'x', $position_x, $position_x__md, $position_x__ml, $position_x__lg );
+  $content_classes[] = silver_position_classes( 'y', $position_y, $position_y__md, $position_y__ml, $position_y__lg );
 
-  wp_enqueue_script('flatsome-maps');
+  wp_enqueue_script('silver-maps');
 
 	ob_start();
 	?>
@@ -53,7 +53,7 @@ function flatsome_shortcode_map( $atts, $content = null, $tag = '' ) {
   jQuery( document ).ready(function() {
     function initialize() {
         var styles = {
-            'flatsome':  [{
+            'silver':  [{
             "featureType": "administrative",
             "stylers": [
               { "visibility": "on" }
@@ -81,7 +81,7 @@ function flatsome_shortcode_map( $atts, $content = null, $tag = '' ) {
             center: myLatlng,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             disableDefaultUI: true,
-            mapTypeId: 'flatsome',
+            mapTypeId: 'silver',
             draggable: <?php echo $pan === 'true' ? 'true' : 'false'; ?>,
             zoomControl: <?php echo $controls == 'true' && $zoom_control == 'true' ? 'true' : 'false'; ?>,
             zoomControlOptions: {
@@ -99,8 +99,8 @@ function flatsome_shortcode_map( $atts, $content = null, $tag = '' ) {
             disableDoubleClickZoom: true
         }
         var map = new google.maps.Map(document.getElementById("<?php echo esc_js( $_id ); ?>-inner"), myOptions);
-                var styledMapType = new google.maps.StyledMapType(styles['flatsome'], {name: 'Silver'});
-        map.mapTypes.set('flatsome', styledMapType);
+                var styledMapType = new google.maps.StyledMapType(styles['silver'], {name: 'Silver'});
+        map.mapTypes.set('silver', styledMapType);
 
         var marker = new google.maps.Marker({
             position: myLatlng,
@@ -156,4 +156,4 @@ function flatsome_shortcode_map( $atts, $content = null, $tag = '' ) {
 	return $content;
 }
 
-add_shortcode('map', 'flatsome_shortcode_map');
+add_shortcode('map', 'silver_shortcode_map');

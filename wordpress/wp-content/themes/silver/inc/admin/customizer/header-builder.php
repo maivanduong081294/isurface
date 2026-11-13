@@ -1,8 +1,8 @@
 <?php
 
 /* Add Header builder */
-function flatsome_customizer_header_builder(){
-    $nav_elements = flatsome_customizer_nav_elements();
+function silver_customizer_header_builder(){
+    $nav_elements = silver_customizer_nav_elements();
     ?>
     <div class="header-builder">
       <h3>
@@ -119,4 +119,4 @@ function flatsome_customizer_header_builder(){
     </div>
     <?php
 }
-add_action('customize_controls_print_footer_scripts', 'flatsome_customizer_header_builder');
+add_action('customize_controls_print_footer_scripts', 'silver_customizer_header_builder');

@@ -5,110 +5,110 @@
  *************/
 
 // Add section immediately to keep sort order.
-Flatsome_Option::add_section( 'header_content', array(
-	'title'       => __( 'HTML', 'flatsome-admin' ),
+Silver_Option::add_section( 'header_content', array(
+	'title'       => __( 'HTML', 'silver' ),
 	'panel'       => 'header',
 ) );
 
-function flatsome_customizer_header_content_options() {
-	Flatsome_Option::add_field( 'option',  array(
+function silver_customizer_header_content_options() {
+	Silver_Option::add_field( 'option',  array(
 		'type'        => 'select',
 		'settings'    => 'header-block-1',
-		'transport'   => flatsome_customizer_transport(),
-		'label'       => __( 'Header Block 1', 'flatsome-admin' ),
-		'description' => __( 'Blocks can be edited in the page builder. Select a block, go to a page and open in the the Page Builder.', 'flatsome-admin' ),
+		'transport'   => silver_customizer_transport(),
+		'label'       => __( 'Header Block 1', 'silver' ),
+		'description' => __( 'Blocks can be edited in the page builder. Select a block, go to a page and open in the the Page Builder.', 'silver' ),
 		'section'     => 'header_content',
-		'choices'     => flatsome_customizer_blocks(),
+		'choices'     => silver_customizer_blocks(),
 	));
 
-	Flatsome_Option::add_field( 'option',  array(
+	Silver_Option::add_field( 'option',  array(
 		'type'        => 'select',
 		'settings'    => 'header-block-2',
-		'transport'   => flatsome_customizer_transport(),
-		'label'       => __( 'Header Block 2', 'flatsome-admin' ),
-		'description' => __( 'Blocks can be edited in the page builder. Select a block, go to a page and open in the the Page Builder.', 'flatsome-admin' ),
+		'transport'   => silver_customizer_transport(),
+		'label'       => __( 'Header Block 2', 'silver' ),
+		'description' => __( 'Blocks can be edited in the page builder. Select a block, go to a page and open in the the Page Builder.', 'silver' ),
 		'section'     => 'header_content',
-		'choices'     => flatsome_customizer_blocks(),
+		'choices'     => silver_customizer_blocks(),
 	));
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'        => 'select',
 		'settings'    => 'header-block-3',
-		'transport'   => flatsome_customizer_transport(),
-		'label'       => __( 'Header Block 3', 'flatsome-admin' ),
-		'description' => __( 'Blocks can be edited in the page builder. Select a block, go to a page and open in the the Page Builder.', 'flatsome-admin' ),
+		'transport'   => silver_customizer_transport(),
+		'label'       => __( 'Header Block 3', 'silver' ),
+		'description' => __( 'Blocks can be edited in the page builder. Select a block, go to a page and open in the the Page Builder.', 'silver' ),
 		'section'     => 'header_content',
-		'choices'     => flatsome_customizer_blocks(),
+		'choices'     => silver_customizer_blocks(),
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'        => 'select',
 		'settings'    => 'header-block-4',
-		'transport'   => flatsome_customizer_transport(),
-		'label'       => __( 'Header Block 4', 'flatsome-admin' ),
-		'description' => __( 'Blocks can be edited in the page builder. Select a block, go to a page and open in the the Page Builder.', 'flatsome-admin' ),
+		'transport'   => silver_customizer_transport(),
+		'label'       => __( 'Header Block 4', 'silver' ),
+		'description' => __( 'Blocks can be edited in the page builder. Select a block, go to a page and open in the the Page Builder.', 'silver' ),
 		'section'     => 'header_content',
-		'choices'     => flatsome_customizer_blocks(),
+		'choices'     => silver_customizer_blocks(),
 	) );
 
-	Flatsome_Option::add_field( 'option',  array(
+	Silver_Option::add_field( 'option',  array(
 		'type'        => 'textarea',
 		'settings'    => 'topbar_left',
-		'transport'   => flatsome_customizer_transport(),
-		'label'       => __( 'HTML 1', 'flatsome-admin' ),
-		'description' => __( 'Add Any HTML or Shortcode here...', 'flatsome-admin' ),
-		//'help'        => __( 'This is some extra help. You can use this to add some additional instructions for users. The main description should go in the "description" of the field, this is only to be used for help tips.', 'flatsome-admin' ),
+		'transport'   => silver_customizer_transport(),
+		'label'       => __( 'HTML 1', 'silver' ),
+		'description' => __( 'Add Any HTML or Shortcode here...', 'silver' ),
+		//'help'        => __( 'This is some extra help. You can use this to add some additional instructions for users. The main description should go in the "description" of the field, this is only to be used for help tips.', 'silver' ),
 		'section'     => 'header_content',
-		'sanitize_callback' => 'flatsome_custom_sanitize',
+		'sanitize_callback' => 'silver_custom_sanitize',
 		'default'     => '<strong class="uppercase">Add anything here or just remove it...</strong>',
 	));
 
 
 
-	Flatsome_Option::add_field( 'option',  array(
+	Silver_Option::add_field( 'option',  array(
 		'type'        => 'textarea',
 		'settings'    => 'topbar_right',
-		'transport'   => flatsome_customizer_transport(),
-		'label'       => __( 'HTML 2', 'flatsome-admin' ),
-		'description' => __( 'Add Any HTML or Shortcode here...', 'flatsome-admin' ),
-		//'help'        => __( 'This is some extra help. You can use this to add some additional instructions for users. The main description should go in the "description" of the field, this is only to be used for help tips.', 'flatsome-admin' ),
+		'transport'   => silver_customizer_transport(),
+		'label'       => __( 'HTML 2', 'silver' ),
+		'description' => __( 'Add Any HTML or Shortcode here...', 'silver' ),
+		//'help'        => __( 'This is some extra help. You can use this to add some additional instructions for users. The main description should go in the "description" of the field, this is only to be used for help tips.', 'silver' ),
 		'section'     => 'header_content',
-		'sanitize_callback' => 'flatsome_custom_sanitize',
+		'sanitize_callback' => 'silver_custom_sanitize',
 	));
 
-	Flatsome_Option::add_field( 'option',  array(
+	Silver_Option::add_field( 'option',  array(
 		'type'        => 'textarea',
 		'settings'    => 'top_right_text',
-		'transport'   => flatsome_customizer_transport(),
-		'label'       => __( 'HTML 3', 'flatsome-admin' ),
-		'description' => __( 'Add Any HTML or Shortcode here...', 'flatsome-admin' ),
+		'transport'   => silver_customizer_transport(),
+		'label'       => __( 'HTML 3', 'silver' ),
+		'description' => __( 'Add Any HTML or Shortcode here...', 'silver' ),
 		'section'     => 'header_content',
-		'sanitize_callback' => 'flatsome_custom_sanitize',
+		'sanitize_callback' => 'silver_custom_sanitize',
 	));
 
-	Flatsome_Option::add_field( 'option',  array(
+	Silver_Option::add_field( 'option',  array(
 		'type'        => 'textarea',
 		'settings'    => 'nav_position_text_top',
-		'transport'   => flatsome_customizer_transport(),
-		'label'       => __( 'HTML 4', 'flatsome-admin' ),
-		'description' => __( 'Add Any HTML or Shortcode here...', 'flatsome-admin' ),
+		'transport'   => silver_customizer_transport(),
+		'label'       => __( 'HTML 4', 'silver' ),
+		'description' => __( 'Add Any HTML or Shortcode here...', 'silver' ),
 		'section'     => 'header_content',
-		'sanitize_callback' => 'flatsome_custom_sanitize',
+		'sanitize_callback' => 'silver_custom_sanitize',
 	));
 
-	Flatsome_Option::add_field( 'option',  array(
+	Silver_Option::add_field( 'option',  array(
 		'type'        => 'textarea',
 		'settings'    => 'nav_position_text',
-		'transport'   => flatsome_customizer_transport(),
-		'label'       => __( 'HTML 5', 'flatsome-admin' ),
-		'description' => __( 'Add Any HTML or Shortcode here...', 'flatsome-admin' ),
+		'transport'   => silver_customizer_transport(),
+		'label'       => __( 'HTML 5', 'silver' ),
+		'description' => __( 'Add Any HTML or Shortcode here...', 'silver' ),
 		'section'     => 'header_content',
-		'sanitize_callback' => 'flatsome_custom_sanitize',
+		'sanitize_callback' => 'silver_custom_sanitize',
 	));
 }
-add_action( 'init', 'flatsome_customizer_header_content_options' );
+add_action( 'init', 'silver_customizer_header_content_options' );
 
-function flatsome_refresh_header_content_partials( WP_Customize_Manager $wp_customize ) {
+function silver_refresh_header_content_partials( WP_Customize_Manager $wp_customize ) {
 
 	if ( ! isset( $wp_customize->selective_refresh ) ) {
 	      return;
@@ -188,4 +188,4 @@ function flatsome_refresh_header_content_partials( WP_Customize_Manager $wp_cust
 		},
 	) );
 }
-add_action( 'customize_register', 'flatsome_refresh_header_content_partials' );
+add_action( 'customize_register', 'silver_refresh_header_content_partials' );

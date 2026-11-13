@@ -2,15 +2,15 @@
 /**
  * Category layout with left sidebar.
  *
- * @package          Flatsome/WooCommerce/Templates
- * @flatsome-version 3.18.7
+ * @package          Silver/WooCommerce/Templates
+ * @silver-version 3.18.7
  */
 
 ?>
 <div class="row category-page-row">
 
-		<div class="col xlarge-3 hide-for-medium <?php flatsome_sidebar_classes(); ?>">
-			<?php flatsome_sticky_column_open( 'category_sticky_sidebar' ); ?>
+		<div class="col xlarge-3 hide-for-medium <?php silver_sidebar_classes(); ?>">
+			<?php silver_sticky_column_open( 'category_sticky_sidebar' ); ?>
 			<div id="shop-sidebar" class="sidebar-inner col-inner">
 				<?php
 				  if(is_active_sidebar('shop-sidebar')) {
@@ -19,7 +19,7 @@
 				  }
 				?>
 			</div>
-			<?php flatsome_sticky_column_close( 'category_sticky_sidebar' ); ?>
+			<?php silver_sticky_column_close( 'category_sticky_sidebar' ); ?>
 		</div>
 
 		<div class="col xlarge-9">
@@ -94,11 +94,11 @@
 
 		<?php
 			/**
-			 * Hook: flatsome_products_after.
+			 * Hook: silver_products_after.
 			 *
-			 * @hooked flatsome_products_footer_content - 10
+			 * @hooked silver_products_footer_content - 10
 			 */
-			do_action( 'flatsome_products_after' );
+			do_action( 'silver_products_after' );
 			/**
 			 * Hook: woocommerce_after_main_content.
 			 *

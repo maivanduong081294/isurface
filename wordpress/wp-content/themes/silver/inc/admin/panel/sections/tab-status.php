@@ -2,10 +2,10 @@
 /**
  * Status tab.
  *
- * @package Flatsome\Admin
+ * @package Silver\Admin
  */
 
 ?>
 <div id="tab-status">
-	<?php Flatsome\Admin\status()->render_panel(); ?>
+	<?php Silver\Admin\status()->render_panel(); ?>
 </div>

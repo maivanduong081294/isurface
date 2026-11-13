@@ -2,8 +2,8 @@
 /**
  * Posts content single.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.20.0
+ * @package          Silver\Templates
+ * @silver-version 3.20.0
  */
 
 ?>
@@ -19,7 +19,7 @@
 		// SHARE ICONS
 		echo '<div class="blog-share text-center">';
 		echo '<div class="is-divider medium"></div>';
-		echo flatsome_apply_shortcode( 'share', array(
+		echo silver_apply_shortcode( 'share', array(
 			'style'   => get_theme_mod( 'social_icons_style', 'outline' ),
 			'tooltip' => get_theme_mod( 'social_icons_tooltip', 1 ) ? 'true' : 'false',
 		) );
@@ -31,17 +31,17 @@
 	<footer class="entry-meta text-<?php echo get_theme_mod( 'blog_posts_title_align', 'center' ); ?>">
 		<?php
 		/* translators: used between list items, there is a space after the comma */
-		$category_list = get_the_category_list( __( ', ', 'flatsome' ) );
+		$category_list = get_the_category_list( __( ', ', 'silver' ) );
 
 		/* translators: used between list items, there is a space after the comma */
-		$tag_list = get_the_tag_list( '', __( ', ', 'flatsome' ) );
+		$tag_list = get_the_tag_list( '', __( ', ', 'silver' ) );
 
 
 		// But this blog has loads of categories so we should probably display them here.
 		if ( '' != $tag_list ) {
-			$meta_text = __( 'This entry was posted in %1$s and tagged %2$s.', 'flatsome' );
+			$meta_text = __( 'This entry was posted in %1$s and tagged %2$s.', 'silver' );
 		} else {
-			$meta_text = __( 'This entry was posted in %1$s. Bookmark the <a href="%3$s" title="Permalink to %4$s" rel="bookmark">permalink</a>.', 'flatsome' );
+			$meta_text = __( 'This entry was posted in %1$s. Bookmark the <a href="%3$s" title="Permalink to %4$s" rel="bookmark">permalink</a>.', 'silver' );
 		}
 
 		printf( $meta_text, $category_list, $tag_list, get_permalink(), the_title_attribute( 'echo=0' ) );
@@ -54,7 +54,7 @@
 		<div class="flex-row align-top">
 			<div class="flex-col mr circle">
 				<div class="blog-author-image">
-					<?php echo get_avatar( get_the_author_meta( 'ID' ), apply_filters( 'flatsome_author_bio_avatar_size', 90 ) ); ?>
+					<?php echo get_avatar( get_the_author_meta( 'ID' ), apply_filters( 'silver_author_bio_avatar_size', 90 ) ); ?>
 				</div>
 			</div>
 			<div class="flex-col flex-grow">
@@ -68,5 +68,5 @@
 <?php endif; ?>
 
 <?php if ( get_theme_mod( 'blog_single_next_prev_nav', 1 ) ) :
-	flatsome_content_nav( 'nav-below' );
+	silver_content_nav( 'nav-below' );
 endif; ?>

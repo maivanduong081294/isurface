@@ -4,14 +4,14 @@
  */
 
 ?>
-<div id="tab-guide" class="col two-col panel flatsome-panel">
+<div id="tab-guide" class="col two-col panel silver-panel">
 		
 	<div class="cols">
 		<div class="inner-panel" style="border-left:4px solid #006799;">
 			<h5 style="color: #006799">STEP 1</h5>
 			<h3>Install and setup plugins</h3>
 			<p>Install the plugins you want to use that are included with Silver.</p>
-			<a href="<?php echo admin_url().'admin.php?page=flatsome-panel-plugins'; ?>" class="button">Install Plugins</a>
+			<a href="<?php echo admin_url().'admin.php?page=silver-panel-plugins'; ?>" class="button">Install Plugins</a>
 			<a href="#" class="button" title="Video Guide">&#9658;</a>
 		</div>
 

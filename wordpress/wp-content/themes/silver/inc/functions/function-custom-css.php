@@ -1,6 +1,6 @@
 <?php
 /* CUSTOM CSS */
-function flatsome_custom_css() {
+function silver_custom_css() {
 if ( ! function_exists( 'fs_color_channels' ) ) {
 	function fs_color_channels( $hex ) {
 		$hex = ltrim( trim( (string) $hex ), '#' );
@@ -15,9 +15,9 @@ if ( ! function_exists( 'fs_color_channels' ) ) {
 }
 
 $fs_opacity_colors = array(
-	'primary'   => get_theme_mod( 'color_primary', Flatsome_Default::COLOR_PRIMARY ),
-	'secondary' => get_theme_mod( 'color_secondary', Flatsome_Default::COLOR_SECONDARY ),
-	'base'      => get_theme_mod( 'color_texts', Flatsome_Default::COLOR_BASE ),
+	'primary'   => get_theme_mod( 'color_primary', Silver_Default::COLOR_PRIMARY ),
+	'secondary' => get_theme_mod( 'color_secondary', Silver_Default::COLOR_SECONDARY ),
+	'base'      => get_theme_mod( 'color_texts', Silver_Default::COLOR_BASE ),
 );
 
 // Layout spacing. Each entry is printed as the CSS variable --fs-{name}, which
@@ -26,7 +26,7 @@ $fs_opacity_colors = array(
 // A pair is mobile-first: the value for mobile and tablet portrait, then the
 // value from tablet landscape (850px) up.
 $fs_layout_spacing = apply_filters(
-	'flatsome_layout_spacing',
+	'silver_layout_spacing',
 	array(
 		'column-gap'        => array( '20px', '30px' ),
 		'row-gap'           => array( '20px', '30px' ),
@@ -55,14 +55,14 @@ ob_start();
 ?>
 <style id="custom-css" type="text/css">
 :root {
-	--primary-color: <?php echo esc_attr( get_theme_mod( 'color_primary', Flatsome_Default::COLOR_PRIMARY ) ); ?>;
-	--fs-color-primary: <?php echo esc_attr( get_theme_mod( 'color_primary', Flatsome_Default::COLOR_PRIMARY ) ); ?>;
-	--fs-color-secondary: <?php echo esc_attr( get_theme_mod( 'color_secondary', Flatsome_Default::COLOR_SECONDARY ) ); ?>;
-	--fs-color-success: <?php echo esc_attr( get_theme_mod( 'color_success', Flatsome_Default::COLOR_SUCCESS ) ); ?>;
-	--fs-color-alert: <?php echo esc_attr( get_theme_mod( 'color_alert', Flatsome_Default::COLOR_ALERT ) ); ?>;
-	--fs-color-base: <?php echo esc_attr( get_theme_mod( 'color_texts', Flatsome_Default::COLOR_BASE ) ); ?>;
-	--fs-experimental-link-color: <?php echo esc_attr( get_theme_mod( 'color_links' ) ?: Flatsome_Default::LINK_COLOR ); ?>;
-	--fs-experimental-link-color-hover: <?php echo esc_attr( get_theme_mod( 'color_links_hover' ) ?: Flatsome_Default::LINK_COLOR_HOVER ); ?>;
+	--primary-color: <?php echo esc_attr( get_theme_mod( 'color_primary', Silver_Default::COLOR_PRIMARY ) ); ?>;
+	--fs-color-primary: <?php echo esc_attr( get_theme_mod( 'color_primary', Silver_Default::COLOR_PRIMARY ) ); ?>;
+	--fs-color-secondary: <?php echo esc_attr( get_theme_mod( 'color_secondary', Silver_Default::COLOR_SECONDARY ) ); ?>;
+	--fs-color-success: <?php echo esc_attr( get_theme_mod( 'color_success', Silver_Default::COLOR_SUCCESS ) ); ?>;
+	--fs-color-alert: <?php echo esc_attr( get_theme_mod( 'color_alert', Silver_Default::COLOR_ALERT ) ); ?>;
+	--fs-color-base: <?php echo esc_attr( get_theme_mod( 'color_texts', Silver_Default::COLOR_BASE ) ); ?>;
+	--fs-experimental-link-color: <?php echo esc_attr( get_theme_mod( 'color_links' ) ?: Silver_Default::LINK_COLOR ); ?>;
+	--fs-experimental-link-color-hover: <?php echo esc_attr( get_theme_mod( 'color_links_hover' ) ?: Silver_Default::LINK_COLOR_HOVER ); ?>;
 <?php foreach ( $fs_opacity_colors as $name => $value ) :
 	$rgb = fs_color_channels( $value );
 	if ( ! $rgb ) {
@@ -90,17 +90,17 @@ ob_start();
 <?php endif; ?>
 
 .tooltipster-base {
-	--tooltip-color: <?php echo esc_attr( get_theme_mod( 'tooltip_color', Flatsome_Default::TOOLTIP_COLOR ) ); ?>;
-	--tooltip-bg-color: <?php echo esc_attr( get_theme_mod( 'tooltip_bg_color', Flatsome_Default::TOOLTIP_BG_COLOR ) ); ?>;
+	--tooltip-color: <?php echo esc_attr( get_theme_mod( 'tooltip_color', Silver_Default::TOOLTIP_COLOR ) ); ?>;
+	--tooltip-bg-color: <?php echo esc_attr( get_theme_mod( 'tooltip_bg_color', Silver_Default::TOOLTIP_BG_COLOR ) ); ?>;
 }
 
 .off-canvas-right .mfp-content, .off-canvas-left .mfp-content {
-	--drawer-width: <?php echo esc_attr( get_theme_mod( 'drawer_width' ) ?: Flatsome_Default::DRAWER_WIDTH ); ?>;
+	--drawer-width: <?php echo esc_attr( get_theme_mod( 'drawer_width' ) ?: Silver_Default::DRAWER_WIDTH ); ?>;
 }
 
 <?php if ( is_woocommerce_activated() ) : ?>
 .off-canvas .mfp-content.off-canvas-cart {
-	--drawer-width: <?php echo esc_attr( get_theme_mod( 'cart_drawer_width' ) ?: Flatsome_Default::CART_DRAWER_WIDTH ); ?>;
+	--drawer-width: <?php echo esc_attr( get_theme_mod( 'cart_drawer_width' ) ?: Silver_Default::CART_DRAWER_WIDTH ); ?>;
 }
 <?php endif;
 
@@ -143,7 +143,7 @@ if($content_bg){ ?>
 <?php
 $cookie_notice_bg_color = get_theme_mod( 'cookie_notice_bg_color' );
 if ( $cookie_notice_bg_color ) { ?>
-	.flatsome-cookies {background-color: <?php echo $cookie_notice_bg_color; ?>}
+	.silver-cookies {background-color: <?php echo $cookie_notice_bg_color; ?>}
 <?php } ?>
 
 <?php
@@ -171,8 +171,8 @@ $header_height = get_theme_mod('header_height', 90); ?>
 
 $height = 0;
 $height = $height + $header_height_transparent;
-if(flatsome_has_top_bar()['large_or_mobile']) $height = $height + '30';
-if(flatsome_has_bottom_bar()['large_or_mobile']) $height = $height + '50';
+if(silver_has_top_bar()['large_or_mobile']) $height = $height + '30';
+if(silver_has_bottom_bar()['large_or_mobile']) $height = $height + '50';
 
 $mob_height = 0;
 ?>
@@ -307,7 +307,7 @@ if ( ! get_theme_mod( 'disable_fonts', 0 ) ) :
 
 	// Type Base
 	if(!empty($type_texts['font-family'])) {
-		echo 'body{font-family: '. flatsome_parse_font_family( $type_texts['font-family'] ).';}';
+		echo 'body{font-family: '. silver_parse_font_family( $type_texts['font-family'] ).';}';
 	}
 
 	if ( ! empty( $type_texts['font-weight'] ) ) { ?>
@@ -319,8 +319,8 @@ if ( ! get_theme_mod( 'disable_fonts', 0 ) ) :
 
 	// Type Navigations
 	if(!empty($type_nav['font-family'])) {
-		echo '.nav > li > a {font-family: '. flatsome_parse_font_family( $type_nav['font-family'] ).';}';
-		echo '.mobile-sidebar-levels-2 .nav > li > ul > li > a {font-family: '. flatsome_parse_font_family( $type_nav['font-family'] ).';}';
+		echo '.nav > li > a {font-family: '. silver_parse_font_family( $type_nav['font-family'] ).';}';
+		echo '.mobile-sidebar-levels-2 .nav > li > ul > li > a {font-family: '. silver_parse_font_family( $type_nav['font-family'] ).';}';
 	}
 
 	if ( ! empty( $type_nav['font-weight'] ) ) { ?>
@@ -333,7 +333,7 @@ if ( ! get_theme_mod( 'disable_fonts', 0 ) ) :
 
 	// Type Headings
 	if(!empty($type_headings['font-family'])) {
-	echo 'h1,h2,h3,h4,h5,h6,.heading-font, .off-canvas-center .nav-sidebar.nav-vertical > li > a{font-family: '. flatsome_parse_font_family( $type_headings['font-family'] ).';}';
+	echo 'h1,h2,h3,h4,h5,h6,.heading-font, .off-canvas-center .nav-sidebar.nav-vertical > li > a{font-family: '. silver_parse_font_family( $type_headings['font-family'] ).';}';
 	}
 
 	if ( ! empty( $type_headings['font-weight'] ) ) { ?>
@@ -345,7 +345,7 @@ if ( ! get_theme_mod( 'disable_fonts', 0 ) ) :
 
 	// Alt Type
 	if(!empty($type_alt ['font-family'])) {
-	echo '.alt-font{font-family: '. flatsome_parse_font_family( $type_alt['font-family'] ).';}';
+	echo '.alt-font{font-family: '. silver_parse_font_family( $type_alt['font-family'] ).';}';
 	}
 
 	if ( ! empty( $type_alt['font-weight'] ) ) { ?>
@@ -735,15 +735,15 @@ background-color: #71cedf;
 	}
 <?php } ?>
 
-.label-new.menu-item > a:after{content:"<?php _e('New','flatsome'); ?>";}
-.label-hot.menu-item > a:after{content:"<?php _e('Hot','flatsome'); ?>";}
-.label-sale.menu-item > a:after{content:"<?php _e('Sale','flatsome'); ?>";}
-.label-popular.menu-item > a:after{content:"<?php _e('Popular','flatsome'); ?>";}
+.label-new.menu-item > a:after{content:"<?php _e('New','silver'); ?>";}
+.label-hot.menu-item > a:after{content:"<?php _e('Hot','silver'); ?>";}
+.label-sale.menu-item > a:after{content:"<?php _e('Sale','silver'); ?>";}
+.label-popular.menu-item > a:after{content:"<?php _e('Popular','silver'); ?>";}
 
 </style>
 
 <?php
 $buffer = ob_get_clean();
-echo flatsome_minify_css($buffer);
+echo silver_minify_css($buffer);
 }
-add_action( 'wp_head', 'flatsome_custom_css', 100 );
+add_action( 'wp_head', 'silver_custom_css', 100 );

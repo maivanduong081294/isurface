@@ -10,6 +10,9 @@
     ng-attr-data-parallax="{{ shortcode.options.parallax }}"
 	ng-style="{
 		'min-height' : shortcode.options.height,
+		'flex' : shortcode.options.widthMode === 'auto' ? '0 1 auto' : (shortcode.options.widthMode === 'custom' && shortcode.options.customWidth ? '0 0 ' + shortcode.options.customWidth : ''),
+		'max-width' : shortcode.options.widthMode === 'auto' ? 'none' : (shortcode.options.widthMode === 'custom' && shortcode.options.customWidth ? shortcode.options.customWidth : ''),
+		'width' : shortcode.options.widthMode === 'auto' ? 'auto' : (shortcode.options.widthMode === 'custom' && shortcode.options.customWidth ? shortcode.options.customWidth : ''),
 	}">
 
 	<div class="col-inner

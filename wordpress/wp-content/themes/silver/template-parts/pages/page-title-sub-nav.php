@@ -2,12 +2,12 @@
 /**
  * Page title with sub nav.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.16.0
+ * @package          Silver\Templates
+ * @silver-version 3.16.0
  */
 
 ?>
-<div class="page-title <?php flatsome_header_title_classes() ?>">
+<div class="page-title <?php silver_header_title_classes() ?>">
 
 	<div class="page-title-bg fill"><div class="page-title-bg-overlay"></div></div>
 
@@ -19,7 +19,7 @@
 	 	</div>
 
 	 	<div class="flex-col">
-	 		<?php get_flatsome_subnav(); ?>
+	 		<?php get_silver_subnav(); ?>
 	 	</div>
 
 	</div>

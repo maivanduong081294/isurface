@@ -11,7 +11,7 @@ foreach ($GLOBALS['wp_registered_sidebars'] as $sidebar){
 add_ux_builder_shortcode( 'ux_sidebar', array(
     'name' => __( 'Widget Area' ),
     'category' => __( 'Layout' ),
-    'thumbnail' =>  flatsome_ux_builder_thumbnail( 'sidebar' ),
+    'thumbnail' =>  silver_ux_builder_thumbnail( 'sidebar' ),
     'options' => array(
         'id' => array(
             'type' => 'select',

@@ -4,8 +4,8 @@
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.16.0
+ * @package          Silver\Templates
+ * @silver-version 3.16.0
  */
 
 ?>
@@ -15,7 +15,7 @@
 
 		<?php if ( 'post' === get_post_type() ) : ?>
 		<div class="entry-meta">
-			<?php flatsome_posted_on(); ?>
+			<?php silver_posted_on(); ?>
 		</div>
 		<?php endif; ?>
 	</header>
@@ -25,7 +25,7 @@
 	</div>
 
 	<footer class="entry-footer">
-		<?php flatsome_entry_footer(); ?>
+		<?php silver_entry_footer(); ?>
 	</footer>
 </article>
 

@@ -1,69 +1,69 @@
-.toplevel_page_flatsome-panel #wpbody-content > .notice,
-body[class^='flatsome_page_'] #wpbody-content > .notice,
-body[class*=' flatsome_page_'] #wpbody-content > .notice {
+.toplevel_page_silver-panel #wpbody-content > .notice,
+body[class^='silver_page_'] #wpbody-content > .notice,
+body[class*=' silver_page_'] #wpbody-content > .notice {
 	display: none!important;
 }
 
-.panel.flatsome-panel {
+.panel.silver-panel {
   margin-left: -10px;
   margin-right: -10px;
 }
 
-.flatsome-panel .about-wrap .nav-tab{
+.silver-panel .about-wrap .nav-tab{
   font-size: 14px;
   margin-right: 5px;
   margin-left: 0;
   line-height: 2;
 }
 
-.flatsome-panel .fl-badge {
+.silver-panel .fl-badge {
     background-image: url(../../../assets/img/silver-icon.png)!important;
     background-size: 80px 80px;
     background-repeat: no-repeat;
     background-position: center 20px;
 }
 
-.flatsome-panel .about-wrap .nav-tab-wrapper{
+.silver-panel .about-wrap .nav-tab-wrapper{
 	margin-bottom: 20px!important;
 }
 
-.flatsome-panel .about-wrap .flatsome-panel h2{
+.silver-panel .about-wrap .silver-panel h2{
 	text-align: left;
 	max-width: 600px;
 }
 
-.rtl .flatsome-panel .about-wrap .flatsome-panel h2{
+.rtl .silver-panel .about-wrap .silver-panel h2{
 	text-align: right;
 }
 
-.flatsome-panel .about-wrap .flatsome-panel .inner-panel{
+.silver-panel .about-wrap .silver-panel .inner-panel{
 	padding: 0 20px 30px 20px;
 	background-color: #FFF;
 	margin: 15px 10px;
 	box-shadow: 1px 1px 5px 1px rgba(0,0,0,.1);
 }
 
-.flatsome-panel .about-wrap .cols {
+.silver-panel .about-wrap .cols {
 	display: flex;
 	flex-wrap: wrap;
 }
-.flatsome-panel .about-wrap .inner-panel{flex:1;}
-.flatsome-panel .about-wrap .inner-panel.col-span-3{flex: 3}
-.flatsome-panel .inner-panel{
+.silver-panel .about-wrap .inner-panel{flex:1;}
+.silver-panel .about-wrap .inner-panel.col-span-3{flex: 3}
+.silver-panel .inner-panel{
 	transition: opacity .3s;
 }
-.flatsome-panel .inner-panel:hover{
+.silver-panel .inner-panel:hover{
 	opacity: 1!important;
 }
-.flatsome-panel .inner-panel.success{border-color: green!important; opacity: .6}
-.flatsome-panel .inner-panel.success h5{color: green!important;}
+.silver-panel .inner-panel.success{border-color: green!important; opacity: .6}
+.silver-panel .inner-panel.success h5{color: green!important;}
 
-.flatsome-panel form > h2 {
+.silver-panel form > h2 {
   margin-top: 20px;
   font-size: 1.4em;
   font-weight: 600;
 }
-.flatsome-panel form > h2:has(+ h2) {
+.silver-panel form > h2:has(+ h2) {
   display: none; /* Hides the "Features" section when no features are available. */
 }
 
@@ -120,59 +120,59 @@ body[class*=' flatsome_page_'] #wpbody-content > .notice {
 
 /* Admin status table
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-table.flatsome-status-table {
+table.silver-status-table {
 	border: 0;
 	box-shadow: none;
 }
 
-table.flatsome-status-table h2 {
+table.silver-status-table h2 {
 	font-size: 1.2em;
 	font-weight: 600;
 	margin: 0;
 }
 
-table.flatsome-status-table td:first-child {
+table.silver-status-table td:first-child {
 	width: 30%;
 }
 
-table.flatsome-status-table td:last-child {
+table.silver-status-table td:last-child {
 	width: 100%;
 }
 
-table.flatsome-status-table td.help {
+table.silver-status-table td.help {
 	width: 1em;
 }
 
-table.flatsome-status-table  td mark.success,
-table.flatsome-status-table  th mark.success {
+table.silver-status-table  td mark.success,
+table.silver-status-table  th mark.success {
 	color: #7ad03a;
 }
 
-table.flatsome-status-table td mark.critical,
-table.flatsome-status-table th mark.critical {
+table.silver-status-table td mark.critical,
+table.silver-status-table th mark.critical {
 	color: #a00;
 }
 
-table.flatsome-status-table td mark.warning,
-table.flatsome-status-table th mark.warning {
+table.silver-status-table td mark.warning,
+table.silver-status-table th mark.warning {
 	color: #f99b71;
 }
 
-table.flatsome-status-table td mark,
-table.flatsome-status-table th mark {
+table.silver-status-table td mark,
+table.silver-status-table th mark {
 	background: transparent none;
 }
 
-table.flatsome-status-table.widefat thead td,
-table.flatsome-status-table.widefat thead th {
+table.silver-status-table.widefat thead td,
+table.silver-status-table.widefat thead th {
 	border: 0;
 }
 
-.flatsome-panel .about-wrap .flatsome-panel .inner-panel table.flatsome-status-table {
+.silver-panel .about-wrap .silver-panel .inner-panel table.silver-status-table {
 	padding-top: 20px;
 }
 
-.flatsome-help-tip {
+.silver-help-tip {
 	color: #d7d7d8;
 	width: 14px;
 	height: 14px;
@@ -180,7 +180,7 @@ table.flatsome-status-table.widefat thead th {
 	padding-top: 1px;
 }
 
-.flatsome-help-tip:hover {
+.silver-help-tip:hover {
 	color: #2271b1;
 }
 

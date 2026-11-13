@@ -13,7 +13,7 @@
  * @see              https://docs.woocommerce.com/document/template-structure/
  * @package          WooCommerce\Templates
  * @version          7.0.1
- * @flatsome-version 3.16.2
+ * @silver-version 3.16.2
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -36,7 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				$selected_category  = isset( $_REQUEST['product_cat'] ) ? $_REQUEST['product_cat'] : '';
 
 				echo '<select class="search_categories resize-select mb-0" name="product_cat">';
-				echo '<option value=""' . selected( '', $selected_category, false ) . '>' . esc_html__( 'All', 'flatsome' ) . '</option>';
+				echo '<option value=""' . selected( '', $selected_category, false ) . '>' . esc_html__( 'All', 'silver' ) . '</option>';
 
 				foreach ( $product_categories as $value ) {
 					if ( $value && ! $value->parent ) {
@@ -62,8 +62,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php endif ?>
 		</div>
 		<div class="flex-col">
-			<button type="submit" value="<?php echo esc_attr_x( 'Search', 'submit button', 'woocommerce' ); ?>" class="ux-search-submit submit-button secondary button <?php if ( fl_woocommerce_version_check( '7.0.1' ) ) { echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ); } ?> icon mb-0" aria-label="<?php esc_attr_e( 'Submit', 'flatsome' ); ?>">
-				<?php echo get_flatsome_icon( 'icon-search' ); ?>
+			<button type="submit" value="<?php echo esc_attr_x( 'Search', 'submit button', 'woocommerce' ); ?>" class="ux-search-submit submit-button secondary button <?php if ( fl_woocommerce_version_check( '7.0.1' ) ) { echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ); } ?> icon mb-0" aria-label="<?php esc_attr_e( 'Submit', 'silver' ); ?>">
+				<?php echo get_silver_icon( 'icon-search' ); ?>
 			</button>
 		</div>
 	</div>

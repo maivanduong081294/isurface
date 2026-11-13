@@ -1,41 +1,41 @@
 <?php
 
 
-Flatsome_Option::add_section( 'payment-icons', array(
-	'title'       => __( 'Payments Icons', 'flatsome-admin' ),
+Silver_Option::add_section( 'payment-icons', array(
+	'title'       => __( 'Payments Icons', 'silver' ),
 	'description' => 'Note: This is not where you select payment methods. These are graphical icons that show which payment methods your shop supports. You can add these anywhere by using the shortcode [ux_payment_icons]',
 	'panel'       => 'woocommerce',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'sortable',
 	'settings'  => 'payment_icons',
-	'label'     => __( 'Payment Icons', 'flatsome-admin' ),
+	'label'     => __( 'Payment Icons', 'silver' ),
 	'section'   => 'payment-icons',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'multiple'  => 99,
 	'default'   => array( 'visa', 'paypal', 'stripe', 'mastercard', 'cashondelivery' ),
-	'choices'   => flatsome_get_payment_icons_list(),
+	'choices'   => silver_get_payment_icons_list(),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'image',
 	'settings'  => 'payment_icons_custom',
-	'label'     => __( 'Custom Icons (Replace)', 'flatsome-admin' ),
+	'label'     => __( 'Custom Icons (Replace)', 'silver' ),
 	'section'   => 'payment-icons',
 	'default'   => '',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'        => 'multicheck',
 	'settings'    => 'payment_icons_placement',
-	'label'       => __( 'Placement', 'flatsome-admin' ),
-	'description' => __( 'Select where you want to show the payment icons', 'flatsome-admin' ),
+	'label'       => __( 'Placement', 'silver' ),
+	'description' => __( 'Select where you want to show the payment icons', 'silver' ),
 	'section'     => 'payment-icons',
 	'default'     => '',
 	'choices'     => array(
-		'footer' => __( 'Absolute Footer', 'flatsome-admin' ),
-		'cart'   => __( 'Cart Sidebar', 'flatsome-admin' ),
+		'footer' => __( 'Absolute Footer', 'silver' ),
+		'cart'   => __( 'Cart Sidebar', 'silver' ),
 	),
 ) );

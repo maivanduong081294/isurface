@@ -2,8 +2,8 @@
 /**
  * Product filter button.
  *
- * @package          Flatsome/WooCommerce/Templates
- * @flatsome-version 3.20.0
+ * @package          Silver/WooCommerce/Templates
+ * @silver-version 3.20.0
  */
 
 $custom_filter_text = get_theme_mod( 'category_filter_text' );
@@ -22,8 +22,8 @@ $link_atts = [
 ];
 ?>
 <div class="category-filtering container text-center product-filter-row show-for-medium">
-	<a <?php echo flatsome_html_atts( $link_atts ); ?>>
-		<?php echo get_flatsome_icon( 'icon-equalizer' ); ?>
+	<a <?php echo silver_html_atts( $link_atts ); ?>>
+		<?php echo get_silver_icon( 'icon-equalizer' ); ?>
 		<strong><?php echo esc_html( $filter_text ); ?></strong>
 	</a>
 </div>

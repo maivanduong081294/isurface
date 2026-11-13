@@ -1,43 +1,43 @@
 <?php
 
-Flatsome_Option::add_section( 'fl-portfolio', array(
-'title'       => __( 'Portfolio', 'flatsome-admin' ),
+Silver_Option::add_section( 'fl-portfolio', array(
+'title'       => __( 'Portfolio', 'silver' ),
 ) );
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'select',
 	'settings'     => 'featured_items_page',
-	'label'       => __( 'Custom Portfolio Page', 'flatsome-admin' ),
+	'label'       => __( 'Custom Portfolio Page', 'silver' ),
 	'section'     => 'fl-portfolio',
 	'default'     => false,
 	'choices'     => $list_pages
 ));
 
-Flatsome_Option::add_field( '', array(
+Silver_Option::add_field( '', array(
     'type'        => 'custom',
     'settings' => 'custom_title_save_permalinks',
-    'label'       => __( '', 'flatsome-admin' ),
+    'label'       => __( '', 'silver' ),
 	'section'     => 'fl-portfolio',
     'default'     => 'You need to Click <strong>"Save & Publish"</strong> and then <strong>"Update Permalinks"</strong> button to make sure it works!<br><br> <a class="button" href="'.admin_url().'options-permalink.php?settings-updated=true" target="_blank">Update permalinks</a>',
 ) );
 
 
-Flatsome_Option::add_field( '', array(
+Silver_Option::add_field( '', array(
     'type'        => 'custom',
     'settings' => 'custom_title_portfolio_single',
-    'label'       => __( '', 'flatsome-admin' ),
+    'label'       => __( '', 'silver' ),
 	'section'     => 'fl-portfolio',
     'default'     => '<div class="options-title-divider">Single Page</div>',
 ) );
 
 // Single Posts
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'radio-image',
 	'settings'     => 'portfolio_layout',
-	'label'       => __( 'Single Portfolio Layout', 'flatsome-admin' ),
+	'label'       => __( 'Single Portfolio Layout', 'silver' ),
 	'section'     => 'fl-portfolio',
 	'default' 	  => '',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'choices'     => array(
 		'' => $image_url . 'portfolio.svg',
 		'sidebar-right' => $image_url . 'portfolio-sidebar-right.svg',
@@ -48,21 +48,21 @@ Flatsome_Option::add_field( 'option',  array(
 	),
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
   'type'        => 'checkbox',
   'settings'     => 'portfolio_title_transparent',
-  'label'       => __( 'Transparent Header', 'flatsome-admin' ),
+  'label'       => __( 'Transparent Header', 'silver' ),
   'section'     => 'fl-portfolio',
   'default' => 0
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'radio-image',
 	'settings'     => 'portfolio_title',
-	'label'       => __( 'Single Portfolio Title', 'flatsome-admin' ),
+	'label'       => __( 'Single Portfolio Title', 'silver' ),
 	'section'     => 'fl-portfolio',
 	'default' 	  => '',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'choices'     => array(
 		'' => $image_url . 'portfolio-title.svg',
 		'featured' => $image_url . 'portfolio-title-featured.svg',
@@ -70,44 +70,44 @@ Flatsome_Option::add_field( 'option',  array(
 	),
 ));
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'checkbox',
 	'settings' => 'portfolio_share',
-	'label'    => __( 'Show share icons', 'flatsome' ),
+	'label'    => __( 'Show share icons', 'silver' ),
 	'section'  => 'fl-portfolio',
 	'default'  => 1,
 ) );
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
   'type'        => 'checkbox',
   'settings'     => 'portfolio_related',
-  'label'       => __( 'Show related items', 'flatsome-admin' ),
+  'label'       => __( 'Show related items', 'silver' ),
   'section'     => 'fl-portfolio',
   'default' => 1
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
   'type'        => 'checkbox',
   'settings'     => 'portfolio_next_prev',
-  'label'       => __( 'Show Next/Prev navigation', 'flatsome-admin' ),
+  'label'       => __( 'Show Next/Prev navigation', 'silver' ),
   'section'     => 'fl-portfolio',
   'default' => 1
 ));
 
 
 
-Flatsome_Option::add_field( '', array(
+Silver_Option::add_field( '', array(
     'type'        => 'custom',
     'settings' => 'custom_title_portfolio_archive',
-    'label'       => __( '', 'flatsome-admin' ),
+    'label'       => __( '', 'silver' ),
 	'section'     => 'fl-portfolio',
     'default'     => '<div class="options-title-divider">Archive Page</div>',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'select',
 	'settings' => 'portfolio_archive_orderby',
-	'label'    => __( 'Portfolio Items Orderby', 'flatsome-admin' ),
+	'label'    => __( 'Portfolio Items Orderby', 'silver' ),
 	'section'  => 'fl-portfolio',
 	'default'  => 'menu_order',
 	'choices'  => array(
@@ -118,10 +118,10 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ));
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'select',
 	'settings' => 'portfolio_archive_order',
-	'label'    => __( 'Portfolio Items Order', 'flatsome-admin' ),
+	'label'    => __( 'Portfolio Items Order', 'silver' ),
 	'section'  => 'fl-portfolio',
 	'default'  => 'desc',
 	'choices'  => array(
@@ -130,13 +130,13 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'radio-image',
 	'settings'     => 'portfolio_style',
-	'label'       => __( 'Portfolio Style', 'flatsome-admin' ),
+	'label'       => __( 'Portfolio Style', 'silver' ),
 	'section'     => 'fl-portfolio',
 	'default' 	  => '',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'choices'     => array(
 		'' => $image_url . 'portfolio-simple.svg',
 		'overlay' => $image_url . 'portfolio-overlay.svg',
@@ -144,10 +144,10 @@ Flatsome_Option::add_field( 'option',  array(
 	),
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
   'type'        => 'select',
   'settings'     => 'portfolio_height',
-  'label'       => __( 'Image Height', 'flatsome-admin' ),
+  'label'       => __( 'Image Height', 'silver' ),
   'section'     => 'fl-portfolio',
   'default'     => 0,
   'choices'     => array(
@@ -161,10 +161,10 @@ Flatsome_Option::add_field( 'option',  array(
   ),
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'     => 'slider',
 	'settings' => 'portfolio_archive_image_radius',
-	'label'    => __( 'Image Radius (%)', 'flatsome-admin' ),
+	'label'    => __( 'Image Radius (%)', 'silver' ),
 	'section'  => 'fl-portfolio',
 	'default'  => 0,
 	'choices'  => array(
@@ -174,10 +174,10 @@ Flatsome_Option::add_field( 'option',  array(
 	),
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'     => 'select',
 	'settings' => 'portfolio_archive_image_size',
-	'label'    => __( 'Image Size', 'flatsome-admin' ),
+	'label'    => __( 'Image Size', 'silver' ),
 	'section'  => 'fl-portfolio',
 	'default'  => 'medium',
 	'choices'  => array(
@@ -188,10 +188,10 @@ Flatsome_Option::add_field( 'option',  array(
 	),
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'     => 'slider',
 	'settings' => 'portfolio_archive_depth',
-	'label'    => __( 'Item Depth', 'flatsome-admin' ),
+	'label'    => __( 'Item Depth', 'silver' ),
 	'section'  => 'fl-portfolio',
 	'default'  => 0,
 	'choices'  => array(
@@ -201,10 +201,10 @@ Flatsome_Option::add_field( 'option',  array(
 	),
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'     => 'slider',
 	'settings' => 'portfolio_archive_depth_hover',
-	'label'    => __( 'Item Depth :hover', 'flatsome-admin' ),
+	'label'    => __( 'Item Depth :hover', 'silver' ),
 	'section'  => 'fl-portfolio',
 	'default'  => 0,
 	'choices'  => array(
@@ -214,10 +214,10 @@ Flatsome_Option::add_field( 'option',  array(
 	),
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'     => 'radio-buttonset',
 	'settings' => 'portfolio_archive_spacing',
-	'label'    => __( 'Column Spacing', 'flatsome-admin' ),
+	'label'    => __( 'Column Spacing', 'silver' ),
 	'section'  => 'fl-portfolio',
 	'default'  => 'small',
 	'choices'  => array(
@@ -229,10 +229,10 @@ Flatsome_Option::add_field( 'option',  array(
 	),
 ));
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'slider',
 	'settings' => 'portfolio_archive_columns',
-	'label'    => __( 'Items per row - Desktop', 'flatsome-admin' ),
+	'label'    => __( 'Items per row - Desktop', 'silver' ),
 	'section'  => 'fl-portfolio',
 	'default'  => 4,
 	'choices'  => array(
@@ -242,10 +242,10 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'slider',
 	'settings' => 'portfolio_archive_columns_tablet',
-	'label'    => __( 'Items per row - Tablet', 'flatsome-admin' ),
+	'label'    => __( 'Items per row - Tablet', 'silver' ),
 	'section'  => 'fl-portfolio',
 	'default'  => 3,
 	'choices'  => array(
@@ -255,10 +255,10 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'slider',
 	'settings' => 'portfolio_archive_columns_mobile',
-	'label'    => __( 'Items per row - Mobile', 'flatsome-admin' ),
+	'label'    => __( 'Items per row - Mobile', 'silver' ),
 	'section'  => 'fl-portfolio',
 	'default'  => 2,
 	'choices'  => array(
@@ -268,13 +268,13 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'radio-image',
 	'settings'     => 'portfolio_archive_title',
-	'label'       => __( 'Archive Portfolio Title', 'flatsome-admin' ),
+	'label'       => __( 'Archive Portfolio Title', 'silver' ),
 	'section'     => 'fl-portfolio',
 	'default' 	  => '',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'choices'     => array(
 		'' => $image_url . 'portfolio-title.svg',
 		'featured' => $image_url . 'portfolio-title-featured.svg',
@@ -282,27 +282,27 @@ Flatsome_Option::add_field( 'option',  array(
 	),
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'checkbox',
 	'settings'     => 'portfolio_archive_title_transparent',
-	'label'       => __( 'Transparent Header', 'flatsome-admin' ),
+	'label'       => __( 'Transparent Header', 'silver' ),
 	'section'     => 'fl-portfolio',
 	'default' => 0
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
     'type'        => 'image',
     'settings'     => 'portfolio_archive_bg',
-    'label'       => __( 'Portfolio Header Background', 'flatsome-admin' ),
+    'label'       => __( 'Portfolio Header Background', 'silver' ),
 	'section'     => 'fl-portfolio',
 	'default'     => "",
 ));
 
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'radio-buttonset',
 	'settings'     => 'portfolio_archive_filter',
-	'label'       => __( 'Filter Navigation', 'flatsome-admin' ),
+	'label'       => __( 'Filter Navigation', 'silver' ),
 	'section'     => 'fl-portfolio',
 	'default'     => 'left',
 	'choices'     => array(
@@ -310,23 +310,23 @@ Flatsome_Option::add_field( 'option',  array(
 		'center' => 'Center',
 		'disabled' => 'Disabled'
 	),
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'radio-image',
 	'settings'     => 'portfolio_archive_filter_style',
-	'label'       => __( 'Filter Nav style', 'flatsome-admin' ),
+	'label'       => __( 'Filter Nav style', 'silver' ),
 	'section'     => 'fl-portfolio',
 	'default' 	  => 'line-grow',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'choices'     => $nav_styles_img
 ));
 
 
 
 
-function flatsome_refresh_portfolio_partials( WP_Customize_Manager $wp_customize ) {
+function silver_refresh_portfolio_partials( WP_Customize_Manager $wp_customize ) {
 
   // Abort if selective refresh is not available.
   if ( ! isset( $wp_customize->selective_refresh ) ) {
@@ -350,4 +350,4 @@ function flatsome_refresh_portfolio_partials( WP_Customize_Manager $wp_customize
 
 
 }
-add_action( 'customize_register', 'flatsome_refresh_portfolio_partials' );
+add_action( 'customize_register', 'silver_refresh_portfolio_partials' );

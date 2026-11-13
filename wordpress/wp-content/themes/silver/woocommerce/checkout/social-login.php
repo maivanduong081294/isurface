@@ -2,8 +2,8 @@
 /**
  * Social login.
  *
- * @package          Flatsome/WooCommerce/Templates
- * @flatsome-version 3.20.0
+ * @package          Silver/WooCommerce/Templates
+ * @silver-version 3.20.0
  */
 
 ?>
@@ -13,8 +13,8 @@
 		?>
 
 		<a href="<?php echo esc_url( $facebook_url ); ?>" class="button social-button large facebook circle" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="facebook" data-popupwidth="475" data-popupheight="175">
-			<?php echo get_flatsome_icon( 'icon-facebook' ); ?>
-			<span><?php _e( 'Login with <strong>Facebook</strong>', 'flatsome' ); ?></span>
+			<?php echo get_silver_icon( 'icon-facebook' ); ?>
+			<span><?php _e( 'Login with <strong>Facebook</strong>', 'silver' ); ?></span>
 		</a>
 
 	<?php endif; ?>
@@ -24,8 +24,8 @@
 		?>
 
 		<a href="<?php echo esc_url( $google_url ); ?>" class="button social-button large google-plus circle" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600">
-			<?php echo get_flatsome_icon( 'icon-google-plus' ); ?>
-			<span><?php _e( 'Login with <strong>Google</strong>', 'flatsome' ); ?></span>
+			<?php echo get_silver_icon( 'icon-google-plus' ); ?>
+			<span><?php _e( 'Login with <strong>Google</strong>', 'silver' ); ?></span>
 		</a>
 
 	<?php endif; ?>

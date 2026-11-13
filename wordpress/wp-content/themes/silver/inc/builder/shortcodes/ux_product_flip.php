@@ -2,7 +2,7 @@
 /**
  * Registers the Product Flip element in UX Builder.
  *
- * @package flatsome
+ * @package silver
  */
 
 $repeater_posts     = 'products';    // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
@@ -79,7 +79,7 @@ add_ux_builder_shortcode( 'ux_product_flip', array(
 	'name'      => 'Flip Book',
 	'category'  => __( 'Shop' ),
 	'priority'  => 4,
-	'thumbnail' => flatsome_ux_builder_thumbnail( 'product_flipbook' ),
+	'thumbnail' => silver_ux_builder_thumbnail( 'product_flipbook' ),
 	'wrap'      => false,
 	'presets'   => array(
 		array(

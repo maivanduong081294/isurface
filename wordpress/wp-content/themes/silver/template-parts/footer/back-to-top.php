@@ -2,8 +2,8 @@
 /**
  * Back to top.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.20.0
+ * @package          Silver\Templates
+ * @silver-version 3.20.0
  */
 
 $classes   = [ 'back-to-top', 'button', 'icon', 'invert', 'plain', 'fixed', 'bottom', 'z-1', 'is-outline' ];
@@ -19,10 +19,10 @@ if ( ! get_theme_mod( 'back_to_top_mobile' ) ) {
 }
 
 printf( '<button type="button" %s>%s</button>',
-	flatsome_html_atts( [
+	silver_html_atts( [
 		'id'         => 'top-link',
 		'class'      => $classes,
-		'aria-label' => esc_attr__( 'Go to top', 'flatsome' ),
+		'aria-label' => esc_attr__( 'Go to top', 'silver' ),
 	] ),
-	get_flatsome_icon( 'icon-angle-up' )
+	get_silver_icon( 'icon-angle-up' )
 );

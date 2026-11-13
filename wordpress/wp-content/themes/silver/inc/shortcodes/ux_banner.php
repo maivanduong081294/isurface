@@ -1,6 +1,6 @@
 <?php
 // [ux_banner]
-function flatsome_ux_banner( $atts, $content = null ){
+function silver_ux_banner( $atts, $content = null ){
 
 	extract( $atts = ux_builder_shortcode_atts( array(
 		'_id'                => 'banner-' . rand(),
@@ -19,6 +19,7 @@ function flatsome_ux_banner( $atts, $content = null ){
 		'tablet_height'      => '', // Deprecated.
 		// Background.
 		'bg'                 => '',
+		'bg_visible'                 => 'show',
 		'parallax'           => '',
 		'parallax_style'     => '',
 		'slide_effect'       => '',
@@ -109,7 +110,7 @@ function flatsome_ux_banner( $atts, $content = null ){
    if($sticky) $classes[] = 'sticky-section';
 
    /* Banner Effects */
-   if($effect) wp_enqueue_style( 'flatsome-effects');
+   if($effect) wp_enqueue_style( 'silver-effects');
 
     /* Old bg fallback */
     $atts['bg_color'] = $bg_color;
@@ -122,7 +123,7 @@ function flatsome_ux_banner( $atts, $content = null ){
     if ( $video_sound == '0' ) $video_sound = 'false';
 
     if($bg_overlay && strpos($bg_overlay,'#') !== false){
-      $atts['bg_overlay'] = flatsome_hex2rgba($bg_overlay,'0.15');
+      $atts['bg_overlay'] = silver_hex2rgba($bg_overlay,'0.15');
     }
 
    /* Full height banner */
@@ -148,7 +149,7 @@ function flatsome_ux_banner( $atts, $content = null ){
 	);
 
 	if ( $link ) {
-		$start_link = sprintf( '<a %s>', flatsome_html_atts( $link_atts ) );
+		$start_link = sprintf( '<a %s>', silver_html_atts( $link_atts ) );
 		$end_link   = '</a>';
 	}
 
@@ -168,7 +169,7 @@ function flatsome_ux_banner( $atts, $content = null ){
         <div class="banner-bg fill" <?php echo $parallax; ?>>
             <?php require __DIR__ . '/commons/background-image.php'; ?>
             <?php require( __DIR__ . '/commons/video.php' ) ;?>
-            <?php if($bg_overlay) echo '<div class="overlay"></div>' ?>
+            <?php if(silver_responsive_values($atts, 'bg_overlay')) echo '<div class="overlay"></div>' ?>
             <?php require( __DIR__ . '/commons/border.php' ) ;?>
             <?php if($effect) echo '<div class="effect-' . esc_attr( $effect ) . ' bg-effect fill no-click"></div>'; ?>
         </div>
@@ -193,7 +194,7 @@ function flatsome_ux_banner( $atts, $content = null ){
               if($text_bg && !$padding) $padding = '30px 30px 30px 30px';
               $depth = '';
               if($text_bg) $depth = '1';
-				echo flatsome_apply_shortcode( 'text_box', array(
+				echo silver_apply_shortcode( 'text_box', array(
 					'text_align'  => $text_align,
 					'parallax'    => $parallax_text,
 					'animate'     => $animation,
@@ -213,7 +214,7 @@ function flatsome_ux_banner( $atts, $content = null ){
       <?php
        // Add invisible image if height is not set.
       if(!$height) { ?>
-        <div class="height-fix is-invisible"><?php if($bg) echo flatsome_get_image($bg, $bg_size, $alt, true); ?></div>
+        <div class="height-fix is-invisible"><?php if($bg) echo silver_get_image($bg, $bg_size, $alt, true); ?></div>
       <?php } ?>
       <?php
         // Get custom CSS
@@ -280,4 +281,4 @@ function flatsome_ux_banner( $atts, $content = null ){
   ob_end_clean();
   return $content;
 }
-add_shortcode('ux_banner', 'flatsome_ux_banner');
+add_shortcode('ux_banner', 'silver_ux_banner');

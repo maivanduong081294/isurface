@@ -1,12 +1,12 @@
 <?php
 
 // Register scripts
-function flatsome_countdown_shortcode_scripts() {
-    wp_register_style( 'flatsome-countdown-style', get_template_directory_uri() . '/inc/shortcodes/ux_countdown/ux-countdown.css', 'flatsome-style');
-    wp_register_script( 'flatsome-countdown-script', get_template_directory_uri() . '/inc/shortcodes/ux_countdown/countdown-script-min.js', 'flatsome-countdown-script');
-    wp_register_script( 'flatsome-countdown-theme-js', get_template_directory_uri() . '/inc/shortcodes/ux_countdown/ux-countdown.js', 'flatsome-js', '3.2.6', true);
+function silver_countdown_shortcode_scripts() {
+    wp_register_style( 'silver-countdown-style', get_template_directory_uri() . '/inc/shortcodes/ux_countdown/ux-countdown.css', 'silver-style');
+    wp_register_script( 'silver-countdown-script', get_template_directory_uri() . '/inc/shortcodes/ux_countdown/countdown-script-min.js', 'silver-countdown-script');
+    wp_register_script( 'silver-countdown-theme-js', get_template_directory_uri() . '/inc/shortcodes/ux_countdown/ux-countdown.js', 'silver-js', '3.2.6', true);
 }
-add_action( 'wp_enqueue_scripts', 'flatsome_countdown_shortcode_scripts' );
+add_action( 'wp_enqueue_scripts', 'silver_countdown_shortcode_scripts' );
 
 // Register Shortcode
 function ux_countdown_shortcode( $atts ){
@@ -43,9 +43,9 @@ function ux_countdown_shortcode( $atts ){
 
     extract( $atts );
 
-    wp_enqueue_style('flatsome-countdown-style');
-    wp_enqueue_script('flatsome-countdown-script');
-    wp_enqueue_script('flatsome-countdown-theme-js');
+    wp_enqueue_style('silver-countdown-style');
+    wp_enqueue_script('silver-countdown-script');
+    wp_enqueue_script('silver-countdown-theme-js');
 
 		if ( ! empty( $before ) ) $before = wp_kses_post( $before );
 		if ( ! empty( $after ) ) $after = wp_kses_post( $after );
@@ -78,7 +78,21 @@ function ux_countdown_shortcode( $atts ){
     }
 
     if($style == 'clock'){
-      return $before.'<div id="'.esc_attr($_id).'" class="ux-timer '.esc_attr($color).'" '.$translations.' data-countdown="'.esc_attr($date).'"><span>&nbsp;<div class="loading-spin dark centered"></div><strong>&nbsp;</strong></span></div>'.ux_builder_element_style_tag($_id, $args, $atts).$after;
+      // Responsive color (larger screens); a custom Bg Color keeps priority.
+      $has_bg_color     = (bool) silver_responsive_values( $atts, 'bg_color' );
+      $responsive_style = silver_responsive_style_tag( $_id, $atts, array(
+        'color' => array(
+          'selector'       => 'span',
+          'only_overrides' => true,
+          'default'        => 'dark',
+          'map'            => array(
+            'dark'  => 'color: #fff' . ( $has_bg_color ? '' : '; background-color: rgba(0,0,0,.85)' ),
+            'light' => 'color: #000' . ( $has_bg_color ? '' : '; background-color: rgba(255,255,255,.85)' ),
+          ),
+        ),
+      ) );
+
+      return $before.'<div id="'.esc_attr($_id).'" class="ux-timer '.esc_attr($color).'" '.$translations.' data-countdown="'.esc_attr($date).'"><span>&nbsp;<div class="loading-spin dark centered"></div><strong>&nbsp;</strong></span></div>'.ux_builder_element_style_tag($_id, $args, $atts).$responsive_style.$after;
     } else{
       return $before.'<span id="'.esc_attr($_id).'" class="ux-timer-text" '.$translations.' data-countdown="'.esc_attr($date).'"></span>'.ux_builder_element_style_tag($_id, $args, $atts).''.$after;
     }

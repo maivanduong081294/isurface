@@ -2,8 +2,8 @@
 /**
  * Posts archive list.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.18.0
+ * @package          Silver\Templates
+ * @silver-version 3.18.0
  */
 
 if ( have_posts() ) : ?>
@@ -17,7 +17,7 @@ if ( have_posts() ) : ?>
 		?>
 
 		<?php
-		echo flatsome_apply_shortcode( 'blog_posts', array(
+		echo silver_apply_shortcode( 'blog_posts', array(
 			'type'        => 'row',
 			'image_width' => '40',
 			'depth'       => get_theme_mod( 'blog_posts_depth', 0 ),
@@ -30,7 +30,7 @@ if ( have_posts() ) : ?>
 		) );
 		?>
 
-		<?php flatsome_posts_pagination(); ?>
+		<?php silver_posts_pagination(); ?>
 	</div>
 <?php else : ?>
 

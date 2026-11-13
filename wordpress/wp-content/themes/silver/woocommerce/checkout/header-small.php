@@ -2,8 +2,8 @@
 /**
  * Checkout header small.
  *
- * @package          Flatsome/WooCommerce/Templates
- * @flatsome-version 3.20.0
+ * @package          Silver/WooCommerce/Templates
+ * @silver-version 3.20.0
  */
 
 /**
@@ -13,7 +13,7 @@
  *
  * @return string
  */
-function flatsome_checkout_breadcrumb_class( $endpoint ) {
+function silver_checkout_breadcrumb_class( $endpoint ) {
 	$classes = array();
 	if ( ( $endpoint == 'cart' && is_cart() ) ||
 	     ( $endpoint == 'checkout' && is_checkout() && ! is_wc_endpoint_url( 'order-received' ) ) ||
@@ -29,9 +29,9 @@ function flatsome_checkout_breadcrumb_class( $endpoint ) {
 $steps = get_theme_mod( 'cart_steps_numbers', 0 );
 
 // Get breadcrumb classes for each endpoint.
-$cart_class           = flatsome_checkout_breadcrumb_class( 'cart' );
-$checkout_class       = flatsome_checkout_breadcrumb_class( 'checkout' );
-$order_received_class = flatsome_checkout_breadcrumb_class( 'order-received' );
+$cart_class           = silver_checkout_breadcrumb_class( 'cart' );
+$checkout_class       = silver_checkout_breadcrumb_class( 'checkout' );
+$order_received_class = silver_checkout_breadcrumb_class( 'order-received' );
 
 // Navigation attributes.
 $nav_atts = [
@@ -39,7 +39,7 @@ $nav_atts = [
 		'breadcrumbs flex-row flex-row-start checkout-breadcrumbs text-left medium-text-center is-large',
 		esc_attr( get_theme_mod( 'cart_steps_case', 'uppercase' ) ),
 	],
-	'aria-label' => esc_attr__( 'Checkout steps', 'flatsome' ),
+	'aria-label' => esc_attr__( 'Checkout steps', 'silver' ),
 ];
 
 // Cart link attributes.
@@ -73,20 +73,20 @@ $divider_atts = [
 ];
 ?>
 
-<nav <?php echo flatsome_html_atts( $nav_atts ); ?>>
-	<?php echo get_flatsome_icon( 'icon-lock', null, array( 'class' => 'op-5' ) ); ?>
-	<a <?php echo flatsome_html_atts( $cart_atts ); ?>>
+<nav <?php echo silver_html_atts( $nav_atts ); ?>>
+	<?php echo get_silver_icon( 'icon-lock', null, array( 'class' => 'op-5' ) ); ?>
+	<a <?php echo silver_html_atts( $cart_atts ); ?>>
 		<?php if ( $steps ) { echo '<span class="breadcrumb-step hide-for-small">1</span>'; } ?>
-		<?php esc_html_e( 'Shopping Cart', 'flatsome' ); ?>
+		<?php esc_html_e( 'Shopping Cart', 'silver' ); ?>
 	</a>
-	<span <?php echo flatsome_html_atts( $divider_atts ); ?>><?php echo get_flatsome_icon( 'icon-angle-right' ); ?></span>
-	<a <?php echo flatsome_html_atts( $checkout_atts ); ?>>
+	<span <?php echo silver_html_atts( $divider_atts ); ?>><?php echo get_silver_icon( 'icon-angle-right' ); ?></span>
+	<a <?php echo silver_html_atts( $checkout_atts ); ?>>
 		<?php if ( $steps ) { echo '<span class="breadcrumb-step hide-for-small">2</span>'; } ?>
-		<?php esc_html_e( 'Checkout details', 'flatsome' ); ?>
+		<?php esc_html_e( 'Checkout details', 'silver' ); ?>
 	</a>
-	<span <?php echo flatsome_html_atts( $divider_atts ); ?>><?php echo get_flatsome_icon( 'icon-angle-right' ); ?></span>
-	<a <?php echo flatsome_html_atts( $order_received_atts ); ?>>
+	<span <?php echo silver_html_atts( $divider_atts ); ?>><?php echo get_silver_icon( 'icon-angle-right' ); ?></span>
+	<a <?php echo silver_html_atts( $order_received_atts ); ?>>
 		<?php if ( $steps ) { echo '<span class="breadcrumb-step hide-for-small">3</span>'; } ?>
-		<?php esc_html_e( 'Order Complete', 'flatsome' ); ?>
+		<?php esc_html_e( 'Order Complete', 'silver' ); ?>
 	</a>
 </nav>

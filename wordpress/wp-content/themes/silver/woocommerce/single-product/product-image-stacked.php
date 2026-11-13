@@ -13,7 +13,7 @@
  * @see              https://woocommerce.com/document/template-structure/
  * @package          WooCommerce\Templates
  * @version          10.5.0
- * @flatsome-version 3.20.5
+ * @silver-version 3.20.5
  */
 
 use Automattic\WooCommerce\Enums\ProductType;
@@ -59,18 +59,18 @@ if(get_theme_mod('product_lightbox','default') == 'disabled'){
 }
 
 ?>
-<?php do_action('flatsome_before_product_images'); ?>
+<?php do_action('silver_before_product_images'); ?>
 
 <div class="product-images relative mb-half has-hover <?php echo esc_attr( implode( ' ', array_map( 'sanitize_html_class', $wrapper_classes ) ) ); ?>" data-columns="<?php echo esc_attr( $columns ); ?>">
 
-  <?php do_action('flatsome_sale_flash'); ?>
+  <?php do_action('silver_sale_flash'); ?>
 
   <div class="image-tools absolute top show-on-hover right z-3">
-    <?php do_action('flatsome_product_image_tools_top'); ?>
+    <?php do_action('silver_product_image_tools_top'); ?>
   </div>
 
   <div class="woocommerce-product-gallery__wrapper <?php echo implode(' ', $slider_classes); ?>"<?php
-    echo flatsome_slider_options_attr( array(
+    echo silver_slider_options_attr( array(
       'wrapAround'      => true,
       'prevNextButtons' => false,
       'adaptiveHeight'  => true,
@@ -81,7 +81,7 @@ if(get_theme_mod('product_lightbox','default') == 'disabled'){
     <?php
 
     if ( $post_thumbnail_id ) {
-      $html  = flatsome_wc_get_gallery_image_html( $post_thumbnail_id, true );
+      $html  = silver_wc_get_gallery_image_html( $post_thumbnail_id, true );
     } else {
 		$wrapper_classname = $product->is_type( fl_woocommerce_version_check( '9.7.0' ) ? ProductType::VARIABLE : 'variable' ) && ! empty( $product->get_visible_children() ) && '' !== $product->get_price() ?
 			'woocommerce-product-gallery__image woocommerce-product-gallery__image--placeholder' :
@@ -97,7 +97,7 @@ if(get_theme_mod('product_lightbox','default') == 'disabled'){
     ?>
   </div>
 </div>
-<?php do_action('flatsome_after_product_images'); ?>
+<?php do_action('silver_after_product_images'); ?>
 
 <div class="show-for-medium product-gallery-stacked-thumbnails">
   <?php wc_get_template( 'woocommerce/single-product/product-gallery-thumbnails.php' ); ?>

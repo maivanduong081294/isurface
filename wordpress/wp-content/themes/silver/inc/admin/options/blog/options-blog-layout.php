@@ -1,35 +1,35 @@
 <?php
 
-Flatsome_Option::add_section( 'blog-layout', array(
-	'title'       => __( 'Blog Layout', 'flatsome-admin' ),
+Silver_Option::add_section( 'blog-layout', array(
+	'title'       => __( 'Blog Layout', 'silver' ),
 	'panel' => 'blog',
 ) );
 
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'textarea',
 	'settings'     => 'blog_header',
-	'label'       => __( 'Blog Homepage Header', 'flatsome-admin' ),
-	'description' => __( 'Enter HTML for blog header here. Will be placed above content and sidebar. Shortcodes are allowed. F.ex [block id="blog-header"]', 'flatsome-admin' ),
+	'label'       => __( 'Blog Homepage Header', 'silver' ),
+	'description' => __( 'Enter HTML for blog header here. Will be placed above content and sidebar. Shortcodes are allowed. F.ex [block id="blog-header"]', 'silver' ),
 	'section'     => 'blog-layout',
-	'sanitize_callback' => 'flatsome_custom_sanitize',
+	'sanitize_callback' => 'silver_custom_sanitize',
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'checkbox',
 	'settings'     => 'blog_archive_transparent',
-	'label'       => __( 'Transparent Header', 'flatsome-admin' ),
+	'label'       => __( 'Transparent Header', 'silver' ),
 	'section'     => 'blog-layout',
 	'default'     => 0,
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'radio-image',
 	'settings'     => 'blog_layout',
-	'label'       => __( 'Blog Sidebar', 'flatsome-admin' ),
+	'label'       => __( 'Blog Sidebar', 'silver' ),
 	'section'     => 'blog-layout',
 	'default'     => 'right-sidebar',
-	'transport'	  => flatsome_customizer_transport(),
+	'transport'	  => silver_customizer_transport(),
 	'choices'     => array(
 		'right-sidebar' => $image_url . 'layout-right.svg',
 		'left-sidebar' => $image_url . 'layout-left.svg',
@@ -38,32 +38,32 @@ Flatsome_Option::add_field( 'option',  array(
 ));
 
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'checkbox',
 	'settings'     => 'blog_layout_divider',
-	'label'       => __( 'Enable Sidebar Divider', 'flatsome-admin' ),
+	'label'       => __( 'Enable Sidebar Divider', 'silver' ),
 	'section'     => 'blog-layout',
-	'transport'	  => flatsome_customizer_transport(),
+	'transport'	  => silver_customizer_transport(),
 	'default'     => 1,
 ));
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'checkbox',
 	'settings' => 'blog_sticky_sidebar',
-	'label'    => __( 'Sticky sidebar', 'flatsome-admin' ),
+	'label'    => __( 'Sticky sidebar', 'silver' ),
 	'section'  => 'blog-layout',
 	'default'  => 0,
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'            => 'select',
 	'settings'        => 'blog_sticky_sidebar_mode',
-	'label'           => __( 'Sticky mode', 'flatsome-admin' ),
+	'label'           => __( 'Sticky mode', 'silver' ),
 	'section'         => 'blog-layout',
 	'default'         => '',
 	'choices'         => array(
-		''           => __( 'CSS (native)', 'flatsome-admin' ),
-		'javascript' => __( 'JavaScript (enhanced)', 'flatsome-admin' ),
+		''           => __( 'CSS (native)', 'silver' ),
+		'javascript' => __( 'JavaScript (enhanced)', 'silver' ),
 	),
 	'active_callback' => array(
 		array(
@@ -74,10 +74,10 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'radio-image',
 	'settings'     => 'blog_style',
-	'label'       => __( 'Posts Layout', 'flatsome-admin' ),
+	'label'       => __( 'Posts Layout', 'silver' ),
 	'section'     => 'blog-layout',
 	'default'     => 'normal',
 	'choices'     => array(
@@ -89,15 +89,15 @@ Flatsome_Option::add_field( 'option',  array(
 	),
 ));
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'            => 'radio-buttonset',
 	'settings'        => 'blog_style_type',
-	'label'           => __( 'Posts Layout Type', 'flatsome-admin' ),
+	'label'           => __( 'Posts Layout Type', 'silver' ),
 	'section'         => 'blog-layout',
 	'default'         => 'masonry',
 	'choices'         => array(
-		'row'     => __( 'Row', 'flatsome-admin' ),
-		'masonry' => __( 'Masonry', 'flatsome-admin' ),
+		'row'     => __( 'Row', 'silver' ),
+		'masonry' => __( 'Masonry', 'silver' ),
 	),
 	'active_callback' => array(
 		array(
@@ -108,23 +108,23 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'checkbox',
 	'settings'     => 'blog_show_excerpt',
-	'transport'	  => flatsome_customizer_transport(),
-	'label'       => __( 'Show Excerpts Only', 'flatsome-admin' ),
-	'help'        => __( 'Show Excerpts only of the Blog posts. You can manually add a Read More link by adding a More Tag to the Post Content.', 'flatsome-admin' ),
+	'transport'	  => silver_customizer_transport(),
+	'label'       => __( 'Show Excerpts Only', 'silver' ),
+	'help'        => __( 'Show Excerpts only of the Blog posts. You can manually add a Read More link by adding a More Tag to the Post Content.', 'silver' ),
 	'section'     => 'blog-layout',
 	'default'     => 1,
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 'type'        => 'color-alpha',
 'settings'     => 'blog_bg_color',
-'label'       => __( 'Blog Background Color', 'flatsome-admin' ),
+'label'       => __( 'Blog Background Color', 'silver' ),
 'section'     => 'blog-layout',
 'default'     => '',
-'transport' => flatsome_customizer_transport(),
+'transport' => silver_customizer_transport(),
 'js_vars'   => array(
 	array(
 		'element'  => '.blog-wrapper',
@@ -135,10 +135,10 @@ Flatsome_Option::add_field( 'option',  array(
 ));
 
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'slider',
 	'settings'     => 'blog_posts_depth',
-	'label'       => __( 'Depth', 'flatsome-admin' ),
+	'label'       => __( 'Depth', 'silver' ),
 	'section'     => 'blog-layout',
 	'default'     => 0,
 	'choices'     => array(
@@ -146,13 +146,13 @@ Flatsome_Option::add_field( 'option',  array(
 		'max'  => 5,
 		'step' => 1
 	),
-	'transport' => flatsome_customizer_transport()
+	'transport' => silver_customizer_transport()
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'slider',
 	'settings'     => 'blog_posts_depth_hover',
-	'label'       => __( 'Depth :hover', 'flatsome-admin' ),
+	'label'       => __( 'Depth :hover', 'silver' ),
 	'section'     => 'blog-layout',
 	'default'     => 0,
 	'choices'     => array(
@@ -160,23 +160,23 @@ Flatsome_Option::add_field( 'option',  array(
 		'max'  => 5,
 		'step' => 1
 	),
-	'transport' => flatsome_customizer_transport()
+	'transport' => silver_customizer_transport()
 ));
 
 
-Flatsome_Option::add_field( '', array(
+Silver_Option::add_field( '', array(
     'type'        => 'custom',
     'settings' => 'custom_title_post_layout',
-    'label'       => __( '', 'flatsome-admin' ),
+    'label'       => __( '', 'silver' ),
 	'section'     => 'blog-layout',
     'default'     => '<div class="options-title-divider">Post layout</div>',
 ) );
 
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'radio-image',
 	'settings'     => 'blog_posts_header_style',
-	'label'       => __( 'Posts Title Style', 'flatsome-admin' ),
+	'label'       => __( 'Posts Title Style', 'silver' ),
 	'section'     => 'blog-layout',
 	'active_callback'    => array(
 		array(
@@ -192,10 +192,10 @@ Flatsome_Option::add_field( 'option',  array(
 	),
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'radio-image',
 	'settings'     => 'blog_posts_title_align',
-	'label'       => __( 'Posts Title Align', 'flatsome-admin' ),
+	'label'       => __( 'Posts Title Align', 'silver' ),
 	'section'     => 'blog-layout',
 	'default'     => 'center',
 	'choices'     => array(

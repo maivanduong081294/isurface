@@ -2,13 +2,13 @@
 /**
  * Maintenance template.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.19.9
+ * @package          Silver\Templates
+ * @silver-version 3.19.9
  */
 
 ?>
 <!DOCTYPE html>
-<html <?php language_attributes(); ?> class="<?php flatsome_html_classes(); ?>">
+<html <?php language_attributes(); ?> class="<?php silver_html_classes(); ?>">
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>" />
 	<link rel="profile" href="http://gmpg.org/xfn/11" />
@@ -19,11 +19,11 @@
 
 <body <?php body_class(); ?>>
 
-<?php do_action( 'flatsome_after_body_open' ); ?>
+<?php do_action( 'silver_after_body_open' ); ?>
 <?php wp_body_open(); ?>
 
 <div id="wrapper">
-	<main id="main" class="<?php flatsome_main_classes(); ?>">
+	<main id="main" class="<?php silver_main_classes(); ?>">
 		<?php
 		if ( get_theme_mod( 'maintenance_mode_page', 0 ) ) {
 			$post = get_post( get_theme_mod( 'maintenance_mode_page', 0 ) );

@@ -2,7 +2,7 @@
 /**
  * Advanced Theme Options
  *
- * @package Flatsome/Admin/Options/Advanced
+ * @package Silver/Admin/Options/Advanced
  */
 
 add_action( 'init', 'of_options' );
@@ -406,19 +406,19 @@ if ( ! function_exists( 'of_options' ) ) {
 
 		$of_options[] = array(
 			'name' => 'Accounts',
-			'std'  => flatsome_facebook_accounts_html(),
+			'std'  => silver_facebook_accounts_html(),
 			'type' => 'info',
 		);
 
 		$of_options[] = array(
 			'name' => 'Cache',
-			'std'  => flatsome_facebook_cache_html(),
+			'std'  => silver_facebook_cache_html(),
 			'type' => 'info',
 		);
 
 		$of_options[] = array(
 			'name' => 'Business Account',
-			'desc' => flatsome_facebook_login_button_html(),
+			'desc' => silver_facebook_login_button_html(),
 			'type' => 'info',
 		);
 
@@ -435,7 +435,7 @@ if ( ! function_exists( 'of_options' ) ) {
 			'type' => 'text',
 		);
 
-		$maintenance_mode = apply_filters( 'flatsome_maintenance_mode', [ 'access_mode' => 'roles' ] );
+		$maintenance_mode = apply_filters( 'silver_maintenance_mode', [ 'access_mode' => 'roles' ] );
 
 		$of_options[] = array(
 			'name' => 'Maintenance Mode',
@@ -472,7 +472,7 @@ if ( ! function_exists( 'of_options' ) ) {
 				'desc'    => 'Exclude roles from maintenance mode (admin always has access).',
 				'std'     => array(),
 				'type'    => 'multicheck',
-				'options' => flatsome_get_role_list( array(
+				'options' => silver_get_role_list( array(
 					'exclude' => array(
 						'super_admin',
 						'administrator',
@@ -525,7 +525,7 @@ if ( ! function_exists( 'of_options' ) ) {
 			'desc'    => 'Replace 404 page content with a Custom Block that you can edit in the Page Builder.',
 			'std'     => 0,
 			'type'    => 'select',
-			'options' => flatsome_get_block_list_by_id( array( 'option_none' => '-- None --' ) ),
+			'options' => silver_get_block_list_by_id( array( 'option_none' => '-- None --' ) ),
 		);
 
 		if ( is_woocommerce_activated() ) {

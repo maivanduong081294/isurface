@@ -2,17 +2,17 @@
 /**
  * Additional variation images frontend class.
  *
- * @package Flatsome\Extensions
+ * @package Silver\Extensions
  */
 
-namespace Flatsome\Extensions;
+namespace Silver\Extensions;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Class Variation_Images_Frontend
  *
- * @package Flatsome\Extensions
+ * @package Silver\Extensions
  */
 class Variation_Images_Frontend {
 
@@ -54,10 +54,10 @@ class Variation_Images_Frontend {
 		add_action( 'wp_head', array( $this, 'add_css' ), 110 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
-		add_filter( 'flatsome_single_product_thumbnails_render_without_attachments', array( $this, 'thumbnails_render_without_attachments' ), 10, 3 );
+		add_filter( 'silver_single_product_thumbnails_render_without_attachments', array( $this, 'thumbnails_render_without_attachments' ), 10, 3 );
 
-		add_action( 'wp_ajax_flatsome_additional_variation_images_load_images_ajax_frontend', array( $this, 'load_images_ajax' ) );
-		add_action( 'wp_ajax_nopriv_flatsome_additional_variation_images_load_images_ajax_frontend', array( $this, 'load_images_ajax' ) );
+		add_action( 'wp_ajax_silver_additional_variation_images_load_images_ajax_frontend', array( $this, 'load_images_ajax' ) );
+		add_action( 'wp_ajax_nopriv_silver_additional_variation_images_load_images_ajax_frontend', array( $this, 'load_images_ajax' ) );
 	}
 
 	/**
@@ -65,7 +65,7 @@ class Variation_Images_Frontend {
 	 */
 	public function enqueue_scripts() {
 		wp_enqueue_script(
-			'flatsome-variation-images-frontend',
+			'silver-variation-images-frontend',
 			get_template_directory_uri() . '/assets/js/extensions/silver-variation-images-frontend.js',
 			array( 'jquery' ),
 			variation_images()->version,
@@ -95,11 +95,11 @@ class Variation_Images_Frontend {
 		<?php
 		$output = ob_get_clean();
 
-		$css  = '<style id="flatsome-variation-images-css">';
+		$css  = '<style id="silver-variation-images-css">';
 		$css .= $output;
 		$css .= '</style>';
 
-		echo flatsome_minify_css( $css ); // phpcs:ignore WordPress.Security.EscapeOutput
+		echo silver_minify_css( $css ); // phpcs:ignore WordPress.Security.EscapeOutput
 	}
 
 	/**
@@ -114,7 +114,7 @@ class Variation_Images_Frontend {
 	public function thumbnails_render_without_attachments( $render_without_attachments, $product, $args ) {
 		if ( isset( $args['thumb_count'] ) && $args['thumb_count'] == 1 ) {
 			if ( $this->has_additional_variation_images( $product ) ) {
-				add_filter( 'flatsome_single_product_thumbnails_classes', function ( $classes ) {
+				add_filter( 'silver_single_product_thumbnails_classes', function ( $classes ) {
 					$classes[] = 'ux-additional-variation-images-thumbs-placeholder';
 
 					return $classes;
@@ -152,7 +152,7 @@ class Variation_Images_Frontend {
 		// Collect main images.
 		$images = array();
 		foreach ( $attachment_ids as $attachment_id ) {
-			$images[] = apply_filters( 'woocommerce_single_product_image_thumbnail_html', flatsome_wc_get_gallery_image_html( $attachment_id, false ), $attachment_id );
+			$images[] = apply_filters( 'woocommerce_single_product_image_thumbnail_html', silver_wc_get_gallery_image_html( $attachment_id, false ), $attachment_id );
 		}
 
 		// Collect thumb images (see product-gallery-thumbnails.php).

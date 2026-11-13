@@ -9,7 +9,7 @@
  * @param  string $md
  * @return string
  */
-function flatsome_position_classes ( $axis, $default, $md = '', $ml = '', $lg = '' ) {
+function silver_position_classes ( $axis, $default, $md = '', $ml = '', $lg = '' ) {
   $classes = array();
 
   // Mobile-first: the unsuffixed value is the base, larger tiers override.
@@ -21,7 +21,7 @@ function flatsome_position_classes ( $axis, $default, $md = '', $ml = '', $lg = 
   return implode( ' ', $classes );
 }
 
-function get_flatsome_repeater_start( $atts ) {
+function get_silver_repeater_start( $atts ) {
     $atts = wp_parse_args( $atts, array(
       'class' => '',
       'visibility' => '',
@@ -114,17 +114,17 @@ function get_flatsome_repeater_start( $atts ) {
     }
 
     if($atts['type'] == 'masonry'){
-      wp_enqueue_script('flatsome-masonry-js');
+      wp_enqueue_script('silver-masonry-js');
       $row_classes[] = 'row-masonry';
     }
 
     if($atts['type'] == 'grid'){
-      wp_enqueue_script('flatsome-masonry-js');
+      wp_enqueue_script('silver-masonry-js');
       $row_classes[] = 'row-grid';
     }
 
     // Main slider + thumbnail slider pair ("Thumbnail Slider" options).
-    $thumbnail_class = flatsome_slider_thumbnail_class( $atts['thumb_role'], $atts['thumb_key'] );
+    $thumbnail_class = silver_slider_thumbnail_class( $atts['thumb_role'], $atts['thumb_key'] );
 
     if($atts['type'] == 'slider'){
       $row_classes[] = 'slider row-slider';
@@ -159,6 +159,13 @@ function get_flatsome_repeater_start( $atts ) {
 	$row_classes_full = implode( ' ', $row_classes_full );
 	$row_classes      = implode( ' ', $row_classes );
 	$id_attr          = $atts['id'] ? ' id="' . esc_attr( $atts['id'] ) . '"' : '';
+
+	// Responsive Layout width / alignment / Box styles of the shortcode
+	// (values for larger screens), scoped to the row ID. Printed before the
+	// row so sliders never turn the <style> tag into a slide.
+	if ( ! empty( $atts['responsive_atts'] ) && $atts['id'] ) {
+		echo silver_responsive_repeater_style( $atts['id'], $atts['responsive_atts'] ); // phpcs:ignore WordPress.Security.EscapeOutput
+	}
   ?>
 
   <?php if($atts['title']){?>
@@ -170,10 +177,10 @@ function get_flatsome_repeater_start( $atts ) {
   <?php } ?>
 
   <?php if($atts['type'] == 'slider') { // Slider grid ?>
-  <div<?php echo $id_attr; ?> class="row <?php echo esc_attr( $row_classes ); ?>"<?php echo flatsome_slider_options_attr( $slider_options ); ?> <?php echo $atts['attrs'] ?>>
+  <div<?php echo $id_attr; ?> class="row <?php echo esc_attr( $row_classes ); ?>"<?php echo silver_slider_options_attr( $slider_options ); ?> <?php echo $atts['attrs'] ?>>
 
   <?php } else if($atts['type'] == 'slider-full') { // Full slider ?>
-  <div<?php echo $id_attr; ?> class="<?php echo esc_attr( $row_classes_full ); ?>"<?php echo flatsome_slider_options_attr( $slider_options ); ?>>
+  <div<?php echo $id_attr; ?> class="<?php echo esc_attr( $row_classes_full ); ?>"<?php echo silver_slider_options_attr( $slider_options ); ?>>
 
   <?php } else if($atts['type'] == 'masonry') { // Masonry grid ?>
   <div<?php echo $id_attr; ?> class="row <?php echo esc_attr( $row_classes ); ?>" data-packery-options='{"itemSelector": ".col", "gutter": 0, "presentageWidth" : true}'>
@@ -189,7 +196,7 @@ function get_flatsome_repeater_start( $atts ) {
   <?php }
 }
 
-function get_flatsome_repeater_end($type){
+function get_silver_repeater_end($type){
   echo '</div>';
 }
 
@@ -212,7 +219,7 @@ function get_flatsome_repeater_end($type){
  *
  * @return array
  */
-function flatsome_slider_options( $options = array() ) {
+function silver_slider_options( $options = array() ) {
 	$options = array_merge(
 		array(
 			'cellAlign'       => 'center',
@@ -240,7 +247,7 @@ function flatsome_slider_options( $options = array() ) {
 		$options['imagesLoaded'] = true;
 	}
 
-	return apply_filters( 'flatsome_slider_options', $options );
+	return apply_filters( 'silver_slider_options', $options );
 }
 
 /**
@@ -253,7 +260,7 @@ function flatsome_slider_options( $options = array() ) {
  *
  * @return string Empty when the slider is not part of a pair.
  */
-function flatsome_slider_thumbnail_class( $role, $key = '' ) {
+function silver_slider_thumbnail_class( $role, $key = '' ) {
 	if ( 'main' !== $role && 'thumbnail' !== $role ) {
 		return '';
 	}
@@ -266,16 +273,16 @@ function flatsome_slider_thumbnail_class( $role, $key = '' ) {
 /**
  * Returns the slider options as an HTML attribute, with a leading space.
  *
- * @param array $options See flatsome_slider_options().
+ * @param array $options See silver_slider_options().
  *
  * @return string
  */
-function flatsome_slider_options_attr( $options = array() ) {
-	return " data-swiper-options='" . esc_attr( wp_json_encode( flatsome_slider_options( $options ) ) ) . "'";
+function silver_slider_options_attr( $options = array() ) {
+	return " data-swiper-options='" . esc_attr( wp_json_encode( silver_slider_options( $options ) ) ) . "'";
 }
 
 /* Fix Normal Shortcodes */
-function flatsome_contentfix($content){
+function silver_contentfix($content){
     if ( ! is_string( $content ) ) {
       return $content;
     }
@@ -299,10 +306,10 @@ function flatsome_contentfix($content){
     return strtr( $content, $fix );
 }
 
-add_filter( 'the_content', 'flatsome_contentfix' );
-add_filter( 'widget_text', 'flatsome_contentfix' );
+add_filter( 'the_content', 'silver_contentfix' );
+add_filter( 'widget_text', 'silver_contentfix' );
 add_filter( 'widget_text', 'do_shortcode' );
-add_filter( 'the_excerpt', 'flatsome_contentfix' );
+add_filter( 'the_excerpt', 'silver_contentfix' );
 add_filter( 'the_excerpt', 'do_shortcode' );
 
 /**
@@ -313,7 +320,7 @@ add_filter( 'the_excerpt', 'do_shortcode' );
  *
  * @return mixed
  */
-function flatsome_sanitize_whitespace_chars( $html ) {
+function silver_sanitize_whitespace_chars( $html ) {
 	$html = preg_replace( '/(?<=>)\s+(?=<)/', '', $html );
 	return trim( $html );
 }
@@ -334,7 +341,7 @@ function get_parallax_option($strength){
     return 'data-velocity="0.'.$strength.'"';
 }
 
-function flatsome_get_image_url($id, $size = 'large'){
+function silver_get_image_url($id, $size = 'large'){
 
     if(!$id) return get_template_directory_uri().'/assets/img/missing.jpg';
 
@@ -347,7 +354,7 @@ function flatsome_get_image_url($id, $size = 'large'){
     }
 }
 
-function flatsome_get_image( $id, $size = 'large', $alt = 'bg_image', $inline = false, $image_title = false ) {
+function silver_get_image( $id, $size = 'large', $alt = 'bg_image', $inline = false, $image_title = false ) {
 
     if(!$id) return '<img src="'.get_template_directory_uri().'/assets/img/missing.jpg'.'" />';
 
@@ -380,7 +387,7 @@ function flatsome_get_image( $id, $size = 'large', $alt = 'bg_image', $inline = 
     }
 }
 
-function flatsome_string_limit_words($string, $word_limit) {
+function silver_string_limit_words($string, $word_limit) {
   $words = explode(' ', $string, ($word_limit + 1));
   if(count($words) > $word_limit)
   array_pop($words);
@@ -394,7 +401,7 @@ function flatsome_string_limit_words($string, $word_limit) {
  *
  * @return string The trimmed excerpt or password protection message.
  */
-function flatsome_get_the_excerpt( $num_words = 15 ) {
+function silver_get_the_excerpt( $num_words = 15 ) {
 	if ( has_excerpt() ) {
 		global $post;
 
@@ -416,7 +423,7 @@ function flatsome_get_the_excerpt( $num_words = 15 ) {
 }
 
 /* Create RGBA color of a #HEX color */
-function flatsome_hex2rgba($color, $opacity = false) {
+function silver_hex2rgba($color, $opacity = false) {
   $default = 'rgb(0,0,0)';
   //Return default if no color provided
   if(empty($color))
@@ -451,7 +458,7 @@ function flatsome_hex2rgba($color, $opacity = false) {
         return $output;
 }
 
-function flatsome_fix_span($span){
+function silver_fix_span($span){
   switch ($span) {
     case "1/1":
         $span = '12'; break;
@@ -504,7 +511,7 @@ function flatsome_fix_span($span){
 }
 
 
-function flatsome_smart_links($link){
+function silver_smart_links($link){
     if($link == 'shop' && is_woocommerce_activated()){
       $link = get_permalink( wc_get_page_id( 'shop' ) );
     }
@@ -531,7 +538,7 @@ function flatsome_smart_links($link){
     }
     // Get link by page title
     else if(strpos($link, '/') === false && !is_numeric($link)){
-      $get_page = flatsome_get_page_by_title($link);
+      $get_page = silver_get_page_by_title($link);
       if( $get_page ) $link = get_permalink($get_page->ID);
     }
 
@@ -555,7 +562,7 @@ function flatsome_smart_links($link){
  *     @type string $object_name Post type or taxonomy name.
  * }
  */
-function flatsome_get_link_data( $atts ) {
+function silver_get_link_data( $atts ) {
 	$atts = (array) $atts;
 	$type = ! empty( $atts['link_type'] ) ? $atts['link_type'] : 'custom';
 	$data = array(
@@ -616,16 +623,16 @@ function flatsome_get_link_data( $atts ) {
 	return $data;
 }
 
-function flatsome_to_dashed($className) {
+function silver_to_dashed($className) {
    return strtolower(preg_replace('/([\S\s])\s/', '$1-', $className));
 }
 
-function flatsome_to_underscore( $className ) {
+function silver_to_underscore( $className ) {
 	return strtolower( preg_replace( '/([\S\s])\s/', '$1_', $className ) );
 }
 
 /*
-function flatsome_get_gradient($primary){ ?>
+function silver_get_gradient($primary){ ?>
   <style>
     .target{
       background: <?php echo $primary; ?>
@@ -641,14 +648,14 @@ function flatsome_get_gradient($primary){ ?>
  * Parse rel attribute values based on target value.
  * Adds 'noopener' to rel when target is _blank.
  *
- * @deprecated 3.18 In favor of flatsome_html_atts()
+ * @deprecated 3.18 In favor of silver_html_atts()
  *
  * @param array $link_atts Link attributes 'target' and 'rel'.
  * @param bool  $trim      Trim start and end whitespaces?
  *
  * @return string Parsed target/rel string.
  */
-function flatsome_parse_target_rel( array $link_atts, $trim = false ) {
+function silver_parse_target_rel( array $link_atts, $trim = false ) {
 	$attrs = array();
 
 	if ( $link_atts['target'] == '_blank' ) {
@@ -672,12 +679,12 @@ function flatsome_parse_target_rel( array $link_atts, $trim = false ) {
  *
  * @return array
  */
-function flatsome_ux_product_box_items() {
+function silver_ux_product_box_items() {
 
 	return array(
 		'cat'              => array(
 			'tag'      => 'woocommerce_shop_loop_item_title',
-			'function' => 'flatsome_woocommerce_shop_loop_category',
+			'function' => 'silver_woocommerce_shop_loop_category',
 		),
 		'title'            => array(
 			'tag'      => 'woocommerce_shop_loop_item_title',
@@ -692,16 +699,16 @@ function flatsome_ux_product_box_items() {
 			'function' => 'woocommerce_template_loop_price',
 		),
 		'add_to_cart'      => array(
-			'tag'      => 'flatsome_product_box_after',
-			'function' => 'flatsome_woocommerce_shop_loop_button',
+			'tag'      => 'silver_product_box_after',
+			'function' => 'silver_woocommerce_shop_loop_button',
 		),
 		'add_to_cart_icon' => array(
-			'tag'      => 'flatsome_product_box_actions',
-			'function' => 'flatsome_product_box_actions_add_to_cart',
+			'tag'      => 'silver_product_box_actions',
+			'function' => 'silver_product_box_actions_add_to_cart',
 		),
 		'quick_view'       => array(
-			'tag'      => 'flatsome_product_box_actions',
-			'function' => 'flatsome_lightbox_button',
+			'tag'      => 'silver_product_box_actions',
+			'function' => 'silver_lightbox_button',
 		),
 	);
 }
@@ -713,7 +720,7 @@ function flatsome_ux_product_box_items() {
  *
  * @return array $items Box items with additional data.
  */
-function flatsome_box_item_toggle_start( $items ) {
+function silver_box_item_toggle_start( $items ) {
 
 	foreach ( $items as $key => $data ) {
 		if ( isset( $data['show'] ) && ! $data['show'] ) {
@@ -734,7 +741,7 @@ function flatsome_box_item_toggle_start( $items ) {
  *
  * @param array $items A collection of box items of a specific element.
  */
-function flatsome_box_item_toggle_end( $items ) {
+function silver_box_item_toggle_end( $items ) {
 	foreach ( $items as $item ) {
 		if ( isset( $item['re_hook'] ) && $item['re_hook'] == true ) {
 			add_action( $item['tag'], $item['function'], $item['priority'] );
@@ -750,7 +757,7 @@ function flatsome_box_item_toggle_end( $items ) {
  * @param int $offset
  * @return array
  */
-function flatsome_array_insert( array $array, array $values, $offset ) {
+function silver_array_insert( array $array, array $values, $offset ) {
   return array_slice( $array, 0, $offset, true ) + $values + array_slice( $array, $offset, null, true );
 }
 
@@ -764,6 +771,6 @@ function flatsome_array_insert( array $array, array $values, $offset ) {
  * @param string $gallery_type The gallery type to check ('gallery' or 'banner-grid').
  * @return bool True if the specified gallery type is enabled, false otherwise
  */
-function flatsome_is_multi_gallery( $gallery_type ) {
+function silver_is_multi_gallery( $gallery_type ) {
 	return in_array( $gallery_type, get_theme_mod( 'flatsome_separate_lightbox_galleries', [] ), true );
 }

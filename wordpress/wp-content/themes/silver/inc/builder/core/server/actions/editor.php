@@ -62,8 +62,8 @@ function ux_builder_enqueue_editor_assets() {
     $version
   );
 
-  flatsome_enqueue_asset( 'ux-builder-vendors', 'builder/vendors/vendors', array( 'underscore', 'jquery-ui-sortable' ) );
-  flatsome_enqueue_asset( 'ux-builder-core', 'builder/core/editor', array( 'ux-builder-vendors' ) );
+  silver_enqueue_asset( 'ux-builder-vendors', 'builder/vendors/vendors', array( 'underscore', 'jquery-ui-sortable' ) );
+  silver_enqueue_asset( 'ux-builder-core', 'builder/core/editor', array( 'ux-builder-vendors' ) );
 
   do_action( 'ux_builder_enqueue_scripts', 'editor' );
 
@@ -93,7 +93,7 @@ function ux_builder_editor_data() {
   $post_status = $editing_post->post()->post_status;
   $can_edit = current_user_can( 'edit_post', $post_id );
   $can_publish = current_user_can( 'publish_post', $post_id );
-  $has_flatsome_studio = get_theme_mod( 'flatsome_studio', 1 );
+  $has_silver_studio = get_theme_mod( 'flatsome_studio', 1 );
 
   // Get the back URL. Redirect to admin page if user came
   // from admin or to the post if user came from some other place.
@@ -123,8 +123,8 @@ function ux_builder_editor_data() {
     'initialized' => false,
     'nonce' => wp_create_nonce( 'ux-builder-' . $editing_post->post()->ID ),
     'ajaxUrl' => admin_url( 'admin-ajax.php' ),
-    'flatsomeUrl' => get_template_directory_uri(),
-    'flatsomeStudioUrl' => $has_flatsome_studio
+    'silverUrl' => get_template_directory_uri(),
+    'silverStudioUrl' => $has_silver_studio
       ? 'https://studio.uxthemes.com/'
       : null,
     'iframeUrl' => ux_builder_iframe_url(),
@@ -133,11 +133,11 @@ function ux_builder_editor_data() {
     'postUrl' => $current_post->permalink(),
     'wpMediaUrl' => ux_builder_edit_url( $post_id, null, 'media' ),
     'wpEditorUrl' => ux_builder_edit_url( $post_id, null, 'tinymce' ),
-    'registerUrl' => admin_url( 'admin.php?page=flatsome-panel' ),
+    'registerUrl' => admin_url( 'admin.php?page=silver-panel' ),
     'post' => $editing_post->to_array(),
     'saveButton' => $save_button,
     'showSidebar' => true,
-    'showFlatsomeStudio' => false,
+    'showSilverStudio' => false,
     'breakpoints' => get_ux_builder_breakpoints_array(),
     'permissions' => array(
       'exit' => true,

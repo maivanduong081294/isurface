@@ -3,13 +3,13 @@
  * Welcome screen getting started template
  */
 
-use function Flatsome\Admin\status;
+use function Silver\Admin\status;
 ?>
 
-<div id="tab-activate" class="col cols panel flatsome-panel">
+<div id="tab-activate" class="col cols panel silver-panel">
 	<div class="cols">
 		<div class="inner-panel">
-			<h3><?php esc_html_e( 'Status', 'flatsome' ); ?></h3>
+			<h3><?php esc_html_e( 'Status', 'silver' ); ?></h3>
 			<?php status()->render_section_overview(); ?>
 
 

@@ -2,20 +2,20 @@
 /**
  * Posts layout left sidebar.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.16.0
+ * @package          Silver\Templates
+ * @silver-version 3.16.0
  */
 
-do_action('flatsome_before_blog');
+do_action('silver_before_blog');
 ?>
 
 <?php if(!is_single() && get_theme_mod('blog_featured', '') == 'top'){ get_template_part('template-parts/posts/featured-posts'); } ?>
 <div class="row row-large <?php if(get_theme_mod('blog_layout_divider', 1)) echo 'row-divided ';?>">
 
 	<div class="post-sidebar xlarge-3 col">
-		<?php flatsome_sticky_column_open( 'blog_sticky_sidebar' ); ?>
+		<?php silver_sticky_column_open( 'blog_sticky_sidebar' ); ?>
 		<?php get_sidebar(); ?>
-		<?php flatsome_sticky_column_close( 'blog_sticky_sidebar' ); ?>
+		<?php silver_sticky_column_close( 'blog_sticky_sidebar' ); ?>
 	</div>
 
 	<div class="xlarge-9 col medium-col-first">
@@ -34,5 +34,5 @@ do_action('flatsome_before_blog');
 </div>
 
 <?php
-	do_action('flatsome_after_blog');
+	do_action('silver_after_blog');
 ?>

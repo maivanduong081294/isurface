@@ -5,7 +5,7 @@
   var registerBlockType = wp.blocks.registerBlockType
   var useBlockProps = wp.blockEditor.useBlockProps || function (props) { return props; }
 
-  function FlatsomeIcon (props) {
+  function SilverIcon (props) {
     return el(
       'svg',
       {
@@ -24,8 +24,8 @@
   }
 
   function gotoUxBuilder () {
-    if (window.flatsome_gutenberg) {
-      window.top.location.href = window.flatsome_gutenberg.edit_button.url
+    if (window.silver_gutenberg) {
+      window.top.location.href = window.silver_gutenberg.edit_button.url
     }
   }
 
@@ -38,7 +38,7 @@
         wp.components.Placeholder,
         {
           key: 'placeholder',
-          icon: el(FlatsomeIcon, { width: 21, height: 21 }),
+          icon: el(SilverIcon, { width: 21, height: 21 }),
           label: 'UX Builder content',
           instructions: 'This content can only be edited in UX Builder.'
         },
@@ -64,7 +64,7 @@
   }
 
   registerBlockType('flatsome/uxbuilder', {
-    icon: FlatsomeIcon,
+    icon: SilverIcon,
     edit: Placeholder,
     save: SaveRawHTML
   })

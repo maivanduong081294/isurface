@@ -2,18 +2,18 @@
 /**
  * Server-side rendering of the `flatsome/uxbuilder` block.
  *
- * @package Flatsome
+ * @package Silver
  */
 
 /**
  * Registers the `flatsome/uxbuilder` component and block. This block doesn't
  * need a render function because it only contains raw HTML and shortcodes.
  */
-function flatsome_register_uxbuilder_block() {
+function silver_register_uxbuilder_block() {
 	$path     = __DIR__ . '/block.json';
 	$metadata = json_decode( file_get_contents( $path ), true );
 
-	if ( flatsome_wp_version_check( '6.3' ) ) {
+	if ( silver_wp_version_check( '6.3' ) ) {
 		$metadata['api_version'] = 3;
 	}
 
@@ -22,4 +22,4 @@ function flatsome_register_uxbuilder_block() {
 		$metadata
 	);
 }
-add_action( 'init', 'flatsome_register_uxbuilder_block' );
+add_action( 'init', 'silver_register_uxbuilder_block' );

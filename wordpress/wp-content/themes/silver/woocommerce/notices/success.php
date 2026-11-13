@@ -13,7 +13,7 @@
  * @see              https://docs.woocommerce.com/document/template-structure/
  * @package          WooCommerce/Templates
  * @version          8.6.0
- * @flatsome-version 3.18.4
+ * @silver-version 3.18.4
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -28,7 +28,7 @@ if ( ! $notices ) {
 <?php foreach ( $notices as $notice ) : ?>
 	<div class="woocommerce-message message-wrapper"<?php echo wc_get_notice_data_attr( $notice ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> role="alert">
 		<div class="message-container container success-color medium-text-center">
-			<?php echo get_flatsome_icon( 'icon-checkmark' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			<?php echo get_silver_icon( 'icon-checkmark' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			<?php echo wc_kses_notice( $notice['notice'] ); ?>
 		</div>
 	</div>

@@ -95,7 +95,7 @@ add_ux_builder_shortcode( 'products',
 	array(
 		'name'      => 'Products - Custom',
 		'category'  => __( 'Shop' ),
-		'thumbnail' => flatsome_ux_builder_thumbnail( 'woo_products' ),
+		'thumbnail' => silver_ux_builder_thumbnail( 'woo_products' ),
 		'wrap'      => false,
 		'options'   => $options_custom,
 	)
@@ -105,7 +105,7 @@ add_ux_builder_shortcode( 'featured_products',
 	array(
 		'name'      => 'Products - Featured',
 		'category'  => __( 'Shop' ),
-		'thumbnail' => flatsome_ux_builder_thumbnail( 'woo_products' ),
+		'thumbnail' => silver_ux_builder_thumbnail( 'woo_products' ),
 		'wrap'      => false,
 		'options'   => $options,
 	)
@@ -115,7 +115,7 @@ add_ux_builder_shortcode( 'recent_products',
 	array(
 		'name'      => 'Products - Recent',
 		'category'  => __( 'Shop' ),
-		'thumbnail' => flatsome_ux_builder_thumbnail( 'woo_products' ),
+		'thumbnail' => silver_ux_builder_thumbnail( 'woo_products' ),
 		'wrap'      => false,
 		'options'   => $options,
 	)
@@ -125,7 +125,7 @@ add_ux_builder_shortcode( 'sale_products',
 	array(
 		'name'      => 'Products - On Sale',
 		'category'  => __( 'Shop' ),
-		'thumbnail' => flatsome_ux_builder_thumbnail( 'woo_products' ),
+		'thumbnail' => silver_ux_builder_thumbnail( 'woo_products' ),
 		'wrap'      => false,
 		'options'   => $options,
 	)
@@ -135,7 +135,7 @@ add_ux_builder_shortcode( 'best_selling_products',
 	array(
 		'name'      => 'Products - Best Selling',
 		'category'  => __( 'Shop' ),
-		'thumbnail' => flatsome_ux_builder_thumbnail( 'woo_products' ),
+		'thumbnail' => silver_ux_builder_thumbnail( 'woo_products' ),
 		'wrap'      => false,
 		'options'   => $options,
 	)
@@ -145,7 +145,7 @@ add_ux_builder_shortcode( 'top_rated_products',
 	array(
 		'name'      => 'Products - Top Rated',
 		'category'  => __( 'Shop' ),
-		'thumbnail' => flatsome_ux_builder_thumbnail( 'woo_products' ),
+		'thumbnail' => silver_ux_builder_thumbnail( 'woo_products' ),
 		'wrap'      => false,
 		'options'   => $options,
 	)

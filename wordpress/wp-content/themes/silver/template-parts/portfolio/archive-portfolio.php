@@ -2,8 +2,8 @@
 /**
  * Portfolio archive.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.16.0
+ * @package          Silver\Templates
+ * @silver-version 3.16.0
  */
 
 get_template_part( 'template-parts/portfolio/archive-portfolio-title', get_theme_mod( 'portfolio_archive_title', '' ) );
@@ -23,7 +23,7 @@ get_template_part( 'template-parts/portfolio/archive-portfolio-title', get_theme
 	// Height.
 	$height = get_theme_mod( 'portfolio_height', 0 ) ? get_theme_mod( 'portfolio_height', 0 ) : '';
 
-	echo flatsome_apply_shortcode( 'ux_portfolio', array(
+	echo silver_apply_shortcode( 'ux_portfolio', array(
 		'image_height' => $height,
 		'filter'       => $filter,
 		'filter_nav'   => $filter_nav,

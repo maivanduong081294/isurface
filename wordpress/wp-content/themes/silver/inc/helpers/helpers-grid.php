@@ -1,6 +1,6 @@
 <?php
 
-function flatsome_get_grid_height( $height, $id ) {
+function silver_get_grid_height( $height, $id ) {
   // Mobile-first heights keyed by breakpoint. A plain value is a desktop height.
   if ( ! is_array( $height ) ) $height = array( 'lg' => $height );
   $desktop   = isset( $height['lg'] ) ? $height['lg'] : '';
@@ -24,8 +24,8 @@ function flatsome_get_grid_height( $height, $id ) {
   echo ux_builder_element_style_tag( esc_attr( $id ), $rules, $atts );
 }
 
-if( ! function_exists( 'flatsome_get_grid' ) ) {
-  function flatsome_get_grid($grid = 1){
+if( ! function_exists( 'silver_get_grid' ) ) {
+  function silver_get_grid($grid = 1){
 
     $g = array();
 

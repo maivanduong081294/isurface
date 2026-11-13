@@ -2,7 +2,7 @@
 /**
  * Registers the `scroll_to` shortcode.
  *
- * @package flatsome
+ * @package silver
  */
 
 /**
@@ -14,7 +14,7 @@
  *
  * @return string
  */
-function flatsome_scroll_to( $atts, $content = null, $tag = '' ) {
+function silver_scroll_to( $atts, $content = null, $tag = '' ) {
 	$atts = ux_builder_shortcode_atts( array(
 		'bullet'      => 'true',
 		'title'       => 'Change this',
@@ -29,7 +29,7 @@ function flatsome_scroll_to( $atts, $content = null, $tag = '' ) {
 
 	// Convert title to link if link is not set.
 	if ( ! $atts['link'] ) {
-		$atts['link'] = flatsome_to_dashed( $atts['title'] );
+		$atts['link'] = silver_to_dashed( $atts['title'] );
 	}
 
 	if ( substr( $atts['link'], 0, 1 ) !== '#' ) {
@@ -50,9 +50,9 @@ function flatsome_scroll_to( $atts, $content = null, $tag = '' ) {
 	}
 
 	return sprintf( '<span %s><a name="%s"></a></span>',
-		flatsome_html_atts( $element_atts ),
+		silver_html_atts( $element_atts ),
 		esc_attr( str_replace( '#', '', $atts['link'] ) )
 	);
 }
 
-add_shortcode( 'scroll_to', 'flatsome_scroll_to' );
+add_shortcode( 'scroll_to', 'silver_scroll_to' );

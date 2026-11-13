@@ -1,6 +1,6 @@
 <?php
 
-function flatsome_woocommerce_setup() {
+function silver_woocommerce_setup() {
 	// Theme support for default WC gallery.
 	if ( get_theme_mod( 'product_gallery_woocommerce') ) {
 		add_theme_support( 'wc-product-gallery-slider' );
@@ -16,15 +16,15 @@ function flatsome_woocommerce_setup() {
 	// Remove default row and column options.
 	remove_theme_support( 'product_grid' );
 }
-add_action( 'after_setup_theme', 'flatsome_woocommerce_setup', 90 );
+add_action( 'after_setup_theme', 'silver_woocommerce_setup', 90 );
 
 
-if ( ! function_exists( 'flatsome_woocommerce_add_notice' ) ) {
+if ( ! function_exists( 'silver_woocommerce_add_notice' ) ) {
 	/**
 	 * Add wc notices except for the cart page
 	 */
-	function flatsome_woocommerce_add_notice() {
-		if ( flatsome_is_login_request() || flatsome_is_register_request() ) {
+	function silver_woocommerce_add_notice() {
+		if ( silver_is_login_request() || silver_is_register_request() ) {
 			return;
 		}
 
@@ -33,9 +33,9 @@ if ( ! function_exists( 'flatsome_woocommerce_add_notice' ) ) {
 		}
 	}
 }
-add_action( 'flatsome_after_header', 'flatsome_woocommerce_add_notice', 100 );
+add_action( 'silver_after_header', 'silver_woocommerce_add_notice', 100 );
 
-function flatsome_my_account_menu_classes( $classes ) {
+function silver_my_account_menu_classes( $classes ) {
 	if ( in_array( 'is-active', $classes ) ) {
 		array_push( $classes, 'active' );
 	}
@@ -43,32 +43,32 @@ function flatsome_my_account_menu_classes( $classes ) {
 	return $classes;
 }
 
-add_filter( 'woocommerce_account_menu_item_classes', 'flatsome_my_account_menu_classes' );
+add_filter( 'woocommerce_account_menu_item_classes', 'silver_my_account_menu_classes' );
 
 /**
  * My Account Dashboard overview
  */
-function flatsome_my_account_dashboard() {
+function silver_my_account_dashboard() {
 	wc_get_template( 'myaccount/dashboard-links.php' );
 }
 
-add_action( 'woocommerce_account_dashboard', 'flatsome_my_account_dashboard' );
+add_action( 'woocommerce_account_dashboard', 'silver_my_account_dashboard' );
 
 /**
  * Remove logout from my account menu
  */
-function flatsome_remove_logout_account_item( $items ) {
+function silver_remove_logout_account_item( $items ) {
 	unset( $items['customer-logout'] );
 
 	return $items;
 }
 
-add_filter( 'woocommerce_account_menu_items', 'flatsome_remove_logout_account_item' );
+add_filter( 'woocommerce_account_menu_items', 'silver_remove_logout_account_item' );
 
 /**
  * Conditionally remove WooCommerce styles and/or scripts.
  */
-function flatsome_woocommerce_scripts_styles() {
+function silver_woocommerce_scripts_styles() {
 	// Remove default WooCommerce Lightbox.
 	if ( get_theme_mod( 'product_lightbox', 'default' ) !== 'woocommerce' || ! is_product() ) {
 		wp_dequeue_style( 'woocommerce_prettyPhoto_css' );
@@ -88,15 +88,15 @@ function flatsome_woocommerce_scripts_styles() {
 	}
 }
 
-add_action( 'wp_enqueue_scripts', 'flatsome_woocommerce_scripts_styles', 98 );
+add_action( 'wp_enqueue_scripts', 'silver_woocommerce_scripts_styles', 98 );
 
 
 /**
  * Add shop widgets
  */
-function flatsome_shop_widgets_init() {
+function silver_shop_widgets_init() {
 	register_sidebar( array(
-		'name'          => __( 'Shop Sidebar', 'flatsome' ),
+		'name'          => __( 'Shop Sidebar', 'silver' ),
 		'id'            => 'shop-sidebar',
 		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</aside>',
@@ -105,7 +105,7 @@ function flatsome_shop_widgets_init() {
 	) );
 
 	register_sidebar( array(
-		'name'          => __( 'Product Sidebar', 'flatsome' ),
+		'name'          => __( 'Product Sidebar', 'silver' ),
 		'id'            => 'product-sidebar',
 		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</aside>',
@@ -114,12 +114,12 @@ function flatsome_shop_widgets_init() {
 	) );
 }
 
-add_action( 'widgets_init', 'flatsome_shop_widgets_init' );
+add_action( 'widgets_init', 'silver_shop_widgets_init' );
 
 /**
  * Modify default Shop Breadcrumbs
  */
-function flatsome_woocommerce_breadcrumbs() {
+function silver_woocommerce_breadcrumbs() {
 	$home = ( get_theme_mod( 'breadcrumb_home', 1 ) ) ? _x( 'Home', 'breadcrumb', 'woocommerce' ) : false;
 
 	return array(
@@ -132,19 +132,19 @@ function flatsome_woocommerce_breadcrumbs() {
 	);
 }
 
-add_filter( 'woocommerce_breadcrumb_defaults', 'flatsome_woocommerce_breadcrumbs' );
+add_filter( 'woocommerce_breadcrumb_defaults', 'silver_woocommerce_breadcrumbs' );
 
 /**
  * Add default breadcrumbs.
  *
  * @see woocommerce_breadcrumb()
  */
-add_action( 'flatsome_breadcrumb' , 'woocommerce_breadcrumb', 20 );
+add_action( 'silver_breadcrumb' , 'woocommerce_breadcrumb', 20 );
 
 /**
  * Update cart price.
  */
-function flatsome_header_add_to_cart_fragment( $fragments ) {
+function silver_header_add_to_cart_fragment( $fragments ) {
 	ob_start();
 	?> <span class="cart-price"><?php echo WC()->cart->get_cart_subtotal(); ?></span><?php
 	$fragments['.cart-price'] = ob_get_clean();
@@ -153,10 +153,10 @@ function flatsome_header_add_to_cart_fragment( $fragments ) {
 
 }
 
-add_filter( 'woocommerce_add_to_cart_fragments', 'flatsome_header_add_to_cart_fragment' );
+add_filter( 'woocommerce_add_to_cart_fragments', 'silver_header_add_to_cart_fragment' );
 
 
-if ( ! function_exists( 'flatsome_header_add_to_cart_fragment_count' ) ) {
+if ( ! function_exists( 'silver_header_add_to_cart_fragment_count' ) ) {
 	/**
 	 * Update cart number when default cart icon is selected
 	 *
@@ -164,7 +164,7 @@ if ( ! function_exists( 'flatsome_header_add_to_cart_fragment_count' ) ) {
 	 *
 	 * @return mixed
 	 */
-	function flatsome_header_add_to_cart_fragment_count( $fragments ) {
+	function silver_header_add_to_cart_fragment_count( $fragments ) {
 		ob_start();
 		?>
 		<span class="cart-icon image-icon">
@@ -176,10 +176,10 @@ if ( ! function_exists( 'flatsome_header_add_to_cart_fragment_count' ) ) {
 		return $fragments;
 	}
 }
-add_filter( 'woocommerce_add_to_cart_fragments', 'flatsome_header_add_to_cart_fragment_count' );
+add_filter( 'woocommerce_add_to_cart_fragments', 'silver_header_add_to_cart_fragment_count' );
 
 
-if ( ! function_exists( 'flatsome_header_add_to_cart_fragment_count_label' ) ) {
+if ( ! function_exists( 'silver_header_add_to_cart_fragment_count_label' ) ) {
 	/**
 	 * Update cart label when a build-in cart icon is selected
 	 *
@@ -187,22 +187,22 @@ if ( ! function_exists( 'flatsome_header_add_to_cart_fragment_count_label' ) ) {
 	 *
 	 * @return mixed
 	 */
-	function flatsome_header_add_to_cart_fragment_count_label( $fragments ) {
+	function silver_header_add_to_cart_fragment_count_label( $fragments ) {
 		if ( ! get_theme_mod( 'cart_icon_style' ) ) {
 			return $fragments;
 		}
 
 		$icon = get_theme_mod( 'cart_icon', 'basket' );
 		ob_start();
-		echo get_flatsome_icon( 'icon-shopping-' . $icon, null, array( 'data-icon-label' => WC()->cart->get_cart_contents_count() ) );
+		echo get_silver_icon( 'icon-shopping-' . $icon, null, array( 'data-icon-label' => WC()->cart->get_cart_contents_count() ) );
 		$fragments[ '.cart-item i.icon-shopping-' . $icon ] = ob_get_clean();
 
 		return $fragments;
 	}
 }
-add_filter( 'woocommerce_add_to_cart_fragments', 'flatsome_header_add_to_cart_fragment_count_label' );
+add_filter( 'woocommerce_add_to_cart_fragments', 'silver_header_add_to_cart_fragment_count_label' );
 
-if ( ! function_exists( 'flatsome_header_add_to_cart_custom_icon_fragment_count_label' ) ) {
+if ( ! function_exists( 'silver_header_add_to_cart_custom_icon_fragment_count_label' ) ) {
 	/**
 	 * Update cart label when custom cart icon is selected
 	 *
@@ -210,7 +210,7 @@ if ( ! function_exists( 'flatsome_header_add_to_cart_custom_icon_fragment_count_
 	 *
 	 * @return mixed
 	 */
-	function flatsome_header_add_to_cart_custom_icon_fragment_count_label( $fragments ) {
+	function silver_header_add_to_cart_custom_icon_fragment_count_label( $fragments ) {
 		$custom_cart_icon_id = get_theme_mod( 'custom_cart_icon' );
 		$custom_cart_icon    = wp_get_attachment_image_src( $custom_cart_icon_id, 'large' );
 
@@ -229,12 +229,12 @@ if ( ! function_exists( 'flatsome_header_add_to_cart_custom_icon_fragment_count_
 		return $fragments;
 	}
 }
-add_filter( 'woocommerce_add_to_cart_fragments', 'flatsome_header_add_to_cart_custom_icon_fragment_count_label' );
+add_filter( 'woocommerce_add_to_cart_fragments', 'silver_header_add_to_cart_custom_icon_fragment_count_label' );
 
 /**
  * Add Pages and blog posts to top of search results if set.
  */
-function flatsome_pages_in_search_results() {
+function silver_pages_in_search_results() {
 	if ( ! is_search() || ! get_theme_mod( 'search_result', 1 ) ) return;
 	global $post;
 	?>
@@ -268,8 +268,8 @@ function flatsome_pages_in_search_results() {
 		wp_reset_query();
 
 		if ( ! empty( $posts ) ) {
-			echo '<hr/><h4 class="uppercase">' . esc_html__( 'Posts found', 'flatsome' ) . '</h4>';
-			echo flatsome_apply_shortcode( 'blog_posts', array(
+			echo '<hr/><h4 class="uppercase">' . esc_html__( 'Posts found', 'silver' ) . '</h4>';
+			echo silver_apply_shortcode( 'blog_posts', array(
 				'columns'      => '2',
 				'columns__md'  => '3',
 				'columns__lg'  => '3',
@@ -281,8 +281,8 @@ function flatsome_pages_in_search_results() {
 		}
 
 		if ( ! empty( $pages ) ) {
-			echo '<hr/><h4 class="uppercase">' . esc_html__( 'Pages found', 'flatsome' ) . '</h4>';
-			echo flatsome_apply_shortcode( 'ux_pages', array(
+			echo '<hr/><h4 class="uppercase">' . esc_html__( 'Pages found', 'silver' ) . '</h4>';
+			echo silver_apply_shortcode( 'ux_pages', array(
 				'columns'      => '2',
 				'columns__md'  => '3',
 				'columns__lg'  => '3',
@@ -297,7 +297,7 @@ function flatsome_pages_in_search_results() {
 	<?php
 }
 
-add_action( 'woocommerce_after_main_content', 'flatsome_pages_in_search_results' );
+add_action( 'woocommerce_after_main_content', 'silver_pages_in_search_results' );
 
 /**
  * Filters the WooCommerce sale flash.
@@ -308,7 +308,7 @@ add_action( 'woocommerce_after_main_content', 'flatsome_pages_in_search_results'
  *
  * @return false|mixed
  */
-function flatsome_woocommerce_sale_flash( $html, $post, $product ) {
+function silver_woocommerce_sale_flash( $html, $post, $product ) {
 	if ( ! get_theme_mod( 'sale_bubble', 1 ) ) {
 		return '';
 	}
@@ -316,9 +316,9 @@ function flatsome_woocommerce_sale_flash( $html, $post, $product ) {
 	return $html;
 }
 
-add_filter( 'woocommerce_sale_flash', 'flatsome_woocommerce_sale_flash', 10, 3 );
+add_filter( 'woocommerce_sale_flash', 'silver_woocommerce_sale_flash', 10, 3 );
 
-function flatsome_new_flash( $html, $post, $product, $badge_style ) {
+function silver_new_flash( $html, $post, $product, $badge_style ) {
 	if ( ! get_theme_mod( 'new_bubble_auto' ) ) {
 		return $html;
 	}
@@ -337,13 +337,13 @@ function flatsome_new_flash( $html, $post, $product, $badge_style ) {
 	$days_in_seconds   = 60 * 24 * 60 * $days;
 
 	if ( $time_delta < $days_in_seconds ) {
-		$html .= apply_filters( 'flatsome_new_flash_html', '<div class="badge callout badge-' . $badge_style . '"><div class="badge-inner is-small new-bubble-auto">' . esc_html__( 'New', 'flatsome' ) . '</div></div>', $post, $product, $badge_style );
+		$html .= apply_filters( 'silver_new_flash_html', '<div class="badge callout badge-' . $badge_style . '"><div class="badge-inner is-small new-bubble-auto">' . esc_html__( 'New', 'silver' ) . '</div></div>', $post, $product, $badge_style );
 	}
 
 	return $html;
 }
 
-add_filter( 'flatsome_product_labels', 'flatsome_new_flash', 20, 4 );
+add_filter( 'silver_product_labels', 'silver_new_flash', 20, 4 );
 
 /**
  * Calculates discount percentage for the product sale bubble for
@@ -355,7 +355,7 @@ add_filter( 'flatsome_product_labels', 'flatsome_new_flash', 20, 4 );
  *
  * @return string
  */
-function flatsome_presentage_bubble( $product, $text ) {
+function silver_presentage_bubble( $product, $text ) {
 	$post_id = $product->get_id();
 
 	if ( $product->is_type( 'simple' ) || $product->is_type( 'external' ) || $product->is_type( 'variation' ) ) {
@@ -363,9 +363,9 @@ function flatsome_presentage_bubble( $product, $text ) {
 		$sale_price     = $product->get_sale_price();
 		$bubble_content = round( ( ( floatval( $regular_price ) - floatval( $sale_price ) ) / floatval( $regular_price ) ) * 100 );
 	} elseif ( $product->is_type( 'variable' ) ) {
-		$bubble_content = flatsome_percentage_get_cache( $post_id );
-		if ( $bubble_content && apply_filters( 'flatsome_sale_bubble_percentage_cache_enabled', true ) ) {
-			return flatsome_percentage_format( $bubble_content );
+		$bubble_content = silver_percentage_get_cache( $post_id );
+		if ( $bubble_content && apply_filters( 'silver_sale_bubble_percentage_cache_enabled', true ) ) {
+			return silver_percentage_format( $bubble_content );
 		}
 
 		$available_variations = $product->get_available_variations();
@@ -388,22 +388,22 @@ function flatsome_presentage_bubble( $product, $text ) {
 		$bubble_content = sprintf( __( '%s', 'woocommerce' ), $maximumper );
 
 		// Cache percentage for variable products to reduce database queries.
-		if ( apply_filters( 'flatsome_sale_bubble_percentage_cache_enabled', true ) ) {
-			flatsome_percentage_set_cache( $post_id, $bubble_content );
+		if ( apply_filters( 'silver_sale_bubble_percentage_cache_enabled', true ) ) {
+			silver_percentage_set_cache( $post_id, $bubble_content );
 		}
 	} else {
 		// Return default if the product type doesn't meet specification.
 		return $text;
 	}
 
-	return flatsome_percentage_format( $bubble_content );
+	return silver_percentage_format( $bubble_content );
 }
 
-function flatsome_percentage_get_cache( $post_id ) {
+function silver_percentage_get_cache( $post_id ) {
 	return get_post_meta( $post_id, '_flatsome_product_percentage', true );
 }
 
-function flatsome_percentage_set_cache( $post_id, $bubble_content ) {
+function silver_percentage_set_cache( $post_id, $bubble_content ) {
 	update_post_meta( $post_id, '_flatsome_product_percentage', $bubble_content );
 }
 
@@ -411,7 +411,7 @@ function flatsome_percentage_set_cache( $post_id, $bubble_content ) {
  * Process custom formatting. Keep mod value double check
  * to process % for default parameter (See sprintf()).
  */
-function flatsome_percentage_format( $value ) {
+function silver_percentage_format( $value ) {
 	$formatting = get_theme_mod( 'sale_bubble_percentage_formatting' );
 	$formatting = $formatting ? $formatting : '-{value}%';
 
@@ -421,7 +421,7 @@ function flatsome_percentage_format( $value ) {
 /**
  * Clear cached percentage whenever a product or variation is saved.
  */
-function flatsome_percentage_clear( $object ) {
+function silver_percentage_clear( $object ) {
 	if ( ! get_theme_mod( 'sale_bubble_percentage' ) ) return;
 
 	$post_id = 'variation' === $object->get_type()
@@ -431,12 +431,12 @@ function flatsome_percentage_clear( $object ) {
 	delete_post_meta( $post_id, '_flatsome_product_percentage' );
 }
 
-add_action( 'woocommerce_before_product_object_save', 'flatsome_percentage_clear' );
+add_action( 'woocommerce_before_product_object_save', 'silver_percentage_clear' );
 
 /**
  * Clear all cached percentages when disabling bubble percentage.
  */
-function flatsome_percentage_clear_all( $value, $old_value ) {
+function silver_percentage_clear_all( $value, $old_value ) {
 	if ( ! $value && $old_value ) {
 		delete_metadata( 'post', null, '_flatsome_product_percentage', '', true );
 	}
@@ -444,20 +444,20 @@ function flatsome_percentage_clear_all( $value, $old_value ) {
 	return $value;
 }
 
-add_filter( 'pre_set_theme_mod_sale_bubble_percentage', 'flatsome_percentage_clear_all', 10, 2 );
+add_filter( 'pre_set_theme_mod_sale_bubble_percentage', 'silver_percentage_clear_all', 10, 2 );
 
 /**
  * Account login style
  */
-function flatsome_account_login_lightbox() {
-	global $flatsome_header_account_add_lightbox_template;
+function silver_account_login_lightbox() {
+	global $silver_header_account_add_lightbox_template;
 
 	if (
 		is_user_logged_in()
 		|| get_theme_mod( 'account_login_style', 'lightbox' ) !== 'lightbox'
 		|| is_checkout()
 		|| is_account_page()
-		|| empty( $flatsome_header_account_add_lightbox_template )
+		|| empty( $silver_header_account_add_lightbox_template )
 	) {
 		return;
 	}
@@ -482,18 +482,18 @@ function flatsome_account_login_lightbox() {
 	<?php
 }
 
-add_action( 'wp_footer', 'flatsome_account_login_lightbox' );
+add_action( 'wp_footer', 'silver_account_login_lightbox' );
 
 /**
  * Payment icons to footer
  */
-function flatsome_footer_payment_icons() {
+function silver_footer_payment_icons() {
 	$icons = get_theme_mod( 'payment_icons_placement' );
 	if ( is_array( $icons ) && ! in_array( 'footer', $icons ) ) return;
 	echo do_shortcode( '[ux_payment_icons]' );
 }
 
-add_action( 'flatsome_absolute_footer_secondary', 'flatsome_footer_payment_icons' );
+add_action( 'silver_absolute_footer_secondary', 'silver_footer_payment_icons' );
 
 /**
  * Disable reviews globally
@@ -509,7 +509,7 @@ if ( get_theme_mod( 'disable_reviews' ) ) {
 	}
 }
 
-if ( ! function_exists( 'flatsome_wc_get_gallery_image_html' ) ) {
+if ( ! function_exists( 'silver_wc_get_gallery_image_html' ) ) {
 	/**
 	 * Get HTML for a gallery image. Copied and modified from woocommerce plugin and wc_get_gallery_image_html helper function.
 	 *
@@ -521,7 +521,7 @@ if ( ! function_exists( 'flatsome_wc_get_gallery_image_html' ) ) {
 	 * @return string
 	 * @see wc_get_gallery_image_html()
 	 */
-	function flatsome_wc_get_gallery_image_html( $attachment_id, $main_image = false, $size = 'woocommerce_single', $image_index = -1 ) {
+	function silver_wc_get_gallery_image_html( $attachment_id, $main_image = false, $size = 'woocommerce_single', $image_index = -1 ) {
 		global $product;
 
 		// $flexslider     = (bool) apply_filters( 'woocommerce_single_product_flexslider_enabled', get_theme_support( 'wc-product-gallery-slider' ) );
@@ -588,16 +588,16 @@ if ( ! function_exists( 'flatsome_wc_get_gallery_image_html' ) ) {
 /**
  * Move demo store notice to top.
  */
-function flatsome_move_store_notice() {
+function silver_move_store_notice() {
 	if ( ! fl_woocommerce_version_check( '9.9.0' ) ) {
 		if ( get_theme_mod( 'woocommerce_store_notice_top' ) ) {
 			remove_action( 'wp_footer', 'woocommerce_demo_store' );
-			add_action( 'flatsome_after_body_open', 'woocommerce_demo_store', 0 );
+			add_action( 'silver_after_body_open', 'woocommerce_demo_store', 0 );
 		}
 	}
 }
 
-add_action( 'wp_loaded', 'flatsome_move_store_notice' );
+add_action( 'wp_loaded', 'silver_move_store_notice' );
 
 /**
  * Filter WC Product shortcode attributes,
@@ -606,7 +606,7 @@ add_action( 'wp_loaded', 'flatsome_move_store_notice' );
  *
  * @return array Attributes.
  */
-function flatsome_filter_shortcode_atts_products( $attrs ) {
+function silver_filter_shortcode_atts_products( $attrs ) {
 	if ( ! isset( $attrs['limit'] ) || $attrs['limit'] == '-1' ) {
 		$attrs['limit'] = '12';
 	}
@@ -618,9 +618,9 @@ function flatsome_filter_shortcode_atts_products( $attrs ) {
 	return $attrs;
 }
 
-add_filter( 'shortcode_atts_products', 'flatsome_filter_shortcode_atts_products' );
+add_filter( 'shortcode_atts_products', 'silver_filter_shortcode_atts_products' );
 
-if ( flatsome_is_mini_cart_reveal() ) {
+if ( silver_is_mini_cart_reveal() ) {
 	/**
 	* Adds a span tag with the "added-to-cart" class to Add to Cart notice to trigger auto reveal mini cart.
 	*
@@ -645,7 +645,7 @@ if ( flatsome_is_mini_cart_reveal() ) {
  *
  * @see wc_get_rating_html()
  */
-function flatsome_get_rating_html( float $rating, int $count = 0, bool $single_product = false ): string {
+function silver_get_rating_html( float $rating, int $count = 0, bool $single_product = false ): string {
 	global $product;
 
 	if ( ! is_a( $product, 'WC_Product' ) ) {

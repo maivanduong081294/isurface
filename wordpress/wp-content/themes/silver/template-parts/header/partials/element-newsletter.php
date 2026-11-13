@@ -2,8 +2,8 @@
 /**
  * Newsletter element.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.20.0
+ * @package          Silver\Templates
+ * @silver-version 3.20.0
  */
 
 $icon_style = get_theme_mod( 'newsletter_icon_style', 'plain' );
@@ -13,7 +13,7 @@ $title      = get_theme_mod( 'header_newsletter_title', 'Sign up for Newsletter'
 $newsletter_block = get_theme_mod( 'header_newsletter_block' );
 if ( ! $newsletter_block ) {
 	$sub_title = get_theme_mod( 'header_newsletter_sub_title', 'Signup for our newsletter to get notified about sales and new products. Add any text here or remove it.' );
-	$bg        = do_shortcode( get_theme_mod( 'header_newsletter_bg', flatsome_dummy_image() ) );
+	$bg        = do_shortcode( get_theme_mod( 'header_newsletter_bg', silver_dummy_image() ) );
 	$height    = get_theme_mod( 'header_newsletter_height', '500px' );
 }
 $auto_open  = get_theme_mod( 'header_newsletter_auto_open', false );
@@ -33,7 +33,7 @@ $behavior .= ' version="' . $version . '"';
 <?php
 $link_atts = [
 	'href'          => '#header-newsletter-signup',
-	'class'         => 'tooltip' . ( $icon_style ? ' ' . get_flatsome_icon_class( $icon_style, 'small' ) : '' ),
+	'class'         => 'tooltip' . ( $icon_style ? ' ' . get_silver_icon_class( $icon_style, 'small' ) : '' ),
 	'role'          => 'button',
 	'title'         => esc_attr( $title ),
 	'aria-label'    => esc_attr( $label ),
@@ -42,10 +42,10 @@ $link_atts = [
 	'aria-controls' => 'header-newsletter-signup',
 ];
 ?>
-<a <?php echo flatsome_html_atts( $link_atts ); ?>>
+<a <?php echo silver_html_atts( $link_atts ); ?>>
 
   <?php if($icon_style) { ?>
-    <?php echo get_flatsome_icon( 'icon-envelop' ); ?>
+    <?php echo get_silver_icon( 'icon-envelop' ); ?>
   <?php } ?>
 
   <?php if($label) { ?>

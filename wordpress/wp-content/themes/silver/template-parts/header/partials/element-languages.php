@@ -2,8 +2,8 @@
 /**
  * Custom Languages dropdown.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.20.0
+ * @package          Silver\Templates
+ * @silver-version 3.20.0
  */
 
 $current_lang = 'Languages';
@@ -33,9 +33,9 @@ if ( function_exists( 'pll_the_languages' ) ) {
 	<a href="#" class="header-language-dropdown__link nav-top-link" aria-expanded="false" aria-controls="ux-language-dropdown" aria-haspopup="menu">
 		<?php echo esc_html( $current_lang ); ?>
 		<?php echo $flag; ?>
-		<?php echo get_flatsome_icon( 'icon-angle-down' ); ?>
+		<?php echo get_silver_icon( 'icon-angle-down' ); ?>
 	</a>
-	<ul id="ux-language-dropdown" class="nav-dropdown <?php flatsome_dropdown_classes(); ?>" role="menu">
+	<ul id="ux-language-dropdown" class="nav-dropdown <?php silver_dropdown_classes(); ?>" role="menu">
 		<?php
 		// Polylang elseif WMPL.
 		if ( $languages && function_exists( 'pll_the_languages' ) ) {

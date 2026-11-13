@@ -2,15 +2,15 @@
 /**
  * Icon handling.
  *
- * @package Flatsome
+ * @package Silver
  */
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Class Flatsome_Icon
+ * Class Silver_Icon
  */
-final class Flatsome_Icon {
+final class Silver_Icon {
 
 	/**
 	 * Get a payment icon using get_template_part.

@@ -2,13 +2,13 @@
 /**
  * Template name: Page - Full Width - Transparent Header - Light Text
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.18.0
+ * @package          Silver\Templates
+ * @silver-version 3.18.0
  */
 
 get_header(); ?>
 
-<?php do_action( 'flatsome_before_page' ); ?>
+<?php do_action( 'silver_before_page' ); ?>
 
 <div id="content" role="main">
 			<?php while ( have_posts() ) : the_post(); ?>
@@ -24,7 +24,7 @@ get_header(); ?>
 			<?php endwhile; // end of the loop. ?>
 </div>
 
-<?php do_action( 'flatsome_after_page' ); ?>
+<?php do_action( 'silver_after_page' ); ?>
 
 <?php get_footer(); ?>
 

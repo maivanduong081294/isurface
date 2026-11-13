@@ -33,7 +33,7 @@ $options = array(
 	    'heading'    => __( 'Lightbox Image Size' ),
 	    'conditions' => 'lightbox == "true"',
 	    'default'    => 'large',
-	    'options'    => flatsome_ux_builder_image_sizes(),
+	    'options'    => silver_ux_builder_image_sizes(),
     ),
 
   ),
@@ -48,9 +48,9 @@ $options = array_merge($options, $box_styles);
 add_ux_builder_shortcode( 'ux_gallery', array(
   'name' => __( 'Gallery','ux-builder'),
   'category' => __( 'Content' ),
-  'thumbnail' => flatsome_ux_builder_thumbnail( 'ux_gallery' ),
+  'thumbnail' => silver_ux_builder_thumbnail( 'ux_gallery' ),
   'scripts' => array(
-    'flatsome-masonry-js' => get_template_directory_uri() .'/assets/libs/packery.pkgd.min.js',
+    'silver-masonry-js' => get_template_directory_uri() .'/assets/libs/packery.pkgd.min.js',
   ),
   'presets' => array(
     array(

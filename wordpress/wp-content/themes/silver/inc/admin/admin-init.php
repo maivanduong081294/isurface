@@ -1,9 +1,9 @@
 <?php
 /**
- * Flatsome Admin Engine Room.
+ * Silver Admin Engine Room.
  * This is where all Admin Functions run
  *
- * @package flatsome
+ * @package silver
  */
 
 
@@ -39,8 +39,8 @@ add_action( 'init', function () {
 		// Include Options Helpers.
 		include_once(dirname( __FILE__ ).'/options/helpers/options-helpers.php');
 
-		// Include Header builder.
-		include_once(dirname( __FILE__ ).'/customizer/header-builder.php');
+		// Header builder (drag & drop) disabled: header areas use UX Blocks instead.
+		// include_once(dirname( __FILE__ ).'/customizer/header-builder.php');
 
 		// Add Options.
 		include_once(dirname( __FILE__ ).'/options/global/options-general.php');
@@ -74,7 +74,7 @@ if(is_admin()) {
   include_once(dirname( __FILE__ ).'/options/pages/options-page-meta.php');
 }
 
-function flatsome_admin_body_version_classes( $classes ) {
+function silver_admin_body_version_classes( $classes ) {
 	$raw_version = get_bloginfo( 'version' );
 
 	if ( ! $raw_version ) {
@@ -86,7 +86,7 @@ function flatsome_admin_body_version_classes( $classes ) {
 	$class_list    = explode( ' ', $classes );
 
 	$version_classes = array(
-		'7.0' => 'flatsome-wp-version-gte-70',
+		'7.0' => 'silver-wp-version-gte-70',
 	);
 
 	foreach ( $version_classes as $min_version => $class_name ) {
@@ -98,4 +98,4 @@ function flatsome_admin_body_version_classes( $classes ) {
 	return $classes;
 }
 
-add_filter( 'admin_body_class', 'flatsome_admin_body_version_classes' );
+add_filter( 'admin_body_class', 'silver_admin_body_version_classes' );

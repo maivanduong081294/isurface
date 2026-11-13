@@ -57,9 +57,9 @@ add_ux_builder_shortcode( 'ux_pages',
 	array(
 		'name'      => __( 'Pages', 'ux-builder' ),
 		'category'  => __( 'Content' ),
-		'thumbnail' => flatsome_ux_builder_thumbnail( 'pages' ),
+		'thumbnail' => silver_ux_builder_thumbnail( 'pages' ),
 		'scripts'   => array(
-			'flatsome-masonry-js' => get_template_directory_uri() . '/assets/libs/packery.pkgd.min.js',
+			'silver-masonry-js' => get_template_directory_uri() . '/assets/libs/packery.pkgd.min.js',
 		),
 		'presets'   => array(
 			array(

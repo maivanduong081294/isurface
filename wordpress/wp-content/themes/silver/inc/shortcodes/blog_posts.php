@@ -44,7 +44,7 @@ function shortcode_latest_from_blog($atts, $content = null, $tag = '' ) {
 		'posts' => '8',
 		'ids' => '', // Custom IDs
 		'cat' => '',
-		'category' => '', // Added for Flatsome v2 fallback
+		'category' => '', // Added for Silver v2 fallback
 		'excerpt' => 'visible',
 		'excerpt_length' => 15,
 		'offset' => '',
@@ -94,6 +94,9 @@ function shortcode_latest_from_blog($atts, $content = null, $tag = '' ) {
 	// Stop if visibility is hidden
   if($visibility == 'hidden') return;
 
+	// Responsive image size: the smallest screen with a value is the base.
+	$image_height = silver_responsive_base( $atts, 'image_height' );
+
 	ob_start();
 
 	$classes_box = array();
@@ -111,7 +114,7 @@ function shortcode_latest_from_blog($atts, $content = null, $tag = '' ) {
 	  if(!$text_pos) $text_pos = 'center';
 	  $columns = 0;
 	  $current_grid = 0;
-	  $grid = flatsome_get_grid($grid);
+	  $grid = silver_get_grid($grid);
 	  $grid_total = count($grid);
 	}
 
@@ -179,6 +182,7 @@ function shortcode_latest_from_blog($atts, $content = null, $tag = '' ) {
 	$repeater['columns__lg'] = $columns__lg;
 	$repeater['depth'] = $depth;
 	$repeater['depth_hover'] = $depth_hover;
+	$repeater['responsive_atts'] = $atts;
 
 	if ( ! empty( $offset ) ) {
 		$found_posts_filter_callback = function ( $found_posts, $query ) use ( $offset ) {
@@ -205,7 +209,7 @@ function shortcode_latest_from_blog($atts, $content = null, $tag = '' ) {
 		'order'               => $order,
 	);
 
-	// Added for Flatsome v2 fallback
+	// Added for Silver v2 fallback
 	if ( get_theme_mod('flatsome_fallback', 0) && $category ) {
 		$args['category_name'] = $category;
 	}
@@ -239,13 +243,13 @@ $recentPosts = new WP_Query( $args );
 		remove_filter( 'found_posts', $found_posts_filter_callback, 1 );
 	}
 
-	Flatsome_Relay::render_container_open( $recentPosts, $tag, $defined_atts, $atts );
+	Silver_Relay::render_container_open( $recentPosts, $tag, $defined_atts, $atts );
 
 	if ( $type == 'grid' ) {
-		flatsome_get_grid_height( $grid_height, $_id );
+		silver_get_grid_height( $grid_height, $_id );
 	}
 
-get_flatsome_repeater_start($repeater);
+get_silver_repeater_start($repeater);
 
 while ( $recentPosts->have_posts() ) : $recentPosts->the_post();
 
@@ -286,7 +290,7 @@ while ( $recentPosts->have_posts() ) : $recentPosts->the_post();
   						<?php if($post_icon && get_post_format()) { ?>
   							<div class="absolute no-click x50 y50 md-x50 md-y50 xl-x50 xl-y50">
   				            	<div class="overlay-icon">
-  				                    <?php echo get_flatsome_icon( 'icon-play' ); ?>
+  				                    <?php echo get_silver_icon( 'icon-play' ); ?>
   				                </div>
   				            </div>
   						<?php } ?>
@@ -295,7 +299,7 @@ while ( $recentPosts->have_posts() ) : $recentPosts->the_post();
 					<div class="box-text <?php echo esc_attr( $classes_text ); ?>" <?php echo get_shortcode_inline_css($css_args); ?>>
 					<div class="box-text-inner blog-post-inner">
 
-					<?php do_action('flatsome_blog_post_before'); ?>
+					<?php do_action('silver_blog_post_before'); ?>
 
 					<?php if($show_category !== 'false') { ?>
 						<p class="cat-label <?php if($show_category == 'label') echo 'tag-label'; ?> is-xxsmall op-7 uppercase">
@@ -313,7 +317,7 @@ while ( $recentPosts->have_posts() ) : $recentPosts->the_post();
 					<div class="is-divider"></div>
 					<?php if($show_excerpt !== 'false') { ?>
 					<p class="from_the_blog_excerpt <?php if($show_excerpt !== 'visible'){ echo 'show-on-hover hover-'. esc_attr( $show_excerpt ); } ?>">
-						<?php echo flatsome_get_the_excerpt( $excerpt_length ); ?>
+						<?php echo silver_get_the_excerpt( $excerpt_length ); ?>
 					</p>
 					<?php } ?>
                     <?php if ( $comments == 'true' && comments_open() && '0' != get_comments_number() ) { ?>
@@ -321,7 +325,7 @@ while ( $recentPosts->have_posts() ) : $recentPosts->the_post();
                             <?php
                                 $comments_number = get_comments_number( get_the_ID() );
                             	/* translators: %s: Comment count */
-                                printf( _n( '%s Comment', '%s Comments', $comments_number, 'flatsome' ),
+                                printf( _n( '%s Comment', '%s Comments', $comments_number, 'silver' ),
                                     number_format_i18n( $comments_number ) )
                             ?>
                         </p>
@@ -333,7 +337,7 @@ while ( $recentPosts->have_posts() ) : $recentPosts->the_post();
 						</a>
 					<?php } ?>
 
-					<?php do_action('flatsome_blog_post_after'); ?>
+					<?php do_action('silver_blog_post_after'); ?>
 
 					</div>
 					</div>
@@ -352,9 +356,9 @@ while ( $recentPosts->have_posts() ) : $recentPosts->the_post();
 wp_reset_query();
 
 // Get repeater end.
-get_flatsome_repeater_end($atts);
+get_silver_repeater_end($atts);
 
-	Flatsome_Relay::render_container_close();
+	Silver_Relay::render_container_close();
 
 $content = ob_get_contents();
 ob_end_clean();

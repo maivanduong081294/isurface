@@ -2,19 +2,19 @@
 /**
  * Options for nav vertical element.
  *
- * @package flatsome
+ * @package silver
  */
 
-Flatsome_Option::add_section( 'header_nav_vertical', array(
-	'title' => __( 'Vertical Menu', 'flatsome' ),
+Silver_Option::add_section( 'header_nav_vertical', array(
+	'title' => __( 'Vertical Menu', 'silver' ),
 	'panel' => 'header',
 ) );
 
 /**
  * Add options.
  */
-function flatsome_customizer_header_nav_vertical_options() {
-	Flatsome_Option::add_field( '', array(
+function silver_customizer_header_nav_vertical_options() {
+	Silver_Option::add_field( '', array(
 		'type'     => 'custom',
 		'settings' => 'custom_title_header_nav_vertical_layout',
 		'label'    => '',
@@ -22,25 +22,25 @@ function flatsome_customizer_header_nav_vertical_options() {
 		'default'  => '<div class="options-title-divider">Opener</div>',
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'      => 'radio-image',
 		'settings'  => 'header_nav_vertical_icon_style',
-		'label'     => __( 'Icon', 'flatsome' ),
+		'label'     => __( 'Icon', 'silver' ),
 		'section'   => 'header_nav_vertical',
 		'default'   => 'plain',
-		'transport' => flatsome_customizer_transport(),
+		'transport' => silver_customizer_transport(),
 		'choices'   => array(
-			''      => flatsome_customizer_images_uri() . '/disabled.svg',
-			'plain' => flatsome_customizer_images_uri() . '/nav-icon-plain.svg',
+			''      => silver_customizer_images_uri() . '/disabled.svg',
+			'plain' => silver_customizer_images_uri() . '/nav-icon-plain.svg',
 		),
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'      => 'slider',
 		'settings'  => 'header_nav_vertical_height',
-		'label'     => __( 'Height', 'flatsome' ),
+		'label'     => __( 'Height', 'silver' ),
 		'section'   => 'header_nav_vertical',
-		'transport' => flatsome_customizer_transport(),
+		'transport' => silver_customizer_transport(),
 		'default'   => '50',
 		'choices'   => array(
 			'min'  => '10',
@@ -49,12 +49,12 @@ function flatsome_customizer_header_nav_vertical_options() {
 		),
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'      => 'slider',
 		'settings'  => 'header_nav_vertical_width',
-		'label'     => __( 'Width', 'flatsome' ),
+		'label'     => __( 'Width', 'silver' ),
 		'section'   => 'header_nav_vertical',
-		'transport' => flatsome_customizer_transport(),
+		'transport' => silver_customizer_transport(),
 		'default'   => '250',
 		'choices'   => array(
 			'min'  => '10',
@@ -63,58 +63,58 @@ function flatsome_customizer_header_nav_vertical_options() {
 		),
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'      => 'text',
 		'settings'  => 'header_nav_vertical_tagline',
-		'label'     => __( 'Tag line', 'flatsome' ),
+		'label'     => __( 'Tag line', 'silver' ),
 		'section'   => 'header_nav_vertical',
-		'transport' => flatsome_customizer_transport(),
+		'transport' => silver_customizer_transport(),
 		'default'   => '',
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'      => 'text',
 		'settings'  => 'header_nav_vertical_text',
-		'label'     => __( 'Text', 'flatsome' ),
+		'label'     => __( 'Text', 'silver' ),
 		'section'   => 'header_nav_vertical',
-		'transport' => flatsome_customizer_transport(),
+		'transport' => silver_customizer_transport(),
 		'default'   => '',
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'      => 'radio-image',
 		'settings'  => 'header_nav_vertical_text_color',
-		'label'     => __( 'Text base color', 'flatsome' ),
+		'label'     => __( 'Text base color', 'silver' ),
 		'section'   => 'header_nav_vertical',
 		'default'   => 'dark',
-		'transport' => flatsome_customizer_transport(),
+		'transport' => silver_customizer_transport(),
 		'choices'   => array(
-			'dark'  => flatsome_customizer_images_uri() . '/text-light.svg',
-			'light' => flatsome_customizer_images_uri() . '/text-dark.svg',
+			'dark'  => silver_customizer_images_uri() . '/text-light.svg',
+			'light' => silver_customizer_images_uri() . '/text-dark.svg',
 		),
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'      => 'color-alpha',
 		'alpha'     => true,
 		'settings'  => 'header_nav_vertical_color',
-		'label'     => __( 'Color', 'flatsome' ),
+		'label'     => __( 'Color', 'silver' ),
 		'section'   => 'header_nav_vertical',
-		'transport' => flatsome_customizer_transport(),
+		'transport' => silver_customizer_transport(),
 		'default'   => '',
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'      => 'color-alpha',
 		'alpha'     => true,
 		'settings'  => 'header_nav_vertical_bg_color',
-		'label'     => __( 'Background color', 'flatsome' ),
+		'label'     => __( 'Background color', 'silver' ),
 		'section'   => 'header_nav_vertical',
-		'transport' => flatsome_customizer_transport(),
+		'transport' => silver_customizer_transport(),
 		'default'   => '',
 	) );
 
-	Flatsome_Option::add_field( '', array(
+	Silver_Option::add_field( '', array(
 		'type'     => 'custom',
 		'settings' => 'custom_title_header_nav_vertical_fly_out',
 		'label'    => '',
@@ -122,30 +122,30 @@ function flatsome_customizer_header_nav_vertical_options() {
 		'default'  => '<div class="options-title-divider">Fly out</div>',
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'      => 'checkbox',
 		'settings'  => 'header_nav_vertical_fly_out_frontpage',
-		'label'     => __( 'Keep open on front page', 'flatsome' ),
+		'label'     => __( 'Keep open on front page', 'silver' ),
 		'section'   => 'header_nav_vertical',
-		'transport' => flatsome_customizer_transport(),
+		'transport' => silver_customizer_transport(),
 		'default'   => 1,
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'      => 'checkbox',
 		'settings'  => 'header_nav_vertical_fly_out_shadow',
-		'label'     => __( 'Add shadow', 'flatsome' ),
+		'label'     => __( 'Add shadow', 'silver' ),
 		'section'   => 'header_nav_vertical',
-		'transport' => flatsome_customizer_transport(),
+		'transport' => silver_customizer_transport(),
 		'default'   => 1,
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'      => 'slider',
 		'settings'  => 'header_nav_vertical_fly_out_width',
-		'label'     => __( 'Width', 'flatsome' ),
+		'label'     => __( 'Width', 'silver' ),
 		'section'   => 'header_nav_vertical',
-		'transport' => flatsome_customizer_transport(),
+		'transport' => silver_customizer_transport(),
 		'default'   => '250',
 		'choices'   => array(
 			'min'  => '10',
@@ -154,17 +154,17 @@ function flatsome_customizer_header_nav_vertical_options() {
 		),
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'      => 'color-alpha',
 		'alpha'     => true,
 		'settings'  => 'header_nav_vertical_fly_out_bg_color',
-		'label'     => __( 'Background color', 'flatsome' ),
+		'label'     => __( 'Background color', 'silver' ),
 		'section'   => 'header_nav_vertical',
-		'transport' => flatsome_customizer_transport(),
+		'transport' => silver_customizer_transport(),
 		'default'   => '',
 	) );
 
-	Flatsome_Option::add_field( '', array(
+	Silver_Option::add_field( '', array(
 		'type'     => 'custom',
 		'settings' => 'custom_title_header_nav_vertical_fly_out_navigation',
 		'label'    => '',
@@ -172,21 +172,21 @@ function flatsome_customizer_header_nav_vertical_options() {
 		'default'  => '<div class="options-title-divider">Fly out navigation</div>',
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'      => 'checkbox',
 		'settings'  => 'header_nav_vertical_fly_out_nav_divider',
-		'label'     => __( 'Divider', 'flatsome' ),
+		'label'     => __( 'Divider', 'silver' ),
 		'section'   => 'header_nav_vertical',
-		'transport' => flatsome_customizer_transport(),
+		'transport' => silver_customizer_transport(),
 		'default'   => 1,
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'      => 'slider',
 		'settings'  => 'header_nav_vertical_fly_out_nav_height',
-		'label'     => __( 'Nav height', 'flatsome' ),
+		'label'     => __( 'Nav height', 'silver' ),
 		'section'   => 'header_nav_vertical',
-		'transport' => flatsome_customizer_transport(),
+		'transport' => silver_customizer_transport(),
 		'default'   => 0,
 		'choices'   => array(
 			'min'  => 0,
@@ -195,58 +195,58 @@ function flatsome_customizer_header_nav_vertical_options() {
 		),
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'      => 'radio-image',
 		'settings'  => 'header_nav_vertical_fly_out_text_color',
-		'label'     => __( 'Text base color', 'flatsome' ),
+		'label'     => __( 'Text base color', 'silver' ),
 		'section'   => 'header_nav_vertical',
 		'default'   => 'light',
-		'transport' => flatsome_customizer_transport(),
+		'transport' => silver_customizer_transport(),
 		'choices'   => array(
-			'dark'  => flatsome_customizer_images_uri() . '/text-light.svg',
-			'light' => flatsome_customizer_images_uri() . '/text-dark.svg',
+			'dark'  => silver_customizer_images_uri() . '/text-light.svg',
+			'light' => silver_customizer_images_uri() . '/text-dark.svg',
 		),
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'      => 'color-alpha',
 		'alpha'     => true,
 		'settings'  => 'header_nav_vertical_fly_out_nav_color',
-		'label'     => __( 'Nav color', 'flatsome' ),
+		'label'     => __( 'Nav color', 'silver' ),
 		'section'   => 'header_nav_vertical',
-		'transport' => flatsome_customizer_transport(),
+		'transport' => silver_customizer_transport(),
 		'default'   => '',
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'      => 'color-alpha',
 		'alpha'     => true,
 		'settings'  => 'header_nav_vertical_fly_out_nav_color_hover',
-		'label'     => __( 'Nav color :hover', 'flatsome' ),
+		'label'     => __( 'Nav color :hover', 'silver' ),
 		'section'   => 'header_nav_vertical',
-		'transport' => flatsome_customizer_transport(),
+		'transport' => silver_customizer_transport(),
 		'default'   => '',
 	) );
 
-	Flatsome_Option::add_field( 'option', array(
+	Silver_Option::add_field( 'option', array(
 		'type'      => 'color-alpha',
 		'alpha'     => true,
 		'settings'  => 'header_nav_vertical_fly_out_nav_bg_color_hover',
-		'label'     => __( 'Nav background color :hover', 'flatsome' ),
+		'label'     => __( 'Nav background color :hover', 'silver' ),
 		'section'   => 'header_nav_vertical',
-		'transport' => flatsome_customizer_transport(),
+		'transport' => silver_customizer_transport(),
 		'default'   => '',
 	) );
 }
 
-add_action( 'init', 'flatsome_customizer_header_nav_vertical_options' );
+add_action( 'init', 'silver_customizer_header_nav_vertical_options' );
 
 /**
  * Refresh partials.
  *
  * @param WP_Customize_Manager $wp_customize Customizer manager.
  */
-function flatsome_refresh_header_nav_vertical_partials( WP_Customize_Manager $wp_customize ) {
+function silver_refresh_header_nav_vertical_partials( WP_Customize_Manager $wp_customize ) {
 	if ( ! isset( $wp_customize->selective_refresh ) ) {
 		return;
 	}
@@ -277,9 +277,9 @@ function flatsome_refresh_header_nav_vertical_partials( WP_Customize_Manager $wp
 			'header_nav_vertical_fly_out_nav_bg_color_hover',
 		),
 		'render_callback' => function () {
-			flatsome_custom_css();
+			silver_custom_css();
 		},
 	) );
 }
 
-add_action( 'customize_register', 'flatsome_refresh_header_nav_vertical_partials' );
+add_action( 'customize_register', 'silver_refresh_header_nav_vertical_partials' );

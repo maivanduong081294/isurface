@@ -5,7 +5,7 @@ add_ux_builder_shortcode( 'col_grid', array(
     'type' => 'container',
     'name' => __( 'Grid Item' ),
     'category' => __( 'Layout' ),
-    'template' => flatsome_ux_builder_template( 'col_grid.html' ),
+    'template' => silver_ux_builder_template( 'col_grid.html' ),
     'tools' => 'shortcodes/col/col-tools.directive.html',
     'info' => '{{ span }}/12',
     'require' => array( 'row' ),

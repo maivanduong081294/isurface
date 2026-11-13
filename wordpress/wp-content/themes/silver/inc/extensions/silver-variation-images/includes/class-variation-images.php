@@ -2,17 +2,17 @@
 /**
  * Additional variation images main class.
  *
- * @package Flatsome\Extensions
+ * @package Silver\Extensions
  */
 
-namespace Flatsome\Extensions;
+namespace Silver\Extensions;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Class Variation_Images
  *
- * @package Flatsome\Extensions
+ * @package Silver\Extensions
  */
 final class Variation_Images {
 	/**

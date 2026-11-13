@@ -13,7 +13,7 @@
  * @see              https://woocommerce.com/document/template-structure/
  * @package          WooCommerce\Templates
  * @version          10.4.0
- * @flatsome-version 3.20.4
+ * @silver-version 3.20.4
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

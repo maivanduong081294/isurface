@@ -2,8 +2,8 @@
 /**
  * Account links.
  *
- * @package          Flatsome/WooCommerce/Templates
- * @flatsome-version 3.20.0
+ * @package          Silver/WooCommerce/Templates
+ * @silver-version 3.20.0
  */
 
 ?>
@@ -14,7 +14,7 @@
 		'container'      => false,
 		'items_wrap'     => '%3$s',
 		'depth'          => 0,
-		'walker'         => new FlatsomeNavSidebar,
+		'walker'         => new SilverNavSidebar,
 	) );
 	?>
 <?php } elseif ( ! get_theme_mod( 'wc_account_links', 1 ) ) { ?>
@@ -37,7 +37,7 @@
 			<?php } ?>
 		</li>
 	<?php endforeach; ?>
-	<?php do_action( 'flatsome_account_links' ); ?>
+	<?php do_action( 'silver_account_links' ); ?>
 	<li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--customer-logout">
 		<a href="<?php echo esc_url( wc_get_endpoint_url( 'customer-logout', '', wc_get_page_permalink( 'myaccount' ) ) ); ?>"><?php esc_html_e( 'Logout', 'woocommerce' ); ?></a>
 	</li>

@@ -4,13 +4,13 @@
  *
  * This template adds My account to the sidebar.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.19.0
+ * @package          Silver\Templates
+ * @silver-version 3.19.0
  */
 
 get_header(); ?>
 
-<?php do_action( 'flatsome_before_page' ); ?>
+<?php do_action( 'silver_before_page' ); ?>
 
 <?php wc_get_template( 'myaccount/header.php' ); ?>
 
@@ -54,6 +54,6 @@ get_header(); ?>
 	</div>
 </div>
 
-<?php do_action( 'flatsome_after_page' ); ?>
+<?php do_action( 'silver_after_page' ); ?>
 
 <?php get_footer(); ?>

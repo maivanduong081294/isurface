@@ -1,9 +1,9 @@
 <?php
 /**
- * Flatsome Conditional Functions
+ * Silver Conditional Functions
  *
  * @author   UX Themes
- * @package  Flatsome/Functions
+ * @package  Silver/Functions
  */
 
 /**
@@ -11,7 +11,7 @@
  *
  * @param string $name The feature name.
  */
-function flatsome_is_feature_enabled( $name ) {
+function silver_is_feature_enabled( $name ) {
 	$features = get_option( 'flatsome_features', [] );
 	return ! empty( $features[ $name ] );
 }
@@ -68,7 +68,7 @@ if ( ! function_exists( 'is_woocommerce_activated' ) ) {
 
 if ( ! function_exists( 'is_portfolio_activated' ) ) {
 	/**
-	 * Returns "1" if Flatsome Portfolio option is enabled
+	 * Returns "1" if Silver Portfolio option is enabled
 	 *
 	 * @return string
 	 */
@@ -96,7 +96,7 @@ if ( ! function_exists( 'is_extension_activated' ) ) {
  *
  * @return bool Returns true if all login-related POST parameters are set, false otherwise.
  */
-function flatsome_is_login_request() {
+function silver_is_login_request() {
 	return isset( $_POST['login'], $_POST['username'], $_POST['password'] ); // phpcs:ignore WordPress.Security.NonceVerification
 }
 
@@ -105,7 +105,7 @@ function flatsome_is_login_request() {
  *
  * @return bool Returns true if all register-related POST parameters are set, false otherwise.
  */
-function flatsome_is_register_request() {
+function silver_is_register_request() {
 	return isset( $_POST['register'], $_POST['email'] ) && ( isset( $_POST['password'] ) || 'yes' === get_option( 'woocommerce_registration_generate_password' ) ); // phpcs:ignore WordPress.Security.NonceVerification
 }
 
@@ -114,8 +114,8 @@ function flatsome_is_register_request() {
  *
  * @return bool
  */
-function flatsome_is_blog_archive() {
-	return apply_filters( 'flatsome_is_blog_archive', is_home() || is_search() || is_tag() || is_category() || is_date() || is_author() );
+function silver_is_blog_archive() {
+	return apply_filters( 'silver_is_blog_archive', is_home() || is_search() || is_tag() || is_category() || is_date() || is_author() );
 }
 
 /**
@@ -123,7 +123,7 @@ function flatsome_is_blog_archive() {
  *
  * @return bool
  */
-function flatsome_is_shop_archive() {
+function silver_is_shop_archive() {
 	$queried_object               = get_queried_object();
 	$taxonomy                     = ( $queried_object && property_exists( $queried_object, 'taxonomy' ) ) ? $queried_object->taxonomy : false;
 	$additional_taxonomy_archives = [
@@ -139,7 +139,7 @@ function flatsome_is_shop_archive() {
 	$is_additional_taxonomy_archive = $taxonomy && in_array( $taxonomy, $additional_taxonomy_archives, true );
 
 	return apply_filters(
-		'flatsome_is_shop_archive',
+		'silver_is_shop_archive',
 		is_shop() || is_product_category() || is_product_tag() || $is_product_search_archive || $is_product_attribute_archive || $is_additional_taxonomy_archive
 	);
 }

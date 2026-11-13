@@ -2,8 +2,8 @@
 /**
  * Account sidebar element.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.19.7
+ * @package          Silver\Templates
+ * @silver-version 3.19.7
  */
 
 if ( ! is_woocommerce_activated() ) {
@@ -22,7 +22,7 @@ if ( ! is_woocommerce_activated() ) {
 			'title' => esc_attr__( 'My account', 'woocommerce' ),
 		];
 		?>
-		<a <?php echo flatsome_html_atts( $link_atts ); ?>>
+		<a <?php echo silver_html_atts( $link_atts ); ?>>
 			<span class="header-account-title">
 				<?php esc_html_e( 'My account', 'woocommerce' ); ?>
 			</span>
@@ -35,7 +35,7 @@ if ( ! is_woocommerce_activated() ) {
 			'title' => esc_attr__( 'Login', 'woocommerce' ),
 		];
 		?>
-		<a <?php echo flatsome_html_atts( $link_atts ); ?>>
+		<a <?php echo silver_html_atts( $link_atts ); ?>>
 			<span class="header-account-title">
 				<?php
 				esc_html_e( 'Login', 'woocommerce' );

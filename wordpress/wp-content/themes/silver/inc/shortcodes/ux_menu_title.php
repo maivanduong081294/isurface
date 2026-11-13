@@ -2,7 +2,7 @@
 /**
  * Registers the `ux_menu_title` shortcode.
  *
- * @package flatsome
+ * @package silver
  */
 
 /**
@@ -14,7 +14,7 @@
  *
  * @return string
  */
-function flatsome_render_ux_menu_title_shortcode( $atts, $content, $tag ) {
+function silver_render_ux_menu_title_shortcode( $atts, $content, $tag ) {
 	$atts = ux_builder_shortcode_atts(
 		array(
 			'_id'        => '',
@@ -34,11 +34,11 @@ function flatsome_render_ux_menu_title_shortcode( $atts, $content, $tag ) {
 	ob_start();
 
 	?>
-	<div<?php if ( $_id ) : ?> id="<?php echo esc_attr( $_id ); ?>"<?php endif; ?> class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>">
+	<div<?php if ( $atts['_id'] ) : ?> id="<?php echo esc_attr( $atts['_id'] ); ?>"<?php endif; ?> class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>">
 		<?php echo esc_html( $atts['text'] ); ?>
 	</div>
 	<?php
 
 	return ob_get_clean();
 }
-add_shortcode( 'ux_menu_title', 'flatsome_render_ux_menu_title_shortcode' );
+add_shortcode( 'ux_menu_title', 'silver_render_ux_menu_title_shortcode' );

@@ -2,13 +2,13 @@
 /**
  * Template name: Page - Right Sidebar
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.16.0
+ * @package          Silver\Templates
+ * @silver-version 3.16.0
  */
 
 get_header(); ?>
 
-<?php do_action( 'flatsome_before_page' ); ?>
+<?php do_action( 'silver_before_page' ); ?>
 
 <div class="page-wrapper page-right-sidebar">
 <div class="row">
@@ -41,6 +41,6 @@ get_header(); ?>
 </div>
 </div>
 
-<?php do_action( 'flatsome_after_page' ); ?>
+<?php do_action( 'silver_after_page' ); ?>
 
 <?php get_footer(); ?>

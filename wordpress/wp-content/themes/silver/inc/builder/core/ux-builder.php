@@ -3,7 +3,7 @@
 // If this file is called directly, abort.
 if( ! defined( 'WPINC' ) ) die;
 
-// Get flatsome version.
+// Get silver version.
 $theme = wp_get_theme( get_template() );
 $version = $theme->get( 'Version' );
 

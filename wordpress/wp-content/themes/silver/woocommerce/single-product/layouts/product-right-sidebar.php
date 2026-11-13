@@ -2,8 +2,8 @@
 /**
  * Product with right sidebar.
  *
- * @package          Flatsome/WooCommerce/Templates
- * @flatsome-version 3.19.9
+ * @package          Silver/WooCommerce/Templates
+ * @silver-version 3.19.9
  */
 
 ?>
@@ -13,7 +13,7 @@
 
 
 	<div class="product-gallery col xlarge-<?php echo get_theme_mod( 'product_image_width', '6' ); ?>">
-		<?php flatsome_sticky_column_open( 'product_sticky_gallery' ); ?>
+		<?php silver_sticky_column_open( 'product_sticky_gallery' ); ?>
 		<?php
 			/**
 			 * woocommerce_before_single_product_summary hook
@@ -23,10 +23,10 @@
 			 */
 			do_action( 'woocommerce_before_single_product_summary' );
 		?>
-		<?php flatsome_sticky_column_close( 'product_sticky_gallery' ); ?>
+		<?php silver_sticky_column_close( 'product_sticky_gallery' ); ?>
 	</div>
 
-	<div class="product-info summary col-fit col-divided col entry-summary <?php flatsome_product_summary_classes();?>">
+	<div class="product-info summary col-fit col-divided col entry-summary <?php silver_product_summary_classes();?>">
 
 		<?php
 			/**
@@ -45,9 +45,9 @@
 
 	</div>
 
-	<div id="product-sidebar" class="col xlarge-3 hide-for-medium <?php flatsome_sidebar_classes(); ?>">
+	<div id="product-sidebar" class="col xlarge-3 hide-for-medium <?php silver_sidebar_classes(); ?>">
 		<?php
-			do_action('flatsome_before_product_sidebar');
+			do_action('silver_before_product_sidebar');
 			/**
 			 * woocommerce_sidebar hook
 			 *

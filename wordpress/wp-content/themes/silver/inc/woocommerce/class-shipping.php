@@ -2,17 +2,17 @@
 /**
  * Shipping class.
  *
- * @package Flatsome\WooCommerce
+ * @package Silver\WooCommerce
  */
 
-namespace Flatsome\WooCommerce;
+namespace Silver\WooCommerce;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Class Shipping
  *
- * @package Flatsome\WooCommerce
+ * @package Silver\WooCommerce
  */
 final class Shipping {
 
@@ -68,7 +68,7 @@ final class Shipping {
 	 */
 	public function init() {
 		if ( get_theme_mod( 'header_cart_shipping' ) ) {
-			add_action( 'flatsome_before_mini_cart_total', array( $this, 'free_shipping' ) );
+			add_action( 'silver_before_mini_cart_total', array( $this, 'free_shipping' ) );
 		}
 
 		if ( get_theme_mod( 'cart_shipping' ) ) {
@@ -142,7 +142,7 @@ final class Shipping {
 			}
 		}
 
-		$free_shipping_threshold = apply_filters( 'flatsome_shipping_free_shipping_threshold', $free_shipping_threshold );
+		$free_shipping_threshold = apply_filters( 'silver_shipping_free_shipping_threshold', $free_shipping_threshold );
 
 		if ( ! $free_shipping_threshold ) {
 			return;
@@ -157,7 +157,7 @@ final class Shipping {
 					$threshold = wc_price( $free_shipping_threshold - $subtotal );
 					printf(
 					/* translators: %s: The threshold */
-						esc_html__( 'Add %s to cart and get free shipping!', 'flatsome' ),
+						esc_html__( 'Add %s to cart and get free shipping!', 'silver' ),
 						$threshold // phpcs:ignore WordPress.Security.EscapeOutput
 					);
 					?>
@@ -168,7 +168,7 @@ final class Shipping {
 			</div>
 		<?php else : // Success message. ?>
 			<div class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>">
-				<div class="ux-free-shipping__notice ux-free-shipping__notice--success"><?php esc_html_e( 'Your order qualifies for free shipping 🎉', 'flatsome' ); ?></div>
+				<div class="ux-free-shipping__notice ux-free-shipping__notice--success"><?php esc_html_e( 'Your order qualifies for free shipping 🎉', 'silver' ); ?></div>
 				<div class="ux-free-shipping__bar ux-free-shipping__bar--striped">
 					<span class="ux-free-shipping__bar-progress" style="width:100%;"></span>
 				</div>

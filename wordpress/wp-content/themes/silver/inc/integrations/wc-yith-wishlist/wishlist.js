@@ -1,4 +1,4 @@
-Flatsome.behavior('wishlist', {
+Silver.behavior('wishlist', {
 	attach: function (context) {
 		jQuery('.wishlist-button', context).each(function (index, element) {
 			'use strict'
@@ -35,13 +35,13 @@ Flatsome.behavior('wishlist', {
 })
 
 jQuery(function ($) {
-  var flatsomeAddToWishlist = function () {
+  var silverAddToWishlist = function () {
 		$('.wishlist-button').removeClass('loading')
 		markAdded()
 
 		$.ajax({
 			data: {
-				action: 'flatsome_update_wishlist_count',
+				action: 'silver_update_wishlist_count',
 			},
 			success: function (data) {
 				var $icon = $('i.wishlist-icon')
@@ -64,7 +64,7 @@ jQuery(function ($) {
 
 	$('body').on(
 		'added_to_wishlist removed_from_wishlist',
-		flatsomeAddToWishlist
+		silverAddToWishlist
 	)
 })
 

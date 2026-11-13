@@ -2,8 +2,8 @@
 /**
  * Posts archive inline.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.16.0
+ * @package          Silver\Templates
+ * @silver-version 3.16.0
  */
 
 if ( have_posts() ) : ?>
@@ -13,7 +13,7 @@ if ( have_posts() ) : ?>
 <?php while ( have_posts() ) : the_post(); ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<div class="article-inner <?php flatsome_blog_article_classes(); ?>">
+	<div class="article-inner <?php silver_blog_article_classes(); ?>">
 
 		<header class="entry-header">
 	  	<div class="entry-header-text text-<?php echo get_theme_mod( 'blog_posts_title_align', 'center' );?>">
@@ -34,7 +34,7 @@ if ( have_posts() ) : ?>
 
 <?php endwhile; ?>
 
-<?php flatsome_posts_pagination(); ?>
+<?php silver_posts_pagination(); ?>
 
 </div>
 

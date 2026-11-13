@@ -1,23 +1,23 @@
 <?php
 /**
- * Flatsome_Relay class.
+ * Silver_Relay class.
  *
  * A queried repeater element containerizer, providing functionalities
  * like "Pagination", "Load More", and "Previous/Next" navigation.
  *
  * @author      UX Themes
- * @package     Flatsome
+ * @package     Silver
  * @since       3.18.0
  */
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Class Flatsome_Relay
+ * Class Silver_Relay
  *
- * @package Flatsome
+ * @package Silver
  */
-final class Flatsome_Relay {
+final class Silver_Relay {
 
 	/**
 	 * WordPress query.
@@ -77,7 +77,7 @@ final class Flatsome_Relay {
 	private static $enabled;
 
 	/**
-	 * Flatsome_Relay constructor.
+	 * Silver_Relay constructor.
 	 */
 	private function __construct() {}
 
@@ -85,7 +85,7 @@ final class Flatsome_Relay {
 	 * Enqueue assets.
 	 */
 	public static function enqueue_assets() {
-		wp_enqueue_script( 'flatsome-relay' );
+		wp_enqueue_script( 'silver-relay' );
 	}
 
 	/**
@@ -142,8 +142,8 @@ final class Flatsome_Relay {
 
 		$container_atts = array(
 			'id'                  => esc_attr( $id ),
-			'class'               => esc_attr( implode( ' ', apply_filters( 'flatsome_relay_classes', $classes, self::$control ) ) ),
-			'data-flatsome-relay' => esc_attr( wp_json_encode( array(
+			'class'               => esc_attr( implode( ' ', apply_filters( 'silver_relay_classes', $classes, self::$control ) ) ),
+			'data-silver-relay' => esc_attr( wp_json_encode( array(
 				'postType'    => $query->query_vars['post_type'],
 				'tag'         => $tag,
 				'atts'        => self::$defined_atts,
@@ -154,7 +154,7 @@ final class Flatsome_Relay {
 			) ) ),
 		);
 		?>
-		<div <?php echo flatsome_html_atts( $container_atts ); ?>>
+		<div <?php echo silver_html_atts( $container_atts ); ?>>
 		<?php
 		self::header();
 	}
@@ -185,7 +185,7 @@ final class Flatsome_Relay {
 			$classes[] = 'text-' . self::$control_align;
 		}
 		?>
-		<div class="<?php echo esc_attr( implode( ' ', apply_filters( 'flatsome_relay_control_classes', $classes, self::$control, 'top' ) ) ); ?>">
+		<div class="<?php echo esc_attr( implode( ' ', apply_filters( 'silver_relay_control_classes', $classes, self::$control, 'top' ) ) ); ?>">
 			<?php self::control( self::$control ); ?>
 		</div>
 		<?php
@@ -204,7 +204,7 @@ final class Flatsome_Relay {
 			$classes[] = 'text-' . self::$control_align;
 		}
 		?>
-		<div class="<?php echo esc_attr( implode( ' ', apply_filters( 'flatsome_relay_control_classes', $classes, self::$control, 'bottom' ) ) ); ?>">
+		<div class="<?php echo esc_attr( implode( ' ', apply_filters( 'silver_relay_control_classes', $classes, self::$control, 'bottom' ) ) ); ?>">
 			<?php self::control( self::$control ); ?>
 		</div>
 		<?php
@@ -227,7 +227,7 @@ final class Flatsome_Relay {
 			case 'load-more':
 				?>
 				<button class="ux-relay__button ux-relay__load-more-button button primary mb-0">
-					<?php esc_html_e( 'Load more', 'flatsome' ); ?>
+					<?php esc_html_e( 'Load more', 'silver' ); ?>
 					<?php
 					if ( self::$control_result_count ) {
 						printf( '<span class="ux-relay__result-count">(<span class="ux-relay__current-count">%d</span> / %d)</span>', self::$query->post_count, self::$query->found_posts ); // phpcs:ignore WordPress.Security.EscapeOutput
@@ -238,12 +238,12 @@ final class Flatsome_Relay {
 				break;
 			case 'prev-next':
 				?>
-				<button class="ux-relay__button ux-relay__nav-button ux-relay__nav-button--prev" data-flatsome-dir="prev" disabled aria-label="<?php esc_attr_e( 'Previous', 'flatsome' ); ?>">
+				<button class="ux-relay__button ux-relay__nav-button ux-relay__nav-button--prev" data-silver-dir="prev" disabled aria-label="<?php esc_attr_e( 'Previous', 'silver' ); ?>">
 					<svg aria-hidden="true" class="ux-relay__button-icon" viewBox="0 0 100 100">
 						<path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z"></path>
 					</svg>
 				</button>
-				<button class="ux-relay__button ux-relay__nav-button ux-relay__nav-button--next" data-flatsome-dir="next" aria-label="<?php esc_attr_e( 'Next', 'flatsome' ); ?>">
+				<button class="ux-relay__button ux-relay__nav-button ux-relay__nav-button--next" data-silver-dir="next" aria-label="<?php esc_attr_e( 'Next', 'silver' ); ?>">
 					<svg aria-hidden="true" class="ux-relay__button-icon" viewBox="0 0 100 100">
 						<path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" transform="translate(100, 100) rotate(180)"></path>
 					</svg>
@@ -261,8 +261,8 @@ final class Flatsome_Relay {
 	 * @return void
 	 */
 	private static function pagination( $args = array() ) {
-		$prev_arrow = is_rtl() ? get_flatsome_icon( 'icon-angle-right' ) : get_flatsome_icon( 'icon-angle-left' );
-		$next_arrow = is_rtl() ? get_flatsome_icon( 'icon-angle-left' ) : get_flatsome_icon( 'icon-angle-right' );
+		$prev_arrow = is_rtl() ? get_silver_icon( 'icon-angle-right' ) : get_silver_icon( 'icon-angle-left' );
+		$next_arrow = is_rtl() ? get_silver_icon( 'icon-angle-left' ) : get_silver_icon( 'icon-angle-right' );
 
 		$defaults = array(
 			'base'      => '#/page/%#%',
@@ -278,15 +278,15 @@ final class Flatsome_Relay {
 
 		$args = wp_parse_args( $args, $defaults );
 
-		$pages = paginate_links( apply_filters( 'flatsome_relay_pagination_args', $args ) );
+		$pages = paginate_links( apply_filters( 'silver_relay_pagination_args', $args ) );
 
 		if ( ! is_array( $pages ) ) return;
 
 		echo '<ul class="ux-relay__pagination page-numbers nav-pagination links">';
 		foreach ( $pages as $page ) {
 			$page = str_replace( 'page-numbers', 'page-number', $page );
-			$page = str_replace( '<a class="next page-number', '<a aria-label="' . esc_attr__( 'Next', 'flatsome' ) . '" class="next page-number', $page );
-			$page = str_replace( '<a class="prev page-number', '<a aria-label="' . esc_attr__( 'Previous', 'flatsome' ) . '" class="prev page-number', $page );
+			$page = str_replace( '<a class="next page-number', '<a aria-label="' . esc_attr__( 'Next', 'silver' ) . '" class="next page-number', $page );
+			$page = str_replace( '<a class="prev page-number', '<a aria-label="' . esc_attr__( 'Previous', 'silver' ) . '" class="prev page-number', $page );
 
 			// Create '#/page/x' hrefs without site URL and query args.
 			$page = preg_replace_callback( '/href="([^"]*)"/', function ( $matches ) {

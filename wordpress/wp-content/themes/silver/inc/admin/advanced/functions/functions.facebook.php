@@ -1,13 +1,13 @@
 <?php
 
-function flatsome_facebook_oauth_url() {
-  $api_version = flatsome_facebook_api_version();
+function silver_facebook_oauth_url() {
+  $api_version = silver_facebook_api_version();
   $uri = get_template_directory_uri();
   $theme = wp_get_theme( get_template() );
   $version = $theme->get( 'Version' );
   $client_id = '380204239234502';
   $base_url = "https://www.facebook.com/$api_version/dialog/oauth";
-  $redirect_uri = flatsome_api_url() . '/facebook/authorize/';
+  $redirect_uri = silver_api_url() . '/facebook/authorize/';
   $scope = 'pages_read_engagement,instagram_basic,public_profile';
   $state = urlencode( admin_url( "admin.php?page=optionsframework&tab=of-option-instagram&ver=$version" ) );
   $response_type = 'code';
@@ -15,44 +15,44 @@ function flatsome_facebook_oauth_url() {
   return "$base_url?client_id=$client_id&response_type=$response_type&scope=$scope&redirect_uri=$redirect_uri&state=$state";
 }
 
-function flatsome_facebook_login_button_html() {
-  $url = flatsome_facebook_oauth_url();
+function silver_facebook_login_button_html() {
+  $url = silver_facebook_oauth_url();
   ob_start(); ?>
   <div class="notice notice-warning inline" style="margin-top: 0; margin-left: 0;">
-    <p><?php echo sprintf( __( 'Connecting Instagram Business accounts is deprecated and will be removed in a future update. Please enter an access token instead. %1$sSee documentation%2$s.', 'flatsome-admin' ), '<a href="https://docs.uxthemes.com/article/427-instagram-api" target="_blank" rel="noopener">', '</a>' ); ?></p>
+    <p><?php echo sprintf( __( 'Connecting Instagram Business accounts is deprecated and will be removed in a future update. Please enter an access token instead. %1$sSee documentation%2$s.', 'silver' ), '<a href="https://docs.uxthemes.com/article/427-instagram-api" target="_blank" rel="noopener">', '</a>' ); ?></p>
   </div>
   <p><?php _e('Login with Facebook to connect an Instagram Business account:')  ?></p>
-  <a class="button flatsome-facebook-login-button" href="<?php echo $url ?>">
+  <a class="button silver-facebook-login-button" href="<?php echo $url ?>">
     <span class="dashicons dashicons-facebook-alt"></span>
-    <?php _e( 'Login with Facebook', 'flatsome-admin' ) ?>
+    <?php _e( 'Login with Facebook', 'silver' ) ?>
   </a>
   <?php return ob_get_clean();
 }
 
-function flatsome_facebook_cache_html() {
+function silver_facebook_cache_html() {
   ob_start(); ?>
   <p style="margin-top: 0;"><?php _e('Clear the cache to fetch fresh data from the Instagram API:')  ?></p>
-  <button class="button" name="flatsome_instagram_clear_cache">
-    <?php _e( 'Clear Instagram cache', 'flatsome-admin' ) ?>
+  <button class="button" name="silver_instagram_clear_cache">
+    <?php _e( 'Clear Instagram cache', 'silver' ) ?>
   </button>
   <?php return ob_get_clean();
 }
 
-function flatsome_facebook_accounts_html() {
-  $accounts = flatsome_facebook_accounts();
+function silver_facebook_accounts_html() {
+  $accounts = silver_facebook_accounts();
 
   ob_start(); ?>
 
-  <div id="flatsome-instagram-errors"></div>
+  <div id="silver-instagram-errors"></div>
   <input type="hidden" value="0" name="facebook_accounts[]">
 
-  <div class="flatsome-instagram-accounts">
+  <div class="silver-instagram-accounts">
     <table class="widefat striped">
       <thead>
         <th><?php _e( 'Username' ); ?></th>
         <th><?php _e( 'Actions' ); ?></th>
       </thead>
-      <tbody class="flatsome-instagram-accounts__body">
+      <tbody class="silver-instagram-accounts__body">
         <?php foreach ( $accounts as $username => $account ) : ?>
         <tr class="instagram-account" data-instagram-account="<?php echo esc_attr( $username ); ?>">
           <td>
@@ -65,14 +65,14 @@ function flatsome_facebook_accounts_html() {
               <?php echo esc_html( $username ) ?>
             </a>
             <?php if ( empty( $account['type'] ) || $account['type'] !== 'instagram' ) : ?>
-              <em><?php _e( 'deprecated', 'flatsome-admin' ) ?></em>
+              <em><?php _e( 'deprecated', 'silver' ) ?></em>
             <?php endif; ?>
 		    <?php if ( isset( $account['error'] ) ) : ?>
 			<div class="notice notice-error inline">
 			  <p>
 				<?php
 					// translators: %s is the error message.
-					echo sprintf( __( 'An error occured while refreshing the access token: %s', 'flatsome-admin' ), esc_html( $account['error'] ) );
+					echo sprintf( __( 'An error occured while refreshing the access token: %s', 'silver' ), esc_html( $account['error'] ) );
 			  	?>
 			  </p>
 			</div>
@@ -86,12 +86,12 @@ function flatsome_facebook_accounts_html() {
         </tr>
         <?php endforeach; ?>
       <tbody>
-      <tfoot class="flatsome-instagram-accounts__foot">
+      <tfoot class="silver-instagram-accounts__foot">
         <tr>
           <td colspan="2">
-			<div class="flatsome-instagram-accounts__access-token-form">
-              <input id="flatsome-instagram-access-token-value" type="text" placeholder="<?php esc_attr_e( 'Enter an Instagram access token', 'flatsome-admin' ) ?>">
-              <button id="flatsome-instagram-access-token-submit" type="button" class="button" title="<?php esc_attr_e( 'Add access token', 'flatsome-admin' ); ?>">
+			<div class="silver-instagram-accounts__access-token-form">
+              <input id="silver-instagram-access-token-value" type="text" placeholder="<?php esc_attr_e( 'Enter an Instagram access token', 'silver' ) ?>">
+              <button id="silver-instagram-access-token-submit" type="button" class="button" title="<?php esc_attr_e( 'Add access token', 'silver' ); ?>">
 			    <span class="dashicons dashicons-plus-alt2"></span>
               </button>
 			</div>
@@ -102,7 +102,7 @@ function flatsome_facebook_accounts_html() {
   </div>
   <p>
 	<a href="<?php echo esc_url( 'https://docs.uxthemes.com/article/427-instagram-api' ) ?>" target="_blank" rel="noopener">
-	  <?php esc_html_e( 'How to get an Instagram access token', 'flatsome-admin' ); ?>
+	  <?php esc_html_e( 'How to get an Instagram access token', 'silver' ); ?>
 	</a>
   </p>
   <?php return ob_get_clean();
@@ -115,14 +115,14 @@ function flatsome_facebook_accounts_html() {
  *
  * @return WP_Error|array
  */
-function flatsome_facebook_get_accounts( $access_token ) {
-  $api_version = flatsome_facebook_api_version();
+function silver_facebook_get_accounts( $access_token ) {
+  $api_version = silver_facebook_api_version();
   $fields   = 'name,access_token,instagram_business_account{id,name,username,profile_picture_url}';
   $url      = "https://graph.facebook.com/$api_version/me/accounts?limit=100&fields=$fields&access_token=$access_token";
   $response = wp_remote_get( $url );
 
   if ( is_wp_error( $response ) ) {
-    return new WP_Error( 'site_down', __( 'Unable to communicate with Instagram.', 'flatsome-admin' ) );
+    return new WP_Error( 'site_down', __( 'Unable to communicate with Instagram.', 'silver' ) );
   } else {
     $body = json_decode( $response['body'], true );
 
@@ -137,14 +137,14 @@ function flatsome_facebook_get_accounts( $access_token ) {
 /**
  * Renders the popup that shows the accounts that can be connected.
  */
-function flatsome_facebook_connect_admin_footer() {
+function silver_facebook_connect_admin_footer() {
   if ( ! is_array( $_GET ) || ! isset( $_GET['flatsome_facebook_access_token'] ) ) {
     return;
   }
 
   $access_token = sanitize_text_field( $_GET['flatsome_facebook_access_token'] );
-  $all_accounts = flatsome_facebook_get_accounts( $access_token );
-  $current_accounts = flatsome_facebook_accounts();
+  $all_accounts = silver_facebook_get_accounts( $access_token );
+  $current_accounts = silver_facebook_accounts();
   $accounts = array();
 
   if ( ! is_wp_error( $all_accounts ) ) {
@@ -157,31 +157,31 @@ function flatsome_facebook_connect_admin_footer() {
 
   ?>
 
-  <div class="flatsome-instagram-connect">
-    <div class="flatsome-instagram-connect-body">
-      <h2 class=""><?php _e( 'Connect Instagram Business accounts', 'flatsome' ); ?></h2>
+  <div class="silver-instagram-connect">
+    <div class="silver-instagram-connect-body">
+      <h2 class=""><?php _e( 'Connect Instagram Business accounts', 'silver' ); ?></h2>
       <?php if ( is_wp_error( $accounts ) ) : ?>
         <div class="notice notice-error inline" style="margin: 0;">
           <p><?php echo $accounts->get_error_message() ?></p>
         </div>
         <div class="tablenav bottom textright">
-          <button type="button" class="button" onclick="jQuery(this).closest('.flatsome-instagram-connect').hide()">
-            <?php esc_html_e( 'Okay', 'flatsome' ); ?>
+          <button type="button" class="button" onclick="jQuery(this).closest('.silver-instagram-connect').hide()">
+            <?php esc_html_e( 'Okay', 'silver' ); ?>
           </button>
         </div>
       <?php elseif ( empty( $accounts ) ) : ?>
         <div class="notice notice-info inline" style="margin: 0;">
-          <p><?php esc_html_e( 'No associated Instagram Business account was found for your Facebook user.', 'flatsome' ) ?></p>
+          <p><?php esc_html_e( 'No associated Instagram Business account was found for your Facebook user.', 'silver' ) ?></p>
         </div>
         <div class="tablenav bottom textright">
-          <button type="button" class="button" onclick="jQuery(this).closest('.flatsome-instagram-connect').hide()">
-            <?php esc_html_e( 'Okay', 'flatsome' ); ?>
+          <button type="button" class="button" onclick="jQuery(this).closest('.silver-instagram-connect').hide()">
+            <?php esc_html_e( 'Okay', 'silver' ); ?>
           </button>
         </div>
       <?php else : ?>
       <form action="<?php echo admin_url( 'admin-post.php' ); ?>" method="POST">
-        <input type="hidden" name="action" value="flatsome_instagram_connect" />
-        <?php wp_nonce_field( 'flatsome_instagram_connect', 'flatsome_instagram_connect_nonce' ); ?>
+        <input type="hidden" name="action" value="silver_instagram_connect" />
+        <?php wp_nonce_field( 'silver_instagram_connect', 'silver_instagram_connect_nonce' ); ?>
         <table class="widefat striped">
           <tbody>
             <?php foreach ( $accounts as $account ) : ?>
@@ -225,11 +225,11 @@ function flatsome_facebook_connect_admin_footer() {
           </tbody>
         </table>
         <div class="tablenav bottom textright">
-          <button type="button" class="button" onclick="jQuery(this).closest('.flatsome-instagram-connect').hide()">
-            <?php esc_html_e( 'Cancel', 'flatsome' ); ?>
+          <button type="button" class="button" onclick="jQuery(this).closest('.silver-instagram-connect').hide()">
+            <?php esc_html_e( 'Cancel', 'silver' ); ?>
           </button>
-          <button name="flatsome_instagram_connect" class="button button-primary">
-            <?php esc_html_e( 'Connect', 'flatsome' ); ?>
+          <button name="silver_instagram_connect" class="button button-primary">
+            <?php esc_html_e( 'Connect', 'silver' ); ?>
           </button>
         </div>
       </form>
@@ -239,16 +239,16 @@ function flatsome_facebook_connect_admin_footer() {
 
   <?php
 }
-add_action( 'admin_footer-flatsome_page_optionsframework', 'flatsome_facebook_connect_admin_footer' );
+add_action( 'admin_footer-silver_page_optionsframework', 'silver_facebook_connect_admin_footer' );
 
 /**
  * Saves the connected accounts data.
  */
-function flatsome_facebook_connect_accounts() {
-  check_admin_referer( 'flatsome_instagram_connect', 'flatsome_instagram_connect_nonce' );
+function silver_facebook_connect_accounts() {
+  check_admin_referer( 'silver_instagram_connect', 'silver_instagram_connect_nonce' );
 
   if ( ! empty( $_POST['instagram_accounts'] ) ) {
-    $accounts = flatsome_facebook_accounts();
+    $accounts = silver_facebook_accounts();
 
     foreach ( $_POST['instagram_accounts'] as $values ) {
       $account = array_map( 'sanitize_text_field', $values );
@@ -262,32 +262,32 @@ function flatsome_facebook_connect_accounts() {
 
   wp_safe_redirect( admin_url( 'admin.php?page=optionsframework&tab=of-option-instagram' ) );
 }
-add_action( 'admin_post_flatsome_instagram_connect', 'flatsome_facebook_connect_accounts' );
+add_action( 'admin_post_silver_instagram_connect', 'silver_facebook_connect_accounts' );
 
 /**
  * Deletes the Instagram oEmbed cache and transients.
  *
  * @return void
  */
-function flatsome_facebook_clear_cache() {
+function silver_facebook_clear_cache() {
   global $wpdb;
 
-  if ( isset( $_POST['flatsome_instagram_clear_cache'] ) ) {
+  if ( isset( $_POST['silver_instagram_clear_cache'] ) ) {
     delete_option( 'flatsome_instagram_oembed_cache' );
-    $wpdb->query( "DELETE FROM {$wpdb->options} WHERE `option_name` LIKE ('%\_transient\_flatsome\_instagram%');" );
-    $wpdb->query( "DELETE FROM {$wpdb->options} WHERE `option_name` LIKE ('%\_transient\_timeout\_flatsome\_instagram%');" );
+    $wpdb->query( "DELETE FROM {$wpdb->options} WHERE `option_name` LIKE ('%\_transient\_silver\_instagram%');" );
+    $wpdb->query( "DELETE FROM {$wpdb->options} WHERE `option_name` LIKE ('%\_transient\_timeout\_silver\_instagram%');" );
   }
 }
-add_action( 'of_save_options_before', 'flatsome_facebook_clear_cache' );
+add_action( 'of_save_options_before', 'silver_facebook_clear_cache' );
 
 /**
  * Validate an Instagram access token.
  *
  * @return void
  */
-function flatsome_ajax_validate_instagram_access_token() {
-	if ( ! wp_verify_nonce( $_POST['nonce'], 'flatsome_advanced' ) ) {
-		wp_send_json_error( __( 'Invalid nonce.', 'flatsome-admin' ) );
+function silver_ajax_validate_instagram_access_token() {
+	if ( ! wp_verify_nonce( $_POST['nonce'], 'silver_advanced' ) ) {
+		wp_send_json_error( __( 'Invalid nonce.', 'silver' ) );
 	}
 
 	$access_token = isset( $_POST['access_token'] )
@@ -295,7 +295,7 @@ function flatsome_ajax_validate_instagram_access_token() {
 		: '';
 
 	if ( empty( $access_token ) ) {
-		wp_send_json_error( __( 'Invalid access token.', 'flatsome-admin' ) );
+		wp_send_json_error( __( 'Invalid access token.', 'silver' ) );
 	}
 
 	$response = wp_remote_get(
@@ -314,14 +314,14 @@ function flatsome_ajax_validate_instagram_access_token() {
 	if ( is_wp_error( $response ) ) {
 		wp_send_json_error( $response->get_error_message() );
 	} elseif ( wp_remote_retrieve_response_code( $response ) !== 200 ) {
-		wp_send_json_error( __( 'Invalid access token.', 'flatsome-admin' ) );
+		wp_send_json_error( __( 'Invalid access token.', 'silver' ) );
 	}
 
 	$body = wp_remote_retrieve_body( $response );
 	$data = json_decode( $body, true );
 
 	if ( ! isset( $data['username'] ) ) {
-		wp_send_json_error( __( 'No username found for the access token', 'flatsome-admin' ) );
+		wp_send_json_error( __( 'No username found for the access token', 'silver' ) );
 	}
 
 	// Set the expiration date to a week from now.
@@ -330,4 +330,4 @@ function flatsome_ajax_validate_instagram_access_token() {
 
 	wp_send_json_success( $data );
 }
-add_action( 'wp_ajax_flatsome_validate_instagram_access_token', 'flatsome_ajax_validate_instagram_access_token' );
+add_action( 'wp_ajax_silver_validate_instagram_access_token', 'silver_ajax_validate_instagram_access_token' );

@@ -185,7 +185,7 @@ if ( ! get_theme_mod( 'activated_before' ) && is_admin() && isset( $_GET['activa
 	/**
 	 * Set Default WooCommerce Image sizes upon theme activation.
 	 */
-	function flatsome_woocommerce_image_dimensions() {
+	function silver_woocommerce_image_dimensions() {
 		$single  = array(
 			'width'  => '510',
 			'height' => '600',
@@ -207,16 +207,16 @@ if ( ! get_theme_mod( 'activated_before' ) && is_admin() && isset( $_GET['activa
 		update_option( 'woocommerce_admin_customize_store_completed', 'yes' );
 	}
 
-	add_action( 'init', 'flatsome_woocommerce_image_dimensions', 1 );
+	add_action( 'init', 'silver_woocommerce_image_dimensions', 1 );
 
 	/**
 	 * Set a theme mod to retrieve first activation state from.
 	 */
-	function flatsome_first_activation_state() {
+	function silver_first_activation_state() {
 		if ( ! get_theme_mod( 'activated_before' ) ) {
 			set_theme_mod( 'activated_before', true );
 		}
 	}
 
-	add_action( 'shutdown', 'flatsome_first_activation_state' );
+	add_action( 'shutdown', 'silver_first_activation_state' );
 }

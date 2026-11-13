@@ -5,7 +5,7 @@ add_ux_builder_shortcode( 'testimonial', array(
     'name' => __( 'Testimonial' ),
     'category' => __( 'Content' ),
     'wrapper' => false,
-    'thumbnail' =>  flatsome_ux_builder_thumbnail( 'testimonials' ),
+    'thumbnail' =>  silver_ux_builder_thumbnail( 'testimonials' ),
     'allow_in' => array('text_box'),
     'presets' => array(
         array(
@@ -30,12 +30,49 @@ add_ux_builder_shortcode( 'testimonial', array(
         ),
     ),
     'options' => array(
+        // Avatar: an image or a circle with the short name (initials).
+        'avatar' => array(
+            'type' => 'radio-buttons',
+            'heading' => 'Avatar',
+            'default' => 'image',
+            'options' => array(
+                'image' => array( 'title' => 'Image' ),
+                'initials' => array( 'title' => 'Short name' ),
+            ),
+        ),
         'image' => array(
             "type" => "image",
             "heading" => "Image",
-            "value" => ""
+            "value" => "",
+            'conditions' => 'avatar !== "initials"',
+        ),
+        'initials' => array(
+            'type' => 'textfield',
+            'heading' => 'Short name',
+            'description' => 'Để trống: tự lấy chữ đầu của Name (Minh Anh → MA).',
+            'default' => '',
+            'conditions' => 'avatar === "initials"',
+        ),
+        'initials_bg' => array(
+            'type' => 'colorpicker',
+            'heading' => 'Short name background',
+            'alpha' => true,
+            'format' => 'rgb',
+            'position' => 'bottom right',
+            'conditions' => 'avatar === "initials"',
+            'helpers' => require( __DIR__ . '/helpers/colors.php' ),
+        ),
+        'initials_color' => array(
+            'type' => 'colorpicker',
+            'heading' => 'Short name color',
+            'alpha' => true,
+            'format' => 'rgb',
+            'position' => 'bottom right',
+            'conditions' => 'avatar === "initials"',
+            'helpers' => require( __DIR__ . '/helpers/colors-text.php' ),
         ),
         'image_width' => array(
+          'responsive' => true,
           "type" => "slider",
           "heading" => "Image Width",
           "unit" => "px",
@@ -46,17 +83,6 @@ add_ux_builder_shortcode( 'testimonial', array(
             'selector' => '.icon-box-img',
             'style' => 'width: {{ value }}px'
           ),
-        ),
-        'pos' => array(
-            "type" => "select",
-            "heading" => "Image Position",
-            "default" => 'left',
-            "options" => array(
-              'top' => 'Top',
-              'center' => 'Center',
-              'left' => 'Left',
-              'right' => 'Right',
-            )
         ),
        'name' => array(
             "type" => "textfield",

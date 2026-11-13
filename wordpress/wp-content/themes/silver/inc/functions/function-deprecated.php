@@ -3,11 +3,11 @@
  * Deprecated functions that are no longer used
  * and will be removed in future updates.
  *
- * @package flatsome
+ * @package silver
  */
 
 /**
- * Get Flatsome option
+ * Get Silver option
  *
  * @deprecated in favor of get_theme_mod()
  *
@@ -15,17 +15,17 @@
  *
  * @return mixed Theme modification value.
  */
-function flatsome_option( string $option ) {
+function silver_option( string $option ) {
 	_deprecated_function( __METHOD__, '3.19.9', 'get_theme_mod()' );
 
 	// Get options.
-	return get_theme_mod( $option, flatsome_defaults( $option ) );
+	return get_theme_mod( $option, silver_defaults( $option ) );
 }
 
 
-if ( ! function_exists( 'flatsome_defaults' ) ) {
+if ( ! function_exists( 'silver_defaults' ) ) {
 	/**
-	 * Flatsome default option values
+	 * Silver default option values
 	 *
 	 * @deprecated in favor of get_theme_mod()
 	 *
@@ -33,7 +33,7 @@ if ( ! function_exists( 'flatsome_defaults' ) ) {
 	 *
 	 * @return mixed Theme modification value.
 	 */
-	function flatsome_defaults( string $option ) {
+	function silver_defaults( string $option ) {
 		_deprecated_function( __METHOD__, '3.19.9' );
 
 		$df = array(

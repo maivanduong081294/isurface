@@ -2,7 +2,7 @@
 /**
  * Shape divider options.
  *
- * @package Flatsome
+ * @package Silver
  */
 
 return array(

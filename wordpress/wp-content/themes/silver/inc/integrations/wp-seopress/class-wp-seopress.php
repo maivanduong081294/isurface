@@ -3,18 +3,18 @@
  * SEOPress integration
  *
  * @author      UX Themes
- * @package     Flatsome\Integrations
+ * @package     Silver\Integrations
  * @since       3.16.0
  */
 
-namespace Flatsome\Integrations;
+namespace Silver\Integrations;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Class WP_SEOPress
  *
- * @package Flatsome\Integrations
+ * @package Silver\Integrations
  */
 class WP_SEOPress {
 
@@ -39,8 +39,8 @@ class WP_SEOPress {
 		// Breadcrumb.
 		if ( get_theme_mod( 'wpseopress_breadcrumb' ) ) {
 			add_action( 'wp_head', array( $this, 'add_css' ), 110 );
-			remove_action( 'flatsome_breadcrumb', 'woocommerce_breadcrumb', 20 );
-			add_action( 'flatsome_breadcrumb', [ $this, 'wpseopress_breadcrumb' ], 20 );
+			remove_action( 'silver_breadcrumb', 'woocommerce_breadcrumb', 20 );
+			add_action( 'silver_breadcrumb', [ $this, 'wpseopress_breadcrumb' ], 20 );
 		}
 	}
 
@@ -88,11 +88,11 @@ class WP_SEOPress {
 			return;
 		}
 
-		$css  = '<style id="flatsome-seopress-css">';
+		$css  = '<style id="silver-seopress-css">';
 		$css .= $output;
 		$css .= '</style>';
 
-		echo flatsome_minify_css( $css ); // phpcs:ignore WordPress.Security.EscapeOutput
+		echo silver_minify_css( $css ); // phpcs:ignore WordPress.Security.EscapeOutput
 	}
 
 	/**

@@ -2,13 +2,13 @@
 
 add_ux_builder_shortcode( 'ux_html', array(
 	'type'      => 'container',
-	'name'      => __( 'HTML', 'flatsome' ),
-	'category'  => __( 'Content', 'flatsome' ),
+	'name'      => __( 'HTML', 'silver' ),
+	'category'  => __( 'Content', 'silver' ),
 	'compile'   => false,
 	'overlay'   => true,
-	'thumbnail' => flatsome_ux_builder_thumbnail( 'ux_html' ),
+	'thumbnail' => silver_ux_builder_thumbnail( 'ux_html' ),
 	'info'      => '{{ label }}',
-	'template'  => flatsome_ux_builder_template( 'ux_html.html' ),
+	'template'  => silver_ux_builder_template( 'ux_html.html' ),
 	'priority'  => 3,
 
 	'options'   => array(

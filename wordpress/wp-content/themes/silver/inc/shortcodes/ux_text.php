@@ -3,7 +3,7 @@
 /**
  * Registers the `ux_text` shortcode.
  *
- * @package flatsome
+ * @package silver
  */
 
 /**
@@ -15,7 +15,7 @@
  *
  * @return string
  */
-function flatsome_render_ux_text_shortcode($atts, $content, $tag)
+function silver_render_ux_text_shortcode($atts, $content, $tag)
 {
 	$atts = ux_builder_shortcode_atts(
 		array(
@@ -75,4 +75,4 @@ function flatsome_render_ux_text_shortcode($atts, $content, $tag)
 
 	return ob_get_clean();
 }
-add_shortcode('ux_text', 'flatsome_render_ux_text_shortcode');
+add_shortcode('ux_text', 'silver_render_ux_text_shortcode');

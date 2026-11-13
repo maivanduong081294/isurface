@@ -13,7 +13,7 @@
  * @see              https://woocommerce.com/document/template-structure/
  * @package          WooCommerce\Templates
  * @version          9.3.0
- * @flatsome-version 3.20.0
+ * @silver-version 3.20.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -40,8 +40,8 @@ if ( $total <= 1 ) {
 					'add_args'  => false,
 					'current'   => max( 1, $current ),
 					'total'     => $total,
-					'prev_text' => get_flatsome_icon( 'icon-angle-left' ),
-					'next_text' => get_flatsome_icon( 'icon-angle-right' ),
+					'prev_text' => get_silver_icon( 'icon-angle-left' ),
+					'next_text' => get_silver_icon( 'icon-angle-right' ),
 					'type'      => 'array',
 					'end_size'  => 3,
 					'mid_size'  => 3,
@@ -54,8 +54,8 @@ if ( $total <= 1 ) {
 			echo '<ul class="page-numbers nav-pagination links text-center">';
 			foreach ( $pages as $page ) {
 				$page = str_replace( 'page-numbers', 'page-number', $page );
-				$page = str_replace( '<a class="next page-number', '<a aria-label="' . esc_attr__( 'Next', 'flatsome' ) . '" class="next page-number', $page );
-				$page = str_replace( '<a class="prev page-number', '<a aria-label="' . esc_attr__( 'Previous', 'flatsome' ) . '" class="prev page-number', $page );
+				$page = str_replace( '<a class="next page-number', '<a aria-label="' . esc_attr__( 'Next', 'silver' ) . '" class="next page-number', $page );
+				$page = str_replace( '<a class="prev page-number', '<a aria-label="' . esc_attr__( 'Previous', 'silver' ) . '" class="prev page-number', $page );
 				echo '<li>' . $page . '</li>';
 			}
 			echo '</ul>';

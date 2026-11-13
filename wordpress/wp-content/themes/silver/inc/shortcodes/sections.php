@@ -9,6 +9,7 @@ function ux_section( $atts, $content = null ) {
 		'sticky'           => '',
 		// Background.
 		'bg'               => '',
+		'bg_visible'               => 'show',
 		'bg_size'          => '',
 		'bg_color'         => '',
 		'bg_overlay'       => '',
@@ -119,7 +120,7 @@ function ux_section( $atts, $content = null ) {
 
 	// Background effects.
 	if ( $effect ) {
-		wp_enqueue_style( 'flatsome-effects' );
+		wp_enqueue_style( 'silver-effects' );
 	}
 
 	// Add Full Height Class.
@@ -144,14 +145,14 @@ function ux_section( $atts, $content = null ) {
 			<?php require __DIR__ . '/commons/background-image.php'; ?>
 			<?php require( __DIR__ . '/commons/video.php' ); ?>
 			<?php
-			if ( $bg_overlay ) {
+			if ( silver_responsive_values( $atts, 'bg_overlay' ) ) {
 				echo '<div class="section-bg-overlay absolute fill"></div>';
 			}
 			if ( $loading ) {
 				echo '<div class="loading-spin centered"></div>';
 			}
 			if ( $scroll_for_more ) {
-				echo '<button class="scroll-for-more z-5 icon absolute bottom h-center" aria-label="' . esc_attr__( 'Scroll for more', 'flatsome' ) . '">' . get_flatsome_icon( 'icon-angle-down', '42px' ) . '</button>';
+				echo '<button class="scroll-for-more z-5 icon absolute bottom h-center" aria-label="' . esc_attr__( 'Scroll for more', 'silver' ) . '">' . get_silver_icon( 'icon-angle-down', '42px' ) . '</button>';
 			}
 			if ( $effect ) {
 				echo '<div class="effect-' . esc_attr( $effect ) . ' bg-effect fill no-click"></div>';
@@ -233,6 +234,9 @@ function ux_section( $atts, $content = null ) {
 			) );
 		}
 		echo ux_builder_element_style_tag( $_id, $args, $atts );
+
+		// Responsive text color (Light / Dark) for larger screens.
+		echo silver_responsive_style_tag( $_id, $atts, silver_responsive_scheme_rules( 'dark', '', 'true', 'false', array( 'only_overrides' => true, 'default' => 'false' ) ) );
 		?>
 	</section>
 	<?php

@@ -2,11 +2,11 @@
 /**
  * Mobile cart element.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.20.0
+ * @package          Silver\Templates
+ * @silver-version 3.20.0
  */
 
-if ( is_woocommerce_activated() && flatsome_is_wc_cart_available() ) {
+if ( is_woocommerce_activated() && silver_is_wc_cart_available() ) {
 	// Get Cart replacement for catalog_mode.
 	if ( get_theme_mod( 'catalog_mode', 0 ) ) {
 		get_template_part( 'template-parts/header/partials/element', 'cart-replace' );
@@ -18,7 +18,7 @@ if ( is_woocommerce_activated() && flatsome_is_wc_cart_available() ) {
 	$icon                = get_theme_mod( 'cart_icon', 'basket' );
 	$custom_cart_icon_id = get_theme_mod( 'custom_cart_icon' );
 	$custom_cart_icon    = wp_get_attachment_image_src( $custom_cart_icon_id, 'large' );
-	$disable_mini_cart   = apply_filters( 'flatsome_disable_mini_cart', is_cart() || is_checkout() );
+	$disable_mini_cart   = apply_filters( 'silver_disable_mini_cart', is_cart() || is_checkout() );
 
   if ( $disable_mini_cart ) {
     $cart_style = 'link';
@@ -28,7 +28,7 @@ if ( is_woocommerce_activated() && flatsome_is_wc_cart_available() ) {
 
 	$link_atts = array(
 		'href'          => is_customize_preview() ? '#' : esc_url( wc_get_cart_url() ), // Prevent none link mode to navigate in customizer.
-		'class'         => 'header-cart-link nav-top-link ' . get_flatsome_icon_class( $icon_style, 'small' ),
+		'class'         => 'header-cart-link nav-top-link ' . get_silver_icon_class( $icon_style, 'small' ),
 		'title'         => esc_attr__( 'Cart', 'woocommerce' ),
 		'aria-label'    => esc_attr__( 'View cart', 'woocommerce' ),
 		'aria-expanded' => $is_cart_link ? null : 'false',
@@ -53,7 +53,7 @@ if ( is_woocommerce_activated() && flatsome_is_wc_cart_available() ) {
 
 <?php if($icon_style && $icon_style !== 'plain') { ?><div class="header-button"><?php } ?>
 
-		<a <?php echo flatsome_html_atts( $link_atts ); ?>>
+		<a <?php echo silver_html_atts( $link_atts ); ?>>
 
 <?php
 if($custom_cart_icon) { ?>
@@ -67,7 +67,7 @@ else { ?>
     <strong><?php echo WC()->cart->get_cart_contents_count(); ?></strong>
   </span>
   <?php } else { ?>
-	<?php echo get_flatsome_icon( 'icon-shopping-' . $icon, null, array( 'data-icon-label' => WC()->cart->get_cart_contents_count() ) ); ?>
+	<?php echo get_silver_icon( 'icon-shopping-' . $icon, null, array( 'data-icon-label' => WC()->cart->get_cart_contents_count() ) ); ?>
   <?php } ?>
 <?php }  ?>
 </a>
@@ -90,7 +90,7 @@ else { ?>
       <?php if($custom_cart_content) {
         echo '<div class="header-cart-content">'.do_shortcode($custom_cart_content).'</div>'; }
       ?>
-       <?php do_action('flatsome_cart_sidebar'); ?>
+       <?php do_action('silver_cart_sidebar'); ?>
   </div>
   </div>
 

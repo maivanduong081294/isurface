@@ -1,20 +1,20 @@
 <?php
 /**
- * Flatsome class.
+ * Silver class.
  *
  * @author  UX Themes
- * @package Flatsome
+ * @package Silver
  * @since   3.18.0
  */
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Class Flatsome
+ * Class Silver
  *
- * @package Flatsome
+ * @package Silver
  */
-final class Flatsome {
+final class Silver {
 
 	/**
 	 * Parent theme version.
@@ -24,39 +24,39 @@ final class Flatsome {
 	private $version;
 
 	/**
-	 * The Flatsome_Theme_JSON instance.
+	 * The Silver_Theme_JSON instance.
 	 *
-	 * @var Flatsome_Theme_JSON
+	 * @var Silver_Theme_JSON
 	 */
 	private $theme_json;
 
 	/**
 	 * The single instance of the class.
 	 *
-	 * @var Flatsome
+	 * @var Silver
 	 */
 	protected static $instance = null;
 
 	/**
-	 * Flatsome constructor.
+	 * Silver constructor.
 	 */
 	private function __construct() {
 		$this->version = wp_get_theme( get_template() )->get( 'Version' );
 
-		$this->theme_json = new Flatsome_Theme_JSON();
+		$this->theme_json = new Silver_Theme_JSON();
 	}
 
 	/**
-	 * Initialize Flatsome.
+	 * Initialize Silver.
 	 */
 	public function init() {
 		$this->theme_json->init();
 
 		if ( is_woocommerce_activated() ) {
-			Flatsome\WooCommerce\MiniCart::get_instance();
-			Flatsome\WooCommerce\Shipping::get_instance();
-			Flatsome\WooCommerce\BuyNow::get_instance();
-			Flatsome\WooCommerce\Brands::get_instance();
+			Silver\WooCommerce\MiniCart::get_instance();
+			Silver\WooCommerce\Shipping::get_instance();
+			Silver\WooCommerce\BuyNow::get_instance();
+			Silver\WooCommerce\Brands::get_instance();
 		}
 	}
 
@@ -73,7 +73,7 @@ final class Flatsome {
 	 * Main instance.
 	 *
 	 * @deprecated in favor of get_instance()
-	 * @return Flatsome
+	 * @return Silver
 	 */
 	public static function instance() {
 		_deprecated_function( __METHOD__, '3.19.0', 'get_instance()' );
@@ -83,7 +83,7 @@ final class Flatsome {
 	/**
 	 * Main instance.
 	 *
-	 * @return Flatsome
+	 * @return Silver
 	 */
 	public static function get_instance() {
 		if ( is_null( self::$instance ) ) {

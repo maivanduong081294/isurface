@@ -1,8 +1,8 @@
 <?php
 /**
- * Flatsome_Registration class.
+ * Silver_Registration class.
  *
- * @package Flatsome
+ * @package Silver
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,9 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Base Flatsome registration.
+ * Base Silver registration.
  */
-class Flatsome_Base_Registration {
+class Silver_Base_Registration {
 
 	/**
 	 * The UX Themes API instance.
@@ -46,7 +46,7 @@ class Flatsome_Base_Registration {
 	 * @return array|WP_error
 	 */
 	public function register( $code ) {
-		return new WP_Error( 500, __( 'Not allowed.', 'flatsome' ) );
+		return new WP_Error( 500, __( 'Not allowed.', 'silver' ) );
 	}
 
 	/**
@@ -55,7 +55,7 @@ class Flatsome_Base_Registration {
 	 * @return array|WP_error
 	 */
 	public function unregister() {
-		return new WP_Error( 500, __( 'Not allowed.', 'flatsome' ) );
+		return new WP_Error( 500, __( 'Not allowed.', 'silver' ) );
 	}
 
 	/**
@@ -64,7 +64,7 @@ class Flatsome_Base_Registration {
 	 * @return array|WP_error
 	 */
 	public function get_latest_version() {
-		return new WP_Error( 500, __( 'Not allowed.', 'flatsome' ) );
+		return new WP_Error( 500, __( 'Not allowed.', 'silver' ) );
 	}
 
 	/**
@@ -74,11 +74,11 @@ class Flatsome_Base_Registration {
 	 * @return array|WP_error
 	 */
 	public function get_download_url( $version ) {
-		return new WP_Error( 500, __( 'Not allowed.', 'flatsome' ) );
+		return new WP_Error( 500, __( 'Not allowed.', 'silver' ) );
 	}
 
 	/**
-	 * Checks whether Flatsome is registered or not.
+	 * Checks whether Silver is registered or not.
 	 *
 	 * @return boolean
 	 */

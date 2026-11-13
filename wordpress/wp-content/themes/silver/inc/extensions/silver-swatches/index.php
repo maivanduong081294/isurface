@@ -1,7 +1,7 @@
 <?php // @codingStandardsIgnoreLine
 
 
-namespace Flatsome\Extensions;
+namespace Silver\Extensions;
 
 defined( 'ABSPATH' ) || exit;
 

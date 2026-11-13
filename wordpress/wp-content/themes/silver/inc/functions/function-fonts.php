@@ -5,7 +5,7 @@
  *
  * @return string The link
  */
-function flatsome_get_google_fonts_link() {
+function silver_get_google_fonts_link() {
 	$type_headings = get_theme_mod( 'type_headings', array( 'font-family' => 'Lato', 'variant' => '700' ) );
 	$type_texts    = get_theme_mod( 'type_texts', array( 'font-family' => 'Lato', 'variant' => 'regular' ) );
 	$type_nav      = get_theme_mod( 'type_nav', array( 'font-family' => 'Lato', 'variant' => '700' ) );
@@ -80,12 +80,12 @@ function flatsome_get_google_fonts_link() {
 /**
  * Add google font style when not disabled.
  */
-function flatsome_google_fonts() {
+function silver_google_fonts() {
 	if ( ! get_theme_mod( 'google_fonts_cdn' ) || get_theme_mod( 'disable_fonts', 0 ) ) {
 		return;
 	}
 
-	wp_enqueue_style( 'flatsome-googlefonts', flatsome_get_google_fonts_link(), array(), '3.9' );
+	wp_enqueue_style( 'silver-googlefonts', silver_get_google_fonts_link(), array(), '3.9' );
 }
 
-add_action( 'wp_enqueue_scripts', 'flatsome_google_fonts', 9999 );
+add_action( 'wp_enqueue_scripts', 'silver_google_fonts', 9999 );

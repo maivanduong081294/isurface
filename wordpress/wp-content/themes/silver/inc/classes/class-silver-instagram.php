@@ -1,8 +1,8 @@
 <?php
 /**
- * Flatsome_Instagram class.
+ * Silver_Instagram class.
  *
- * @package Flatsome
+ * @package Silver
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,9 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Flatsome_Instagram class.
+ * Silver_Instagram class.
  */
-class Flatsome_Instagram {
+class Silver_Instagram {
 
 	/**
 	 * The scheduled event name.
@@ -24,7 +24,7 @@ class Flatsome_Instagram {
 	/**
 	 * The single class instance.
 	 *
-	 * @var Flatsome_Instagram|null
+	 * @var Silver_Instagram|null
 	 */
 	protected static $instance = null;
 
@@ -39,7 +39,7 @@ class Flatsome_Instagram {
 	 * Initialize.
 	 */
 	public function init() {
-		if ( ! empty( flatsome_facebook_accounts() ) ) {
+		if ( ! empty( silver_facebook_accounts() ) ) {
 			add_action( 'admin_init', array( $this, 'schedule_event' ) );
 			add_action( 'switch_theme', array( $this, 'deschedule_event' ) );
 			add_action( $this->event, array( $this, 'refresh_access_tokens' ) );
@@ -70,7 +70,7 @@ class Flatsome_Instagram {
 	 * Deschedule the event if there are no accounts.
 	 */
 	public function deschedule_event_if_no_accounts() {
-		if ( empty( flatsome_facebook_accounts() ) ) {
+		if ( empty( silver_facebook_accounts() ) ) {
 			$this->deschedule_event();
 		}
 	}
@@ -79,7 +79,7 @@ class Flatsome_Instagram {
 	 * Refresh Instagram access tokens if they are about to expire.
 	 */
 	public function refresh_access_tokens() {
-		$accounts = flatsome_facebook_accounts();
+		$accounts = silver_facebook_accounts();
 
 		if ( empty( $accounts ) ) {
 			return;
@@ -145,9 +145,9 @@ class Flatsome_Instagram {
 	}
 
 	/**
-	 * Main Flatsome_Instagram instance
+	 * Main Silver_Instagram instance
 	 *
-	 * @return Flatsome_Instagram
+	 * @return Silver_Instagram
 	 */
 	public static function get_instance() {
 		if ( is_null( self::$instance ) ) {
@@ -157,4 +157,4 @@ class Flatsome_Instagram {
 	}
 }
 
-Flatsome_Instagram::get_instance();
+Silver_Instagram::get_instance();

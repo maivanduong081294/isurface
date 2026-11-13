@@ -2,8 +2,8 @@
 /**
  * Product gallery wide.
  *
- * @package          Flatsome/WooCommerce/Templates
- * @flatsome-version 3.19.9
+ * @package          Silver/WooCommerce/Templates
+ * @silver-version 3.19.9
  */
 
 ?>
@@ -25,9 +25,9 @@
 			<div class="product-info">
 				<div class="row">
 					<div class="xlarge-7 col">
-						<div class="entry-summary <?php flatsome_product_summary_classes();?>">
+						<div class="entry-summary <?php silver_product_summary_classes();?>">
 							<?php
-								 flatsome_breadcrumb();
+								 silver_breadcrumb();
 								 woocommerce_template_single_title();
 								 woocommerce_template_single_rating();
 								 woocommerce_template_single_excerpt();
@@ -39,14 +39,14 @@
 						</div>
 					</div>
 					<div class="xlarge-5 col">
-						<div class="is-well add-to-cart-wrapper <?php flatsome_product_summary_classes( false, false, true );?>">
+						<div class="is-well add-to-cart-wrapper <?php silver_product_summary_classes( false, false, true );?>">
 							<?php
 
 								if ( ! get_theme_mod( 'catalog_mode', 0 ) ) {
 									woocommerce_template_single_price();
-									flatsome_before_add_to_cart_html();
+									silver_before_add_to_cart_html();
 									woocommerce_template_single_add_to_cart();
-									flatsome_after_add_to_cart_html();
+									silver_after_add_to_cart_html();
 								} else {
 									if ( get_theme_mod( 'catalog_mode_prices', 0 ) ) {
 										woocommerce_template_single_price();
@@ -63,7 +63,7 @@
 					<div id="product-sidebar" class="mfp-hide">
 						<div class="sidebar-inner">
 							<?php
-								do_action( 'flatsome_before_product_sidebar' );
+								do_action( 'silver_before_product_sidebar' );
 								if ( is_active_sidebar( 'product-sidebar' ) ) {
 									dynamic_sidebar( 'product-sidebar' );
 								} else if ( is_active_sidebar( 'shop-sidebar' ) ) {

@@ -563,7 +563,7 @@ class Options_Machine {
 					}
 
 					$output .= '<div class="backup-box">';
-					$output .= '<p><strong>'. __('Last Backup : ', 'flatsome-admin').'<span class="backup-log">'.$log.'</span></strong></p>'."\n";
+					$output .= '<p><strong>'. __('Last Backup : ', 'silver').'<span class="backup-log">'.$log.'</span></strong></p>'."\n";
 					$output .= '<a href="#" id="of_backup_button" class="button" title="Backup Options">Backup Options</a>';
 
 					if ( isset( $backup['backup_log'] ) ) :

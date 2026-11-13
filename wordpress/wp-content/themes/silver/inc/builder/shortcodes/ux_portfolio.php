@@ -61,7 +61,7 @@ $options = array(
 	    'heading'    => __( 'Lightbox Image Size' ),
 	    'conditions' => 'lightbox == "true"',
 	    'default'    => 'original',
-	    'options'    => flatsome_ux_builder_image_sizes(),
+	    'options'    => silver_ux_builder_image_sizes(),
     ),
 
     'ids' => array(
@@ -143,10 +143,10 @@ add_ux_builder_shortcode( 'ux_portfolio', array(
    'name' => __( 'Portfolio' ),
    'category' => __( 'Content' ),
    'wrap' => true,
-   'thumbnail' =>  flatsome_ux_builder_thumbnail( 'portfolio' ),
+   'thumbnail' =>  silver_ux_builder_thumbnail( 'portfolio' ),
     'scripts' => array(
-        'flatsome-masonry-js' => get_template_directory_uri() .'/assets/libs/packery.pkgd.min.js',
-        'flatsome-isotope-js' => get_template_directory_uri() .'/assets/libs/isotope.pkgd.min.js',
+        'silver-masonry-js' => get_template_directory_uri() .'/assets/libs/packery.pkgd.min.js',
+        'silver-isotope-js' => get_template_directory_uri() .'/assets/libs/isotope.pkgd.min.js',
     ),
    'presets' => array(
         array(

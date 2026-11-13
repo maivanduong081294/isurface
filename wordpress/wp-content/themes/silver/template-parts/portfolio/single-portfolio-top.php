@@ -2,8 +2,8 @@
 /**
  * Portfolio single top.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.19.9
+ * @package          Silver\Templates
+ * @silver-version 3.19.9
  */
 
 get_template_part( 'template-parts/portfolio/portfolio-title', get_theme_mod( 'portfolio_title', '' ) );

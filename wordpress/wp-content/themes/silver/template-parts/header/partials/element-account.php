@@ -2,8 +2,8 @@
 /**
  * Account element.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.20.0
+ * @package          Silver\Templates
+ * @silver-version 3.20.0
  */
 
 if ( ! is_woocommerce_activated() ) {
@@ -12,7 +12,7 @@ if ( ! is_woocommerce_activated() ) {
 	return;
 }
 
-global $flatsome_header_account_add_lightbox_template;
+global $silver_header_account_add_lightbox_template;
 
 $icon_style           = get_theme_mod( 'account_icon_style' );
 $header_account_title = get_theme_mod( 'header_account_title', 1 );
@@ -25,7 +25,7 @@ if ( is_account_page() ) $li_atts['class'][]   = 'active';
 if ( is_user_logged_in() ) $li_atts['class'][] = 'has-dropdown';
 ?>
 
-<li <?php echo flatsome_html_atts( $li_atts ); ?>>
+<li <?php echo silver_html_atts( $li_atts ); ?>>
 <?php if ( $is_button ) echo '<div class="header-button">'; ?>
 
 <?php
@@ -40,16 +40,16 @@ if ( is_user_logged_in() ) :
 	];
 
 	if ( $icon_style && $icon_style !== 'image' ) {
-		$link_atts['class'][] = get_flatsome_icon_class( $icon_style, 'small' );
+		$link_atts['class'][] = get_silver_icon_class( $icon_style, 'small' );
 	}
 	?>
-	<a <?php echo flatsome_html_atts( $link_atts ); ?>>
+	<a <?php echo silver_html_atts( $link_atts ); ?>>
 		<?php if ( get_theme_mod( 'header_account_title', 1 ) ) : ?>
 			<span class="header-account-title">
 				<?php
 				if ( get_theme_mod( 'header_account_username' ) ) :
 					$wp_current_user = wp_get_current_user();
-					echo esc_html( apply_filters( 'flatsome_header_account_username', $wp_current_user->display_name ) );
+					echo esc_html( apply_filters( 'silver_header_account_username', $wp_current_user->display_name ) );
 				else :
 					esc_html_e( 'My account', 'woocommerce' );
 				endif;
@@ -61,7 +61,7 @@ if ( is_user_logged_in() ) :
 		if ( $icon_style == 'image' ) :
 			echo '<i aria-hidden="true" class="image-icon circle">' . get_avatar( get_current_user_id() ) . '</i>';
 		elseif ( $icon_style ) :
-			echo get_flatsome_icon( 'icon-user' );
+			echo get_silver_icon( 'icon-user' );
 		endif;
 		?>
 	</a>
@@ -70,12 +70,12 @@ else : // Show login/register link.
 	$is_lightbox = get_theme_mod( 'account_login_style', 'lightbox' ) === 'lightbox' && ! is_checkout() && ! is_account_page();
 
 	if ( $is_lightbox ) {
-		$flatsome_header_account_add_lightbox_template = true;
+		$silver_header_account_add_lightbox_template = true;
 	}
 
 	$link_atts = [
 		'href'          => esc_url( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ),
-		'class'         => [ 'nav-top-link', 'nav-top-not-logged-in', get_flatsome_icon_class( $icon_style, 'small' ) ],
+		'class'         => [ 'nav-top-link', 'nav-top-not-logged-in', get_silver_icon_class( $icon_style, 'small' ) ],
 		'title'         => esc_attr__( 'Login', 'woocommerce' ),
 		'role'          => $is_lightbox ? 'button' : null,
 		'data-open'     => $is_lightbox ? '#login-form-popup' : null,
@@ -86,10 +86,10 @@ else : // Show login/register link.
 	];
 
 	if ( $icon_style && $icon_style !== 'image' ) {
-		$link_atts['class'][] = get_flatsome_icon_class( $icon_style, 'small' );
+		$link_atts['class'][] = get_silver_icon_class( $icon_style, 'small' );
 	}
 	?>
-	<a <?php echo flatsome_html_atts( $link_atts ); ?>>
+	<a <?php echo silver_html_atts( $link_atts ); ?>>
 		<?php if ( get_theme_mod( 'header_account_title', 1 ) ) : ?>
 			<span>
 			<?php
@@ -101,7 +101,7 @@ else : // Show login/register link.
 			</span>
 			<?php
 		else :
-			echo get_flatsome_icon( 'icon-user' );
+			echo get_silver_icon( 'icon-user' );
 		endif;
 		?>
 	</a>
@@ -114,7 +114,7 @@ else : // Show login/register link.
 // Show Dropdown for logged in users.
 if ( is_user_logged_in() ) :
 	?>
-	<ul class="nav-dropdown <?php flatsome_dropdown_classes(); ?>">
+	<ul class="nav-dropdown <?php silver_dropdown_classes(); ?>">
 		<?php wc_get_template( 'myaccount/account-links.php' ); ?>
 	</ul>
 <?php endif; ?>

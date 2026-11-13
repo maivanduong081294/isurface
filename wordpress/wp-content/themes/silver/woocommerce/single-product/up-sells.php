@@ -13,7 +13,7 @@
  * @see              https://woocommerce.com/document/template-structure/
  * @package          WooCommerce\Templates
  * @version          9.6.0
- * @flatsome-version 3.19.9
+ * @silver-version 3.19.9
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -58,7 +58,7 @@ if ( $upsells ) : ?>
 				</h3>
 			<?php endif; ?>
 
-			<?php get_flatsome_repeater_start( $repeater ); ?>
+			<?php get_silver_repeater_start( $repeater ); ?>
 
 			<?php foreach ( $upsells as $upsell ) :
 				$post_object = get_post( $upsell->get_id() );
@@ -69,7 +69,7 @@ if ( $upsells ) : ?>
 			endforeach;
 			?>
 
-			<?php get_flatsome_repeater_end( $repeater ); ?>
+			<?php get_silver_repeater_end( $repeater ); ?>
 		</div>
 	<?php else : ?>
 

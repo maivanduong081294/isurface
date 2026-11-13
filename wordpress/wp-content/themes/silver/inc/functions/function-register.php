@@ -2,7 +2,7 @@
 /**
  * Register functions.
  *
- * @package flatsome
+ * @package silver
  */
 
 /**
@@ -15,9 +15,9 @@
  *
  * @return void
  */
-function flatsome_register_follow_link( $key, $label, $link_args = array(), $option = true ) {
+function silver_register_follow_link( $key, $label, $link_args = array(), $option = true ) {
 	if ( $option ) {
-		Flatsome_Option::add_field( 'option', array(
+		Silver_Option::add_field( 'option', array(
 			'type'     => 'text',
 			'settings' => 'follow_' . $key,
 			'label'    => $label,
@@ -38,21 +38,21 @@ function flatsome_register_follow_link( $key, $label, $link_args = array(), $opt
 		return $out;
 	}, 10, 4 );
 
-	add_filter( 'flatsome_shortcode_team_member_social_links', function ( $out, $atts ) use ( $key ) {
+	add_filter( 'silver_shortcode_team_member_social_links', function ( $out, $atts ) use ( $key ) {
 		$out[ $key ] = ! empty( $atts[ $key ] ) ? $atts[ $key ] : '';
 
 		return $out;
 	}, 10, 2 );
 
-	add_filter( 'flatsome_shortcode_follow_social_links', function ( $out, $atts ) use ( $key ) {
+	add_filter( 'silver_shortcode_follow_social_links', function ( $out, $atts ) use ( $key ) {
 		$out[ $key ] = ! empty( $atts[ $key ] ) ? $atts[ $key ] : '';
 
 		return $out;
 	}, 10, 2 );
 
-	add_filter( 'flatsome_follow_links', function ( $links, $args ) use ( $key, $label, $link_args ) {
+	add_filter( 'silver_follow_links', function ( $links, $args ) use ( $key, $label, $link_args ) {
 		/* translators: %s: The label */
-		$follow_text = sprintf( esc_attr__( 'Follow on %s', 'flatsome' ), $label );
+		$follow_text = sprintf( esc_attr__( 'Follow on %s', 'silver' ), $label );
 		$global_link = get_theme_mod( 'follow_' . $key, '' );
 		$link        = $args['use_global_link'] ? $global_link : $args['atts'][ $key ];
 
@@ -67,7 +67,7 @@ function flatsome_register_follow_link( $key, $label, $link_args = array(), $opt
 				'title'      => $follow_text,
 				'aria-label' => $follow_text,
 			),
-			'icon'     => get_flatsome_icon( 'icon-' . $key ),
+			'icon'     => get_silver_icon( 'icon-' . $key ),
 			'priority' => 9999,
 		);
 

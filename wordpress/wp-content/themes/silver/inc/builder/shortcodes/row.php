@@ -5,8 +5,8 @@ add_ux_builder_shortcode( 'row', array(
     'name' => __( 'Row' , 'ux-builder' ),
     'image' => '',
     'category' => __( 'Layout' ),
-    'template' => flatsome_ux_builder_template( 'row.html' ),
-    'thumbnail' =>  flatsome_ux_builder_thumbnail( 'row' ),
+    'template' => silver_ux_builder_template( 'row.html' ),
+    'thumbnail' =>  silver_ux_builder_thumbnail( 'row' ),
     'tools' => 'shortcodes/row-tools.directive.html',
     'info' => '{{ label }}',
     'allow' => array( 'col' ),
@@ -18,72 +18,72 @@ add_ux_builder_shortcode( 'row', array(
         array(
             'name' => __( '3 Columns' ),
             'content' => '[row][col span__lg="4" span="12"][/col][col span__lg="4" span="12"][/col][col span__lg="4" span="12"][/col]][/row]',
-            'thumbnail' =>  flatsome_ux_builder_thumbnail( 'row-3-col' ),
+            'thumbnail' =>  silver_ux_builder_thumbnail( 'row-3-col' ),
         ),
         array(
             'name' => __( '2 Columns' ),
             'content' => '[row][col span__lg="6" span="12"][/col][col span__lg="6" span="12"][/col][/row]',
-            'thumbnail' =>  flatsome_ux_builder_thumbnail( 'row-2-col' ),
+            'thumbnail' =>  silver_ux_builder_thumbnail( 'row-2-col' ),
         ),
         array(
             'name' => __( '4 Columns' ),
-            'thumbnail' =>  flatsome_ux_builder_thumbnail( 'row-4-col' ),
+            'thumbnail' =>  silver_ux_builder_thumbnail( 'row-4-col' ),
             'content' => '[row][col span__lg="3" span="6"][/col][col span__lg="3" span="6"][/col][col span__lg="3" span="6"][/col][col span__lg="3" span="6"][/col][/row]'
         ),
         array(
             'name' => __( 'One Column' ),
             'content' => '[row][col span__lg="12" span="12"][/col][/row]',
-            'thumbnail' =>  flatsome_ux_builder_thumbnail( 'row-1-col' ),
+            'thumbnail' =>  silver_ux_builder_thumbnail( 'row-1-col' ),
         ),
         array(
             'name' => __( 'Large Right' ),
             'content' => '[row][col span__lg="4" span="12"][/col][col span__lg="8" span="12"][/col][/row]',
-            'thumbnail' =>  flatsome_ux_builder_thumbnail( 'row-1-3-col' ),
+            'thumbnail' =>  silver_ux_builder_thumbnail( 'row-1-3-col' ),
         ),
         array(
             'name' => __( 'Large Left' ),
             'content' => '[row][col span__lg="8" span="12"][/col][col span__lg="4" span="12"][/col][/row]',
-            'thumbnail' =>  flatsome_ux_builder_thumbnail( 'row-2-3-col' ),
+            'thumbnail' =>  silver_ux_builder_thumbnail( 'row-2-3-col' ),
         ),
         array(
             'name' => __( '2 Col - Full' ),
             'content' => '[row style="collapse" width="full-width"][col span__lg="6"][/col][col span__lg="6"][/col][/row]',
-            'thumbnail' =>  flatsome_ux_builder_thumbnail( 'row-2-col-full' ),
+            'thumbnail' =>  silver_ux_builder_thumbnail( 'row-2-col-full' ),
         ),
         array(
             'name' => __( '3 col - Full' ),
             'content' => '[row style="collapse" width="full-width"][col span__lg="4"][/col][col span__lg="4"][/col][col span__lg="4"][/col][/row]',
-            'thumbnail' =>  flatsome_ux_builder_thumbnail( 'row-3-col-full' ),
+            'thumbnail' =>  silver_ux_builder_thumbnail( 'row-3-col-full' ),
         ),
         array(
             'name' => __( 'Media Left' ),
             'content' => '[row  v_align="middle"][col span__lg="6" span="12"][ux_image][/col][col span__lg="6" span="12"][/col][/row]',
-            'thumbnail' =>  flatsome_ux_builder_thumbnail( 'row-image-left' ),
+            'thumbnail' =>  silver_ux_builder_thumbnail( 'row-image-left' ),
         ),
         array(
             'name' => __( 'Media Right' ),
             'content' => '[row v_align="middle"][col span__lg="6" span="12"][/col][col span__lg="6" span="12"][ux_image][/col][/row]',
-            'thumbnail' =>  flatsome_ux_builder_thumbnail( 'row-image-right' ),
+            'thumbnail' =>  silver_ux_builder_thumbnail( 'row-image-right' ),
         ),
         array(
             'name' => __( 'Large Media Left' ),
             'content' => '[row v_align="middle" style="collapse" width="full-width"][col span__lg="6" span="12"][ux_image][/col][col max_width="520px" padding="5% 5% 5% 5%" span__lg="6" span="12"][/col][/row]',
-            'thumbnail' =>  flatsome_ux_builder_thumbnail( 'row-image-left-large' ),
+            'thumbnail' =>  silver_ux_builder_thumbnail( 'row-image-left-large' ),
         ),
         array(
             'name' => __( 'Large Media Right' ),
             'content' => '[row v_align="middle" style="collapse" width="full-width"][col max_width="520px" padding="5% 5% 5% 5%" span__lg="6" span="12" width=""][/col][col span__lg="6" span="12"][ux_image][/col][/row]',
-            'thumbnail' =>  flatsome_ux_builder_thumbnail( 'row-image-right-large' ),
+            'thumbnail' =>  silver_ux_builder_thumbnail( 'row-image-right-large' ),
         ),
         array(
             'name' => __( '3 Columns - Drop Shadow' ),
             'content' => '[row depth="3" depth_hover="5"][col span__lg="4" span="12"][/col][col span__lg="4" span="12"][/col][col span__lg="4" span="12"][/col]][/row]',
-            'thumbnail' =>  flatsome_ux_builder_thumbnail( 'row-3-shadow-col' ),
+            'thumbnail' =>  silver_ux_builder_thumbnail( 'row-3-shadow-col' ),
         ),
         array(
             'name' => __( '3 Columns - Dashed' ),
             'content' => '[row col_style="dashed"][col span__lg="4" span="12"][/col][col span__lg="4" span="12"][/col][col span__lg="4" span="12"][/col][col span__lg="4" span="12"][/col][col span__lg="4" span="12"][/col][col span__lg="4" span="12"][/col]][/row]',
-            'thumbnail' =>  flatsome_ux_builder_thumbnail( 'row-3-col-dashed' ),
+            'thumbnail' =>  silver_ux_builder_thumbnail( 'row-3-col-dashed' ),
         )
     ),
 
@@ -142,13 +142,16 @@ add_ux_builder_shortcode( 'row', array(
 	        'max'        => 100,
         ),
 
+        // Responsive options: every choice has an explicit value because
+        // an empty value at a larger breakpoint means "inherit".
         'width' => array(
             'type' => 'radio-buttons',
             'heading' => 'Width',
             'full_width' => true,
-            'default' => '',
+            'responsive' => true,
+            'default' => 'container',
             'options' => array(
-                '' => array( 'title' => 'Container'),
+                'container' => array( 'title' => 'Container'),
                 'full-width' => array( 'title' => 'Full' ),
                 'custom' => array( 'title' => 'Custom' ),
             ),
@@ -158,6 +161,7 @@ add_ux_builder_shortcode( 'row', array(
             'type' => 'scrubfield',
             'conditions' => 'width == "custom"',
             'heading' => 'Custom Width',
+            'responsive' => true,
             'default' => '',
             'placeholder' => '1080px'
         ),
@@ -166,9 +170,10 @@ add_ux_builder_shortcode( 'row', array(
             'type' => 'radio-buttons',
             'heading' => 'Align Vertical',
             'full_width' => true,
-            'default' => '',
+            'responsive' => true,
+            'default' => 'top',
             'options' => array(
-                '' => array( 'title' => 'Top'),
+                'top' => array( 'title' => 'Top'),
                 'equal' => array( 'title' => 'Equal'),
                 'middle' => array( 'title' => 'Middle'),
                 'bottom' => array( 'title' => 'Bottom'),
@@ -179,11 +184,39 @@ add_ux_builder_shortcode( 'row', array(
             'type' => 'radio-buttons',
             'heading' => 'Align Horizontal',
             'full_width' => true,
-            'default' => '',
+            'responsive' => true,
+            'default' => 'left',
             'options' => array(
-                 '' => array( 'title' => 'Left'),
+                 'left' => array( 'title' => 'Left'),
                  'center' => array( 'title' => 'Center'),
                  'right' => array( 'title' => 'Right')
+            )
+        ),
+
+        // flex-wrap of the columns, per screen. "No wrap" keeps every column
+        // on one line (they shrink to fit).
+        'flex_wrap' => array(
+            'type' => 'radio-buttons',
+            'heading' => 'Flex wrap',
+            'full_width' => true,
+            'responsive' => true,
+            'default' => 'wrap',
+            'options' => array(
+                 'wrap' => array( 'title' => 'Wrap'),
+                 'nowrap' => array( 'title' => 'No wrap'),
+            )
+        ),
+
+        // Reverse the order of the columns (flex-direction: row-reverse), per screen.
+        'flex_reverse' => array(
+            'type' => 'radio-buttons',
+            'heading' => 'Reverse',
+            'full_width' => true,
+            'responsive' => true,
+            'default' => 'no',
+            'options' => array(
+                 'no' => array( 'title' => 'No'),
+                 'yes' => array( 'title' => 'Yes'),
             )
         ),
 

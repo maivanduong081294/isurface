@@ -1,6 +1,6 @@
 <?php
 
-function flatsome_team_member($atts, $content = null, $tag = ''){
+function silver_team_member($atts, $content = null, $tag = ''){
   extract( $atts = ux_builder_shortcode_atts( array(
       '_id' => null,
       'class' => '',
@@ -81,7 +81,7 @@ function flatsome_team_member($atts, $content = null, $tag = ''){
     if($depth) $classes_box[] = 'box-shadow-'.$depth;
     if($depth_hover) $classes_box[] = 'box-shadow-'.$depth_hover.'-hover';
 
-	$link_start = '<a href="' . esc_url( $link ) . '"' . flatsome_parse_target_rel( $link_atts ) . '>';
+	$link_start = '<a href="' . esc_url( $link ) . '"' . silver_parse_target_rel( $link_atts ) . '>';
 	$link_end   = '</a>';
 
     if($style) $classes_box[] = 'box-'.$style;
@@ -93,6 +93,10 @@ function flatsome_team_member($atts, $content = null, $tag = ''){
 
     if($image_hover)  $classes_image[] = 'image-'.$image_hover;
     if($image_hover_alt)  $classes_image[] = 'image-'.$image_hover_alt;
+
+    // Responsive Box styles: base value + CSS for larger screens.
+    $image_height = silver_responsive_base( $atts, 'image_height' ) ?: $image_height;
+    list( $_id, $responsive_style ) = silver_responsive_single_box( $_id, $atts, 'team-member-' );
 
     if($image_height)  $classes_image_inner[] = 'image-cover';
 
@@ -118,7 +122,7 @@ function flatsome_team_member($atts, $content = null, $tag = ''){
         array( 'attribute' => 'padding-top', 'value' => $image_height),
     );
 
-	$social_links = apply_filters( "flatsome_shortcode_{$tag}_social_links", array(
+	$social_links = apply_filters( "silver_shortcode_{$tag}_social_links", array(
 		'facebook'  => $facebook,
 		'instagram' => $instagram,
 		'tiktok'    => $tiktok,
@@ -139,12 +143,13 @@ function flatsome_team_member($atts, $content = null, $tag = ''){
 		'discord'   => $discord,
 	), $atts );
     ?>
-    <div class="box has-hover <?php echo esc_attr( implode( ' ', $classes_box ) ); ?>" <?php echo $animate; ?>>
+    <?php echo $responsive_style; // phpcs:ignore WordPress.Security.EscapeOutput ?>
+    <div<?php echo $_id ? ' id="' . esc_attr( $_id ) . '"' : ''; ?> class="box has-hover <?php echo esc_attr( implode( ' ', $classes_box ) ); ?>" <?php echo $animate; ?>>
 
          <?php if($link) echo $link_start; ?>
          <div class="box-image <?php echo esc_attr( implode( ' ', $classes_image ) ); ?>" <?php echo get_shortcode_inline_css($css_image); ?>>
            <div class="box-image-inner <?php echo esc_attr( implode( ' ', $classes_image_inner ) ); ?>" <?php echo get_shortcode_inline_css($css_image_inner); ?>>
-              <?php echo flatsome_get_image($img, $image_size); ?>
+              <?php echo silver_get_image($img, $image_size); ?>
               <?php if($image_overlay) { ?><div class="overlay" style="background-color:<?php echo esc_attr( $image_overlay ); ?>"></div><?php } ?>
            </div>
           </div>
@@ -158,7 +163,7 @@ function flatsome_team_member($atts, $content = null, $tag = ''){
                       <?php echo wp_kses_post( $title ); ?>
                     </span>
                   </h4>
-					<?php if ( count( array_filter( $social_links ) ) > 0 ) echo flatsome_apply_shortcode( 'follow', array_merge( array( 'style' => $icon_style, 'tooltip' => $tooltip === 'true' ? 'true' : 'false' ), $social_links ) );
+					<?php if ( count( array_filter( $social_links ) ) > 0 ) echo silver_apply_shortcode( 'follow', array_merge( array( 'style' => $icon_style, 'tooltip' => $tooltip === 'true' ? 'true' : 'false' ), $social_links ) );
 					if($style  !== 'overlay' && $style  !== 'shade') echo do_shortcode($content);
 					?>
                 </div>
@@ -173,4 +178,4 @@ function flatsome_team_member($atts, $content = null, $tag = ''){
     return $content;
 }
 
-add_shortcode('team_member','flatsome_team_member');
+add_shortcode('team_member','silver_team_member');

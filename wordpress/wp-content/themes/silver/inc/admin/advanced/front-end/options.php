@@ -21,7 +21,7 @@
 					<h3>Silver <br/>Advanced Options<span><?php echo ('Version: '. THEMEVERSION); ?></span></h3>
 				</div>
 					<div class="save_bar"> 
-						<button id ="of_save" type="button" class="button-primary"><?php _e('Save All Changes', 'flatsome-admin');?></button>			
+						<button id ="of_save" type="button" class="button-primary"><?php _e('Save All Changes', 'silver');?></button>			
 						<img style="display:none" src="<?php echo ADMIN_DIR; ?>assets/images/loading-bottom.gif" class="ajax-loading-img ajax-loading-img-bottom" alt="Working..." />
 		
 					</div><!--.save_bar--> 
@@ -49,7 +49,7 @@
 		  		<?php echo $options_machine->Inputs /* Settings */ ?>
 	  			<div class="save_bar" style="padding-left:0;"> 
 
-					<button id="of_save" type="button" class="button-primary"><?php _e('Save All Changes', 'flatsome-admin');?></button>
+					<button id="of_save" type="button" class="button-primary"><?php _e('Save All Changes', 'silver');?></button>
 					<img style="display:none" src="<?php echo ADMIN_DIR; ?>assets/images/loading-bottom.gif" class="ajax-loading-img ajax-loading-img-bottom" alt="Working..." />
 
 				</div><!--.save_bar--> 

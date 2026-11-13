@@ -2,23 +2,23 @@
 
 $preset_url = get_template_directory_uri().'/inc/admin/options/header/img/';
 
-Flatsome_Option::add_section( 'header-presets', array(
-    'title' => __( 'Presets', 'flatsome-admin' ),
+Silver_Option::add_section( 'header-presets', array(
+    'title' => __( 'Presets', 'silver' ),
     'panel' => 'header',
     'priority' => '1',
-    'description' => __( 'You can quick change between header presets here. This works best on a fresh install or resetted options. You can safely try new layouts without loosing changes. Just remember to NOT save if you do not want to use the selected preset.', 'flatsome-admin' ),
+    'description' => __( 'You can quick change between header presets here. This works best on a fresh install or resetted options. You can safely try new layouts without loosing changes. Just remember to NOT save if you do not want to use the selected preset.', 'silver' ),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
     'type'        => 'preset',
     'settings'    => 'preset_demo',
     'label'       => __( 'Preset', 'kirki' ),
     'section'     => 'header-presets',
-    'transport' => flatsome_customizer_transport(),
-    'choices'     => get_flatsome_header_presets()
+    'transport' => silver_customizer_transport(),
+    'choices'     => get_silver_header_presets()
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
     'type'        => 'custom',
     'settings' => 'select_preset',
     'section'     => 'header-presets',

@@ -2,8 +2,8 @@
 /**
  * Shortcode button.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.20.0
+ * @package          Silver\Templates
+ * @silver-version 3.20.0
  */
 ?>
 <div<?php if ( $_id ) : ?> id="<?php echo esc_attr( $_id ); ?>"<?php endif; ?> class="silver-button-wrapper<?php echo $class ? ' ' . esc_attr( $class ) : ''; ?>">

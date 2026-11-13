@@ -2,8 +2,8 @@
 /**
  * Posts featured.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.16.0
+ * @package          Silver\Templates
+ * @silver-version 3.16.0
  */
 
 $args = array(
@@ -26,10 +26,10 @@ if ( $the_query->have_posts() ) : ?>
 	// Set ids
 	$ids = implode(',', $ids);
 
-	$readmore = __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'flatsome' );
+	$readmore = __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'silver' );
 ?>
 	<?php
-	echo flatsome_apply_shortcode( 'blog_posts', array(
+	echo silver_apply_shortcode( 'blog_posts', array(
 		'class'            => 'featured-posts mb',
 		'slider_nav_style' => 'circle',
 		'style'            => 'shade',

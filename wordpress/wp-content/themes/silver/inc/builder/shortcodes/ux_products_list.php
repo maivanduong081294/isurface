@@ -74,7 +74,7 @@ add_ux_builder_shortcode( 'ux_products_list', array(
 	'name'      => 'Products List',
 	'category'  => __( 'Shop' ),
 	'priority'  => 2,
-	'thumbnail' => flatsome_ux_builder_thumbnail( 'products-list' ),
+	'thumbnail' => silver_ux_builder_thumbnail( 'products-list' ),
 	'presets'   => array(
 		array(
 			'name'    => __( 'Default' ),

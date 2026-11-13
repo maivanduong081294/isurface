@@ -1,14 +1,14 @@
 <?php
 
-Flatsome_Option::add_section( 'blog-single', array(
-	'title' => __( 'Blog Single Post', 'flatsome-admin' ),
+Silver_Option::add_section( 'blog-single', array(
+	'title' => __( 'Blog Single Post', 'silver' ),
 	'panel' => 'blog',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'radio-image',
 	'settings' => 'blog_post_layout',
-	'label'    => __( 'Blog Post Single Layout', 'flatsome-admin' ),
+	'label'    => __( 'Blog Post Single Layout', 'silver' ),
 	'section'  => 'blog-single',
 	'default'  => 'right-sidebar',
 	'choices'  => array(
@@ -18,10 +18,10 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'radio-image',
 	'settings' => 'blog_post_style',
-	'label'    => __( 'Title Layout', 'flatsome-admin' ),
+	'label'    => __( 'Title Layout', 'silver' ),
 	'section'  => 'blog-single',
 	'default'  => 'default',
 	'choices'  => array(
@@ -31,15 +31,15 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'checkbox',
 	'settings' => 'blog_single_transparent',
-	'label'    => __( 'Transparent Header', 'flatsome-admin' ),
+	'label'    => __( 'Transparent Header', 'silver' ),
 	'section'  => 'blog-single',
 	'default'  => 0,
 ) );
 
-Flatsome_Option::add_field( '', array(
+Silver_Option::add_field( '', array(
 	'type'     => 'custom',
 	'settings' => 'custom_title_blog_single_header',
 	'label'    => '',
@@ -47,31 +47,31 @@ Flatsome_Option::add_field( '', array(
 	'default'  => '<div class="options-title-divider">Header</div>',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'checkbox',
 	'settings' => 'blog_single_header_category',
-	'label'    => __( 'Category', 'flatsome-admin' ),
+	'label'    => __( 'Category', 'silver' ),
 	'section'  => 'blog-single',
 	'default'  => 1,
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'checkbox',
 	'settings' => 'blog_single_header_title',
-	'label'    => __( 'Title', 'flatsome-admin' ),
+	'label'    => __( 'Title', 'silver' ),
 	'section'  => 'blog-single',
 	'default'  => 1,
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'checkbox',
 	'settings' => 'blog_single_header_meta',
-	'label'    => __( 'Meta', 'flatsome-admin' ),
+	'label'    => __( 'Meta', 'silver' ),
 	'section'  => 'blog-single',
 	'default'  => 1,
 ) );
 
-Flatsome_Option::add_field( '', array(
+Silver_Option::add_field( '', array(
 	'type'     => 'custom',
 	'settings' => 'custom_title_blog_single_post',
 	'label'    => '',
@@ -79,15 +79,15 @@ Flatsome_Option::add_field( '', array(
 	'default'  => '<div class="options-title-divider">Post</div>',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'checkbox',
 	'settings' => 'blog_single_featured_image',
-	'label'    => __( 'Featured image', 'flatsome' ),
+	'label'    => __( 'Featured image', 'silver' ),
 	'section'  => 'blog-single',
 	'default'  => 1,
 ) );
 
-Flatsome_Option::add_field( '', array(
+Silver_Option::add_field( '', array(
 	'type'     => 'custom',
 	'settings' => 'custom_title_blog_single_footer',
 	'label'    => '',
@@ -95,44 +95,44 @@ Flatsome_Option::add_field( '', array(
 	'default'  => '<div class="options-title-divider">Footer</div>',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'checkbox',
 	'settings' => 'blog_share',
-	'label'    => __( 'Share icons', 'flatsome' ),
+	'label'    => __( 'Share icons', 'silver' ),
 	'section'  => 'blog-single',
 	'default'  => 1,
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'checkbox',
 	'settings' => 'blog_single_footer_meta',
-	'label'    => __( 'Meta', 'flatsome' ),
+	'label'    => __( 'Meta', 'silver' ),
 	'section'  => 'blog-single',
 	'default'  => 1,
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'checkbox',
 	'settings' => 'blog_author_box',
-	'label'    => __( 'Blog author box', 'flatsome' ),
+	'label'    => __( 'Blog author box', 'silver' ),
 	'section'  => 'blog-single',
 	'default'  => 1,
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'     => 'checkbox',
 	'settings' => 'blog_single_next_prev_nav',
-	'label'    => __( 'Next/Prev navigation', 'flatsome' ),
+	'label'    => __( 'Next/Prev navigation', 'silver' ),
 	'section'  => 'blog-single',
 	'default'  => 1,
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'              => 'textarea',
 	'settings'          => 'blog_after_post',
-	'label'             => __( 'HTML after blog posts', 'flatsome' ),
+	'label'             => __( 'HTML after blog posts', 'silver' ),
 	'section'           => 'blog-single',
 	'description'       => 'Enter HTML or shortcodes that will be visible after blog posts. (Before comment box). Shortcodes are allowed',
-	'sanitize_callback' => 'flatsome_custom_sanitize',
+	'sanitize_callback' => 'silver_custom_sanitize',
 	'default'           => '',
 ) );

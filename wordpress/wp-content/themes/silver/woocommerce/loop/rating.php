@@ -13,7 +13,7 @@
  * @see              https://docs.woocommerce.com/document/template-structure/
  * @package          WooCommerce\Templates
  * @version          3.6.0
- * @flatsome-version 3.20.0
+ * @silver-version 3.20.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -29,7 +29,7 @@ if ( ! wc_review_ratings_enabled() ) {
 $rating_count = $product->get_rating_count();
 $review_count = $product->get_review_count();
 
-echo flatsome_get_rating_html( $product->get_average_rating() ); // phpcs:ignore WordPress.Security.EscapeOutput
+echo silver_get_rating_html( $product->get_average_rating() ); // phpcs:ignore WordPress.Security.EscapeOutput
 
 if ( $rating_count > 0 ) :
 	if ( get_theme_mod( 'product_box_review_count' ) ) :
@@ -41,10 +41,10 @@ if ( $rating_count > 0 ) :
 			);
 			$review_count_html = sprintf(
 				'<span %1$s>(%2$s)</span>',
-				flatsome_html_atts( $span_atts ),
+				silver_html_atts( $span_atts ),
 				esc_html( $review_count )
 			);
-			echo apply_filters( 'flatsome_loop_review_count_html', $review_count_html, $product ); // phpcs:ignore WordPress.Security.EscapeOutput
+			echo apply_filters( 'silver_loop_review_count_html', $review_count_html, $product ); // phpcs:ignore WordPress.Security.EscapeOutput
 		endif;
 	endif;
 endif;

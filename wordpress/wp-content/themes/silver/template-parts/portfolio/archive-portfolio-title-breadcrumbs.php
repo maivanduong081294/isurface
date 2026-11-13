@@ -2,8 +2,8 @@
 /**
  * Portfolio archive title with breadcrumbs.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.16.0
+ * @package          Silver\Templates
+ * @silver-version 3.16.0
  */
 
 ?>
@@ -19,7 +19,7 @@
 			</h1>
 	 	</div>
 	 	<div class="flex-col flex-right">
-			<?php get_flatsome_portfolio_breadcrumbs(); ?>
+			<?php get_silver_portfolio_breadcrumbs(); ?>
 	 	</div>
 
 	</div>

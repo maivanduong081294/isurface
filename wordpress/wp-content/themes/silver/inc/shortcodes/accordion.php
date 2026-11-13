@@ -5,11 +5,11 @@
  * Accordion and Accordion Item Shortcode builder.
  *
  * @author UX Themes
- * @package Flatsome/Shortcodes/Accordion
+ * @package Silver/Shortcodes/Accordion
  */
 
-$flatsome_accordion_state = array();
-$flatsome_accordion_faq_schema = array();
+$silver_accordion_state = array();
+$silver_accordion_faq_schema = array();
 
 /**
  * Output the accordion shortcode.
@@ -20,10 +20,10 @@ $flatsome_accordion_faq_schema = array();
  * @return string.
  */
 function ux_accordion( $atts, $content = null ) {
-	global $flatsome_accordion_state;
+	global $silver_accordion_state;
 
 	if ( defined( 'WP_CLI' ) && WP_CLI ) {
-		$flatsome_accordion_state = array();
+		$silver_accordion_state = array();
 	}
 
 	extract( ux_builder_shortcode_atts( array(
@@ -36,7 +36,7 @@ function ux_accordion( $atts, $content = null ) {
 
 	if ($auto_open) $open = 1;
 
-	array_push( $flatsome_accordion_state, array(
+	array_push( $silver_accordion_state, array(
 		'open'       => (int) $open,
 		'current'    => 1,
 		'faq_schema' => filter_var( $faq_schema, FILTER_VALIDATE_BOOLEAN ),
@@ -49,7 +49,7 @@ function ux_accordion( $atts, $content = null ) {
 
 	$result = wp_kses_post( $title ) . '<div class="' . esc_attr( implode( ' ', $classes ) ) . '">' . do_shortcode( $content ) . '</div>';
 
-	array_pop( $flatsome_accordion_state );
+	array_pop( $silver_accordion_state );
 
 	return $result;
 }
@@ -66,11 +66,11 @@ add_shortcode( 'accordion', 'ux_accordion' );
  * @return string.
  */
 function ux_accordion_item( $atts, $content = null, $tag = '' ) {
-	global $flatsome_accordion_state, $flatsome_accordion_faq_schema;
+	global $silver_accordion_state, $silver_accordion_faq_schema;
 
-	$current = count( $flatsome_accordion_state ) - 1;
-	$state   = isset( $flatsome_accordion_state[ $current ] )
-		? $flatsome_accordion_state[ $current ]
+	$current = count( $silver_accordion_state ) - 1;
+	$state   = isset( $silver_accordion_state[ $current ] )
+		? $silver_accordion_state[ $current ]
 		: null;
 
 	$atts = ux_builder_shortcode_atts(
@@ -95,11 +95,11 @@ function ux_accordion_item( $atts, $content = null, $tag = '' ) {
 
 	if ( ! empty( $atts['class'] ) ) $classes[] = $atts['class'];
 
-	if ( isset( $flatsome_accordion_state[ $current ]['current'] ) ) {
-		$flatsome_accordion_state[ $current ]['current'] ++;
+	if ( isset( $silver_accordion_state[ $current ]['current'] ) ) {
+		$silver_accordion_state[ $current ]['current'] ++;
 	}
 
-	if ( isset( $flatsome_accordion_state[ $current ]['faq_schema'] ) && $flatsome_accordion_state[ $current ]['faq_schema'] ) {
+	if ( isset( $silver_accordion_state[ $current ]['faq_schema'] ) && $silver_accordion_state[ $current ]['faq_schema'] ) {
 		$question = wp_strip_all_tags( $atts['title'] );
 		$answer   = $content;
 
@@ -111,7 +111,7 @@ function ux_accordion_item( $atts, $content = null, $tag = '' ) {
 			$answer = $GLOBALS['wp_embed']->autoembed( $answer );
 		}
 
-		$flatsome_accordion_faq_schema[] = array(
+		$silver_accordion_faq_schema[] = array(
 			'question' => $question,
 			'answer'   => $answer,
 		);
@@ -122,7 +122,7 @@ function ux_accordion_item( $atts, $content = null, $tag = '' ) {
 		'class'         => esc_attr( implode( ' ', $title_classes ) ),
 		'href'          => ! empty( $atts['anchor'] )
 			? '#' . rawurlencode( $atts['anchor'] )
-			: esc_url( '#accordion-item-' . flatsome_to_dashed( $atts['title'] ) ),
+			: esc_url( '#accordion-item-' . silver_to_dashed( $atts['title'] ) ),
 		'aria-expanded' => $is_open ? 'true' : 'false',
 		'aria-controls' => esc_attr( $atts['id'] ) . '-content',
 	);
@@ -139,11 +139,11 @@ function ux_accordion_item( $atts, $content = null, $tag = '' ) {
 
 	?>
 	<div id="<?php echo esc_attr( $atts['id'] ); ?>" class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>">
-		<a <?php echo flatsome_html_atts( $link_atts ); ?>>
-			<button class="toggle" aria-label="<?php esc_attr_e( 'Toggle', 'flatsome' ); ?>"><?php echo get_flatsome_icon( 'icon-angle-down' ); ?></button>
+		<a <?php echo silver_html_atts( $link_atts ); ?>>
+			<button class="toggle" aria-label="<?php esc_attr_e( 'Toggle', 'silver' ); ?>"><?php echo get_silver_icon( 'icon-angle-down' ); ?></button>
 			<span><?php echo wp_kses_post( $atts['title'] ); ?></span>
 		</a>
-		<div <?php echo flatsome_html_atts( $accordion_inner_atts ); ?>>
+		<div <?php echo silver_html_atts( $accordion_inner_atts ); ?>>
 			<?php echo do_shortcode( $content ); ?>
 		</div>
 	</div>
@@ -158,10 +158,10 @@ add_shortcode( 'accordion-item', 'ux_accordion_item' );
  *
  * @return void
  */
-function flatsome_print_faq_schema() {
-	global $flatsome_accordion_faq_schema;
+function silver_print_faq_schema() {
+	global $silver_accordion_faq_schema;
 
-	if ( empty( $flatsome_accordion_faq_schema ) ) {
+	if ( empty( $silver_accordion_faq_schema ) ) {
 		return;
 	}
 
@@ -171,7 +171,7 @@ function flatsome_print_faq_schema() {
 		'mainEntity' => array(),
 	);
 
-	foreach ( $flatsome_accordion_faq_schema as $faq ) {
+	foreach ( $silver_accordion_faq_schema as $faq ) {
 		$json['mainEntity'][] = array(
 			'@type'          => 'Question',
 			'name'           => wp_strip_all_tags( $faq['question'] ),
@@ -185,4 +185,4 @@ function flatsome_print_faq_schema() {
 	echo '<script type="application/ld+json">' . wp_json_encode( $json ) . '</script>';
 }
 
-add_action( 'wp_footer', 'flatsome_print_faq_schema' );
+add_action( 'wp_footer', 'silver_print_faq_schema' );

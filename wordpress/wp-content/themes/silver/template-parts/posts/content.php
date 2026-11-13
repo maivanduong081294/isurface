@@ -2,8 +2,8 @@
 /**
  * Posts content.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.19.9
+ * @package          Silver\Templates
+ * @silver-version 3.19.9
  */
 
 ?>
@@ -12,11 +12,11 @@
 	<div class="entry-summary">
 		<?php the_excerpt(); ?>
 		<div class="text-<?php echo get_theme_mod( 'blog_posts_title_align', 'center' );?>">
-			<a class="more-link button primary is-outline is-smaller" href="<?php echo get_the_permalink(); ?>"><?php _e('Continue reading <span class="meta-nav">&rarr;</span>', 'flatsome'); ?></a>
+			<a class="more-link button primary is-outline is-smaller" href="<?php echo get_the_permalink(); ?>"><?php _e('Continue reading <span class="meta-nav">&rarr;</span>', 'silver'); ?></a>
 		</div>
 	</div>
 	<?php } else { ?>
-	<?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'flatsome' ) ); ?>
+	<?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'silver' ) ); ?>
 	<?php
 		wp_link_pages();
 	?>

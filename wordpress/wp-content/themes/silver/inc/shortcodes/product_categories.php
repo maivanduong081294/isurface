@@ -112,9 +112,9 @@ function ux_product_categories($atts, $content = null, $tag = '' ) {
     if($type == 'grid'){
       $columns = 0;
       $current_grid = 0;
-      $grid = flatsome_get_grid($grid);
+      $grid = silver_get_grid($grid);
       $grid_total = count($grid);
-      flatsome_get_grid_height($grid_height, $_id);
+      silver_get_grid_height($grid_height, $_id);
     }
 
     // Add Animations
@@ -131,6 +131,8 @@ function ux_product_categories($atts, $content = null, $tag = '' ) {
     // Set image styles
     if($image_hover)  $classes_image[] = 'image-'.$image_hover;
     if($image_hover_alt)  $classes_image[] = 'image-'.$image_hover_alt;
+    // Responsive image size: the smallest screen with a value is the base.
+    $image_height = silver_responsive_base( $atts, 'image_height' ) ?: $image_height;
     if($image_height)  $classes_image[] = 'image-cover';
 
     // Text classes
@@ -155,6 +157,7 @@ function ux_product_categories($atts, $content = null, $tag = '' ) {
 
     // Repeater options
     $repeater['id'] = $_id;
+    $repeater['responsive_atts'] = array_merge( (array) $atts, array( 'col_spacing' => $col_spacing, 'text_align' => $text_align ) );
     $repeater['class'] = $class;
     $repeater['visibility'] = $visibility;
     $repeater['tag'] = $tag;
@@ -179,7 +182,7 @@ function ux_product_categories($atts, $content = null, $tag = '' ) {
     $repeater['depth_hover'] = $depth_hover;
 
 
-    get_flatsome_repeater_start($repeater);
+    get_silver_repeater_start($repeater);
 
     if ( $product_categories ) {
       foreach ( $product_categories as $category ) {
@@ -253,7 +256,7 @@ function ux_product_categories($atts, $content = null, $tag = '' ) {
     }
 	wc_reset_loop();
 
-    get_flatsome_repeater_end($repeater);
+    get_silver_repeater_end($repeater);
 
     $content = ob_get_contents();
     ob_end_clean();

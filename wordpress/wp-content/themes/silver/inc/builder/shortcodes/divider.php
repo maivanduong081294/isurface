@@ -3,22 +3,25 @@
 add_ux_builder_shortcode( 'divider', array(
     'name' => __( 'Divider' ),
     'category' => __( 'Content' ),
-    'template' => flatsome_ux_builder_template( 'divider.html' ),
-    'thumbnail' =>  flatsome_ux_builder_thumbnail( 'divider' ),
+    'template' => silver_ux_builder_template( 'divider.html' ),
+    'thumbnail' =>  silver_ux_builder_thumbnail( 'divider' ),
     'options' => array(
         'align' => array(
+            'responsive' => true,
             'type' => 'radio-buttons',
             'heading' => __('Align'),
             'default' => '',
             'options' => require( __DIR__ . '/values/align-radios.php' ),
         ),
     	'width' => array(
+    		'responsive' => true,
     		'type' => 'scrubfield',
     		'heading' => __('Width'),
     		'default' => '30px',
             'min' => 0,
     	),
     	'height' => array(
+    		'responsive' => true,
     		'type' => 'scrubfield',
     		'heading' => __('Height'),
     		'default' => '3px',
@@ -31,7 +34,9 @@ add_ux_builder_shortcode( 'divider', array(
             'step' => 0.1,
     	),
 		'color' => array(
+	      'responsive' => true,
 	      'type' => 'colorpicker',
+	      'helpers' => require( __DIR__ . '/helpers/colors.php' ),
 	      'heading' => __('Color'),
 	      'default' => '',
 	      'alpha' => true,

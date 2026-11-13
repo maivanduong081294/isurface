@@ -5,7 +5,7 @@ function title_shortcode($atts, $content = null)
   extract(ux_builder_shortcode_atts(array(
     '_id' => 'title-' . rand(),
     'text' => 'Lorem ipsum dolor sit amet...',
-    'tag_name' => 'h3',
+    'tag_name' => 'h2',
     'style' => 'normal',
     'size' => '100',
     'margin_top' => '',
@@ -45,16 +45,16 @@ function title_shortcode($atts, $content = null)
   if ($link_text) {
     $link_output = sprintf(
       '<a %s>%s%s</a>',
-      flatsome_html_atts($link_atts),
+      silver_html_atts($link_atts),
       wp_kses_post($link_text),
-      get_flatsome_icon('icon-angle-right')
+      get_silver_icon('icon-angle-right')
     );
   }
 
   $small_text = '';
   if ($sub_text) $small_text = '<small class="sub-title">' . wp_kses_post($atts['sub_text']) . '</small>';
 
-  if ($icon) $icon = get_flatsome_icon($icon);
+  if ($icon) $icon = get_silver_icon($icon);
 
   // fix old
   if ($style == 'bold_center') $style = 'bold-center';
@@ -86,10 +86,17 @@ function title_shortcode($atts, $content = null)
     . '<b aria-hidden="true"></b>'
     . '</' . $tag_name . '>';
 
+  // Responsive color / width (larger screens).
+  $responsive_style = silver_responsive_style_tag($_id, $atts, array(
+    'color' => array('selector' => '.section-title-main', 'property' => 'color', 'only_overrides' => true),
+    'width' => array('selector' => '', 'property' => 'max-width', 'only_overrides' => true),
+  ));
+
   // Phần tử 2: link ($link_output) nằm ngoài tiêu đề
   return '<div' . ($_id ? ' id="' . esc_attr($_id) . '"' : '') . ' class="' . esc_attr($classes) . '" ' . get_shortcode_inline_css($css_args) . '>'
     . $title_output
     . $link_output
+    . $responsive_style
     . '</div>';
 }
 add_shortcode('title', 'title_shortcode');
@@ -129,6 +136,29 @@ function divider_shortcode($atts, $content = null)
     $align_start = '<div class="text-right">';
     $align_end = '</div>';
   }
-  return $align_start . '<div class="is-divider divider clearfix" ' . get_shortcode_inline_css($css_args) . '></div>' . $align_end;
+
+  // Responsive align / width / height / color (larger screens).
+  $id_attr          = '';
+  $responsive_style = '';
+  if (silver_responsive_any_overrides((array) $atts, array('align', 'width', 'height', 'color'))) {
+    $id               = 'divider-' . wp_rand();
+    $id_attr          = ' id="' . esc_attr($id) . '"';
+    $responsive_style = silver_responsive_style_tag($id, (array) $atts, array(
+      'align'  => array(
+        'selector'       => '',
+        'only_overrides' => true,
+        'map'            => array(
+          'left'   => 'margin-left: 0; margin-right: auto',
+          'center' => 'margin-left: auto; margin-right: auto',
+          'right'  => 'margin-left: auto; margin-right: 0',
+        ),
+      ),
+      'width'  => array('selector' => '', 'property' => 'max-width', 'only_overrides' => true, 'default' => '30px'),
+      'height' => array('selector' => '', 'property' => 'height', 'only_overrides' => true, 'default' => '3px'),
+      'color'  => array('selector' => '', 'property' => 'background-color', 'only_overrides' => true),
+    ));
+  }
+
+  return $align_start . '<div' . $id_attr . ' class="is-divider divider clearfix" ' . get_shortcode_inline_css($css_args) . '></div>' . $align_end . $responsive_style;
 }
 add_shortcode('divider', 'divider_shortcode');

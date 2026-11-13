@@ -1,0 +1,12 @@
+{
+  "name": "silver-theme-build",
+  "private": true,
+  "description": "Minify Silver theme CSS/JS from assets/*/src into assets/*.",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "0.24.0",
+    "lightningcss": "1.27.0"
+  }
+}

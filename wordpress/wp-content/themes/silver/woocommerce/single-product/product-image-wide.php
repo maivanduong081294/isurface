@@ -13,7 +13,7 @@
  * @see              https://woocommerce.com/document/template-structure/
  * @package          WooCommerce\Templates
  * @version          10.5.0
- * @flatsome-version 3.20.5
+ * @silver-version 3.20.5
  */
 
 use Automattic\WooCommerce\Enums\ProductType;
@@ -42,17 +42,17 @@ $wrapper_classes   = apply_filters(
 $slider_classes = array( 'product-gallery-slider', 'slider', 'slider-nav-circle', 'mb-half', 'slider-style-container', 'slider-nav-light', 'slider-load-first', 'no-overflow' );
 
 ?>
-<?php do_action( 'flatsome_before_product_images' ); ?>
+<?php do_action( 'silver_before_product_images' ); ?>
 
 <div class="product-images slider-wrapper relative mb-half has-hover <?php echo esc_attr( implode( ' ', array_map( 'sanitize_html_class', $wrapper_classes ) ) ); ?> " data-columns="<?php echo esc_attr( $columns ); ?>">
 	<div class="absolute left right">
 		<div class="container relative">
-			<?php do_action( 'flatsome_sale_flash' ); ?>
+			<?php do_action( 'silver_sale_flash' ); ?>
 		</div>
 	</div>
 
 	<div class="woocommerce-product-gallery__wrapper <?php echo implode( ' ', $slider_classes ); ?>"<?php
-		echo flatsome_slider_options_attr( array(
+		echo silver_slider_options_attr( array(
 			'wrapAround'     => true,
 			'adaptiveHeight' => true,
 			'dragThreshold'  => 15,
@@ -63,7 +63,7 @@ $slider_classes = array( 'product-gallery-slider', 'slider', 'slider-nav-circle'
 		<?php
 
     if ( $post_thumbnail_id ) {
-      $html  = flatsome_wc_get_gallery_image_html( $post_thumbnail_id, true, 'full' );
+      $html  = silver_wc_get_gallery_image_html( $post_thumbnail_id, true, 'full' );
     } else {
 		$wrapper_classname = $product->is_type( fl_woocommerce_version_check( '9.7.0' ) ? ProductType::VARIABLE : 'variable' ) && ! empty( $product->get_visible_children() ) && '' !== $product->get_price() ?
 			'woocommerce-product-gallery__image woocommerce-product-gallery__image--placeholder' :
@@ -84,11 +84,11 @@ $slider_classes = array( 'product-gallery-slider', 'slider', 'slider-nav-circle'
 	<div class="absolute bottom left right">
 		<div class="container relative image-tools">
 			<div class="image-tools absolute bottom right z-3">
-				<?php do_action( 'flatsome_product_image_tools_bottom' ); ?>
-				<?php do_action( 'flatsome_product_image_tools_top' ); ?>
+				<?php do_action( 'silver_product_image_tools_bottom' ); ?>
+				<?php do_action( 'silver_product_image_tools_top' ); ?>
 			</div>
 		</div>
 	</div>
 
 </div>
-<?php do_action( 'flatsome_after_product_images' ); ?>
+<?php do_action( 'silver_after_product_images' ); ?>

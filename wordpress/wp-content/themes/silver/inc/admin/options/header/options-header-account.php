@@ -4,17 +4,17 @@
  * - Account
  *************/
 
-Flatsome_Option::add_section( 'header_account', array(
-	'title' => __( 'Account', 'flatsome-admin' ),
+Silver_Option::add_section( 'header_account', array(
+	'title' => __( 'Account', 'silver' ),
 	'panel' => 'header',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'        => 'radio-image',
 	'settings'     => 'account_icon_style',
-	'label'       => __( 'Icon Style', 'flatsome-admin' ),
+	'label'       => __( 'Icon Style', 'silver' ),
 	'section'     => 'header_account',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'default'     => '',
 	'choices'     => array(
 		'' => $image_url . 'disabled.svg',
@@ -27,23 +27,23 @@ Flatsome_Option::add_field( 'option', array(
 	),
 ));
 
-Flatsome_Option::add_field( 'option',  array(
+Silver_Option::add_field( 'option',  array(
 	'type'        => 'checkbox',
 	'settings'     => 'header_account_title',
-	'label'       => __( 'Show label', 'flatsome-admin' ),
-	'description' => __( 'Display label for logged in users.', 'flatsome-admin' ),
+	'label'       => __( 'Show label', 'silver' ),
+	'description' => __( 'Display label for logged in users.', 'silver' ),
 	'section'     => 'header_account',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'default'     => 1,
 ));
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'            => 'checkbox',
 	'settings'        => 'header_account_username',
-	'label'           => __( 'Use username as label', 'flatsome-admin' ),
-	'description'     => __( 'Display username instead of fixed label for logged in users.', 'flatsome-admin' ),
+	'label'           => __( 'Use username as label', 'silver' ),
+	'description'     => __( 'Display username instead of fixed label for logged in users.', 'silver' ),
 	'section'         => 'header_account',
-	'transport'       => flatsome_customizer_transport(),
+	'transport'       => silver_customizer_transport(),
 	'active_callback' => array(
 		array(
 			'setting'  => 'header_account_title',
@@ -54,7 +54,7 @@ Flatsome_Option::add_field( 'option', array(
 	'default'         => 0,
 ) );
 
-Flatsome_Option::add_field( '', array(
+Silver_Option::add_field( '', array(
 	'type'     => 'custom',
 	'settings' => 'custom_title_account_login',
 	'label'    => '',
@@ -62,20 +62,20 @@ Flatsome_Option::add_field( '', array(
 	'default'  => '<div class="options-title-divider">Login</div>',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'      => 'select',
 	'settings'  => 'account_login_style',
-	'label'     => __( 'Login Style', 'flatsome-admin' ),
+	'label'     => __( 'Login Style', 'silver' ),
 	'section'   => 'header_account',
-	'transport' => flatsome_customizer_transport(),
+	'transport' => silver_customizer_transport(),
 	'default'   => 'lightbox',
 	'choices'   => array(
-		'link'     => __( 'Link', 'flatsome-admin' ),
-		'lightbox' => __( 'Lightbox', 'flatsome-admin' ),
+		'link'     => __( 'Link', 'silver' ),
+		'lightbox' => __( 'Lightbox', 'silver' ),
 	),
 ) );
 
-Flatsome_Option::add_field( '', array(
+Silver_Option::add_field( '', array(
 	'type'     => 'custom',
 	'settings' => 'custom_title_account_register',
 	'label'    => '',
@@ -83,19 +83,19 @@ Flatsome_Option::add_field( '', array(
 	'default'  => '<div class="options-title-divider">Register</div>',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'        => 'checkbox',
 	'settings'    => 'header_account_register',
-	'label'       => __( 'Show "Register" label', 'flatsome-admin' ),
-	'description' => __( 'Display "Register" for non logged in users.', 'flatsome-admin' ),
+	'label'       => __( 'Show "Register" label', 'silver' ),
+	'description' => __( 'Display "Register" for non logged in users.', 'silver' ),
 	'section'     => 'header_account',
-	'transport'   => flatsome_customizer_transport(),
+	'transport'   => silver_customizer_transport(),
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'            => 'radio-image',
 	'settings'        => 'account_login_lightbox_layout',
-	'label'           => __( 'Lightbox layout (register)', 'flatsome-admin' ),
+	'label'           => __( 'Lightbox layout (register)', 'silver' ),
 	'description'     => 'Register form/link is only visible for non logged in users and if the WooCommerce setting, "Allow customers to create an account on the "My account" page" is enabled.',
 	'section'         => 'header_account',
 	'active_callback' => array(
@@ -107,18 +107,18 @@ Flatsome_Option::add_field( 'option', array(
 	),
 	'default'         => '',
 	'choices'         => array(
-		''                     => flatsome_customizer_images_uri() . '/form-login.svg',
-		'lightbox-left-panel'  => flatsome_customizer_images_uri() . '/form-login-lightbox-left-panel.svg',
-		'lightbox-right-panel' => flatsome_customizer_images_uri() . '/form-login-lightbox-right-panel.svg',
+		''                     => silver_customizer_images_uri() . '/form-login.svg',
+		'lightbox-left-panel'  => silver_customizer_images_uri() . '/form-login-lightbox-left-panel.svg',
+		'lightbox-right-panel' => silver_customizer_images_uri() . '/form-login-lightbox-right-panel.svg',
 	),
 ) );
 
-Flatsome_Option::add_field( 'option',
+Silver_Option::add_field( 'option',
 	array(
 		'type'            => 'select',
 		'settings'        => 'account_login_lightbox_side_panel_block',
-		'label'           => __( 'Side panel block', 'flatsome-admin' ),
-		'description'     => __( 'Replace side panel content with a custom Block that can be edited in UX Builder.', 'flatsome-admin' ),
+		'label'           => __( 'Side panel block', 'silver' ),
+		'description'     => __( 'Replace side panel content with a custom Block that can be edited in UX Builder.', 'silver' ),
 		'section'         => 'header_account',
 		'active_callback' => array(
 			array(
@@ -133,14 +133,14 @@ Flatsome_Option::add_field( 'option',
 			),
 		),
 		'default'         => false,
-		'choices'         => flatsome_customizer_blocks(),
+		'choices'         => silver_customizer_blocks(),
 	)
 );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'            => 'color',
 	'settings'        => 'account_login_lightbox_side_panel_bg_color',
-	'label'           => __( 'Side panel background color', 'flatsome-admin' ),
+	'label'           => __( 'Side panel background color', 'silver' ),
 	'section'         => 'header_account',
 	'active_callback' => array(
 		array(
@@ -159,13 +159,13 @@ Flatsome_Option::add_field( 'option', array(
 			'value'    => false,
 		),
 	),
-	'default'         => Flatsome_Default::COLOR_PRIMARY,
+	'default'         => Silver_Default::COLOR_PRIMARY,
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'            => 'image',
 	'settings'        => 'account_login_lightbox_side_panel_bg_image',
-	'label'           => __( 'Side panel background image', 'flatsome-admin' ),
+	'label'           => __( 'Side panel background image', 'silver' ),
 	'section'         => 'header_account',
 	'active_callback' => array(
 		array(
@@ -187,11 +187,11 @@ Flatsome_Option::add_field( 'option', array(
 	'default'         => '',
 ) );
 
-Flatsome_Option::add_field( 'option', array(
+Silver_Option::add_field( 'option', array(
 	'type'            => 'color-alpha',
 	'alpha'           => true,
 	'settings'        => 'account_login_lightbox_side_panel_bg_overlay',
-	'label'           => __( 'Side panel background overlay', 'flatsome-admin' ),
+	'label'           => __( 'Side panel background overlay', 'silver' ),
 	'section'         => 'header_account',
 	'active_callback' => array(
 		array(
@@ -213,15 +213,15 @@ Flatsome_Option::add_field( 'option', array(
 	'default'         => '',
 ) );
 
-Flatsome_Option::add_field( '', array(
+Silver_Option::add_field( '', array(
 	'type'     => 'custom',
 	'settings' => 'custom_html_account_shortcut',
-	'label'    => __( '', 'flatsome-admin' ),
+	'label'    => __( '', 'silver' ),
 	'section'  => 'header_account',
 	'default'  => '<button style="margin-top:30px; margin-bottom:15px" class="button button-primary" data-to-section="fl-my-account">Account Page Layout →</button>',
 ) );
 
-function flatsome_refresh_header_account_partials( WP_Customize_Manager $wp_customize ) {
+function silver_refresh_header_account_partials( WP_Customize_Manager $wp_customize ) {
 
 	if ( ! isset( $wp_customize->selective_refresh ) ) {
 	      return;
@@ -237,4 +237,4 @@ function flatsome_refresh_header_account_partials( WP_Customize_Manager $wp_cust
 	    },
 	) );
 }
-add_action( 'customize_register', 'flatsome_refresh_header_account_partials' );
+add_action( 'customize_register', 'silver_refresh_header_account_partials' );

@@ -95,7 +95,7 @@ add_ux_builder_shortcode( 'ux_product_categories', array(
     'category' => __( 'Shop' ),
     'priority' => 3,
     #'wrap' => false,
-    'thumbnail' =>  flatsome_ux_builder_thumbnail( 'categories' ),
+    'thumbnail' =>  silver_ux_builder_thumbnail( 'categories' ),
 
    'presets' => array(
         array(

@@ -15,8 +15,8 @@ $title_link_options['options'] = array_merge(
 add_ux_builder_shortcode('title', array(
 	'name'      => __('Title', 'ux-builder'),
 	'category'  => __('Content'),
-	'thumbnail' => flatsome_ux_builder_thumbnail('title'),
-	'template'  => flatsome_ux_builder_template('title.html'),
+	'thumbnail' => silver_ux_builder_thumbnail('title'),
+	'template'  => silver_ux_builder_template('title.html'),
 	'info'      => '{{ text }}',
 	'wrap'      => false,
 	'options' => array(
@@ -40,7 +40,7 @@ add_ux_builder_shortcode('title', array(
 		'tag_name'         => array(
 			'type'    => 'select',
 			'heading' => esc_html__('Tag', 'silver'),
-			'default' => 'h3',
+			'default' => 'h2',
 			'options' => array(
 				'h1'  => esc_html__('Heading 1', 'silver'),
 				'h2'  => esc_html__('Heading 2', 'silver'),
@@ -52,7 +52,9 @@ add_ux_builder_shortcode('title', array(
 		),
 		'color'            => array(
 			'type'     => 'colorpicker',
+			'helpers' => require(__DIR__ . '/helpers/colors-text.php'),
 			'heading'  => __('Color'),
+			'responsive' => true,
 			'alpha'    => true,
 			'format'   => 'rgb',
 			'position' => 'bottom right',
@@ -64,6 +66,7 @@ add_ux_builder_shortcode('title', array(
 		'width'            => array(
 			'type'    => 'scrubfield',
 			'heading' => __('Width'),
+			'responsive' => true,
 			'default' => '',
 			'min'     => 0,
 			'max'     => 1200,

@@ -2,7 +2,7 @@
 /**
  * Registers the `ux_products_list` shortcode.
  *
- * @package flatsome
+ * @package silver
  */
 
 /**

@@ -1,10 +1,10 @@
 <?php
 /**
- * Handles flatsome option upgrades
+ * Handles silver option upgrades
  *
  * @author     UX Themes
  * @category   Class
- * @package    Flatsome/Classes
+ * @package    Silver/Classes
  * @since      3.4.0
  */
 
@@ -13,19 +13,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class Flatsome_Upgrade
+ * Class Silver_Upgrade
  */
-class Flatsome_Upgrade {
+class Silver_Upgrade {
 
 	/**
-	 * Holds flatsome DB version
+	 * Holds silver DB version
 	 *
 	 * @var string
 	 */
 	private $db_version;
 
 	/**
-	 * Holds flatsome current running parent theme version
+	 * Holds silver current running parent theme version
 	 *
 	 * @var string
 	 */
@@ -73,23 +73,23 @@ class Flatsome_Upgrade {
 	);
 
 	/**
-	 * Flatsome_Upgrade Class constructor
+	 * Silver_Upgrade Class constructor
 	 */
 	public function __construct() {
 		add_action( 'init', array( $this, 'check_version' ), 5, 0 );
 	}
 
 	/**
-	 * Check Flatsome version and run the updater if required.
+	 * Check Silver version and run the updater if required.
 	 */
 	public function check_version() {
 		$this->db_version      = get_theme_mod( 'flatsome_db_version', '3.0.0' );
-		$this->running_version = flatsome()->version();
+		$this->running_version = silver()->version();
 
 		// If current version is new.
 		if ( version_compare( $this->db_version, $this->running_version, '<' ) ) {
 			$this->update();
-			Flatsome_Cache::clear( [ 'third_party' => true ] );
+			Silver_Cache::clear( [ 'third_party' => true ] );
 		}
 	}
 
@@ -134,7 +134,7 @@ class Flatsome_Upgrade {
 	}
 
 	/**
-	 * Performs upgrades to Flatsome 3.4.0
+	 * Performs upgrades to Silver 3.4.0
 	 */
 	private function update_340() {
 		$portfolio_archive_filter = get_theme_mod( 'portfolio_archive_filter' );
@@ -144,7 +144,7 @@ class Flatsome_Upgrade {
 	}
 
 	/**
-	 * Performs upgrades to Flatsome 3.6.0
+	 * Performs upgrades to Silver 3.6.0
 	 */
 	private function update_360() {
 		// Set cart layout as checkout layout if its set.
@@ -182,7 +182,7 @@ class Flatsome_Upgrade {
 	}
 
 	/**
-	 * Performs upgrades to Flatsome 3.9.0
+	 * Performs upgrades to Silver 3.9.0
 	 */
 	private function update_390() {
 		remove_theme_mod( 'follow_google' );
@@ -193,13 +193,13 @@ class Flatsome_Upgrade {
 	}
 
 	/**
-	 * Performs upgrades to Flatsome 3.12.1
+	 * Performs upgrades to Silver 3.12.1
 	 */
 	private function update_3121() {
 		// Change 404_block setting value from post_name to ID if one is chosen.
 		$block = get_theme_mod( '404_block' );
 		if ( ! empty( $block ) && ! is_numeric( $block ) ) {
-			$blocks = flatsome_get_post_type_items( 'blocks' );
+			$blocks = silver_get_post_type_items( 'blocks' );
 			if ( $blocks ) {
 				foreach ( $blocks as $block_post ) {
 					if ( $block_post->post_name == $block ) {
@@ -217,7 +217,7 @@ class Flatsome_Upgrade {
 	}
 
 	/**
-	 * Performs upgrades to Flatsome 3.15.0
+	 * Performs upgrades to Silver 3.15.0
 	 */
 	private function update_3150() {
 		foreach ( array( 'site_logo', 'site_logo_dark', 'site_logo_sticky' ) as $name ) {
@@ -233,7 +233,7 @@ class Flatsome_Upgrade {
 	}
 
 	/**
-	 * Performs upgrades to Flatsome 3.16.0
+	 * Performs upgrades to Silver 3.16.0
 	 */
 	private function update_3160() {
 		// Mirror vertical menu opener width.
@@ -253,7 +253,7 @@ class Flatsome_Upgrade {
 	}
 
 	/**
-	 * Performs upgrades to Flatsome 3.17.0
+	 * Performs upgrades to Silver 3.17.0
 	 */
 	private function update_3170() {
 		// Iterate sticky sidebar options and set their mode to 'javascript' if enabled before the upgrade.
@@ -264,7 +264,7 @@ class Flatsome_Upgrade {
 	}
 
 	/**
-	 * Performs upgrades to Flatsome 3.18.0
+	 * Performs upgrades to Silver 3.18.0
 	 */
 	private function update_3180() {
 		if ( get_theme_mod( 'flatsome_infinite_scroll', 0 ) ) {
@@ -274,12 +274,12 @@ class Flatsome_Upgrade {
 	}
 
 	/**
-	 * Performs upgrades to Flatsome 3.18.5
+	 * Performs upgrades to Silver 3.18.5
 	 */
 	private function update_3185() {
 		// Clear typography cache.
 		try {
-			$fonts_dir = flatsome_get_fonts_dir();
+			$fonts_dir = silver_get_fonts_dir();
 
 			delete_transient( 'kirki_remote_url_contents' );
 			delete_option( 'kirki_downloaded_font_files' );
@@ -305,7 +305,7 @@ class Flatsome_Upgrade {
 	}
 
 	/**
-	 * Performs upgrades to Flatsome 3.19.0
+	 * Performs upgrades to Silver 3.19.0
 	 */
 	private function update_3190() {
 		// Convert custom cart icon URL to attachment ID.
@@ -323,16 +323,16 @@ class Flatsome_Upgrade {
 
 		// If swatch color selected setting matches color secondary it likely has the
 		// previous default value, reset it so it will use custom secondary color if set.
-		if ( get_theme_mod( 'swatches_color_selected' ) === Flatsome_Default::COLOR_SECONDARY ) {
+		if ( get_theme_mod( 'swatches_color_selected' ) === Silver_Default::COLOR_SECONDARY ) {
 			set_theme_mod( 'swatches_color_selected', '' );
 		}
-		if ( get_theme_mod( 'swatches_box_color_selected' ) === Flatsome_Default::COLOR_SECONDARY ) {
+		if ( get_theme_mod( 'swatches_box_color_selected' ) === Silver_Default::COLOR_SECONDARY ) {
 			set_theme_mod( 'swatches_box_color_selected', '' );
 		}
 	}
 
 	/**
-	 * Performs upgrades to Flatsome 3.20.0
+	 * Performs upgrades to Silver 3.20.0
 	 */
 	private function update_3200() {
 		// Replace old lightbox multi gallery option with separate lightbox galleries options.
@@ -352,5 +352,5 @@ class Flatsome_Upgrade {
 }
 
 if ( ! wp_doing_ajax() ) {
-	new Flatsome_Upgrade();
+	new Silver_Upgrade();
 }

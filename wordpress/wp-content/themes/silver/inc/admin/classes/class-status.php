@@ -2,10 +2,10 @@
 /**
  * Status main class.
  *
- * @package Flatsome\Admin
+ * @package Silver\Admin
  */
 
-namespace Flatsome\Admin;
+namespace Silver\Admin;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -14,7 +14,7 @@ use DirectoryIterator;
 /**
  * Class Status
  *
- * @package Flatsome\Admin
+ * @package Silver\Admin
  */
 final class Status {
 	/**
@@ -395,7 +395,7 @@ final class Status {
 	 *
 	 * @return string
 	 */
-	public function get_file_version( $file, $version_tag = '@flatsome-version' ) {
+	public function get_file_version( $file, $version_tag = '@silver-version' ) {
 
 		// Avoid notices if file does not exist.
 		if ( ! file_exists( $file ) ) {
@@ -492,10 +492,10 @@ final class Status {
 	public function render_panel() {
 		$popper_ver = '2.0.0';
 		$tippy_ver  = '6.3.7';
-		wp_register_script( 'flatsome-popper-js', 'https://unpkg.com/@popperjs/core@' . $popper_ver, array(), $popper_ver, true );
-		wp_register_script( 'flatsome-tippy-js', 'https://unpkg.com/tippy.js@' . $tippy_ver, array(), $tippy_ver, true );
-		wp_enqueue_script( 'flatsome-popper-js' );
-		wp_enqueue_script( 'flatsome-tippy-js' );
+		wp_register_script( 'silver-popper-js', 'https://unpkg.com/@popperjs/core@' . $popper_ver, array(), $popper_ver, true );
+		wp_register_script( 'silver-tippy-js', 'https://unpkg.com/tippy.js@' . $tippy_ver, array(), $tippy_ver, true );
+		wp_enqueue_script( 'silver-popper-js' );
+		wp_enqueue_script( 'silver-tippy-js' );
 
 		ob_start();
 		$this->render_theme();
@@ -514,7 +514,7 @@ final class Status {
 	 * @return void
 	 */
 	private function panel_open() {
-		echo '<div class="col cols panel flatsome-panel">';
+		echo '<div class="col cols panel silver-panel">';
 		echo '<div class="inner-panel">';
 	}
 
@@ -536,7 +536,7 @@ final class Status {
 	 */
 	private function help_tip( $content ) {
 		$icon = '<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><circle cx="20.75" cy="6" r="4" fill="currentColor" class="clr-i-solid clr-i-solid-path-1"/><path fill="currentColor" d="M24.84 26.23a1 1 0 0 0-1.4.29a16.6 16.6 0 0 1-3.51 3.77c-.33.25-1.56 1.2-2.08 1c-.36-.11-.15-.82-.08-1.12l.53-1.57c.22-.64 4.05-12 4.47-13.3c.62-1.9.35-3.77-2.48-3.32c-.77.08-8.58 1.09-8.72 1.1a1 1 0 0 0 .13 2s3-.39 3.33-.42a.88.88 0 0 1 .85.44a2.47 2.47 0 0 1-.07 1.71c-.26 1-4.37 12.58-4.5 13.25a2.78 2.78 0 0 0 1.18 3a5 5 0 0 0 3.08.83a8.53 8.53 0 0 0 3.09-.62c2.49-1 5.09-3.66 6.46-5.75a1 1 0 0 0-.28-1.29Z" class="clr-i-solid clr-i-solid-path-2"/><path fill="none" d="M0 0h36v36H0z"/></svg>';
-		echo '<div class="flatsome-help-tip" data-tippy-content="' . esc_attr( $content ) . '"><span>' . $icon . '</span></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.
+		echo '<div class="silver-help-tip" data-tippy-content="' . esc_attr( $content ) . '"><span>' . $icon . '</span></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.
 	}
 
 	/**
@@ -550,19 +550,19 @@ final class Status {
 			'warning'  => '<span class="ux-status-overview__list-item-icon warning" title="Warning">' . $this->icon['warning'] . '</span>',
 			'critical' => '<span class="ux-status-overview__list-item-icon critical" title="Critical">' . $this->icon['critical'] . '</span>',
 		);
-		$panel_url = network_admin_url( 'admin.php?page=flatsome-panel-status' );
+		$panel_url = network_admin_url( 'admin.php?page=silver-panel-status' );
 		?>
 		<div class="ux-status-overview">
 			<ul class="ux-status-overview__list">
-				<li class="ux-status-overview__list-item"><?php echo $indicator[ $this->wordpress_environment_group_test_result() ]; ?><a href="<?php echo esc_url_raw( $panel_url . '#wordpress' ); ?>"><?php esc_html_e( 'WordPress environment', 'flatsome' ); ?></a></li>
-				<li class="ux-status-overview__list-item"><?php echo $indicator[ $this->server_environment_group_test_result() ]; ?><a href="<?php echo esc_url_raw( $panel_url . '#server' );  ?>"><?php esc_html_e( 'Server environment', 'flatsome' ); ?></a></li>
-				<li class="ux-status-overview__list-item"><?php echo $indicator[ $this->security_group_test_result() ]; ?><a href="<?php echo esc_url_raw( $panel_url . '#security' ); ?>"><?php esc_html_e( 'Security', 'flatsome' ); ?></a></li>
-				<li class="ux-status-overview__list-item"><?php echo $indicator[ $this->database_group_test_result() ]; ?><a href="<?php echo esc_url_raw( $panel_url . '#database' ); ?>"><?php esc_html_e( 'Database', 'flatsome' ); ?></a></li>
-				<li class="ux-status-overview__list-item"><?php echo $indicator[ $this->templates_group_test_result() ]; ?><a href="<?php echo esc_url_raw( $panel_url . '#templates' ); ?>"><?php esc_html_e( 'Templates', 'flatsome' ); ?></a></li>
+				<li class="ux-status-overview__list-item"><?php echo $indicator[ $this->wordpress_environment_group_test_result() ]; ?><a href="<?php echo esc_url_raw( $panel_url . '#wordpress' ); ?>"><?php esc_html_e( 'WordPress environment', 'silver' ); ?></a></li>
+				<li class="ux-status-overview__list-item"><?php echo $indicator[ $this->server_environment_group_test_result() ]; ?><a href="<?php echo esc_url_raw( $panel_url . '#server' );  ?>"><?php esc_html_e( 'Server environment', 'silver' ); ?></a></li>
+				<li class="ux-status-overview__list-item"><?php echo $indicator[ $this->security_group_test_result() ]; ?><a href="<?php echo esc_url_raw( $panel_url . '#security' ); ?>"><?php esc_html_e( 'Security', 'silver' ); ?></a></li>
+				<li class="ux-status-overview__list-item"><?php echo $indicator[ $this->database_group_test_result() ]; ?><a href="<?php echo esc_url_raw( $panel_url . '#database' ); ?>"><?php esc_html_e( 'Database', 'silver' ); ?></a></li>
+				<li class="ux-status-overview__list-item"><?php echo $indicator[ $this->templates_group_test_result() ]; ?><a href="<?php echo esc_url_raw( $panel_url . '#templates' ); ?>"><?php esc_html_e( 'Templates', 'silver' ); ?></a></li>
 			</ul>
 			<div class="ux-status-overview__actions">
 				<a class="button button-large" href="<?php echo esc_url_raw( $panel_url ); ?>">
-					<?php esc_html_e( 'More details', 'flatsome' ); ?>
+					<?php esc_html_e( 'More details', 'silver' ); ?>
 				</a>
 			</div>
 		</div>
@@ -577,40 +577,40 @@ final class Status {
 	private function render_theme() {
 		$this->panel_open();
 		?>
-		<table class="flatsome-status-table widefat" cellspacing="0">
+		<table class="silver-status-table widefat" cellspacing="0">
 			<thead>
 			<tr>
 				<th colspan="3" data-export-label="Theme">
-					<h2 id="theme"><?php esc_html_e( 'Theme', 'flatsome' ); ?></h2>
+					<h2 id="theme"><?php esc_html_e( 'Theme', 'silver' ); ?></h2>
 				</th>
 			</tr>
 			</thead>
 			<tbody>
 			<tr>
-				<td data-export-label="Name"><?php esc_html_e( 'Name', 'flatsome' ); ?></td>
+				<td data-export-label="Name"><?php esc_html_e( 'Name', 'silver' ); ?></td>
 				<td class="help">
-					<?php $this->help_tip( __( 'The name of the current active theme.', 'flatsome' ) ); ?>
+					<?php $this->help_tip( __( 'The name of the current active theme.', 'silver' ) ); ?>
 				</td>
 				<td><?php echo esc_html( $this->theme['name'] ); ?></td>
 			</tr>
 			<tr>
-				<td data-export-label="Version"><?php esc_html_e( 'Version', 'flatsome' ); ?></td>
+				<td data-export-label="Version"><?php esc_html_e( 'Version', 'silver' ); ?></td>
 				<td class="help">
-					<?php $this->help_tip( __( 'The version of the current active theme.', 'flatsome' ) ); ?>
+					<?php $this->help_tip( __( 'The version of the current active theme.', 'silver' ) ); ?>
 				</td>
 				<td><?php echo esc_html( $this->theme['version'] ); ?></td>
 			</tr>
 			<tr>
-				<td data-export-label="Author URL"><?php esc_html_e( 'Author URL', 'flatsome' ); ?></td>
+				<td data-export-label="Author URL"><?php esc_html_e( 'Author URL', 'silver' ); ?></td>
 				<td class="help">
-					<?php $this->help_tip( __( 'The theme developers URL.', 'flatsome' ) ); ?>
+					<?php $this->help_tip( __( 'The theme developers URL.', 'silver' ) ); ?>
 				</td>
 				<td><?php echo esc_html( $this->theme['author_url'] ); ?></td>
 			</tr>
 			<tr>
-				<td data-export-label="Child Theme"><?php esc_html_e( 'Child theme', 'flatsome' ); ?></td>
+				<td data-export-label="Child Theme"><?php esc_html_e( 'Child theme', 'silver' ); ?></td>
 				<td class="help">
-					<?php $this->help_tip( __( 'Displays whether or not the current active theme is a child theme.', 'flatsome' ) ); ?>
+					<?php $this->help_tip( __( 'Displays whether or not the current active theme is a child theme.', 'silver' ) ); ?>
 				</td>
 				<td>
 					<?php
@@ -618,15 +618,15 @@ final class Status {
 						echo '<mark class="success"><span class="dashicons dashicons-yes"></span></mark>';
 					} else {
 						/* translators: %s: Docs link. */
-						echo '<span class="dashicons dashicons-no-alt"></span>&ndash; ' . wp_kses_post( sprintf( __( 'If you are modifying Flatsome on the parent theme we recommend using a child theme. See: <a href="%s" target="_blank">How to create a child theme</a>', 'flatsome' ), 'https://developer.wordpress.org/themes/advanced-topics/child-themes/' ) );
+						echo '<span class="dashicons dashicons-no-alt"></span>&ndash; ' . wp_kses_post( sprintf( __( 'If you are modifying Silver on the parent theme we recommend using a child theme. See: <a href="%s" target="_blank">How to create a child theme</a>', 'silver' ), 'https://developer.wordpress.org/themes/advanced-topics/child-themes/' ) );
 					}
 					?>
 				</td>
 			</tr>
 			<tr>
-				<td data-export-label="Release Channel"><?php esc_html_e( 'Release channel', 'flatsome' ); ?></td>
+				<td data-export-label="Release Channel"><?php esc_html_e( 'Release channel', 'silver' ); ?></td>
 				<td class="help">
-					<?php $this->help_tip( __( 'Which updates to receive on this site.', 'flatsome' ) ); ?>
+					<?php $this->help_tip( __( 'Which updates to receive on this site.', 'silver' ) ); ?>
 				</td>
 				<td>
 					<?php
@@ -640,23 +640,23 @@ final class Status {
 			</tr>
 			<?php if ( $this->theme['is_child_theme'] ) : ?>
 				<tr>
-					<td data-export-label="Parent Theme Name"><?php esc_html_e( 'Parent theme name', 'flatsome' ); ?></td>
+					<td data-export-label="Parent Theme Name"><?php esc_html_e( 'Parent theme name', 'silver' ); ?></td>
 					<td class="help">
-						<?php $this->help_tip( __( 'The name of the parent theme.', 'flatsome' ) ); ?>
+						<?php $this->help_tip( __( 'The name of the parent theme.', 'silver' ) ); ?>
 					</td>
 					<td><?php echo esc_html( $this->theme['parent_name'] ); ?></td>
 				</tr>
 				<tr>
-					<td data-export-label="Parent Theme Version"><?php esc_html_e( 'Parent theme version', 'flatsome' ); ?></td>
+					<td data-export-label="Parent Theme Version"><?php esc_html_e( 'Parent theme version', 'silver' ); ?></td>
 					<td class="help">
-						<?php $this->help_tip( __( 'The installed version of the parent theme.', 'flatsome' ) ); ?>
+						<?php $this->help_tip( __( 'The installed version of the parent theme.', 'silver' ) ); ?>
 					</td>
 					<td><?php echo esc_html( $this->theme['parent_version'] ); ?></td>
 				</tr>
 				<tr>
-					<td data-export-label="Parent Theme Author URL"><?php esc_html_e( 'Parent theme author URL', 'flatsome' ); ?></td>
+					<td data-export-label="Parent Theme Author URL"><?php esc_html_e( 'Parent theme author URL', 'silver' ); ?></td>
 					<td class="help">
-						<?php $this->help_tip( __( 'The parent theme developers URL.', 'flatsome' ) ); ?>
+						<?php $this->help_tip( __( 'The parent theme developers URL.', 'silver' ) ); ?>
 					</td>
 					<td><?php echo esc_html( $this->theme['parent_author_url'] ); ?></td>
 				</tr>
@@ -675,19 +675,19 @@ final class Status {
 	private function render_wordpress_environment() {
 		$this->panel_open();
 		?>
-		<table class="flatsome-status-table widefat" cellspacing="0">
+		<table class="silver-status-table widefat" cellspacing="0">
 			<thead>
 			<tr>
 				<th colspan="3" data-export-label="WordPress Environment">
-					<h2 id="wordpress"><?php esc_html_e( 'WordPress environment', 'flatsome' ); ?></h2>
+					<h2 id="wordpress"><?php esc_html_e( 'WordPress environment', 'silver' ); ?></h2>
 				</th>
 			</tr>
 			</thead>
 			<tbody>
 			<tr>
-				<td data-export-label="WordPress Version"><?php esc_html_e( 'WordPress version', 'flatsome' ); ?></td>
+				<td data-export-label="WordPress Version"><?php esc_html_e( 'WordPress version', 'silver' ); ?></td>
 				<td class="help">
-					<?php $this->help_tip( __( 'The installed WordPress version (indicates the fulfillment of the minimum required version).', 'flatsome' ) ); ?>
+					<?php $this->help_tip( __( 'The installed WordPress version (indicates the fulfillment of the minimum required version).', 'silver' ) ); ?>
 				</td>
 				<td>
 					<?php
@@ -696,7 +696,7 @@ final class Status {
 					} elseif ( $this->tests['wp_version']['result'] === Log_Level::CRITICAL ) {
 						$wp_version_required = wp_get_theme( get_template() )->get( 'RequiresWP' );
 						/* translators: %s: The minimum required WP version number. */
-						$notice = sprintf( __( 'The theme requires WordPress version %s or above.', 'flatsome' ), $wp_version_required );
+						$notice = sprintf( __( 'The theme requires WordPress version %s or above.', 'silver' ), $wp_version_required );
 						?>
 						<mark class="critical"><span class="dashicons dashicons-warning"></span>
 							<?php echo esc_html( $this->environment['wp_version'] ) . ' - ' . wp_kses_post( $notice ); ?>
@@ -708,9 +708,9 @@ final class Status {
 			</tr>
 			<?php if ( $this->environment['woocommerce_enabled'] ) : ?>
 				<tr>
-					<td data-export-label="WooCommerce Version"><?php esc_html_e( 'WooCommerce version', 'flatsome' ); ?></td>
+					<td data-export-label="WooCommerce Version"><?php esc_html_e( 'WooCommerce version', 'silver' ); ?></td>
 					<td class="help">
-						<?php $this->help_tip( __( 'The installed WooCommerce version (indicates the fulfillment of the minimum required version).', 'flatsome' ) ); ?>
+						<?php $this->help_tip( __( 'The installed WooCommerce version (indicates the fulfillment of the minimum required version).', 'silver' ) ); ?>
 					</td>
 					<td>
 						<?php
@@ -719,7 +719,7 @@ final class Status {
 						} else {
 							$wc_version_required = wp_get_theme( get_template() )->get( 'WC requires at least' );
 							/* translators: %s: The minimum required WC version number. */
-							$notice = sprintf( __( 'The theme requires WooCommerce version %s or above.', 'flatsome' ), $wc_version_required );
+							$notice = sprintf( __( 'The theme requires WooCommerce version %s or above.', 'silver' ), $wc_version_required );
 							?>
 							<mark class="critical"><span class="dashicons dashicons-warning"></span>
 								<?php echo esc_html( $this->environment['wc_version'] ) . ' - ' . wp_kses_post( $notice ); ?>
@@ -731,25 +731,25 @@ final class Status {
 				</tr>
 			<?php endif; ?>
 			<tr>
-				<td data-export-label="WP Memory Limit"><?php esc_html_e( 'WordPress memory limit', 'flatsome' ); ?></td>
+				<td data-export-label="WP Memory Limit"><?php esc_html_e( 'WordPress memory limit', 'silver' ); ?></td>
 				<td class="help">
-					<?php $this->help_tip( __( 'The maximum amount of memory (RAM) that your site can use at one time.', 'flatsome' ) ); ?></td>
+					<?php $this->help_tip( __( 'The maximum amount of memory (RAM) that your site can use at one time.', 'silver' ) ); ?></td>
 				<td>
 					<?php
 					if ( $this->tests['wp_memory_limit']['result'] === Log_Level::SUCCESS ) {
 						echo '<mark class="success">' . esc_html( size_format( $this->environment['wp_memory_limit'] ) ) . '</mark>';
 					} else {
 						/* translators: %1$s: Memory limit, %2$s: Docs link. */
-						echo '<mark class="warning">' . sprintf( esc_html__( '%1$s - We recommend setting memory to at least 256MB. See: %2$s', 'flatsome' ), esc_html( size_format( $this->environment['wp_memory_limit'] ) ), '<a href="https://wordpress.org/support/article/editing-wp-config-php/#increasing-memory-allocated-to-php" target="_blank" rel="noopener">' . esc_html__( 'Increasing memory allocated to PHP', 'flatsome' ) . '</a>' ) . '</mark>';
+						echo '<mark class="warning">' . sprintf( esc_html__( '%1$s - We recommend setting memory to at least 256MB. See: %2$s', 'silver' ), esc_html( size_format( $this->environment['wp_memory_limit'] ) ), '<a href="https://wordpress.org/support/article/editing-wp-config-php/#increasing-memory-allocated-to-php" target="_blank" rel="noopener">' . esc_html__( 'Increasing memory allocated to PHP', 'silver' ) . '</a>' ) . '</mark>';
 					}
 					?>
 				</td>
 			</tr>
 			<?php if ( $this->extended ) : ?>
 				<tr>
-					<td data-export-label="WP Image Sizes"><?php esc_html_e( 'WordPress image sizes', 'flatsome' ); ?></td>
+					<td data-export-label="WP Image Sizes"><?php esc_html_e( 'WordPress image sizes', 'silver' ); ?></td>
 					<td class="help">
-						<?php $this->help_tip( __( 'The image sizes that are registered on this site.', 'flatsome' ) ); ?>
+						<?php $this->help_tip( __( 'The image sizes that are registered on this site.', 'silver' ) ); ?>
 					</td>
 					<td>
 						<?php
@@ -787,24 +787,24 @@ final class Status {
 	private function render_server_environment() {
 		$this->panel_open();
 		?>
-		<table class="flatsome-status-table widefat" cellspacing="0">
+		<table class="silver-status-table widefat" cellspacing="0">
 			<thead>
 			<tr>
 				<th colspan="3" data-export-label="Server Environment">
-					<h2 id="server"><?php esc_html_e( 'Server environment', 'flatsome' ); ?></h2>
+					<h2 id="server"><?php esc_html_e( 'Server environment', 'silver' ); ?></h2>
 				</th>
 			</tr>
 			</thead>
 			<tbody>
 			<tr>
-				<td data-export-label="Server Info"><?php esc_html_e( 'Server info', 'flatsome' ); ?></td>
-				<td class="help"><?php $this->help_tip( __( 'Information about the web server that is currently hosting your site.', 'flatsome' ) ); ?></td>
+				<td data-export-label="Server Info"><?php esc_html_e( 'Server info', 'silver' ); ?></td>
+				<td class="help"><?php $this->help_tip( __( 'Information about the web server that is currently hosting your site.', 'silver' ) ); ?></td>
 				<td><?php echo esc_html( $this->environment['server_info'] ); ?></td>
 			</tr>
 			<tr>
-				<td data-export-label="PHP Version"><?php esc_html_e( 'PHP version', 'flatsome' ); ?></td>
+				<td data-export-label="PHP Version"><?php esc_html_e( 'PHP version', 'silver' ); ?></td>
 				<td class="help">
-					<?php $this->help_tip( __( 'The version of PHP installed on your hosting server.', 'flatsome' ) ); ?>
+					<?php $this->help_tip( __( 'The version of PHP installed on your hosting server.', 'silver' ) ); ?>
 				</td>
 				<td>
 					<?php
@@ -816,7 +816,7 @@ final class Status {
 
 						if ( version_compare( $this->environment['php_version'], $this->recommended_php_version, '<' ) ) {
 							/* translators: %s: The recommended PHP version number. */
-							$notice = sprintf( __( 'We recommend using PHP version %s or above for greater performance and security.', 'flatsome' ), $this->recommended_php_version );
+							$notice = sprintf( __( 'We recommend using PHP version %s or above for greater performance and security.', 'silver' ), $this->recommended_php_version );
 							$class  = 'warning';
 						}
 
@@ -827,31 +827,31 @@ final class Status {
 			</tr>
 			<?php if ( function_exists( 'ini_get' ) ) : ?>
 				<tr>
-					<td data-export-label="PHP Post Max Size"><?php esc_html_e( 'PHP post max size', 'flatsome' ); ?></td>
+					<td data-export-label="PHP Post Max Size"><?php esc_html_e( 'PHP post max size', 'silver' ); ?></td>
 					<td class="help">
-						<?php $this->help_tip( __( 'The largest filesize that can be contained in one post.', 'flatsome' ) ); ?>
+						<?php $this->help_tip( __( 'The largest filesize that can be contained in one post.', 'silver' ) ); ?>
 					</td>
 					<td><?php echo esc_html( size_format( $this->environment['php_post_max_size'] ) ); ?></td>
 				</tr>
 				<tr>
-					<td data-export-label="PHP Time Limit"><?php esc_html_e( 'PHP time limit', 'flatsome' ); ?></td>
+					<td data-export-label="PHP Time Limit"><?php esc_html_e( 'PHP time limit', 'silver' ); ?></td>
 					<td class="help">
-						<?php $this->help_tip( __( 'The amount of time (in seconds) that your site will spend on a single operation before timing out (to avoid server lockups).', 'flatsome' ) ); ?>
+						<?php $this->help_tip( __( 'The amount of time (in seconds) that your site will spend on a single operation before timing out (to avoid server lockups).', 'silver' ) ); ?>
 					</td>
 					<td><?php echo esc_html( $this->environment['php_max_execution_time'] ); ?></td>
 				</tr>
 				<tr>
-					<td data-export-label="PHP Max Input Variables"><?php esc_html_e( 'PHP max input variables', 'flatsome' ); ?></td>
+					<td data-export-label="PHP Max Input Variables"><?php esc_html_e( 'PHP max input variables', 'silver' ); ?></td>
 					<td class="help">
-						<?php $this->help_tip( __( 'The maximum number of variables your server can use for a single function to avoid overloads.', 'flatsome' ) ); ?>
+						<?php $this->help_tip( __( 'The maximum number of variables your server can use for a single function to avoid overloads.', 'silver' ) ); ?>
 					</td>
 					<td><?php echo esc_html( $this->environment['php_max_input_vars'] ); ?></td>
 				</tr>
 			<?php endif; ?>
 			<tr>
-				<td data-export-label="Max Upload Size"><?php esc_html_e( 'Max upload size', 'flatsome' ); ?></td>
+				<td data-export-label="Max Upload Size"><?php esc_html_e( 'Max upload size', 'silver' ); ?></td>
 				<td class="help">
-					<?php $this->help_tip( __( 'The largest filesize that can be uploaded to your WordPress installation.', 'flatsome' ) ); ?>
+					<?php $this->help_tip( __( 'The largest filesize that can be uploaded to your WordPress installation.', 'silver' ) ); ?>
 				</td>
 				<td><?php echo esc_html( size_format( $this->environment['max_upload_size'] ) ); ?></td>
 			</tr>
@@ -869,19 +869,19 @@ final class Status {
 	private function render_security() {
 		$this->panel_open();
 		?>
-		<table class="flatsome-status-table widefat" cellspacing="0">
+		<table class="silver-status-table widefat" cellspacing="0">
 			<thead>
 			<tr>
 				<th colspan="3" data-export-label="Security">
-					<h2 id="security"><?php esc_html_e( 'Security', 'flatsome' ); ?></h2>
+					<h2 id="security"><?php esc_html_e( 'Security', 'silver' ); ?></h2>
 				</th>
 			</tr>
 			</thead>
 			<tbody>
 			<tr>
-				<td data-export-label="Secure connection (HTTPS)"><?php esc_html_e( 'Secure connection (HTTPS)', 'flatsome' ); ?></td>
+				<td data-export-label="Secure connection (HTTPS)"><?php esc_html_e( 'Secure connection (HTTPS)', 'silver' ); ?></td>
 				<td class="help">
-					<?php $this->help_tip( esc_html__( 'Is the connection to your site secure?', 'flatsome' ) ); ?>
+					<?php $this->help_tip( esc_html__( 'Is the connection to your site secure?', 'silver' ) ); ?>
 				</td>
 				<td>
 					<?php if ( $this->tests['secure_connection']['result'] === Log_Level::SUCCESS ) : ?>
@@ -890,23 +890,23 @@ final class Status {
 						<mark class="critical"><span class="dashicons dashicons-warning"></span>
 							<?php
 							/* translators: %s: Docs link. */
-							echo wp_kses_post( sprintf( __( 'Your site is not using HTTPS. <a href="%s" target="_blank">Learn more about HTTPS and SSL Certificates</a>.', 'flatsome' ), 'https://wordpress.com/support/https-ssl/' ) );
+							echo wp_kses_post( sprintf( __( 'Your site is not using HTTPS. <a href="%s" target="_blank">Learn more about HTTPS and SSL Certificates</a>.', 'silver' ), 'https://wordpress.com/support/https-ssl/' ) );
 							?>
 						</mark>
 					<?php endif; ?>
 				</td>
 			</tr>
 			<tr>
-				<td data-export-label="Hide errors from visitors"><?php esc_html_e( 'Hide errors from visitors', 'flatsome' ); ?></td>
+				<td data-export-label="Hide errors from visitors"><?php esc_html_e( 'Hide errors from visitors', 'silver' ); ?></td>
 				<td class="help">
-					<?php $this->help_tip( esc_html__( 'Error messages can contain sensitive information about your site environment. These should be hidden from untrusted visitors.', 'flatsome' ) ); ?>
+					<?php $this->help_tip( esc_html__( 'Error messages can contain sensitive information about your site environment. These should be hidden from untrusted visitors.', 'silver' ) ); ?>
 				</td>
 				<td>
 					<?php if ( $this->tests['hide_errors']['result'] === Log_Level::SUCCESS ) : ?>
 						<mark class="success"><span class="dashicons dashicons-yes"></span></mark>
 					<?php else : ?>
 						<mark class="critical"><span class="dashicons dashicons-warning"></span>
-							<?php esc_html_e( 'Error messages should not be shown to visitors.', 'flatsome' ); ?>
+							<?php esc_html_e( 'Error messages should not be shown to visitors.', 'silver' ); ?>
 						</mark>
 					<?php endif; ?>
 				</td>
@@ -925,26 +925,26 @@ final class Status {
 	private function render_database() {
 		$this->panel_open();
 		?>
-		<table class="flatsome-status-table widefat" cellspacing="0">
+		<table class="silver-status-table widefat" cellspacing="0">
 			<thead>
 			<tr>
 				<th colspan="3" data-export-label="Database">
-					<h2 id="database"><?php esc_html_e( 'Database', 'flatsome' ); ?></h2>
+					<h2 id="database"><?php esc_html_e( 'Database', 'silver' ); ?></h2>
 				</th>
 			</tr>
 			</thead>
 			<tbody>
 			<tr>
-				<td data-export-label="Silver Database Version"><?php esc_html_e( 'Flatsome database version', 'flatsome' ); ?></td>
+				<td data-export-label="Silver Database Version"><?php esc_html_e( 'Silver database version', 'silver' ); ?></td>
 				<td class="help">
-					<?php $this->help_tip( __( 'The database version for Flatsome. This should be the same as the parent theme version.', 'flatsome' ) ); ?>
+					<?php $this->help_tip( __( 'The database version for Silver. This should be the same as the parent theme version.', 'silver' ) ); ?>
 				</td>
 				<td>
 					<?php
 					if ( $this->tests['db_version']['result'] === Log_Level::SUCCESS ) {
 						echo '<mark class="success">' . esc_html( $this->database['db_version'] ) . '</mark>';
 					} else {
-						echo '<mark class="warning">' . esc_html( $this->database['db_version'] ) . ' - ' . esc_html( __( 'This should be the same as the parent theme version.', 'flatsome' ) ) . '</mark>';
+						echo '<mark class="warning">' . esc_html( $this->database['db_version'] ) . ' - ' . esc_html( __( 'This should be the same as the parent theme version.', 'silver' ) ) . '</mark>';
 					}
 					?>
 				</td>
@@ -963,18 +963,18 @@ final class Status {
 	private function render_templates() {
 		$this->panel_open();
 		?>
-		<table class="flatsome-status-table widefat" cellspacing="0">
+		<table class="silver-status-table widefat" cellspacing="0">
 			<thead>
 			<tr>
 				<th colspan="3" data-export-label="Templates">
-					<h2 id="templates"><?php esc_html_e( 'Templates', 'flatsome' ); ?></h2>
+					<h2 id="templates"><?php esc_html_e( 'Templates', 'silver' ); ?></h2>
 				</th>
 			</tr>
 			</thead>
 			<tbody>
 			<tr>
-				<td data-export-label="Overrides"><?php esc_html_e( 'Overrides', 'flatsome' ); ?></td>
-				<td class="help"><?php $this->help_tip( __( 'This section shows any files that are overriding the default Flatsome templates.', 'flatsome' ) ); ?></td>
+				<td data-export-label="Overrides"><?php esc_html_e( 'Overrides', 'silver' ); ?></td>
+				<td class="help"><?php $this->help_tip( __( 'This section shows any files that are overriding the default Silver templates.', 'silver' ) ); ?></td>
 				<?php
 				if ( ! empty( $this->theme['overrides'] ) ) :
 					$total_overrides = count( $this->theme['overrides'] );
@@ -987,7 +987,7 @@ final class Status {
 								$current_version = $override['version'] ? $override['version'] : '-';
 								printf(
 								/* translators: %1$s: Template name, %2$s: Template version, %3$s: Core version. */
-									esc_html__( '%1$s version %2$s is out of date. The core version is %3$s', 'flatsome' ),
+									esc_html__( '%1$s version %2$s is out of date. The core version is %3$s', 'silver' ),
 									'<code>' . esc_html( $override['file'] ) . '</code>',
 									'<strong style="color:red">' . esc_html( $current_version ) . '</strong>',
 									esc_html( $override['core_version'] )
@@ -1019,7 +1019,7 @@ final class Status {
 	 */
 	private function render_footer() {
 		?>
-		<script id="flatsome-status-panel-js">
+		<script id="silver-status-panel-js">
 			document.addEventListener('DOMContentLoaded', function () {
 				window.tippy('[data-tippy-content]', {
 					theme: 'blue',
@@ -1207,7 +1207,7 @@ final class Status {
 	}
 
 	/**
-	 * Test Flatsome database version.
+	 * Test Silver database version.
 	 *
 	 * @return string
 	 */

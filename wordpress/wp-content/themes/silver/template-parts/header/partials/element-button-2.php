@@ -2,15 +2,15 @@
 /**
  * Button 2 element.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.20.0
+ * @package          Silver\Templates
+ * @silver-version 3.20.0
  */
 
 ?>
 <li class="html header-button-2">
 	<div class="header-button">
 		<?php
-		echo flatsome_apply_shortcode( 'button', array(
+		echo silver_apply_shortcode( 'button', array(
 			'text'        => get_theme_mod( 'header_button_2', 'Button 2' ),
 			'letter_case' => get_theme_mod( 'header_button_2_letter_case' ),
 			'link'        => get_theme_mod( 'header_button_2_link' ),

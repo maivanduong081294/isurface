@@ -4,8 +4,8 @@ add_ux_builder_shortcode( 'text_box', array(
     'type' => 'container',
     'name' => __( 'Text Box' ),
     'category' => __( 'Content' ),
-    'template' => flatsome_ux_builder_template( 'text_box.html' ),
-    'thumbnail' => flatsome_ux_builder_thumbnail( 'text_box' ),
+    'template' => silver_ux_builder_template( 'text_box.html' ),
+    'thumbnail' => silver_ux_builder_thumbnail( 'text_box' ),
     'require' => 'ux_banner',
     'allow' => array(
       'ux_breadcrumbs',
@@ -52,6 +52,7 @@ add_ux_builder_shortcode( 'text_box', array(
             'text_color' => array(
                 'type' => 'radio-buttons',
                 'heading' => __('Color'),
+                'responsive' => true,
                 'default' => 'light',
                 'options' => array(
                     'light'  => array( 'title' => 'Light'),
@@ -132,6 +133,7 @@ add_ux_builder_shortcode( 'text_box', array(
           'text_align' => array(
               'type' => 'radio-buttons',
               'heading' => __('Align'),
+              'responsive' => true,
               'default' => 'center',
               'options' => require( __DIR__ . '/values/align-radios.php' ),
             ),
@@ -152,7 +154,9 @@ add_ux_builder_shortcode( 'text_box', array(
 
           'bg' => array(
             'type' => 'colorpicker',
+            'helpers' => require( __DIR__ . '/helpers/colors.php' ),
             'heading' => __('BG Color'),
+            'responsive' => true,
             'alpha' => true,
             'format' => 'rgb',
             'position' => 'bottom right',

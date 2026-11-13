@@ -1,6 +1,6 @@
 <?php
 
-function flatsome_text_box( $atts, $content = null ){
+function silver_text_box( $atts, $content = null ){
 
   $atts = ux_builder_shortcode_atts( array(
     '_id' => '',
@@ -71,8 +71,8 @@ function flatsome_text_box( $atts, $content = null ){
     if($visibility) $classes[] = $visibility;
 
     // Set positions
-    $classes[] = flatsome_position_classes( 'x', $position_x, $position_x__md, $position_x__ml, $position_x__lg );
-    $classes[] = flatsome_position_classes( 'y', $position_y, $position_y__md, $position_y__ml, $position_y__lg );
+    $classes[] = silver_position_classes( 'x', $position_x, $position_x__md, $position_x__ml, $position_x__lg );
+    $classes[] = silver_position_classes( 'y', $position_y, $position_y__md, $position_y__ml, $position_y__lg );
 
     $classes_inner = array();
 
@@ -147,6 +147,19 @@ function flatsome_text_box( $atts, $content = null ){
 
           );
           echo ux_builder_element_style_tag( $id, $args, $atts);
+
+          // Responsive text align / text color (larger screens).
+          echo silver_responsive_style_tag( $id, $atts, array_merge(
+            array(
+              'text_align' => array(
+                'selector'       => '.text-inner',
+                'only_overrides' => true,
+                'default'        => 'center',
+                'map'            => silver_responsive_map( 'text_align' ),
+              ),
+            ),
+            silver_responsive_scheme_rules( 'text_color', '.text-box-content', 'light', 'dark', array( 'only_overrides' => true, 'default' => 'light' ) )
+          ) );
         ?>
     </div>
  <?php
@@ -154,4 +167,4 @@ function flatsome_text_box( $atts, $content = null ){
   ob_end_clean();
   return $content;
 }
-add_shortcode('text_box', 'flatsome_text_box');
+add_shortcode('text_box', 'silver_text_box');

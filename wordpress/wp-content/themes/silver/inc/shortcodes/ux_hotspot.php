@@ -34,8 +34,8 @@ function ux_hotspot( $atts, $content = null ) {
 	}
 
 	// Set positions.
-	$classes[] = flatsome_position_classes( 'x', $position_x, $position_x__md, $position_x__ml, $position_x__lg );
-	$classes[] = flatsome_position_classes( 'y', $position_y, $position_y__md, $position_y__ml, $position_y__lg );
+	$classes[] = silver_position_classes( 'x', $position_x, $position_x__md, $position_x__ml, $position_x__lg );
+	$classes[] = silver_position_classes( 'y', $position_y, $position_y__md, $position_y__ml, $position_y__lg );
 
 	// Size.
 	if ( $size ) {
@@ -65,7 +65,15 @@ function ux_hotspot( $atts, $content = null ) {
 		wp_enqueue_script( 'wc-add-to-cart-variation' );
 	}
 
-	$icon_html = get_flatsome_icon( 'icon-' . esc_attr( $icon ) );
+	$icon_html = get_silver_icon( 'icon-' . esc_attr( $icon ) );
+
+	// Responsive background color (larger screens).
+	if ( silver_responsive_has_overrides( (array) $atts, 'bg_color' ) ) {
+		if ( ! $_id ) $_id = 'hotspot-' . wp_rand();
+		echo silver_responsive_style_tag( $_id, (array) $atts, array( // phpcs:ignore WordPress.Security.EscapeOutput
+			'bg_color' => array( 'selector' => '.hotspot', 'property' => 'background-color', 'only_overrides' => true ),
+		) );
+	}
 	?>
 	<div<?php if ( $_id ) : ?> id="<?php echo esc_attr( $_id ); ?>"<?php endif; ?> class="<?php echo esc_attr( $classes ); ?> dark">
 		<div data-animate="<?php echo esc_attr( $animate ); ?>">
@@ -78,7 +86,7 @@ function ux_hotspot( $atts, $content = null ) {
 					'aria-label' => esc_attr( $text ),
 				);
 				?>
-				<a <?php echo flatsome_html_atts( $link_atts ) . ' ' . get_shortcode_inline_css( $css_args ); ?>>
+				<a <?php echo silver_html_atts( $link_atts ) . ' ' . get_shortcode_inline_css( $css_args ); ?>>
 					<?php echo $icon_html; // phpcs:ignore WordPress.Security.EscapeOutput ?>
 				</a>
 				<?php
@@ -93,7 +101,7 @@ function ux_hotspot( $atts, $content = null ) {
 						'aria-label' => esc_attr( $product_title ),
 					);
 					?>
-					<a <?php echo flatsome_html_atts( $link_atts ) . ' ' . get_shortcode_inline_css( $css_args ); ?>>
+					<a <?php echo silver_html_atts( $link_atts ) . ' ' . get_shortcode_inline_css( $css_args ); ?>>
 						<?php echo $icon_html; // phpcs:ignore WordPress.Security.EscapeOutput ?>
 					</a>
 					<?php
@@ -109,7 +117,7 @@ function ux_hotspot( $atts, $content = null ) {
 						'aria-haspopup' => 'dialog',
 					);
 					?>
-					<a <?php echo flatsome_html_atts( $link_atts ) . ' ' . get_shortcode_inline_css( $css_args ); ?>>
+					<a <?php echo silver_html_atts( $link_atts ) . ' ' . get_shortcode_inline_css( $css_args ); ?>>
 						<?php echo $icon_html; // phpcs:ignore WordPress.Security.EscapeOutput ?>
 					</a>
 					<?php

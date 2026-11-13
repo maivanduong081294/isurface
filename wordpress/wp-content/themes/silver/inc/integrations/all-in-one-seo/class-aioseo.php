@@ -3,18 +3,18 @@
  * All in one SEO integration
  *
  * @author      UX Themes
- * @package     Flatsome\Integrations
+ * @package     Silver\Integrations
  * @since       3.16.0
  */
 
-namespace Flatsome\Integrations;
+namespace Silver\Integrations;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Class AIOSEO
  *
- * @package Flatsome\Integrations
+ * @package Silver\Integrations
  */
 class AIOSEO {
 
@@ -38,8 +38,8 @@ class AIOSEO {
 	public function integrate() {
 		// Breadcrumb.
 		if ( get_theme_mod( 'aioseo_breadcrumb' ) ) {
-			remove_action( 'flatsome_breadcrumb', 'woocommerce_breadcrumb', 20 );
-			add_action( 'flatsome_breadcrumb', [ $this, 'aioseo_breadcrumb' ], 20 );
+			remove_action( 'silver_breadcrumb', 'woocommerce_breadcrumb', 20 );
+			add_action( 'silver_breadcrumb', [ $this, 'aioseo_breadcrumb' ], 20 );
 
 			add_filter( 'aioseo_breadcrumbs_separator', [ $this, 'wrap_crumb_separator' ] );
 		}

@@ -4,7 +4,7 @@ add_ux_builder_shortcode( 'team_member', array(
     'name' => __( 'Team Member' ),
     'category' => __( 'Content' ),
     'type' => 'container',
-    'thumbnail' =>  flatsome_ux_builder_thumbnail( 'team_member' ),
+    'thumbnail' =>  silver_ux_builder_thumbnail( 'team_member' ),
 
     'presets' => array(
         array(

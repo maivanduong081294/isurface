@@ -13,7 +13,7 @@
  * @see              https://woocommerce.com/document/template-structure/
  * @package          WooCommerce\Templates
  * @version          11.0.0
- * @flatsome-version 3.20.9
+ * @silver-version 3.20.9
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -215,7 +215,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 
 				<?php if ( wc_coupons_enabled() && get_theme_mod( 'cart_coupon_position', 'sidebar' ) === 'bottom' ) { ?>
 					<div class="coupon mb">
-						<h3 class="widget-title text-left"><?php echo get_flatsome_icon( 'icon-tag' ); ?> <?php esc_html_e( 'Coupon', 'woocommerce' ); ?></h3>
+						<h3 class="widget-title text-left"><?php echo get_silver_icon( 'icon-tag' ); ?> <?php esc_html_e( 'Coupon', 'woocommerce' ); ?></h3>
 						<div class="flex-row gap-half">
 							<div class="flex-col flex-grow">
 								<label for="coupon_code" class="screen-reader-text"><?php esc_html_e( 'Coupon:', 'woocommerce' ); ?></label>
@@ -248,7 +248,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 <?php do_action( 'woocommerce_before_cart_collaterals' ); ?>
 
 <div class="cart-collaterals xlarge-5 col pb-0">
-	<?php flatsome_sticky_column_open( 'cart_sticky_sidebar' ); ?>
+	<?php silver_sticky_column_open( 'cart_sticky_sidebar' ); ?>
 
 	<div class="cart-sidebar col-inner <?php echo esc_attr( $sidebar_classes ); ?>">
 		<?php
@@ -263,15 +263,15 @@ do_action( 'woocommerce_before_cart' ); ?>
 		<?php if ( wc_coupons_enabled() && get_theme_mod( 'cart_coupon_position', 'sidebar' ) === 'sidebar' ) { ?>
 		<form class="ux-cart-coupon mb-0" method="post">
 			<div class="coupon">
-				<h3 class="widget-title"><?php echo get_flatsome_icon( 'icon-tag' ); ?> <?php esc_html_e( 'Coupon', 'woocommerce' ); ?></h3><label for="coupon_code" class="screen-reader-text"><?php esc_html_e( 'Coupon:', 'woocommerce' ); ?></label><input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="<?php esc_attr_e( 'Coupon code', 'woocommerce' ); ?>" /> <button type="submit" class="is-form expand button<?php if ( fl_woocommerce_version_check( '7.0.1' ) ) { echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); } ?>" name="apply_coupon" value="<?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?>"><?php esc_html_e( 'Apply coupon', 'woocommerce' ); ?></button>
+				<h3 class="widget-title"><?php echo get_silver_icon( 'icon-tag' ); ?> <?php esc_html_e( 'Coupon', 'woocommerce' ); ?></h3><label for="coupon_code" class="screen-reader-text"><?php esc_html_e( 'Coupon:', 'woocommerce' ); ?></label><input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="<?php esc_attr_e( 'Coupon code', 'woocommerce' ); ?>" /> <button type="submit" class="is-form expand button<?php if ( fl_woocommerce_version_check( '7.0.1' ) ) { echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); } ?>" name="apply_coupon" value="<?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?>"><?php esc_html_e( 'Apply coupon', 'woocommerce' ); ?></button>
 				<?php do_action( 'woocommerce_cart_coupon' ); ?>
 			</div>
 		</form>
 		<?php } ?>
-		<?php do_action( 'flatsome_cart_sidebar' ); ?>
+		<?php do_action( 'silver_cart_sidebar' ); ?>
 	</div>
 
-	<?php flatsome_sticky_column_close( 'cart_sticky_sidebar' ); ?>
+	<?php silver_sticky_column_close( 'cart_sticky_sidebar' ); ?>
 </div>
 </div>
 

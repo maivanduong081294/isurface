@@ -2,8 +2,8 @@
 /**
  * Checkout element.
  *
- * @package          Flatsome\Templates
- * @flatsome-version 3.20.0
+ * @package          Silver\Templates
+ * @silver-version 3.20.0
  */
 
 if ( ! is_woocommerce_activated() ) {
@@ -24,7 +24,7 @@ if ( is_checkout() ) {
 ?>
 <li>
 	<div class="cart-checkout-button header-button">
-		<a <?php echo flatsome_html_atts( $link_atts ); ?>>
+		<a <?php echo silver_html_atts( $link_atts ); ?>>
 			<span class="hide-for-small"><?php esc_html_e( 'Checkout', 'woocommerce' ); ?></span>
 			<span class="show-for-small" aria-label="<?php esc_attr_e( 'Checkout', 'woocommerce' ); ?>">+</span>
 		</a>

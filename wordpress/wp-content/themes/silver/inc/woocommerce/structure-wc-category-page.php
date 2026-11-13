@@ -13,28 +13,28 @@ add_action( 'woocommerce_before_shop_loop_item', 'woocommerce_show_product_loop_
 /**
  * Gets products per page count from theme settings.
  */
-function flatsome_product_pr_page() {
+function silver_product_pr_page() {
 	return get_theme_mod( 'products_pr_page', 12 );
 }
-add_filter( 'loop_shop_per_page', 'flatsome_product_pr_page', 20 );
+add_filter( 'loop_shop_per_page', 'silver_product_pr_page', 20 );
 
 /**
  * Gets base desktop row count from theme settings.
  */
-function flatsome_category_row_count() {
+function silver_category_row_count() {
 	return get_theme_mod( 'category_row_count', 3 );
 }
-add_filter( 'loop_shop_columns', 'flatsome_category_row_count', 20 );
+add_filter( 'loop_shop_columns', 'silver_category_row_count', 20 );
 
 
 /* Set WooCommerce product loop classes */
-function flatsome_product_row_classes($cols = null){
+function silver_product_row_classes($cols = null){
     $classes = array('row','row-small');
 
 	$category_grid_style = get_theme_mod( 'category_grid_style', 'grid' );
 
     if($category_grid_style == 'masonry'){
-      wp_enqueue_script('flatsome-masonry-js');
+      wp_enqueue_script('silver-masonry-js');
       $classes[] = 'row-masonry has-packery';
     }
 
@@ -70,7 +70,7 @@ function flatsome_product_row_classes($cols = null){
     return implode(' ', $classes);
 }
 
-function flatsome_products_footer_content(){
+function silver_products_footer_content(){
     if(is_product_category() || is_product_tag()){
       $queried_object = get_queried_object();
       $content = get_term_meta($queried_object->term_id, 'cat_meta');
@@ -80,7 +80,7 @@ function flatsome_products_footer_content(){
         }
     }
 }
-add_action('flatsome_products_after','flatsome_products_footer_content');
+add_action('silver_products_after','silver_products_footer_content');
 
 
 /* Add Custom Meta to Category */
@@ -94,12 +94,12 @@ if(is_admin()){
         if(!$term_meta){$term_meta = add_term_meta($t_id, 'cat_meta', '');}
          ?>
         <tr class="form-field">
-        <th scope="row" valign="top"><label for="term_meta[cat_header]"><?php _e( 'Top Content', 'flatsome' ); ?></label></th>
+        <th scope="row" valign="top"><label for="term_meta[cat_header]"><?php _e( 'Top Content', 'silver' ); ?></label></th>
             <td>
                     <?php
                     $content = esc_attr( isset($term_meta[0]['cat_header']) ) ? esc_attr( $term_meta[0]['cat_header'] ) : '';
                     echo '<textarea id="term_meta[cat_header]" name="term_meta[cat_header]">'.$content.'</textarea>'; ?>
-                <p class="description"><?php _e( 'Enter a value for this field. Shortcodes are allowed. This will be displayed at top of the category.','flatsome' ); ?></p>
+                <p class="description"><?php _e( 'Enter a value for this field. Shortcodes are allowed. This will be displayed at top of the category.','silver' ); ?></p>
             </td>
         </tr>
     <?php
@@ -116,12 +116,12 @@ if(is_admin()){
       if(!$term_meta){$term_meta = add_term_meta($t_id, 'cat_meta', '');}
        ?>
       <tr class="form-field">
-      <th scope="row" valign="top"><label for="term_meta[cat_footer]"><?php _e( 'Bottom Content', 'flatsome' ); ?></label></th>
+      <th scope="row" valign="top"><label for="term_meta[cat_footer]"><?php _e( 'Bottom Content', 'silver' ); ?></label></th>
         <td>
             <?php
             $content = isset($term_meta[0]['cat_footer']) ? esc_attr( $term_meta[0]['cat_footer'] ) : '';
             echo '<textarea id="term_meta[cat_footer]" name="term_meta[cat_footer]">'.$content.'</textarea>'; ?>
-          <p class="description"><?php _e( 'Enter a value for this field. Shortcodes are allowed. This will be displayed at bottom of the category.','flatsome' ); ?></p>
+          <p class="description"><?php _e( 'Enter a value for this field. Shortcodes are allowed. This will be displayed at bottom of the category.','silver' ); ?></p>
         </td>
       </tr>
     <?php
@@ -129,7 +129,7 @@ if(is_admin()){
     add_action( 'product_cat_edit_form_fields', 'bottom_text_taxonomy_edit_meta_field', 10, 2 );
     add_action( 'product_tag_edit_form_fields', 'bottom_text_taxonomy_edit_meta_field', 10, 2 );
 
-	    function flatsome_custom_product_page_taxonomy_edit_meta_field( $term ) {
+	    function silver_custom_product_page_taxonomy_edit_meta_field( $term ) {
 		    $t_id = $term->term_id;
 		    // retrieve the existing value(s) for this meta field. This returns an array
 		    $term_meta = get_term_meta( $t_id, 'cat_meta' );
@@ -138,7 +138,7 @@ if(is_admin()){
 		    }
 		    ?>
 		    <tr class="form-field">
-			    <th scope="row" valign="top"><label for="term_meta[cat_product_block]"><?php _e( 'Custom product layout', 'flatsome' ); ?></label></th>
+			    <th scope="row" valign="top"><label for="term_meta[cat_product_block]"><?php _e( 'Custom product layout', 'silver' ); ?></label></th>
 			    <td>
 				    <?php
 				    $selected = esc_attr( isset( $term_meta[0]['cat_product_block'] ) ) ? esc_attr( $term_meta[0]['cat_product_block'] ) : 0;
@@ -149,14 +149,14 @@ if(is_admin()){
 					    'show_option_none' => '-- None --',
 					    'selected'         => $selected,
 				    ) ); ?>
-				    <p class="description"><?php _e( 'Choose a custom product block layout for this category.', 'flatsome' ); ?></p>
+				    <p class="description"><?php _e( 'Choose a custom product block layout for this category.', 'silver' ); ?></p>
 			    </td>
 		    </tr>
 		    <?php
 
 	    }
 
-	    add_action( 'product_cat_edit_form_fields', 'flatsome_custom_product_page_taxonomy_edit_meta_field', 10 );
+	    add_action( 'product_cat_edit_form_fields', 'silver_custom_product_page_taxonomy_edit_meta_field', 10 );
 
     /* SAVE CUSTOM META*/
     function fl_save_taxonomy_custom_meta( $term_id ) {

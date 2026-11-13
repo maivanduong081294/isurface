@@ -2,17 +2,17 @@
 /**
  * Brands class.
  *
- * @package Flatsome\WooCommerce
+ * @package Silver\WooCommerce
  */
 
-namespace Flatsome\WooCommerce;
+namespace Silver\WooCommerce;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Class Brands
  *
- * @package Flatsome\WooCommerce
+ * @package Silver\WooCommerce
  */
 final class Brands {
 

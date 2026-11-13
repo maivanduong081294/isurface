@@ -15,13 +15,13 @@ function fl_header_element_error( $resource ) {
 }
 
 /**
- * Get flatsome_breadcrumb hooked content.
+ * Get silver_breadcrumb hooked content.
  *
  * @param string|array $class   One or more classes to add to the class list.
  * @param bool         $display Whether to display the breadcrumb (true) or return it (false).
  */
-function flatsome_breadcrumb( $class = '', $display = true ) {
-	do_action( 'flatsome_breadcrumb', $class, $display );
+function silver_breadcrumb( $class = '', $display = true ) {
+	do_action( 'silver_breadcrumb', $class, $display );
 }
 
 /**
@@ -35,7 +35,7 @@ function flatsome_breadcrumb( $class = '', $display = true ) {
  * @param string $name  Theme modification name.
  * @param string $mode  Sticky mode (css or javascript).
  */
-function flatsome_sticky_column_open( $name = '', $mode = '' ) {
+function silver_sticky_column_open( $name = '', $mode = '' ) {
 	if ( empty( $name ) || get_theme_mod( $name ) ) {
 		if ( ! empty( $name ) && empty( $mode ) ) {
 			$mode = get_theme_mod( $name . '_mode' );
@@ -56,7 +56,7 @@ function flatsome_sticky_column_open( $name = '', $mode = '' ) {
  *
  * @param string $name   Theme modification name.
  */
-function flatsome_sticky_column_close( $name = '' ) {
+function silver_sticky_column_close( $name = '' ) {
 	if ( empty( $name ) || get_theme_mod( $name ) ) {
 		echo '</div></div>';
 	}
@@ -65,7 +65,7 @@ function flatsome_sticky_column_close( $name = '' ) {
 /**
  * @deprecated 3.7
  */
-function get_flatsome_breadcrumbs() {
-	_deprecated_function( __FUNCTION__, '3.7', 'flatsome_breadcrumb' );
-	flatsome_breadcrumb();
+function get_silver_breadcrumbs() {
+	_deprecated_function( __FUNCTION__, '3.7', 'silver_breadcrumb' );
+	silver_breadcrumb();
 }

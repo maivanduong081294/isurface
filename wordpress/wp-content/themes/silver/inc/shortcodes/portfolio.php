@@ -1,7 +1,7 @@
 <?php
 
 // [featured_items_slider]
-function flatsome_portfolio_shortcode($atts, $content = null, $tag = '' ) {
+function silver_portfolio_shortcode($atts, $content = null, $tag = '' ) {
 
   extract(ux_builder_shortcode_atts(array(
         // meta
@@ -89,9 +89,9 @@ function flatsome_portfolio_shortcode($atts, $content = null, $tag = '' ) {
   if($type == 'grid'){
     $columns = 0;
     $current_grid = 0;
-    $grid = flatsome_get_grid($grid);
+    $grid = silver_get_grid($grid);
     $grid_total = count($grid);
-    flatsome_get_grid_height($grid_height, $_id);
+    silver_get_grid_height($grid_height, $_id);
   }
 
 	// Wrapper classes.
@@ -108,6 +108,8 @@ function flatsome_portfolio_shortcode($atts, $content = null, $tag = '' ) {
   // Set image styles
   if($image_hover)  $classes_image[] = 'image-'.$image_hover;
   if($image_hover_alt)  $classes_image[] = 'image-'.$image_hover_alt;
+  // Responsive image size: the smallest screen with a value is the base.
+  $image_height = silver_responsive_base( $atts, 'image_height' ) ?: $image_height;
   if($image_height)  $classes_image[] = 'image-cover';
 
   // Text classes
@@ -142,11 +144,11 @@ function flatsome_portfolio_shortcode($atts, $content = null, $tag = '' ) {
  // Add filter
  if($filter && $filter != 'disabled' && empty($cat) && $type !== 'grid' && $type !== 'slider' && $type !== 'full-slider'){
   // TODO: Get categories for filtering.
-  wp_enqueue_script('flatsome-isotope-js');
+  wp_enqueue_script('silver-isotope-js');
   ?>
   <div class="container mb-half">
   <ul class="nav nav-<?php echo esc_attr( $filter ); ?> nav-<?php echo esc_attr( $filter_align ); ?> nav-<?php echo esc_attr( $filter_nav ); ?> nav-uppercase filter-nav">
-    <li class="active"><a href="#" data-filter="*"><?php echo esc_html__( 'All','flatsome' ); ?></a></li>
+    <li class="active"><a href="#" data-filter="*"><?php echo esc_html__( 'All','silver' ); ?></a></li>
     <?php
       $tax_terms = get_terms('featured_item_category');
       foreach ($tax_terms as $key => $value) {
@@ -162,6 +164,7 @@ function flatsome_portfolio_shortcode($atts, $content = null, $tag = '' ) {
 
 // Repeater options
 $repeater['id'] = $_id;
+$repeater['responsive_atts'] = array_merge( (array) $atts, array( 'col_spacing' => $col_spacing, 'text_align' => $text_align ) );
 $repeater['tag'] = $tag;
 $repeater['type'] = $type;
 $repeater['style'] = $style;
@@ -220,7 +223,7 @@ if ( isset( $atts['ids'] ) ) {
 $wp_query = new WP_Query( $args );
 
 // Get repeater structure
-get_flatsome_repeater_start($repeater);
+get_silver_repeater_start($repeater);
 
  ?>
   <?php
@@ -284,7 +287,7 @@ get_flatsome_repeater_start($repeater);
           endif;
           wp_reset_query();
 
-  get_flatsome_repeater_end($repeater);
+  get_silver_repeater_end($repeater);
   echo '</div>';
 
   $args = array(
@@ -304,6 +307,6 @@ get_flatsome_repeater_start($repeater);
   ob_end_clean();
   return $content;
 }
-add_shortcode("featured_items_slider", "flatsome_portfolio_shortcode");
-add_shortcode("featured_items_grid", "flatsome_portfolio_shortcode");
-add_shortcode("ux_portfolio", "flatsome_portfolio_shortcode");
+add_shortcode("featured_items_slider", "silver_portfolio_shortcode");
+add_shortcode("featured_items_grid", "silver_portfolio_shortcode");
+add_shortcode("ux_portfolio", "silver_portfolio_shortcode");

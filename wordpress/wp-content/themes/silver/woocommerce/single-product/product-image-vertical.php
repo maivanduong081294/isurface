@@ -13,7 +13,7 @@
  * @see              https://woocommerce.com/document/template-structure/
  * @package          WooCommerce\Templates
  * @version          10.5.0
- * @flatsome-version 3.20.8
+ * @silver-version 3.20.8
  */
 
 use Automattic\WooCommerce\Enums\ProductType;
@@ -52,18 +52,18 @@ if(get_theme_mod('product_zoom', 0)){
 ?>
 <div class="row row-small">
 <div class="col xlarge-10">
-<?php do_action('flatsome_before_product_images'); ?>
+<?php do_action('silver_before_product_images'); ?>
 
 <div class="<?php echo esc_attr( implode( ' ', array_map( 'sanitize_html_class', $wrapper_classes ) ) ); ?> relative mb-half has-hover" data-columns="<?php echo esc_attr( $columns ); ?>">
 
-  <?php do_action('flatsome_sale_flash'); ?>
+  <?php do_action('silver_sale_flash'); ?>
 
   <div class="image-tools absolute top show-on-hover right z-3">
-    <?php do_action('flatsome_product_image_tools_top'); ?>
+    <?php do_action('silver_product_image_tools_top'); ?>
   </div>
 
   <div class="woocommerce-product-gallery__wrapper <?php echo implode(' ', $slider_classes); ?>"<?php
-    echo flatsome_slider_options_attr( array(
+    echo silver_slider_options_attr( array(
       'wrapAround'     => true,
       'adaptiveHeight' => true,
       'dragThreshold'  => 15,
@@ -72,7 +72,7 @@ if(get_theme_mod('product_zoom', 0)){
   ?>>
     <?php
     if ( $post_thumbnail_id ) {
-      $html  = flatsome_wc_get_gallery_image_html( $post_thumbnail_id, true );
+      $html  = silver_wc_get_gallery_image_html( $post_thumbnail_id, true );
     } else {
 		$wrapper_classname = $product->is_type( fl_woocommerce_version_check( '9.7.0' ) ? ProductType::VARIABLE : 'variable' ) && ! empty( $product->get_visible_children() ) && '' !== $product->get_price() ?
 			'woocommerce-product-gallery__image woocommerce-product-gallery__image--placeholder' :
@@ -90,17 +90,17 @@ if(get_theme_mod('product_zoom', 0)){
   </div>
 
   <div class="image-tools absolute bottom left z-3">
-    <?php do_action('flatsome_product_image_tools_bottom'); ?>
+    <?php do_action('silver_product_image_tools_bottom'); ?>
   </div>
 </div>
-<?php do_action('flatsome_after_product_images'); ?>
+<?php do_action('silver_after_product_images'); ?>
 </div>
 
 <?php
 
   $attachment_ids = $product->get_gallery_image_ids();
   $thumb_count = count($attachment_ids)+1;
-  $render_without_attachments = apply_filters( 'flatsome_single_product_thumbnails_render_without_attachments', false, $product, array( 'thumb_count' => $thumb_count ) );
+  $render_without_attachments = apply_filters( 'silver_single_product_thumbnails_render_without_attachments', false, $product, array( 'thumb_count' => $thumb_count ) );
 
   if ( $attachment_ids || $render_without_attachments ) {
 	  $loop              = 0;
@@ -113,13 +113,13 @@ if(get_theme_mod('product_zoom', 0)){
     }
 
     $gallery_class[] = 'slider row row-small row-slider slider-nav-small small-columns-4';
-	$gallery_class   = apply_filters( 'flatsome_single_product_thumbnails_classes', $gallery_class );
+	$gallery_class   = apply_filters( 'silver_single_product_thumbnails_classes', $gallery_class );
 
     ?>
     <div class="col xlarge-2 xlarge-col-first vertical-thumbnails pb-0">
 
     <div class="<?php echo implode(' ', $gallery_class); ?>"<?php
-      echo flatsome_slider_options_attr( array(
+      echo silver_slider_options_attr( array(
         'cellAlign'       => 'left',
         'prevNextButtons' => false,
         'asNavFor'        => '.product-gallery-slider',

@@ -1,4 +1,4 @@
-Flatsome.behavior('ux-countdown', {
+Silver.behavior('ux-countdown', {
  attach: function (context) {
 	jQuery('[data-countdown]', context).each(function () {
 	 var $this = jQuery(this), finalDate = jQuery(this).data('countdown');
