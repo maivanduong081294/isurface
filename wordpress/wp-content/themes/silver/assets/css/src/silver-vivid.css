@@ -1,0 +1,565 @@
+/**
+ * Silver Vivid UI – colour accents on top of the Modern UI layer (silver-modern.css).
+ *
+ * Toggle: Customizer > Style > Global Styles > "Vivid UI" (needs "Modern UI").
+ * Everything is derived from the theme colours (Style > Colors), so the layer
+ * follows the primary and secondary colour of the site. Options of an element
+ * (colours, backgrounds: inline styles or #id rules) still win; no !important.
+ */
+
+/* ------------------------------------------------------------------ Tokens */
+:root {
+	--sv-accent: var(--fs-color-primary, #446084);
+	--sv-accent-2: var(--fs-color-secondary, #d26e4b);
+	--sv-accent-dark: color-mix(in srgb, var(--sv-accent) 78%, #0b1220);
+	--sv-accent-soft: color-mix(in srgb, var(--sv-accent) 9%, #fff);
+	--sv-accent-line: color-mix(in srgb, var(--sv-accent) 22%, transparent);
+	/* Tones of the primary colour only: mixed with the secondary it turns muddy. */
+	--sv-grad: linear-gradient(135deg, color-mix(in srgb, var(--sv-accent) 78%, #fff), var(--sv-accent) 50%, var(--sv-accent-dark));
+	--sv-grad-line: linear-gradient(90deg, var(--sv-accent), var(--sv-accent-2));
+	--sv-glow: 0 14px 30px -14px color-mix(in srgb, var(--sv-accent) 70%, transparent);
+}
+
+.dark {
+	--sv-accent-soft: rgba(255, 255, 255, 0.08);
+	--sv-accent-line: rgba(255, 255, 255, 0.22);
+}
+
+/* ----------------------------------------------------------------- Buttons */
+/* Solid buttons: a soft light from the top left and a shadow in their own
+   colour. Outline, link, underline, white and form buttons stay flat. */
+.button:is(.default, .primary, .secondary, .success, .alert):not(.is-outline, .is-link, .is-underline, .is-shade, .is-bevel, .is-gloss, .icon, .is-form) {
+	background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 60%);
+}
+
+.button:is(.default, .primary, .secondary, .success, .alert):not(.is-outline, .is-link, .is-underline, .icon, .is-form, [class*="box-shadow-"]) {
+	box-shadow: 0 6px 14px -8px color-mix(in srgb, var(--sv-btn-accent) 80%, transparent);
+}
+
+.nav .button,
+.searchform .button,
+.quantity .button {
+	box-shadow: none;
+}
+
+/* ------------------------------------------------------------------ Titles */
+.section-title-normal {
+	border-bottom-color: var(--sv-border);
+}
+
+.section-title-normal span {
+	border-image: var(--sv-grad-line) 1;
+	border-bottom-width: 3px;
+	margin-bottom: -2px;
+}
+
+/* Simple: a short accent bar under the title. */
+.section-title-simple .section-title-main {
+	padding-bottom: 0.45em;
+	position: relative;
+}
+
+.section-title-simple .section-title-main:after {
+	background-image: var(--sv-grad-line);
+	border-radius: 2px;
+	bottom: 0;
+	content: "";
+	height: 3px;
+	left: 0;
+	position: absolute;
+	width: 2.2em;
+}
+
+/* Center / bold: side lines that fade out from the title. */
+.section-title-center b,
+.section-title-bold-center b,
+.section-title-bold b {
+	height: 2px;
+	opacity: 1;
+}
+
+.section-title-center b:first-of-type,
+.section-title-bold-center b:first-of-type {
+	background: linear-gradient(90deg, transparent, var(--sv-accent-line));
+}
+
+.section-title-center b:last-of-type,
+.section-title-bold-center b:last-of-type,
+.section-title-bold b:last-of-type {
+	background: linear-gradient(90deg, var(--sv-accent-line), transparent);
+}
+
+.section-title-bold span,
+.section-title-bold-center span {
+	background-color: var(--sv-accent-soft);
+	border-color: var(--sv-accent-line);
+}
+
+.section-title i {
+	color: var(--sv-accent-2);
+	opacity: 1;
+}
+
+.section-title-link {
+	font-weight: 600;
+}
+
+/* Divider */
+.is-divider:not([style*="background-color"]) {
+	background-image: var(--sv-grad-line);
+}
+
+/* -------------------------------------------------------------- Message box */
+/* Default (dark, no colour of its own): the primary colour instead of grey.
+   A Bg Color option is drawn above this by its overlay. */
+.message-box.dark {
+	background-color: var(--sv-accent-dark);
+	background-image: linear-gradient(120deg, var(--sv-accent-dark), var(--sv-accent) 55%, color-mix(in srgb, var(--sv-accent) 78%, #fff));
+	box-shadow: var(--sv-shadow);
+}
+
+/* Light: an accent edge (a border, the background overlay covers the inside). */
+.message-box:not(.dark) {
+	border-left: 4px solid var(--sv-accent);
+}
+
+/* -------------------------------------------------------------------- Tabs */
+.tabbed-content .nav > li > a {
+	transition: color var(--sv-dur) var(--sv-ease), background-color var(--sv-dur) var(--sv-ease);
+}
+
+.tabbed-content .nav > li:not(.active) > a:hover {
+	color: var(--sv-accent);
+}
+
+.tabbed-content .nav-line > li.active > a,
+.tabbed-content .nav-line-grow > li.active > a,
+.tabbed-content .nav-line-bottom > li.active > a,
+.tabbed-content .nav-simple > li.active > a,
+.tabbed-content .nav-divided > li.active > a {
+	color: var(--sv-accent);
+}
+
+.tabbed-content .nav-line > li > a:before,
+.tabbed-content .nav-line-grow > li > a:before,
+.tabbed-content .nav-line-bottom > li > a:before {
+	background-image: var(--sv-grad-line);
+}
+
+.tabbed-content .nav-line:not(.nav-vertical) > li > a:before,
+.tabbed-content .nav-line-bottom > li > a:before {
+	height: 3px;
+}
+
+/* Pills: a soft track with the active pill in the gradient. */
+.tabbed-content .nav-pills:not(.nav-vertical) {
+	background-color: var(--sv-accent-soft);
+	border-radius: var(--sv-radius-pill);
+	display: inline-flex;
+	padding: 4px;
+	width: auto;
+}
+
+.tabbed-content:has(> .nav-pills.nav-center) {
+	justify-content: center;
+}
+
+.tabbed-content:has(> .nav-pills.nav-right) {
+	justify-content: flex-end;
+}
+
+.tabbed-content .nav-pills > li.active > a {
+	background-image: var(--sv-grad);
+	box-shadow: var(--sv-glow);
+}
+
+.tabbed-content .nav-outline > li.active > a {
+	background-color: var(--sv-accent-soft);
+}
+
+.tabbed-content .nav-tabs > li.active > a {
+	color: var(--sv-accent);
+}
+
+.tabbed-content .nav-tabs + .tab-panels {
+	box-shadow: var(--sv-shadow-sm);
+}
+
+.dark .tabbed-content .nav > li.active > a,
+.dark .tabbed-content .nav > li:not(.active) > a:hover {
+	color: #fff;
+}
+
+/* --------------------------------------------------------------- Accordion */
+/* Each item is a card; the open one is tinted and marked on the left. */
+.accordion {
+	display: grid;
+	gap: 0.6em;
+}
+
+.accordion .accordion-item {
+	background-color: var(--sv-surface);
+	border: 1px solid var(--sv-border);
+	border-radius: var(--sv-radius);
+	overflow: hidden;
+	transition: border-color var(--sv-dur) var(--sv-ease), box-shadow var(--sv-dur) var(--sv-ease);
+}
+
+.dark .accordion .accordion-item {
+	background-color: rgba(255, 255, 255, 0.04);
+}
+
+.accordion .accordion-item:hover {
+	border-color: var(--sv-accent-line);
+}
+
+.accordion .accordion-item:has(> .accordion-title.active) {
+	border-color: var(--sv-accent-line);
+	box-shadow: inset 3px 0 0 var(--sv-accent), var(--sv-shadow-sm);
+}
+
+.accordion .accordion-title {
+	padding: 0.95em 3.4em 0.95em 1.2em;
+}
+
+.accordion .accordion-title.active {
+	color: var(--sv-accent);
+}
+
+.dark .accordion .accordion-title.active {
+	color: #fff;
+}
+
+.accordion .accordion-inner {
+	padding: 0 1.2em 1.2em;
+}
+
+/* The toggle: a round tinted chip that fills when the item is open. */
+.accordion .toggle {
+	background-color: var(--sv-accent-soft);
+	border-radius: 50%;
+	color: var(--sv-accent);
+	height: 2em;
+	margin: 0;
+	min-height: 0;
+	opacity: 1;
+	right: 0.9em;
+	top: 50%;
+	translate: 0 -50%;
+	width: 2em;
+}
+
+.accordion .toggle i {
+	font-size: 1em;
+}
+
+.accordion .accordion-title.active .toggle {
+	background-color: var(--sv-accent);
+	color: #fff;
+}
+
+.dark .accordion .toggle {
+	color: #fff;
+}
+
+/* --------------------------------------------------------------- Countdown */
+/* A light from the top over the cell colour: works with the Background option. */
+:root .ux-timer:not(.light) > span {
+	background-image: linear-gradient(160deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 55%);
+	box-shadow: var(--sv-glow);
+}
+
+:root .ux-timer.light > span {
+	box-shadow: inset 0 -3px 0 var(--sv-accent), var(--sv-shadow-sm);
+	color: var(--sv-accent-dark);
+}
+
+.ux-timer-text span {
+	color: var(--sv-accent);
+}
+
+.dark .ux-timer-text span {
+	color: inherit;
+}
+
+/* ----------------------------------------------------------------- Counter */
+.ux-counter:not(.dark) .ux-counter-value {
+	color: var(--sv-accent);
+}
+
+.ux-counter .ux-counter-label {
+	padding-top: 0.75em;
+	position: relative;
+}
+
+.ux-counter .ux-counter-label:before {
+	background-image: var(--sv-grad-line);
+	border-radius: 2px;
+	content: "";
+	height: 3px;
+	left: 50%;
+	position: absolute;
+	top: 0;
+	translate: -50% 0;
+	width: 1.8em;
+}
+
+.ux-counter.text-left .ux-counter-label:before {
+	left: 0;
+	translate: none;
+}
+
+.ux-counter.text-right .ux-counter-label:before {
+	left: auto;
+	right: 0;
+	translate: none;
+}
+
+/* ------------------------------------------------------------- Price table */
+.pricing-table {
+	border-color: var(--sv-border);
+	position: relative;
+}
+
+.pricing-table:hover {
+	border-color: var(--sv-accent-line);
+	box-shadow: var(--sv-shadow), var(--sv-glow);
+}
+
+.pricing-table .title {
+	background-color: var(--sv-accent-soft);
+	border-bottom-color: transparent;
+	color: var(--sv-accent);
+}
+
+.dark .pricing-table .title {
+	color: #fff;
+}
+
+.pricing-table .price {
+	color: var(--sv-accent-dark);
+}
+
+.dark .pricing-table .price {
+	color: #fff;
+}
+
+/* Featured: gradient header, coloured glow. */
+.featured-table {
+	border-color: var(--sv-accent);
+	box-shadow: var(--sv-shadow), 0 24px 44px -22px color-mix(in srgb, var(--sv-accent) 80%, transparent);
+}
+
+.featured-table .title {
+	background-color: var(--sv-accent);
+	background-image: var(--sv-grad);
+	color: #fff;
+}
+
+.featured-table .price {
+	color: var(--sv-accent);
+}
+
+/* --------------------------------------------------------------- Bullet item */
+/* The check mark sits in a tinted circle. */
+.bullet-item:before {
+	background-color: var(--sv-accent);
+	height: 1.25em;
+	mask: none;
+	width: 1.25em;
+	border-radius: 50%;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23fff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='4.5 8.4 7 10.8 11.6 5.6'/%3E%3C/svg%3E");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+
+.bullet-item.is-disabled:before {
+	background-color: #cbd5e1;
+}
+
+.dark .bullet-item:before {
+	background-color: rgba(255, 255, 255, 0.28);
+}
+
+/* -------------------------------------------------------------- Testimonial */
+.testimonial-box {
+	background-color: var(--sv-surface);
+	background-image: linear-gradient(180deg, var(--sv-accent-soft), transparent 55%);
+	border: 1px solid var(--sv-accent-line);
+	box-shadow: var(--sv-shadow-sm);
+	position: relative;
+	transition: transform var(--sv-dur) var(--sv-ease), box-shadow var(--sv-dur) var(--sv-ease);
+}
+
+.testimonial-box:hover {
+	box-shadow: var(--sv-shadow), var(--sv-glow);
+	transform: translateY(-3px);
+}
+
+.dark .testimonial-box {
+	background-color: rgba(255, 255, 255, 0.06);
+}
+
+/* A large quotation mark in the corner opposite the text start. */
+.testimonial-box:after {
+	color: var(--sv-accent);
+	content: "\201D";
+	font-family: Georgia, "Times New Roman", serif;
+	font-size: 5em;
+	line-height: 1;
+	opacity: 0.16;
+	pointer-events: none;
+	position: absolute;
+	right: 0.3em;
+	top: 0.12em;
+}
+
+.testimonial-box.text-right:after {
+	left: 0.3em;
+	right: auto;
+}
+
+.testimonial-box.text-center:after {
+	content: none;
+}
+
+.dark .testimonial-box:after {
+	color: #fff;
+}
+
+.testimonial-initials:not([style*="background"]) {
+	background-image: var(--sv-grad);
+	color: #fff;
+}
+
+.testimonial-footer .testimonial-image img {
+	box-shadow: 0 0 0 2px var(--sv-surface), 0 0 0 4px var(--sv-accent-line);
+}
+
+/* ------------------------------------------------------------- Featured box */
+/* A font icon sits in a tinted tile of the icon colour; the tile fills on
+   hover. The tile keeps the Icon Width; the glyph is drawn at half of it. */
+.icon-box-img.has-font-icon:not(.has-icon-bg) .icon-inner {
+	align-items: center;
+	aspect-ratio: 1;
+	background-color: color-mix(in srgb, currentColor 12%, transparent);
+	border-radius: 28%;
+	display: flex;
+	justify-content: center;
+	transition: background-color var(--sv-dur) var(--sv-ease), transform var(--sv-dur) var(--sv-ease), box-shadow var(--sv-dur) var(--sv-ease);
+}
+
+.icon-box-img.has-font-icon:not(.has-icon-bg) .icon-inner i {
+	padding: 0;
+	scale: 0.5;
+	transition: color var(--sv-dur) var(--sv-ease);
+}
+
+.icon-box:hover .icon-box-img.has-font-icon:not(.has-icon-bg) .icon-inner {
+	background-color: currentColor;
+	box-shadow: 0 12px 22px -12px currentColor;
+}
+
+.icon-box:hover .icon-box-img.has-font-icon:not(.has-icon-bg) .icon-inner i {
+	color: #fff;
+}
+
+.dark .icon-box:hover .icon-box-img.has-font-icon:not(.has-icon-bg) .icon-inner:not([style*="color"]) i {
+	color: #0f172a;
+}
+
+.has-icon-bg .icon .icon-inner {
+	background-color: color-mix(in srgb, currentColor 8%, transparent);
+}
+
+.icon-box-text h5 {
+	color: #0f172a;
+}
+
+.dark .icon-box-text h5 {
+	color: #fff;
+}
+
+.icon-box-text h6 {
+	color: var(--sv-accent-2);
+}
+
+/* ------------------------------------------------- Image box / team member */
+.box.has-hover:not(.box-overlay, .box-shade) .box-text h4,
+.box.has-hover:not(.box-overlay, .box-shade) .box-text h5 {
+	transition: color var(--sv-dur) var(--sv-ease);
+}
+
+.box.has-hover:not(.box-overlay, .box-shade, .dark):hover .box-text:not(.dark) h4,
+.box.has-hover:not(.box-overlay, .box-shade, .dark):hover .box-text:not(.dark) h5 {
+	color: var(--sv-accent);
+}
+
+.box-text .person-title {
+	color: var(--sv-accent);
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	opacity: 1;
+}
+
+.box-overlay .person-title,
+.box-shade .person-title,
+.dark .person-title {
+	color: inherit;
+}
+
+/* ---------------------------------------------------------- Share / follow */
+.social-icons .button.icon.is-outline:hover {
+	background-color: var(--sv-accent);
+	border-color: var(--sv-accent);
+	color: #fff;
+}
+
+/* ------------------------------------------------------------------ Search */
+.searchform-wrapper:not(.form-flat) .submit-button {
+	background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 60%);
+}
+
+.form-flat .searchform .flex-grow .search-field {
+	background-color: var(--sv-accent-soft);
+	border-color: var(--sv-accent-line);
+}
+
+.form-flat .searchform .submit-button {
+	color: var(--sv-accent) !important; /* the base rule sets currentColor with !important */
+}
+
+/* -------------------------------------------------------------- Menu (ux_menu) */
+.ux-menu-title {
+	color: var(--sv-accent);
+}
+
+.dark .ux-menu-title {
+	color: inherit;
+}
+
+.ux-menu-link__link:hover {
+	background-color: var(--sv-accent-soft);
+	padding-left: 0.6em;
+}
+
+.ux-menu-link__icon {
+	color: var(--sv-accent);
+}
+
+/* ----------------------------------------------------------- Blog / badges */
+.box-blog-post .is-divider {
+	width: 2.2em;
+}
+
+.box-blog-post:hover .post-title {
+	color: var(--sv-accent);
+}
+
+/* --------------------------------------------------------- Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+	.testimonial-box:hover {
+		transform: none;
+	}
+}

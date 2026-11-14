@@ -46,3 +46,28 @@
 .ux-terms-description p:last-child {
   margin-bottom: 0;
 }
+/* Grid type (.row-grid, a CSS grid with fixed cell heights): the item fills its
+   cell and the image takes the space above the text. The image ratio (Image
+   Height option, an #id rule with !important) has no meaning in a cell of
+   fixed height: the ratio box is clipped and the picture is positioned against
+   the image wrapper instead. */
+.row-grid > .ux-terms-item .ux-terms-link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+.row-grid > .ux-terms-item .ux-terms-image {
+  background: rgba(0, 0, 0, 0.04);
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+}
+.row-grid > .ux-terms-item .ux-terms-image-inner {
+  background: none;
+  position: static;
+}
+.row-grid > .ux-terms-item .ux-terms-text {
+  flex: none;
+}

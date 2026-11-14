@@ -9,17 +9,18 @@ function silver_get_grid_height( $height, $id ) {
   $landscape = isset( $height['ml'] ) ? $height['ml'] : '';
   // Without a mobile height, scale the desktop height down as before.
   if ( ! strlen( (string) $mobile ) ) $mobile = strlen( (string) $desktop ) ? intval( $desktop ) / 1.5 : 400;
-  $rules = array();
-  $atts = array();
-
-  foreach ( array( '1' => 1, '1-2' => 1 / 2, '1-3' => 1 / 3, '2-3' => 2 / 3, '1-4' => 1 / 4, '3-4' => 3 / 4 ) as $suffix => $ratio ) {
-    $name = 'grid_' . $suffix;
-    $rules[$name] = array( 'selector' => '.grid-col-' . $suffix, 'property' => 'height', 'unit' => 'px' );
-    $atts[$name] = floatval( $mobile ) * $ratio;
-    $atts[$name . '__lg'] = strlen( (string) $desktop ) ? floatval( $desktop ) * $ratio : null;
-    $atts[$name . '__md'] = strlen( (string) $portrait ) ? floatval( $portrait ) * $ratio : null;
-    $atts[$name . '__ml'] = strlen( (string) $landscape ) ? floatval( $landscape ) * $ratio : null;
-  }
+  // The grid height as a CSS variable. The cells are placed and sized by the
+  // CSS grid of .row-grid (silver.css): a cell of height "1-2" spans half of
+  // the row units, so no height per cell is printed any more.
+  $rules = array(
+    'grid_height' => array( 'selector' => '', 'property' => '--grid-height', 'unit' => 'px' ),
+  );
+  $atts = array(
+    'grid_height'     => floatval( $mobile ),
+    'grid_height__lg' => strlen( (string) $desktop ) ? floatval( $desktop ) : null,
+    'grid_height__md' => strlen( (string) $portrait ) ? floatval( $portrait ) : null,
+    'grid_height__ml' => strlen( (string) $landscape ) ? floatval( $landscape ) : null,
+  );
 
   echo ux_builder_element_style_tag( esc_attr( $id ), $rules, $atts );
 }

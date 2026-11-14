@@ -37,12 +37,12 @@ function silver_banner_grid($atts, $content = null) {
     if($depth_hover) $classes[] = 'row-box-shadow-'.$depth_hover.'-hover';
     if($width == 'full-width') $classes[] = 'row-full-width';
 
-    // Run masonry script
-    wp_enqueue_script( 'silver-masonry-js');
+    // Laid out by CSS grid (.row-grid in silver.css): no Packery
+    // script and no data-packery-options attribute.
     ob_start();
   ?>
   <div class="banner-grid-wrapper">
-  <div id="<?php echo esc_attr( $_id ); ?>" class="banner-grid <?php echo esc_attr( implode( ' ', $classes ) ); ?>" data-packery-options="">
+  <div id="<?php echo esc_attr( $_id ); ?>" class="banner-grid <?php echo esc_attr( implode( ' ', $classes ) ); ?>">
           <?php if(has_shortcode( $content, 'col_grid' ) || has_shortcode( $content, 'col' )) { ?>
             <?php echo do_shortcode( $content ) ?>
           <?php } else {

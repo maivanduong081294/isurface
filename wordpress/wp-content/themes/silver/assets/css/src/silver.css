@@ -1004,21 +1004,242 @@ body.framed header {
 .row > div:not(.col):not([class^="col-"]):not([class*=" col-"]) {
   width: 100% !important;
 }
-.row.row-grid,
+/* Masonry: laid out by the Packery script (absolute positions). Grid rows
+   are a CSS grid, see below. */
 .row.row-masonry {
   display: block;
 }
-.row.row-grid > .col,
 .row.row-masonry > .col {
   float: left;
 }
 /* Floated and absolutely positioned (isotope) children ignore row-gap,
    so they keep the vertical gap on the column itself. Sliders have a
    single line of columns: no vertical gap. */
-.row-grid > .col,
 .row-masonry > .col,
 .row-isotope > .col {
   padding-bottom: var(--row-gap);
+}
+/* The same for the row sizes: `.row-small > .col` (and xsmall / large) set
+   the `padding` shorthand further down and reset this bottom gap to 0, so a
+   small masonry row had no space between its lines. */
+.row-small.row-masonry > .col,
+.row-small.row-isotope > .col,
+.row-xsmall.row-masonry > .col,
+.row-xsmall.row-isotope > .col,
+.row-large.row-masonry > .col,
+.row-large.row-isotope > .col {
+  padding-bottom: var(--row-gap);
+}
+/* Grid rows (banner grid and the "grid" type of posts, products, gallery,
+   portfolio, pages, terms, categories): a CSS grid of 12 columns and 12 row
+   units per grid height, instead of the Packery script.
+   - A column spans its "small-N / medium-N / large-N / xlarge-N" class (12
+     without one) and, for its height, 12 / 6 / 4 / 8 / 3 / 9 row units
+     (grid-col-1, 1-2, 1-3, 2-3, 1-4, 3-4).
+   - --grid-height is printed per grid and breakpoint by
+     silver_get_grid_height(). The row unit leaves room for the 11 gaps inside
+     a full height, so two "1-2" cells and their gap are as high as one "1".
+   - The vertical gutter is a real row-gap; the columns have no bottom padding.
+     The horizontal gutter stays the side padding of the columns.
+   - "dense" fills the holes, as Packery did. */
+.row.row-grid {
+  display: grid;
+  column-gap: 0;
+  grid-auto-flow: row dense;
+  grid-auto-rows: calc((var(--grid-height, 600px) - 11 * var(--row-gap)) / 12);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  row-gap: var(--row-gap);
+}
+/* The clearfix of .row would be a grid item of its own (an empty extra row). */
+.row.row-grid:before,
+.row.row-grid:after {
+  content: none;
+}
+.row.row-grid > .col {
+  flex-basis: auto;
+  float: none;
+  height: auto;
+  /* No auto margins (.text-center > div): a grid item with them shrinks to its
+     content instead of filling its cell. */
+  margin-left: 0;
+  margin-right: 0;
+  max-width: none;
+  min-width: 0;
+  padding-bottom: 0;
+  width: auto;
+}
+/* Full width without a span class. As weak as the span rules below, which
+   come later and win. */
+.row-grid > .col {
+  grid-column-end: span 12;
+}
+.row-grid > .grid-col-1 {
+  grid-row-end: span 12;
+}
+.row-grid > .grid-col-1-2 {
+  grid-row-end: span 6;
+}
+.row-grid > .grid-col-1-3 {
+  grid-row-end: span 4;
+}
+.row-grid > .grid-col-2-3 {
+  grid-row-end: span 8;
+}
+.row-grid > .grid-col-1-4 {
+  grid-row-end: span 3;
+}
+.row-grid > .grid-col-3-4 {
+  grid-row-end: span 9;
+}
+.row-grid > .small-1 {
+  grid-column-end: span 1;
+}
+.row-grid > .small-2 {
+  grid-column-end: span 2;
+}
+.row-grid > .small-3 {
+  grid-column-end: span 3;
+}
+.row-grid > .small-4 {
+  grid-column-end: span 4;
+}
+.row-grid > .small-5 {
+  grid-column-end: span 5;
+}
+.row-grid > .small-6 {
+  grid-column-end: span 6;
+}
+.row-grid > .small-7 {
+  grid-column-end: span 7;
+}
+.row-grid > .small-8 {
+  grid-column-end: span 8;
+}
+.row-grid > .small-9 {
+  grid-column-end: span 9;
+}
+.row-grid > .small-10 {
+  grid-column-end: span 10;
+}
+.row-grid > .small-11 {
+  grid-column-end: span 11;
+}
+.row-grid > .small-12 {
+  grid-column-end: span 12;
+}
+@media screen and (min-width: 550px) {
+  .row-grid > .medium-1 {
+    grid-column-end: span 1;
+  }
+  .row-grid > .medium-2 {
+    grid-column-end: span 2;
+  }
+  .row-grid > .medium-3 {
+    grid-column-end: span 3;
+  }
+  .row-grid > .medium-4 {
+    grid-column-end: span 4;
+  }
+  .row-grid > .medium-5 {
+    grid-column-end: span 5;
+  }
+  .row-grid > .medium-6 {
+    grid-column-end: span 6;
+  }
+  .row-grid > .medium-7 {
+    grid-column-end: span 7;
+  }
+  .row-grid > .medium-8 {
+    grid-column-end: span 8;
+  }
+  .row-grid > .medium-9 {
+    grid-column-end: span 9;
+  }
+  .row-grid > .medium-10 {
+    grid-column-end: span 10;
+  }
+  .row-grid > .medium-11 {
+    grid-column-end: span 11;
+  }
+  .row-grid > .medium-12 {
+    grid-column-end: span 12;
+  }
+}
+@media (min-width: 850px) {
+  .row-grid > .large-1 {
+    grid-column-end: span 1;
+  }
+  .row-grid > .large-2 {
+    grid-column-end: span 2;
+  }
+  .row-grid > .large-3 {
+    grid-column-end: span 3;
+  }
+  .row-grid > .large-4 {
+    grid-column-end: span 4;
+  }
+  .row-grid > .large-5 {
+    grid-column-end: span 5;
+  }
+  .row-grid > .large-6 {
+    grid-column-end: span 6;
+  }
+  .row-grid > .large-7 {
+    grid-column-end: span 7;
+  }
+  .row-grid > .large-8 {
+    grid-column-end: span 8;
+  }
+  .row-grid > .large-9 {
+    grid-column-end: span 9;
+  }
+  .row-grid > .large-10 {
+    grid-column-end: span 10;
+  }
+  .row-grid > .large-11 {
+    grid-column-end: span 11;
+  }
+  .row-grid > .large-12 {
+    grid-column-end: span 12;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .row-grid > .xlarge-1 {
+    grid-column-end: span 1;
+  }
+  .row-grid > .xlarge-2 {
+    grid-column-end: span 2;
+  }
+  .row-grid > .xlarge-3 {
+    grid-column-end: span 3;
+  }
+  .row-grid > .xlarge-4 {
+    grid-column-end: span 4;
+  }
+  .row-grid > .xlarge-5 {
+    grid-column-end: span 5;
+  }
+  .row-grid > .xlarge-6 {
+    grid-column-end: span 6;
+  }
+  .row-grid > .xlarge-7 {
+    grid-column-end: span 7;
+  }
+  .row-grid > .xlarge-8 {
+    grid-column-end: span 8;
+  }
+  .row-grid > .xlarge-9 {
+    grid-column-end: span 9;
+  }
+  .row-grid > .xlarge-10 {
+    grid-column-end: span 10;
+  }
+  .row-grid > .xlarge-11 {
+    grid-column-end: span 11;
+  }
+  .row-grid > .xlarge-12 {
+    grid-column-end: span 12;
+  }
 }
 .container .row:not(.row-collapse),
 .lightbox-content .row:not(.row-collapse),
@@ -3064,6 +3285,42 @@ a.secondary:not(.button) {
   border-color: var(--fs-color-alert);
   color: #fff;
 }
+/* "Default" colour of the [button] element (UX Builder > Button > Color).
+   Theme Options > Style > Default Button prints the --fs-button-default-*
+   variables; while an option is empty the button looks like a primary one.
+   :where() keeps the colour as weak as .primary / .secondary, so the style
+   rules (.button.is-outline, .button.is-link, ...) still win. */
+:where(.button).default {
+  --sv-btn-default-bg: var(--fs-button-default-bg, var(--fs-color-primary));
+  --sv-btn-default-text: var(--fs-button-default-color, #fff);
+  /* A hover background of its own replaces the dark tint. */
+  --sv-btn-hover-shadow: inset 0 0 0 100px
+    var(--fs-button-default-hover-tint, rgba(0, 0, 0, 0.2));
+  background-color: var(--sv-btn-default-bg);
+  border-color: var(--fs-button-default-border, rgba(0, 0, 0, 0.05));
+  color: var(--sv-btn-default-text);
+}
+.dark :where(.button).default {
+  color: var(--sv-btn-default-text);
+}
+:where(.button).default:hover {
+  background-color: var(--fs-button-default-bg-hover, var(--sv-btn-default-bg));
+  border-color: var(
+    --fs-button-default-border-hover,
+    var(--fs-button-default-border, rgba(0, 0, 0, 0.05))
+  );
+  color: var(--fs-button-default-color-hover, var(--sv-btn-default-text));
+}
+.default.is-link,
+.default.is-outline,
+.default.is-underline {
+  color: var(--sv-btn-default-bg);
+}
+.default.is-outline:hover {
+  background-color: var(--fs-button-default-bg-hover, var(--sv-btn-default-bg));
+  border-color: var(--fs-button-default-bg-hover, var(--sv-btn-default-bg));
+  color: var(--fs-button-default-color-hover, var(--sv-btn-default-text));
+}
 .text-center .button:first-of-type {
   margin-left: 0 !important;
 }
@@ -3076,6 +3333,22 @@ a.secondary:not(.button) {
    axis when the alignment does not come from .text-center / .text-right
    (inline text-align, .small-text-center, .medium-text-center, ...). */
 .silver-button-wrapper > .button {
+  margin-inline-end: 0;
+}
+/* Buttons sit side by side, as inline elements do: a block wrapper put every
+   [button] on its own line. The gap sits on the wrapper and not on the last
+   one, so a single button still lines up with its text alignment. An
+   expanding button needs the full row. */
+.silver-button-wrapper {
+  display: inline-block;
+  margin-inline-end: 0.65em;
+  vertical-align: middle;
+}
+.silver-button-wrapper:last-child {
+  margin-inline-end: 0;
+}
+.silver-button-wrapper:has(> .expand) {
+  display: block;
   margin-inline-end: 0;
 }
 /* Search block (widgets / block editor). WordPress global styles give
@@ -3576,7 +3849,6 @@ i[class^="icon-"] {
 }
 .button i,
 button i {
-  top: -1.5px;
   vertical-align: middle;
 }
 .button.open-video i {
@@ -3613,7 +3885,9 @@ button.icon:not(.button) {
   display: inline-block;
   margin-left: 0.12em;
   margin-right: 0.12em;
-  min-width: var(--sv-btn-height); /* stays square when the height token changes */
+  min-width: var(
+    --sv-btn-height
+  ); /* stays square when the height token changes */
   padding-left: 0.6em;
   padding-right: 0.6em;
 }
@@ -4747,71 +5021,203 @@ img.mfp-img {
 .justify-around {
   justify-content: space-around;
 }
-.sm\:stack-row { flex-direction: row; }
-.sm\:stack-col { flex-direction: column; }
-.sm\:stack-row > *, .sm\:stack-col > * { margin: 0 !important; }
-.sm\:stack-row > * ~ * { margin-top: 0 !important; margin-left: var(--stack-gap) !important; }
-.sm\:stack-col > * ~ * { margin-left: 0 !important; margin-top: var(--stack-gap) !important; }
-.sm\:items-stretch { align-items: stretch; }
-.sm\:items-start { align-items: flex-start; }
-.sm\:items-center { align-items: center; }
-.sm\:items-end { align-items: flex-end; }
-.sm\:items-baseline { align-items: baseline; }
-.sm\:justify-start { justify-content: flex-start; }
-.sm\:justify-center { justify-content: center; }
-.sm\:justify-end { justify-content: flex-end; }
-.sm\:justify-between { justify-content: space-between; }
-.sm\:justify-around { justify-content: space-around; }
+.sm\:stack-row {
+  flex-direction: row;
+}
+.sm\:stack-col {
+  flex-direction: column;
+}
+.sm\:stack-row > *,
+.sm\:stack-col > * {
+  margin: 0 !important;
+}
+.sm\:stack-row > * ~ * {
+  margin-top: 0 !important;
+  margin-left: var(--stack-gap) !important;
+}
+.sm\:stack-col > * ~ * {
+  margin-left: 0 !important;
+  margin-top: var(--stack-gap) !important;
+}
+.sm\:items-stretch {
+  align-items: stretch;
+}
+.sm\:items-start {
+  align-items: flex-start;
+}
+.sm\:items-center {
+  align-items: center;
+}
+.sm\:items-end {
+  align-items: flex-end;
+}
+.sm\:items-baseline {
+  align-items: baseline;
+}
+.sm\:justify-start {
+  justify-content: flex-start;
+}
+.sm\:justify-center {
+  justify-content: center;
+}
+.sm\:justify-end {
+  justify-content: flex-end;
+}
+.sm\:justify-between {
+  justify-content: space-between;
+}
+.sm\:justify-around {
+  justify-content: space-around;
+}
 @media (min-width: 550px) {
-  .md\:stack-row { flex-direction: row; }
-  .md\:stack-col { flex-direction: column; }
-  .md\:stack-row > *, .md\:stack-col > * { margin: 0 !important; }
-  .md\:stack-row > * ~ * { margin-top: 0 !important; margin-left: var(--stack-gap) !important; }
-  .md\:stack-col > * ~ * { margin-left: 0 !important; margin-top: var(--stack-gap) !important; }
-  .md\:items-stretch { align-items: stretch; }
-  .md\:items-start { align-items: flex-start; }
-  .md\:items-center { align-items: center; }
-  .md\:items-end { align-items: flex-end; }
-  .md\:items-baseline { align-items: baseline; }
-  .md\:justify-start { justify-content: flex-start; }
-  .md\:justify-center { justify-content: center; }
-  .md\:justify-end { justify-content: flex-end; }
-  .md\:justify-between { justify-content: space-between; }
-  .md\:justify-around { justify-content: space-around; }
+  .md\:stack-row {
+    flex-direction: row;
+  }
+  .md\:stack-col {
+    flex-direction: column;
+  }
+  .md\:stack-row > *,
+  .md\:stack-col > * {
+    margin: 0 !important;
+  }
+  .md\:stack-row > * ~ * {
+    margin-top: 0 !important;
+    margin-left: var(--stack-gap) !important;
+  }
+  .md\:stack-col > * ~ * {
+    margin-left: 0 !important;
+    margin-top: var(--stack-gap) !important;
+  }
+  .md\:items-stretch {
+    align-items: stretch;
+  }
+  .md\:items-start {
+    align-items: flex-start;
+  }
+  .md\:items-center {
+    align-items: center;
+  }
+  .md\:items-end {
+    align-items: flex-end;
+  }
+  .md\:items-baseline {
+    align-items: baseline;
+  }
+  .md\:justify-start {
+    justify-content: flex-start;
+  }
+  .md\:justify-center {
+    justify-content: center;
+  }
+  .md\:justify-end {
+    justify-content: flex-end;
+  }
+  .md\:justify-between {
+    justify-content: space-between;
+  }
+  .md\:justify-around {
+    justify-content: space-around;
+  }
 }
 @media (min-width: 850px) {
-  .ml\:stack-row { flex-direction: row; }
-  .ml\:stack-col { flex-direction: column; }
-  .ml\:stack-row > *, .ml\:stack-col > * { margin: 0 !important; }
-  .ml\:stack-row > * ~ * { margin-top: 0 !important; margin-left: var(--stack-gap) !important; }
-  .ml\:stack-col > * ~ * { margin-left: 0 !important; margin-top: var(--stack-gap) !important; }
-  .ml\:items-stretch { align-items: stretch; }
-  .ml\:items-start { align-items: flex-start; }
-  .ml\:items-center { align-items: center; }
-  .ml\:items-end { align-items: flex-end; }
-  .ml\:items-baseline { align-items: baseline; }
-  .ml\:justify-start { justify-content: flex-start; }
-  .ml\:justify-center { justify-content: center; }
-  .ml\:justify-end { justify-content: flex-end; }
-  .ml\:justify-between { justify-content: space-between; }
-  .ml\:justify-around { justify-content: space-around; }
+  .ml\:stack-row {
+    flex-direction: row;
+  }
+  .ml\:stack-col {
+    flex-direction: column;
+  }
+  .ml\:stack-row > *,
+  .ml\:stack-col > * {
+    margin: 0 !important;
+  }
+  .ml\:stack-row > * ~ * {
+    margin-top: 0 !important;
+    margin-left: var(--stack-gap) !important;
+  }
+  .ml\:stack-col > * ~ * {
+    margin-left: 0 !important;
+    margin-top: var(--stack-gap) !important;
+  }
+  .ml\:items-stretch {
+    align-items: stretch;
+  }
+  .ml\:items-start {
+    align-items: flex-start;
+  }
+  .ml\:items-center {
+    align-items: center;
+  }
+  .ml\:items-end {
+    align-items: flex-end;
+  }
+  .ml\:items-baseline {
+    align-items: baseline;
+  }
+  .ml\:justify-start {
+    justify-content: flex-start;
+  }
+  .ml\:justify-center {
+    justify-content: center;
+  }
+  .ml\:justify-end {
+    justify-content: flex-end;
+  }
+  .ml\:justify-between {
+    justify-content: space-between;
+  }
+  .ml\:justify-around {
+    justify-content: space-around;
+  }
 }
 @media (min-width: 1200px) {
-  .lg\:stack-row { flex-direction: row; }
-  .lg\:stack-col { flex-direction: column; }
-  .lg\:stack-row > *, .lg\:stack-col > * { margin: 0 !important; }
-  .lg\:stack-row > * ~ * { margin-top: 0 !important; margin-left: var(--stack-gap) !important; }
-  .lg\:stack-col > * ~ * { margin-left: 0 !important; margin-top: var(--stack-gap) !important; }
-  .lg\:items-stretch { align-items: stretch; }
-  .lg\:items-start { align-items: flex-start; }
-  .lg\:items-center { align-items: center; }
-  .lg\:items-end { align-items: flex-end; }
-  .lg\:items-baseline { align-items: baseline; }
-  .lg\:justify-start { justify-content: flex-start; }
-  .lg\:justify-center { justify-content: center; }
-  .lg\:justify-end { justify-content: flex-end; }
-  .lg\:justify-between { justify-content: space-between; }
-  .lg\:justify-around { justify-content: space-around; }
+  .lg\:stack-row {
+    flex-direction: row;
+  }
+  .lg\:stack-col {
+    flex-direction: column;
+  }
+  .lg\:stack-row > *,
+  .lg\:stack-col > * {
+    margin: 0 !important;
+  }
+  .lg\:stack-row > * ~ * {
+    margin-top: 0 !important;
+    margin-left: var(--stack-gap) !important;
+  }
+  .lg\:stack-col > * ~ * {
+    margin-left: 0 !important;
+    margin-top: var(--stack-gap) !important;
+  }
+  .lg\:items-stretch {
+    align-items: stretch;
+  }
+  .lg\:items-start {
+    align-items: flex-start;
+  }
+  .lg\:items-center {
+    align-items: center;
+  }
+  .lg\:items-end {
+    align-items: flex-end;
+  }
+  .lg\:items-baseline {
+    align-items: baseline;
+  }
+  .lg\:justify-start {
+    justify-content: flex-start;
+  }
+  .lg\:justify-center {
+    justify-content: center;
+  }
+  .lg\:justify-end {
+    justify-content: flex-end;
+  }
+  .lg\:justify-between {
+    justify-content: space-between;
+  }
+  .lg\:justify-around {
+    justify-content: space-around;
+  }
 }
 table {
   border-color: #ececec;
@@ -10658,4 +11064,21 @@ li.wc-layered-nav-rating .star-rating {
 }
 
 /* Testimonial: short name avatar. */
-.testimonial-avatar-initials{container-type:inline-size}.testimonial-initials{align-items:center;aspect-ratio:1;background-color:rgba(var(--fs-color-primary-rgb,68,106,179),.12);border-radius:50%;color:var(--fs-color-primary);display:flex;font-size:1.1em;font-size:34cqw;font-weight:700;justify-content:center;letter-spacing:.02em;line-height:1;width:100%}
+.testimonial-avatar-initials {
+  container-type: inline-size;
+}
+.testimonial-initials {
+  align-items: center;
+  aspect-ratio: 1;
+  background-color: rgba(var(--fs-color-primary-rgb, 68, 106, 179), 0.12);
+  border-radius: 50%;
+  color: var(--fs-color-primary);
+  display: flex;
+  font-size: 1.1em;
+  font-size: 34cqw;
+  font-weight: 700;
+  justify-content: center;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  width: 100%;
+}

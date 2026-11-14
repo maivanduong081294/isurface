@@ -118,8 +118,8 @@ function get_silver_repeater_start( $atts ) {
       $row_classes[] = 'row-masonry';
     }
 
+    // Grid: a CSS grid (.row-grid in silver.css), no Packery script.
     if($atts['type'] == 'grid'){
-      wp_enqueue_script('silver-masonry-js');
       $row_classes[] = 'row-grid';
     }
 
@@ -186,7 +186,7 @@ function get_silver_repeater_start( $atts ) {
   <div<?php echo $id_attr; ?> class="row <?php echo esc_attr( $row_classes ); ?>" data-packery-options='{"itemSelector": ".col", "gutter": 0, "presentageWidth" : true}'>
 
   <?php } else if($atts['type'] == 'grid') { ?>
-  <div<?php echo $id_attr; ?> class="row <?php echo esc_attr( $row_classes ); ?>" data-packery-options='{"itemSelector": ".col", "gutter": 0, "presentageWidth" : true}'>
+  <div<?php echo $id_attr; ?> class="row <?php echo esc_attr( $row_classes ); ?>">
 
   <?php } else if($atts['type'] == 'blank') { //Blank type ?>
   <div<?php echo $id_attr; ?> class="container">

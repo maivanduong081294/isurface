@@ -217,6 +217,17 @@ function silver_scripts() {
 			is_woocommerce_activated() ? array( 'silver-main', 'silver-shop' ) : array( 'silver-main' ),
 			file_exists( $modern_file ) ? filemtime( $modern_file ) : $style_version
 		);
+
+		// Vivid UI: color accents on top of Modern UI (Global Styles > Vivid UI).
+		if ( get_theme_mod( 'silver_vivid_ui', 0 ) ) {
+			$vivid_file = $css_dir . 'silver-vivid.css';
+			wp_enqueue_style(
+				'silver-vivid',
+				$uri . '/assets/css/silver-vivid.css',
+				array( 'silver-modern' ),
+				file_exists( $vivid_file ) ? filemtime( $vivid_file ) : $style_version
+			);
+		}
 	}
 
 	// Load current theme styles.css file.

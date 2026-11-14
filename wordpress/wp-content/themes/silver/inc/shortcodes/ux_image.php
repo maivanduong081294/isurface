@@ -1,10 +1,11 @@
 <?php
-function ux_image( $atts, $content = null ) {
-	extract( ux_builder_shortcode_atts( array(
+function ux_image($atts, $content = null)
+{
+	extract(ux_builder_shortcode_atts(array(
 		'_id'                 => 'image_' . rand(),
 		'class'               => '',
 		'visibility'          => '',
-		'id'                  => '',
+		'image_id'            => '',
 		'org_img'             => '',
 		'caption'             => '',
 		'animate'             => '',
@@ -33,41 +34,41 @@ function ux_image( $atts, $content = null ) {
 		'link'                => '',
 		'target'              => '_self',
 		'rel'                 => '',
-	), $atts ) );
+	), $atts));
 
-	if ( empty( $id ) ) {
+	if (empty($image_id)) {
 		return '<div class="uxb-no-content uxb-image">Upload Image...</div>';
 	}
 
 	// Ensure key existence when builder setting is
 	// not touched, to extract responsive widths.
-	if ( ! array_key_exists( 'width', $atts ) ) {
+	if (! array_key_exists('width', $atts)) {
 		$atts['width'] = '100';
 	}
 
 	$classes = array();
-	if ( $class ) $classes[] = $class;
-	if ( $visibility ) $classes[] = $visibility;
+	if ($class) $classes[] = $class;
+	if ($visibility) $classes[] = $visibility;
 
-	$classes_inner = array( 'img-inner' );
-	$image_meta    = wp_prepare_attachment_for_js( $id );
-	$image_title   = filter_var( $image_title, FILTER_VALIDATE_BOOLEAN );
+	$classes_inner = array('img-inner');
+	$image_meta    = wp_prepare_attachment_for_js($image_id);
+	$image_title   = filter_var($image_title, FILTER_VALIDATE_BOOLEAN);
 	$link_atts     = array(
 		'target' => $target,
-		'rel'    => array( $rel ),
+		'rel'    => array($rel),
 	);
 
-	if ( is_numeric( $id ) ) {
-		if ( ! $org_img ) {
-			$org_img = wp_get_attachment_image_src( $id, $lightbox_image_size );
+	if (is_numeric($image_id)) {
+		if (! $org_img) {
+			$org_img = wp_get_attachment_image_src($image_id, $lightbox_image_size);
 			$org_img = $org_img ? $org_img[0] : '';
 		}
-		if ( $caption && $caption == 'true' ) {
-			$caption = is_array( $image_meta ) ? $image_meta['caption'] : '';
+		if ($caption && $caption == 'true') {
+			$caption = is_array($image_meta) ? $image_meta['caption'] : '';
 		}
 	} else {
-		if ( ! $org_img ) {
-			$org_img = $id;
+		if (! $org_img) {
+			$org_img = $image_id;
 		}
 	}
 
@@ -76,88 +77,88 @@ function ux_image( $atts, $content = null ) {
 	$link_end   = '';
 	$link_class = '';
 
-	if ( $link ) {
-		if ( strpos( $link, 'watch?v=' ) !== false ) {
+	if ($link) {
+		if (strpos($link, 'watch?v=') !== false) {
 			$icon       = 'icon-play';
 			$link_class = 'open-video';
-			if ( ! $image_overlay ) {
+			if (! $image_overlay) {
 				$image_overlay = 'rgba(0,0,0,.2)';
 			}
 		}
-		$link_start = '<a class="' . esc_attr( $link_class ) . '" href="' . esc_url( $link ) . '"' . silver_parse_target_rel( $link_atts ) . '>';
+		$link_start = '<a class="' . esc_attr($link_class) . '" href="' . esc_url($link) . '"' . silver_parse_target_rel($link_atts) . '>';
 		$link_end   = '</a>';
-	} elseif ( $lightbox ) {
+	} elseif ($lightbox) {
 		$title      = $lightbox_caption ? $image_meta['caption'] : '';
-		$link_start = '<a class="image-lightbox lightbox-gallery" title="' . esc_attr( $title ) . '" href="' . esc_url( $org_img ) . '">';
+		$link_start = '<a class="image-lightbox lightbox-gallery" title="' . esc_attr($title) . '" href="' . esc_url($org_img) . '">';
 		$link_end   = '</a>';
 	}
 
 	// Set positions
-	if ( function_exists( 'ux_builder_is_active' ) && ux_builder_is_active() ) {
+	if (function_exists('ux_builder_is_active') && ux_builder_is_active()) {
 		// Do not add positions if builder is active.
 		// They will be set by the onChange handler.
 	} else {
-		$classes[] = silver_position_classes( 'x', $position_x, $position_x__md, $position_x__ml, $position_x__lg );
-		$classes[] = silver_position_classes( 'y', $position_y, $position_y__md, $position_y__ml, $position_y__lg );
+		$classes[] = silver_position_classes('x', $position_x, $position_x__md, $position_x__ml, $position_x__lg);
+		$classes[] = silver_position_classes('y', $position_y, $position_y__md, $position_y__ml, $position_y__lg);
 	}
 
-	if ( $image_hover ) {
+	if ($image_hover) {
 		$classes_inner[] = 'image-' . $image_hover;
 	}
-	if ( $image_hover_alt ) {
+	if ($image_hover_alt) {
 		$classes_inner[] = 'image-' . $image_hover_alt;
 	}
 	// Responsive height: the smallest screen with a value is the base.
-	$height = silver_responsive_base( $atts, 'height' ) ?: $height;
-	if ( $height ) {
+	$height = silver_responsive_base($atts, 'height') ?: $height;
+	if ($height) {
 		$classes_inner[] = 'image-cover';
 	}
-	if ( $depth ) {
+	if ($depth) {
 		$classes_inner[] = 'box-shadow-' . $depth;
 	}
-	if ( $depth_hover ) {
+	if ($depth_hover) {
 		$classes_inner[] = 'box-shadow-' . $depth_hover . '-hover';
 	}
 
 	// Add Parallax Attribute.
-	if ( $parallax ) {
-		$parallax = 'data-parallax-fade="true" data-parallax="' . esc_attr( $parallax ) . '"';
+	if ($parallax) {
+		$parallax = 'data-parallax-fade="true" data-parallax="' . esc_attr($parallax) . '"';
 	}
 
 	// Set image height.
 	$css_image_height = array(
-		array( 'attribute' => 'padding-top', 'value' => $height ),
-		array( 'attribute' => 'margin', 'value' => $margin ),
+		array('attribute' => 'padding-top', 'value' => $height),
+		array('attribute' => 'margin', 'value' => $margin),
 	);
 
-	$classes       = implode( " ", $classes );
-	$classes_inner = implode( " ", $classes_inner );
+	$classes       = implode(" ", $classes);
+	$classes_inner = implode(" ", $classes_inner);
 
 	ob_start();
-	?>
-	<div class="img has-hover <?php echo esc_attr( $classes ); ?>" id="<?php echo esc_attr( $_id ); ?>">
+?>
+	<div class="img has-hover <?php echo esc_attr($classes); ?>" id="<?php echo esc_attr($_id); ?>">
 		<?php echo $link_start; ?>
-		<?php if ( $parallax ) echo '<div ' . $parallax . '>'; ?>
-		<?php if ( $animate ) echo '<div data-animate="' . esc_attr( $animate ) . '">'; ?>
-		<div class="<?php echo esc_attr( $classes_inner ); ?> dark" <?php echo get_shortcode_inline_css( $css_image_height ); ?>>
-			<?php echo silver_get_image( $id, $image_size, $caption, false, $image_title ); ?>
-			<?php if ( $image_overlay ) { ?>
-				<div class="overlay" style="background-color: <?php echo esc_attr( $image_overlay ); ?>"></div>
+		<?php if ($parallax) echo '<div ' . $parallax . '>'; ?>
+		<?php if ($animate) echo '<div data-animate="' . esc_attr($animate) . '">'; ?>
+		<div class="<?php echo esc_attr($classes_inner); ?> dark" <?php echo get_shortcode_inline_css($css_image_height); ?>>
+			<?php echo silver_get_image($image_id, $image_size, $caption, false, $image_title); ?>
+			<?php if ($image_overlay) { ?>
+				<div class="overlay" style="background-color: <?php echo esc_attr($image_overlay); ?>"></div>
 			<?php } ?>
-			<?php if ( $icon ) { ?>
+			<?php if ($icon) { ?>
 				<div class="absolute no-click x50 y50 md-x50 md-y50 xl-x50 xl-y50 text-shadow-2">
 					<div class="overlay-icon">
-						<?php echo get_silver_icon( 'icon-play' ); ?>
+						<?php echo get_silver_icon('icon-play'); ?>
 					</div>
 				</div>
 			<?php } ?>
 
-			<?php if ( $caption ) { ?>
-				<div class="caption"><?php echo wp_kses_post( $caption ); ?></div>
+			<?php if ($caption) { ?>
+				<div class="caption"><?php echo wp_kses_post($caption); ?></div>
 			<?php } ?>
 		</div>
-		<?php if ( $animate ) echo '</div>'; ?>
-		<?php if ( $parallax ) echo '</div>'; ?>
+		<?php if ($animate) echo '</div>'; ?>
+		<?php if ($parallax) echo '</div>'; ?>
 		<?php echo $link_end; ?>
 		<?php
 		$args = array(
@@ -167,19 +168,19 @@ function ux_image( $atts, $content = null ) {
 				'unit'     => '%',
 			),
 		);
-		echo ux_builder_element_style_tag( $_id, $args, $atts );
+		echo ux_builder_element_style_tag($_id, $args, $atts);
 
 		// Responsive height (larger screens).
-		echo silver_responsive_style_tag( $_id, $atts, array(
-			'height' => array( 'selector' => '.img-inner', 'property' => 'padding-top', 'only_overrides' => true ),
-		) );
+		echo silver_responsive_style_tag($_id, $atts, array(
+			'height' => array('selector' => '.img-inner', 'property' => 'padding-top', 'only_overrides' => true),
+		));
 		?>
 	</div>
-	<?php
+<?php
 	$content = ob_get_contents();
 	ob_end_clean();
 
 	return $content;
 }
 
-add_shortcode( 'ux_image', 'ux_image' );
+add_shortcode('ux_image', 'ux_image');

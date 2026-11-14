@@ -38,6 +38,7 @@ $fs_opacity_colors = array(
 // default otherwise: var(--fs-button-radius, 6px).
 $fs_button_radius   = get_theme_mod( 'button_radius' );
 $fs_dropdown_radius = get_theme_mod( 'dropdown_radius' );
+$fs_button_bg_hover = get_theme_mod( 'button_default_bg_hover' );
 $fs_option_vars     = array_filter(
 	apply_filters(
 		'silver_option_css_vars',
@@ -46,6 +47,16 @@ $fs_option_vars     = array_filter(
 			'color-headings'  => get_theme_mod( 'type_headings_color' ),
 			// Style > Global Styles > Default Button Radius.
 			'button-radius'   => '0px' !== $fs_button_radius ? $fs_button_radius : '',
+			// Style > Default Button: the "Default" color of the [button] element
+			// (.button.default in silver.css).
+			'button-default-bg'           => get_theme_mod( 'button_default_bg' ),
+			'button-default-color'        => get_theme_mod( 'button_default_color' ),
+			'button-default-border'       => get_theme_mod( 'button_default_border' ),
+			'button-default-bg-hover'     => $fs_button_bg_hover,
+			'button-default-color-hover'  => get_theme_mod( 'button_default_color_hover' ),
+			'button-default-border-hover' => get_theme_mod( 'button_default_border_hover' ),
+			// A hover background of its own replaces the dark tint every button gets on hover.
+			'button-default-hover-tint'   => $fs_button_bg_hover ? 'transparent' : '',
 			// Style > Lightbox > Backdrop color.
 			'lightbox-bg'     => get_theme_mod( 'flatsome_lightbox_bg' ),
 			// Header > Dropdown Style.

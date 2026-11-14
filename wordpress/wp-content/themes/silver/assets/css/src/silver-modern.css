@@ -148,7 +148,25 @@ input[type="reset"] {
 	--sv-btn-depth-4: 0 2px 4px -1px rgba(15, 23, 42, 0.16), 0 16px 28px -10px color-mix(in srgb, var(--sv-btn-accent) 65%, transparent);
 	--sv-btn-depth-5: 0 2px 4px -1px rgba(15, 23, 42, 0.16), 0 22px 36px -12px color-mix(in srgb, var(--sv-btn-accent) 70%, transparent);
 	--sv-btn-depth-hover: 0 8px 18px -8px color-mix(in srgb, var(--sv-btn-accent) 65%, #0f172a);
-	--sv-btn-hover-shadow: inset 0 0 0 100px rgba(0, 0, 0, 0.08), var(--sv-btn-depth-hover);
+	--sv-btn-hover-tint: rgba(0, 0, 0, 0.08); /* darkens any colour */
+	--sv-btn-hover-shadow: inset 0 0 0 100px var(--sv-btn-hover-tint), var(--sv-btn-depth-hover);
+	/* Darker tone of the button colour: the edge under a Bevel button. */
+	--sv-btn-edge: color-mix(in srgb, var(--sv-btn-accent) 68%, #000);
+	/* Light top / dark bottom inner line of a Gloss button. */
+	--sv-btn-rim: inset 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 0 rgba(15, 23, 42, 0.14);
+}
+
+/* Default colour (Theme Options > Style > Default Button): shadows follow its
+   background. A hover background of its own replaces the dark tint. */
+.button.default {
+	--sv-btn-accent: var(--fs-button-default-bg, var(--fs-color-primary, #446084));
+	--sv-btn-hover-tint: var(--fs-button-default-hover-tint, rgba(0, 0, 0, 0.08));
+}
+
+/* On hover the shadow, the Bevel edge and the Simple / Underline text follow
+   the hover background. */
+.button.default:hover {
+	--sv-btn-accent: var(--fs-button-default-bg-hover, var(--fs-button-default-bg, var(--fs-color-primary, #446084)));
 }
 
 .button.secondary,
@@ -215,6 +233,52 @@ input[type="reset"] {
 	width: 100%;
 }
 
+/* Bevel: a raised key. A solid edge in a darker tone of the button colour sits
+   under the button; it rises on hover and is pressed down on click. */
+.button.is-bevel {
+	--sv-btn-hover-shadow: inset 0 0 0 100px var(--sv-btn-hover-tint), 0 4px 0 var(--sv-btn-edge), var(--sv-btn-depth-hover);
+	box-shadow: 0 3px 0 var(--sv-btn-edge), var(--sv-btn-depth);
+}
+
+.button.white.is-bevel {
+	--sv-btn-edge: #cbd5e1;
+}
+
+.button.is-bevel:active {
+	box-shadow: inset 0 0 0 100px rgba(0, 0, 0, 0.1), 0 1px 0 var(--sv-btn-edge);
+	transform: translateY(2px);
+}
+
+/* :where() keeps the overlays of Bevel and Gloss weaker than the spinner of a
+   loading button, which is drawn with the same pseudo element. */
+:where(.button).is-bevel:after {
+	border-radius: inherit;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 -2px 0 rgba(15, 23, 42, 0.14);
+}
+
+/* Gloss: a glass highlight on the upper half instead of the flat white band,
+   and a light that sweeps across the button on hover. */
+.button.is-gloss {
+	--sv-btn-hover-shadow: var(--sv-btn-rim), inset 0 0 0 100px var(--sv-btn-hover-tint), var(--sv-btn-depth-hover);
+	background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.08) 50%, rgba(255, 255, 255, 0) 50%, rgba(15, 23, 42, 0.08));
+	box-shadow: var(--sv-btn-rim), var(--sv-btn-depth);
+}
+
+:where(.button).is-gloss:after {
+	background-image: linear-gradient(105deg, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 70%);
+	box-shadow: none;
+	left: 0;
+	transform: translateX(-100%);
+	width: 100%;
+}
+
+/* The transition is on :hover only: the light crosses once and does not run
+   back when the pointer leaves. */
+.button.is-gloss:not(.loading):hover:after {
+	transform: translateX(100%);
+	transition: transform 0.65s var(--sv-ease);
+}
+
 /* Simple Link: a soft pill in the text colour appears on hover. It is drawn
    outside the button box so the label stays aligned with the content edge. */
 .button.is-link {
@@ -265,11 +329,11 @@ input[type="reset"] {
 
 /* Link and underline keep their colour on hover (a darker tone of it) instead
    of turning dark grey. On dark sections they still turn white. */
-.button:is(.primary, .secondary, .success, .alert):is(.is-link, .is-underline):hover {
+.button:is(.default, .primary, .secondary, .success, .alert):is(.is-link, .is-underline):hover {
 	color: color-mix(in srgb, var(--sv-btn-accent) 78%, #000);
 }
 
-.dark .button:is(.primary, .secondary, .success, .alert):is(.is-link, .is-underline):hover {
+.dark .button:is(.default, .primary, .secondary, .success, .alert):is(.is-link, .is-underline):hover {
 	color: #fff;
 }
 
@@ -447,6 +511,7 @@ label:has(> input[type="radio"]) > input {
 .img .img-inner,
 .post-item-thumbnail,
 .ux-terms-image-inner,
+.row-grid > .ux-terms-item .ux-terms-image,
 .col-inner > .banner,
 .banner-grid-wrapper .banner {
 	border-radius: var(--sv-radius);
@@ -561,15 +626,25 @@ label:has(> input[type="radio"]) > input {
 }
 
 /* ------------------------------------------------------------------- Tabs */
-.tabbed-content .nav-line > li > a:before {
+/* Horizontal tabs only: the vertical ones keep their full-height indicator
+   (silver.css, .nav-vertical.nav-line), which this rule turned into a dot. */
+.tabbed-content .nav-line:not(.nav-vertical) > li > a:before {
 	border-radius: 2px;
 	bottom: 0;
 	height: 2px;
 	top: auto;
 }
 
-.tabbed-content .nav-line {
+.tabbed-content .nav-line:not(.nav-vertical) {
 	border-bottom: 1px solid var(--sv-border);
+}
+
+.tabbed-content .nav-vertical.nav-line > li > a:before {
+	border-radius: 2px;
+}
+
+.nav-vertical + .tab-panels {
+	border-left-color: var(--sv-border);
 }
 
 .tabbed-content .nav-pills > li > a {
@@ -742,6 +817,404 @@ label:has(> input[type="radio"]) > input {
 
 .back-to-top {
 	box-shadow: var(--sv-shadow);
+}
+
+/* ---------------------------------------- Shortcode components: shared look */
+/* Same radius, border, shadow and rhythm as the cards and buttons above. */
+
+/* Countdown: the primary colour instead of flat black. The element CSS loads
+   on demand, so these selectors are one step stronger than its own. */
+.ux-timer {
+	border-spacing: 8px;
+}
+
+:root .ux-timer:not(.light) > span {
+	background-color: color-mix(in srgb, var(--sv-primary) 90%, #000);
+	border-radius: var(--sv-radius);
+	box-shadow: var(--sv-shadow-sm);
+	line-height: 1;
+	padding: 0.5em 0.1em 0.35em;
+}
+
+.ux-timer > span strong {
+	letter-spacing: 0.08em;
+	margin-top: 0.35em;
+}
+
+:root .ux-timer.light > span {
+	border: 1px solid var(--sv-border);
+	color: #0f172a;
+}
+
+/* Tabs */
+.tabbed-content .nav-line > li > a,
+.tabbed-content .nav-pills > li > a {
+	font-weight: 600;
+}
+
+.tabbed-content .nav-line:not(.nav-vertical) > li + li {
+	margin-left: 0.4em;
+}
+
+.tabbed-content .nav-vertical > li > a {
+	padding-bottom: 0.7em;
+	padding-top: 0.7em;
+}
+
+/* Message box: a card with room to breathe. */
+.message-box {
+	padding-bottom: 1.1em;
+	padding-top: 1.1em;
+}
+
+/* Pricing table */
+.pricing-table .title {
+	background-color: var(--sv-surface-muted);
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	padding-bottom: 0.7em;
+	padding-top: 0.7em;
+}
+
+.pricing-table .price {
+	font-size: 2.4em;
+	padding-top: 0.5em;
+}
+
+.pricing-table .description {
+	color: var(--sv-text-muted);
+	font-size: 0.9em;
+}
+
+/* Featured: the header in the primary colour (the muted header above hid its
+   white title) and a card that stands 12px taller on both sides. */
+.featured-table {
+	box-shadow: var(--sv-shadow);
+	margin-bottom: -12px;
+	margin-top: -12px;
+	position: relative;
+	z-index: 1;
+}
+
+.featured-table .title {
+	background-color: var(--sv-primary);
+	border-color: var(--sv-primary);
+	color: #fff;
+	letter-spacing: 0.1em;
+	padding-bottom: calc(0.7em + 12px);
+	padding-top: calc(0.7em + 12px);
+}
+
+/* The button of a price table: [button] is wrapped in a div, which took the
+   row border and shrank to the label ("Choose plan" on two lines). */
+.pricing-table .items > .silver-button-wrapper {
+	border-bottom: 0;
+	display: block;
+	margin: 0;
+	padding: 1.4em 0 0.4em;
+}
+
+.pricing-table .items > .silver-button-wrapper > .button {
+	margin: 0;
+	width: 100%;
+}
+
+.pricing-table .items > .bullet-item:last-child {
+	border-bottom: 0;
+}
+
+/* Bullet item (price table and lists): a check mark in the primary colour. */
+.bullet-item {
+	align-items: center;
+	display: flex;
+	gap: 0.65em;
+	text-align: start;
+}
+
+.bullet-item:before {
+	background-color: var(--sv-primary);
+	content: "";
+	flex: none;
+	height: 1.1em;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='3.5 8.5 6.5 11.5 12.5 4.5'/%3E%3C/svg%3E") center / contain no-repeat;
+	width: 1.1em;
+}
+
+.bullet-item.is-disabled:before {
+	background-color: var(--sv-text-muted);
+}
+
+/* The text keeps its own width, so the tooltip mark sits next to it and not at
+   the far end of the row. */
+.bullet-item .text {
+	flex: 0 1 auto;
+}
+
+.pricing-table .bullet-item {
+	justify-content: center;
+}
+
+.dark .bullet-item:before {
+	background-color: currentColor;
+}
+
+.bullet-item .bullet-more-info {
+	align-items: center;
+	background-color: var(--sv-surface-muted);
+	border: 1px solid var(--sv-border);
+	color: var(--sv-text-muted);
+	cursor: help;
+	display: inline-flex;
+	flex: none;
+	font-size: 11px;
+	height: 1.7em;
+	justify-content: center;
+	letter-spacing: 0;
+	margin-left: 0;
+	padding: 0;
+	width: 1.7em;
+}
+
+.bullet-item:hover .bullet-more-info {
+	background-color: var(--sv-primary);
+	border-color: var(--sv-primary);
+	color: #fff;
+}
+
+/* Share / follow icons: an even gap instead of touching circles. The icons stay
+   inline, so the Align option (text-align on the wrapper) keeps working. */
+.social-icons .button.icon {
+	margin: 0.15em 0.45em 0.15em 0;
+}
+
+.social-icons .button.icon:last-child {
+	margin-right: 0;
+}
+
+.social-icons > span {
+	padding-right: 0.35em;
+}
+
+/* Tabs: Bold had no rule of its own and looked like Simple. */
+.tabbed-content .nav-bold > li > a {
+	font-weight: 800;
+	letter-spacing: 0.02em;
+}
+
+.tabbed-content .nav-bold > li.active > a {
+	color: var(--sv-primary);
+}
+
+.dark .tabbed-content .nav-bold > li.active > a {
+	color: #fff;
+}
+
+/* Tabs style: rounded tabs joined to a rounded panel. */
+.tabbed-content .nav-tabs > li > a {
+	border-color: var(--sv-border);
+	transition: background-color var(--sv-dur) var(--sv-ease), color var(--sv-dur) var(--sv-ease);
+}
+
+.tabbed-content .nav-tabs:not(.nav-vertical) > li > a {
+	border-radius: var(--sv-radius-sm) var(--sv-radius-sm) 0 0;
+}
+
+.tabbed-content .nav-tabs > li.active > a {
+	border-top-color: var(--sv-primary);
+}
+
+.tabbed-content .nav-tabs > li:not(.active) > a:hover {
+	background-color: rgba(15, 23, 42, 0.08);
+}
+
+.tabbed-content .nav-tabs + .tab-panels {
+	border-color: var(--sv-border);
+	border-radius: var(--sv-radius);
+	padding: 1.5em;
+}
+
+.tabbed-content .nav-tabs.nav-left:not(.nav-vertical) + .tab-panels {
+	border-top-left-radius: 0;
+}
+
+.tabbed-content .nav-tabs.nav-right:not(.nav-vertical) + .tab-panels {
+	border-top-right-radius: 0;
+}
+
+/* Vertical Outline / Pills: separate items with a soft radius instead of a
+   full-width capsule between divider lines. */
+.tabbed-content .nav-vertical:is(.nav-outline, .nav-pills) > li + li {
+	border-top: 0;
+	margin-top: 0.25em;
+}
+
+.tabbed-content .nav-vertical:is(.nav-outline, .nav-pills) > li > a {
+	border-radius: var(--sv-radius-sm);
+	padding: 0.15em 1em;
+}
+
+.tabbed-content .nav-vertical.nav-pills > li:not(.active) > a:hover,
+.tabbed-content .nav-vertical.nav-outline > li:not(.active) > a:hover {
+	background-color: var(--sv-surface-muted);
+}
+
+@media (min-width: 1200px) {
+	.tabbed-content .nav-vertical.nav-pills {
+		padding-right: 15px;
+	}
+
+	.tabbed-content .nav-vertical.nav-tabs + .tab-panels {
+		border-radius: 0 var(--sv-radius) var(--sv-radius) 0;
+	}
+}
+
+/* Countdown, light: a white card on any background. The muted surface is
+   almost transparent on dark sections and hid the dark digits. */
+:root .ux-timer.light > span {
+	background-color: #fff;
+	box-shadow: var(--sv-shadow-sm);
+}
+
+/* Phones: five cells do not fit the digits at the Size option (300% by
+   default), so the digits scale with the screen and never grow past it. */
+@media (max-width: 549px) {
+	.ux-timer {
+		border-spacing: 4px;
+	}
+
+	.ux-timer > span {
+		font-size: min(1em, 6.5vw);
+	}
+
+	.ux-timer > span strong {
+		font-size: max(30%, 9px);
+		letter-spacing: 0.04em;
+	}
+
+	/* Price tables are stacked: the featured one no longer overlaps its
+	   neighbours. */
+	.featured-table {
+		margin-bottom: 0;
+		margin-top: 0;
+	}
+}
+
+/* Image box / team member with a depth or a text background: one rounded card.
+   The image loses its own radius and the text gets side padding. Styles that
+   move the text over or out of the image keep their layout. */
+.box:is([class*="box-shadow-"], :has(> .box-text[style*="background-color"])):not(.box-overlay, .box-shade, .box-vertical, .box-badge, .box-label, .box-push, .box-bounce, .box-none) {
+	border-radius: var(--sv-radius);
+	overflow: hidden;
+}
+
+.box:is([class*="box-shadow-"], :has(> .box-text[style*="background-color"])):not(.box-overlay, .box-shade, .box-vertical, .box-badge, .box-label, .box-push, .box-bounce, .box-none) > .box-image:not([style*="radius"]) {
+	border-radius: 0;
+}
+
+.box[class*="box-shadow-"]:not(.box-overlay, .box-shade, .box-badge, .box-label, .box-push) > .box-text {
+	padding-left: 1.2em;
+	padding-right: 1.2em;
+}
+
+/* Testimonial: stars, text, then the avatar next to the name and company. */
+.testimonial-box .star-rating {
+	margin-bottom: 0.7em;
+}
+
+.testimonial-footer {
+	align-items: center;
+	display: flex;
+	gap: 0.85em;
+	margin-top: 1.1em;
+}
+
+.testimonial-footer .testimonial-image {
+	flex: none;
+	margin: 0;
+	max-width: 40%;
+}
+
+.testimonial-footer .testimonial-image img {
+	aspect-ratio: 1;
+	border-radius: 50%;
+	display: block;
+	object-fit: cover;
+	width: 100%;
+}
+
+.testimonial-meta {
+	display: flex;
+	flex-direction: column;
+	line-height: 1.35;
+	min-width: 0;
+}
+
+.testimonial-meta .testimonial-name {
+	color: #0f172a;
+}
+
+.dark .testimonial-meta .testimonial-name {
+	color: #fff;
+}
+
+.testimonial-meta .testimonial-company {
+	font-size: 0.9em;
+}
+
+.testimonial-box.text-center .testimonial-footer {
+	flex-direction: column;
+	gap: 0.6em;
+}
+
+.testimonial-box.text-right .testimonial-footer {
+	flex-direction: row-reverse;
+}
+
+.dark .testimonial-initials:not([style*="background"]) {
+	background-color: rgba(255, 255, 255, 0.16);
+	color: #fff;
+}
+
+/* Featured box: a font icon takes the primary colour, like the bordered icon
+   (Icon Color still wins, it is an inline style). */
+.icon-box-img.has-font-icon:not(.has-icon-bg) .icon-inner {
+	color: var(--sv-primary);
+}
+
+.dark .icon-box-img.has-font-icon:not(.has-icon-bg) .icon-inner {
+	color: inherit;
+}
+
+/* Bordered icon on a dark section: white ring; filled white on hover, so the
+   icon turns dark instead of white on white. */
+.dark .has-icon-bg .icon .icon-inner:not([style*="color"]) {
+	color: #fff;
+}
+
+.dark .icon-box:hover .has-icon-bg .icon-inner:not([style*="color"]) i,
+.dark .icon-box:hover .has-icon-bg .icon-inner:not([style*="color"]) svg,
+.dark .icon-box:hover .has-icon-bg .icon-inner:not([style*="color"]) svg path {
+	color: #0f172a;
+	fill: #0f172a;
+}
+
+.icon-box-text h5 {
+	letter-spacing: 0.04em;
+}
+
+/* Search, flat: a full capsule. The square right side of the normal style (the
+   field is joined to its button there) was applied to this one too. */
+.form-flat .searchform .flex-grow .search-field {
+	border-radius: var(--sv-radius-pill);
+	padding-right: 2.9em;
+}
+
+/* Title, bold: the frame takes the radius of the buttons. */
+.section-title-bold span,
+.section-title-bold-center span {
+	border-color: var(--sv-border-strong);
+	border-radius: var(--sv-radius-sm);
+	border-width: 1.5px;
 }
 
 /* --------------------------------------------------------- Reduced motion */

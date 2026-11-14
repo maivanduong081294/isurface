@@ -51,6 +51,7 @@ add_action( 'init', function () {
 		include_once(dirname( __FILE__ ).'/options/pages/options-pages.php');
 		include_once(dirname( __FILE__ ).'/options/styles/options-colors.php');
 		include_once(dirname( __FILE__ ).'/options/styles/options-global.php');
+		include_once(dirname( __FILE__ ).'/options/styles/options-buttons.php');
 		include_once(dirname( __FILE__ ).'/options/styles/options-css.php');
 		include_once(dirname( __FILE__ ).'/options/styles/options-lightbox.php');
 		include_once(dirname( __FILE__ ).'/options/notifications/options-notifications.php');

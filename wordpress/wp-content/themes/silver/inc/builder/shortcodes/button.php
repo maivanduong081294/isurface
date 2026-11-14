@@ -88,8 +88,10 @@ add_ux_builder_shortcode( 'button', array(
 				'color'       => array(
 					'type'    => 'select',
 					'heading' => 'Color',
-					'default' => 'primary',
+					'default' => 'default',
 					'options' => array(
+						// Colors of Theme Options > Style > Default Button.
+						'default'   => 'Default',
 						'primary'   => 'Primary',
 						'secondary' => 'Secondary',
 						'alert'     => 'Alert',
