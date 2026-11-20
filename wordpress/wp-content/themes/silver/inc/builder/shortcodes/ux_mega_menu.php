@@ -61,7 +61,7 @@ add_ux_builder_shortcode('ux_mega_menu', array(
 		'trigger'       => array(
 			'type'        => 'radio-buttons',
 			'heading'     => __('Open on', 'silver'),
-			'description' => __('Desktop. On mobile the button is always clicked.', 'silver'),
+			'description' => __('Desktop. On mobile the button / icon is always clicked.', 'silver'),
 			'default'     => 'hover',
 			'options'     => array(
 				'hover' => array('title' => 'Hover'),
@@ -96,10 +96,16 @@ add_ux_builder_shortcode('ux_mega_menu', array(
 					'placeholder' => '1100px',
 				),
 				'panel_align'   => array(
-					'type'    => 'radio-buttons',
-					'heading' => __('Align', 'silver'),
-					'default' => 'left',
-					'options' => require __DIR__ . '/values/align-radios.php',
+					'type'        => 'radio-buttons',
+					'heading'     => __('Align', 'silver'),
+					'description' => __('Container: same left edge and width as the header / row container. The panel always stays on screen.', 'silver'),
+					'default'     => 'left',
+					'options'     => array(
+						'left'      => array('title' => 'Left'),
+						'center'    => array('title' => 'Center'),
+						'right'     => array('title' => 'Right'),
+						'container' => array('title' => 'Container'),
+					),
 				),
 				'sidebar_width' => array(
 					'type'        => 'scrubfield',
@@ -108,12 +114,91 @@ add_ux_builder_shortcode('ux_mega_menu', array(
 					'default'     => '260px',
 					'placeholder' => '260px',
 				),
+				'panel_padding' => array(
+					'type'        => 'scrubfield',
+					'heading'     => __('Padding (left / right)', 'silver'),
+					'description' => __('Inner side padding, like the column gutter of a row. Default 15px.', 'silver'),
+					'responsive'  => true,
+					'default'     => '',
+					'placeholder' => '15px',
+				),
 				'min_height'    => array(
 					'type'        => 'scrubfield',
 					'heading'     => __('Min height', 'silver'),
 					'responsive'  => true,
 					'default'     => '',
 					'placeholder' => '0px',
+				),
+			),
+		),
+		// Per screen: the button (desktop panel above 850px, accordion below)
+		// or only the icon (hamburger) opening the items in a drawer.
+		'display_options' => array(
+			'type'    => 'group',
+			'heading' => __('Display', 'silver'),
+			'options' => array(
+				'display_mode'      => array(
+					'type'        => 'radio-buttons',
+					'heading'     => __('Display', 'silver'),
+					'description' => __('Per screen: switch the screen size in the toolbar.', 'silver'),
+					'responsive'  => true,
+					'default'     => 'button',
+					'options'     => array(
+						'button' => array('title' => 'Button'),
+						'icon'   => array('title' => 'Icon + drawer'),
+					),
+				),
+				'drawer_title'      => array(
+					'type'        => 'textfield',
+					'heading'     => __('Drawer title', 'silver'),
+					'description' => __('Empty: the button text.', 'silver'),
+					'default'     => '',
+				),
+				'drawer_layout'     => array(
+					'type'        => 'radio-buttons',
+					'heading'     => __('Drawer layout', 'silver'),
+					'description' => __('Expanded: every item with its heading and grid. Accordion: one item open at a time.', 'silver'),
+					'default'     => 'expanded',
+					'options'     => array(
+						'expanded'  => array('title' => 'Expanded'),
+						'accordion' => array('title' => 'Accordion'),
+					),
+				),
+				'drawer_columns'    => array(
+					'type'    => 'slider',
+					'heading' => __('Drawer grid columns', 'silver'),
+					'default' => 3,
+					'min'     => 2,
+					'max'     => 5,
+					'step'    => 1,
+				),
+				'drawer_pos'        => array(
+					'type'    => 'radio-buttons',
+					'heading' => __('Drawer opens from', 'silver'),
+					'default' => 'left',
+					'options' => array(
+						'left'  => array('title' => 'Left'),
+						'right' => array('title' => 'Right'),
+					),
+				),
+				'drawer_icon_size'  => array(
+					'type'       => 'slider',
+					'heading'    => __('Icon size', 'silver'),
+					'responsive' => true,
+					'unit'       => 'px',
+					'default'    => 22,
+					'min'        => 14,
+					'max'        => 40,
+					'step'       => 1,
+				),
+				'drawer_icon_color' => array(
+					'type'       => 'colorpicker',
+					'heading'    => __('Icon color', 'silver'),
+					'responsive' => true,
+					'alpha'      => true,
+					'format'     => 'rgb',
+					'position'   => 'bottom right',
+					'helpers'    => require __DIR__ . '/helpers/colors-text.php',
 				),
 			),
 		),

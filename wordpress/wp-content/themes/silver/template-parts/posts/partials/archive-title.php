@@ -4,12 +4,19 @@
  *
  * @package          Silver\Templates
  * @silver-version 3.16.0
+ *
+ * @var array $args show_title: false when only the breadcrumbs are on
+ *                  (see silver_archive_title()).
  */
+
+$show_title = isset( $args['show_title'] ) ? $args['show_title'] : true;
 
 ?>
 <header class="archive-page-header">
 	<div class="row">
 	<div class="xlarge-12 text-center col">
+	<?php silver_blog_breadcrumbs(); ?>
+	<?php if ( $show_title ) : ?>
 	<h1 class="page-title is-large uppercase">
 		<?php
 
@@ -81,6 +88,7 @@
 
 		endif;
 	?>
+	<?php endif; // $show_title ?>
 	</div>
 	</div>
 </header>

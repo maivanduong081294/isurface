@@ -32,7 +32,7 @@ function silver_render_ux_stack_shortcode($atts, $content, $tag)
 			'align'          => 'stretch',
 			'align__sm'      => null,
 			'align__md'      => null,
-			'gap'            => '0',
+			'gap'            => '',
 			'gap__sm'        => null,
 			'gap__md'        => null,
 			'slider_nav_style'     => 'reveal',
@@ -126,6 +126,7 @@ function silver_render_ux_stack_shortcode($atts, $content, $tag)
 					'selector' => '.stack-inner',
 					'property' => '--stack-gap',
 					'unit'     => 'rem',
+                    'css_value' => true,
 				),
 			),
 			$atts

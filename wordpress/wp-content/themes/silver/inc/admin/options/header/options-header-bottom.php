@@ -20,6 +20,22 @@ Silver_Option::add_field( 'option', array(
 	'choices'     => silver_get_block_list_by_id( array( 'option_none' => '-- None --' ) ),
 ) );
 
+// Hide this bar per screen (UX Builder breakpoints), e.g. only on mobile.
+Silver_Option::add_field( 'option', array(
+	'type'        => 'multicheck',
+	'settings'    => 'header_bottom_hide_screens',
+	'label'       => __( 'Hide Header Bottom on', 'silver' ),
+	'description' => __( 'Hide the bar on the checked screens.', 'silver' ),
+	'section'     => 'bottom_bar',
+	'default'     => array(),
+	'choices'     => array(
+		'sm' => __( 'Mobile (< 550px)', 'silver' ),
+		'md' => __( 'Tablet portrait (550 - 849px)', 'silver' ),
+		'ml' => __( 'Tablet landscape (850 - 1199px)', 'silver' ),
+		'lg' => __( 'Desktop (>= 1200px)', 'silver' ),
+	),
+) );
+
 
 Silver_Option::add_field( '', array(
     'type'        => 'custom',

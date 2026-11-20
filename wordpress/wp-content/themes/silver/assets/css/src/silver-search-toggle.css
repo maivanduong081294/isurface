@@ -1,0 +1,140 @@
+/*
+ * Search "Collapse to icon" ([search collapse="true"], per screen).
+ * On the collapsed screens only the toggle (search icon) shows; it opens the
+ * bar, which silver-search-toggle.js moves under the header row (or parent
+ * block) so it spans its full width. Other screens show the normal box.
+ * Merged into silver.css by the build.
+ */
+.ux-search-collapse {
+  align-items: center;
+  display: flex;
+  min-width: 0;
+  position: relative;
+}
+.ux-search-collapse.ux-search-grow {
+  flex: 1 1 auto;
+}
+.ux-search-collapse__box {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.ux-search-collapse__toggle {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  color: inherit;
+  cursor: pointer;
+  display: none;
+  font-size: 20px;
+  height: 40px;
+  justify-content: center;
+  margin: 0;
+  min-height: 0;
+  padding: 0;
+  transition: background-color 0.2s;
+  width: 40px;
+}
+.ux-search-collapse__toggle:hover {
+  background: rgba(15, 23, 42, 0.06);
+}
+.ux-search-collapse__icon-open {
+  display: inline-flex;
+}
+.ux-search-collapse__icon-close,
+.ux-search-collapse__toggle[aria-expanded="true"] .ux-search-collapse__icon-open {
+  display: none;
+}
+.ux-search-collapse__toggle[aria-expanded="true"] .ux-search-collapse__icon-close {
+  display: block;
+}
+
+/* Collapsed screens: icon only (no flash before the JS). */
+@media (max-width: 549px) {
+  .ux-search-collapse-sm {
+    flex: none !important;
+    max-width: none !important;
+  }
+  .ux-search-collapse-sm > .ux-search-collapse__box {
+    display: none;
+  }
+  .ux-search-collapse-sm > .ux-search-collapse__toggle {
+    display: inline-flex;
+  }
+}
+@media (min-width: 550px) and (max-width: 849px) {
+  .ux-search-collapse-md {
+    flex: none !important;
+    max-width: none !important;
+  }
+  .ux-search-collapse-md > .ux-search-collapse__box {
+    display: none;
+  }
+  .ux-search-collapse-md > .ux-search-collapse__toggle {
+    display: inline-flex;
+  }
+}
+@media (min-width: 850px) and (max-width: 1199px) {
+  .ux-search-collapse-ml {
+    flex: none !important;
+    max-width: none !important;
+  }
+  .ux-search-collapse-ml > .ux-search-collapse__box {
+    display: none;
+  }
+  .ux-search-collapse-ml > .ux-search-collapse__toggle {
+    display: inline-flex;
+  }
+}
+@media (min-width: 1200px) {
+  .ux-search-collapse-lg {
+    flex: none !important;
+    max-width: none !important;
+  }
+  .ux-search-collapse-lg > .ux-search-collapse__box {
+    display: none;
+  }
+  .ux-search-collapse-lg > .ux-search-collapse__toggle {
+    display: inline-flex;
+  }
+}
+
+/* The bar, under the header row (moved there by the JS). */
+.ux-search-collapse__bar {
+  display: none;
+}
+.ux-search-collapse__bar.is-open {
+  animation: ux-search-bar-in 0.18s ease-out;
+  background: var(--ux-search-bar-bg, #fff);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 10px 20px -16px rgba(15, 23, 42, 0.35);
+  display: block;
+  inset-inline: 0;
+  padding: 4px var(--fs-container-padding, 15px) 12px;
+  position: absolute;
+  top: 100%;
+  z-index: 20;
+}
+.dark .ux-search-collapse__bar.is-open,
+.nav-dark .ux-search-collapse__bar.is-open {
+  --ux-search-bar-bg: #0f172a;
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+.ux-search-collapse__bar-inner {
+  margin-inline: auto;
+  max-width: var(--fs-container-width, 1200px);
+}
+.ux-search-collapse__bar .searchform-wrapper {
+  max-width: none;
+}
+@keyframes ux-search-bar-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ux-search-collapse__bar.is-open {
+    animation: none;
+  }
+}

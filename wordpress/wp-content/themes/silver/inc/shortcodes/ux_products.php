@@ -86,6 +86,13 @@ function ux_products($atts, $content = null, $tag = '' ) {
 		'show_price' => 'true',
 		'show_add_to_cart' => 'true',
 		'show_quick_view' => 'true',
+		// Product attributes on cards: '' = Theme Options.
+		'show_attrs' => '',
+		'attrs_style' => '',
+		'attrs_max' => '',
+		'attrs_bg' => '',
+		'attrs_color' => '',
+		'attrs_border' => '',
 
 	), $atts));
 
@@ -101,6 +108,11 @@ function ux_products($atts, $content = null, $tag = '' ) {
 	$items['add_to_cart_icon']['show'] = $show_add_to_cart;
 	$items['quick_view']['show']       = $show_quick_view;
 	$items                             = silver_box_item_toggle_start( $items );
+
+	// Attribute block settings of this shortcode (popped at the end).
+	if ( function_exists( 'silver_card_attrs_override' ) ) {
+		silver_card_attrs_override( silver_card_attrs_override_from_atts( $atts ) );
+	}
 
 	ob_start();
 
@@ -323,14 +335,13 @@ function ux_products($atts, $content = null, $tag = '' ) {
 									<?php if($image_overlay){ ?><div class="overlay fill" style="background-color: <?php echo esc_attr($image_overlay);?>"></div><?php } ?>
 									 <?php if($style == 'shade'){ ?><div class="shade"></div><?php } ?>
 								</div>
-								<div class="image-tools top right show-on-hover">
-									<?php do_action('silver_product_box_tools_top'); ?>
-								</div>
-								<?php if($style !== 'shade' && $style !== 'overlay') { ?>
-									<div class="image-tools <?php echo silver_product_box_actions_class(); ?>">
-										<?php  do_action('silver_product_box_actions'); ?>
-									</div>
-								<?php } ?>
+								<?php
+								// Tool bars are printed only when their hook outputs something.
+								silver_action_wrapper( 'silver_product_box_tools_top', 'image-tools top right show-on-hover' );
+								if ( $style !== 'shade' && $style !== 'overlay' ) {
+									silver_action_wrapper( 'silver_product_box_actions', 'image-tools ' . silver_product_box_actions_class() );
+								}
+								?>
 								<?php if($out_of_stock) { ?><div class="out-of-stock-label"><?php _e( 'Out of stock', 'woocommerce' ); ?></div><?php }?>
 							</div>
 
@@ -342,9 +353,8 @@ function ux_products($atts, $content = null, $tag = '' ) {
 									do_action( 'woocommerce_shop_loop_item_title' );
 									echo '</div>';
 
-									echo '<div class="price-wrapper">';
-									do_action( 'woocommerce_after_shop_loop_item_title' );
-									echo '</div>';
+									// Rating and attributes, then <div class="price-wrapper">.
+									silver_product_box_price_wrapper();
 
 									if($style == 'shade' || $style == 'overlay') {
 									echo '<div class="overlay-tools">';
@@ -368,6 +378,10 @@ function ux_products($atts, $content = null, $tag = '' ) {
 	Silver_Relay::render_container_close();
 
 	silver_box_item_toggle_end( $items );
+
+	if ( function_exists( 'silver_card_attrs_override' ) ) {
+		silver_card_attrs_override( false );
+	}
 
 	$content = ob_get_contents();
 	ob_end_clean();

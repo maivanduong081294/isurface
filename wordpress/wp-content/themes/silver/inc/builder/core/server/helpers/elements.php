@@ -51,7 +51,10 @@ function ux_builder_element_style_tag( $id, $rules, $atts ) {
         $selector_str = trim( "#{$id} {$selector}" );
         foreach ( $properties as $property ) {
           if ( empty( $property ) ) continue;
-          if ( isset( $rule['unit'] ) ) $value = floatval( $value ) . $unit;
+          if ( ! empty( $rule['css_value'] ) ) {
+            $value = silver_builder_css_value( $value, $unit );
+            if ( $value === '' ) continue;
+          } elseif ( isset( $rule['unit'] ) ) $value = floatval( $value ) . $unit;
           $declaration = array( 'property' => $property, 'value' => $value, 'size' => $size);
           $declaration = apply_filters( 'ux_builder_css_declaration', $declaration );
           if (!empty($declaration['value']) || $declaration['value'] === '0') {
@@ -81,7 +84,14 @@ function ux_builder_element_style_tag( $id, $rules, $atts ) {
   $trimmed_output = trim( $output );
 
   if ( ! empty( $trimmed_output ) ) {
-    return "\n<style>\n" . strip_tags( $trimmed_output ) . "\n</style>\n"; // phpcs:ignore WordPress.WP.AlternativeFunctions.strip_tags_strip_tags
+    $css = strip_tags( $trimmed_output ); // phpcs:ignore WordPress.WP.AlternativeFunctions.strip_tags_strip_tags
+
+    // Merged into one <style> tag per shortcode tree on the front end.
+    if ( function_exists( 'silver_inline_style_tag' ) ) {
+      return silver_inline_style_tag( $css );
+    }
+
+    return "\n<style>\n" . $css . "\n</style>\n";
   }
 
   return '';

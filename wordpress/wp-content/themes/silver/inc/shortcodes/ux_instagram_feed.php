@@ -137,7 +137,7 @@ function ux_instagram_feed( $atts, $content = null ) {
 						<a href="<?php echo esc_url( $item['link'] ); ?>" target="_blank" rel="noopener" class="plain"<?php if ( empty( $alt_text ) ) echo ' aria-label="' . esc_attr__( 'Instagram image', 'silver' ) . '"'; ?>>
 							<?php echo silver_get_image( $image_url, false, $alt_text ); ?>
 							<?php if ( $image_overlay ) { ?>
-								<div class="overlay" style="background-color: <?php echo esc_attr( $image_overlay ); ?>"></div>
+								<div class="overlay" style="<?php echo esc_attr( silver_overlay_style( $image_overlay ) ); ?>"></div>
 							<?php } ?>
 							<?php if ( $caption ) { ?>
 								<div class="caption"><?php echo wp_kses_post( $caption ); ?></div>
@@ -154,7 +154,7 @@ function ux_instagram_feed( $atts, $content = null ) {
 
 	if ( $link != '' ) {
 		?>
-		<a class="plain uppercase" href="<?php echo trailingslashit( '//instagram.com/' . esc_attr( trim( $username ) ) ); ?>" rel="me"
+		<a class="<?php echo esc_attr( trim( 'plain uppercase ' . $visibility ) ); ?>" href="<?php echo trailingslashit( '//instagram.com/' . esc_attr( trim( $username ) ) ); ?>" rel="me"
 			 target="<?php echo esc_attr( $target ); ?>" aria-label="<?php echo esc_attr__( 'Follow on Instagram', 'silver' ); ?>"><?php echo get_silver_icon( 'icon-instagram' ); ?><?php echo wp_kses_post( $link ); ?></a>
 		<?php
 	}

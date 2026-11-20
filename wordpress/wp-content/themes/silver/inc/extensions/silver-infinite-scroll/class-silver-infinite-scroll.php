@@ -41,6 +41,14 @@ class Silver_Infinite_Scroll {
 	private $list_style;
 
 	/**
+	 * Where it runs on this page: 'shop' (product archives, Shop pagination)
+	 * or 'blog' (post archives, Blog pagination).
+	 *
+	 * @var string
+	 */
+	private $context;
+
+	/**
 	 * Static instance
 	 *
 	 * @var object
@@ -74,15 +82,32 @@ class Silver_Infinite_Scroll {
 	 * Initialize extension
 	 */
 	public function init() {
-		if ( is_admin() || ! silver_is_shop_archive() ) {
+		if ( is_admin() ) {
 			return;
 		}
 
-		$this->loader_type = get_theme_mod( 'infinite_scroll_loader_type', 'spinner' );
-		$this->list_style  = get_theme_mod( 'category_grid_style', 'grid' );
+		$shop_pagination = get_theme_mod( 'shop_pagination' );
+
+		if (
+			function_exists( 'silver_is_shop_archive' ) && silver_is_shop_archive()
+			&& in_array( $shop_pagination, array( 'infinite-scroll', 'load-more' ), true )
+		) {
+			// Shop: "Load more button", or "Infinite scroll" with its Loading type
+			// (Button (On click) is the older way to get a load more button).
+			$this->context     = 'shop';
+			$this->loader_type = 'load-more' === $shop_pagination ? 'button' : get_theme_mod( 'infinite_scroll_loader_type', 'spinner' );
+			$this->list_style  = get_theme_mod( 'category_grid_style', 'grid' );
+			add_action( 'woocommerce_after_shop_loop', array( $this, 'add_page_loader' ), 20 );
+		} elseif ( silver_is_blog_archive() && 'load-more' === get_theme_mod( 'blog_pagination' ) ) {
+			$this->context     = 'blog';
+			$this->loader_type = 'button';
+			$this->list_style  = get_theme_mod( 'blog_style_type', 'masonry' );
+			add_action( 'silver_after_posts_pagination', array( $this, 'add_page_loader' ) );
+		} else {
+			return;
+		}
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'add_scripts' ), 99 );
-		add_action( 'woocommerce_after_shop_loop', array( $this, 'add_page_loader' ), 20 );
 		add_action( 'wp_head', array( $this, 'add_css' ), 110 );
 	}
 
@@ -100,6 +125,7 @@ class Silver_Infinite_Scroll {
 			'type'             => $this->loader_type,
 			'list_style'       => $this->list_style,
 			'history'          => 'push',
+			'context'          => $this->context,
 		);
 
 		wp_localize_script( 'silver-infinite-scroll', 'flatsome_infinite_scroll', apply_filters( 'silver_infinite_scroll_params', $params ) );
@@ -120,7 +146,7 @@ class Silver_Infinite_Scroll {
 		?>
 		<style id="infinite-scroll-css" type="text/css">
 			.page-load-status,
-			.archive .woocommerce-pagination {
+			<?php echo 'blog' === $this->context ? '#post-list .page-numbers.nav-pagination' : '.archive .woocommerce-pagination'; ?> {
 				display: none;
 			}
 		</style>

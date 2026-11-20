@@ -6,6 +6,11 @@
  * @silver-version 3.16.0
  */
 
+// Blog Single Post > Breadcrumbs: above the category, aligned with the title.
+if ( is_singular( 'post' ) ) {
+	silver_blog_breadcrumbs();
+}
+
 if ( is_single() ) :
 	if ( get_theme_mod( 'blog_single_header_category', 1 ) ) :
 		echo '<h6 class="entry-category is-xsmall">';

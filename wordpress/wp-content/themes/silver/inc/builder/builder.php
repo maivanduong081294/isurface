@@ -3,6 +3,7 @@
 require_once __DIR__ . '/core/ux-builder.php';
 require_once __DIR__ . '/actions.php';
 require_once __DIR__ . '/icon-picker.php';
+require_once __DIR__ . '/css-value.php';
 require_once __DIR__ . '/quick-view.php';
 require_once __DIR__ . '/theme-colors.php';
 require_once __DIR__ . '/filters.php';

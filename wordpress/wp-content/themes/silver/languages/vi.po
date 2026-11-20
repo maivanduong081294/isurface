@@ -938,6 +938,10 @@ msgstr "Nhận được URL không hợp lệ."
 msgid "Load more"
 msgstr "Tải thêm"
 
+#: inc/admin/customizer/customizer-config.php
+msgid "Tablet landscape"
+msgstr "Tablet ngang"
+
 #: inc/classes/class-silver-relay.php:241
 #: inc/classes/class-silver-relay.php:289
 #: inc/structure/structure-posts.php:303

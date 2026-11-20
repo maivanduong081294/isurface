@@ -42,3 +42,4 @@ Silver_Option::add_field( 'option', array(
 	'section'     => 'blog-global',
 	'default'     => ' [...]',
 ) );
+

@@ -222,7 +222,7 @@ function ux_product_categories($atts, $content = null, $tag = '' ) {
                 <div class="box-image" <?php echo get_shortcode_inline_css($css_args_img); ?>>
                   <div class="<?php echo esc_attr( implode( ' ', $classes_image ) ); ?>" <?php echo get_shortcode_inline_css($css_image_height); ?>>
                   <?php echo '<img src="' . esc_url( $image ) . '" alt="' . esc_attr( $category->name ) . '" width="300" height="300" />'; ?>
-                  <?php if($image_overlay){ ?><div class="overlay" style="background-color: <?php echo esc_attr( $image_overlay ); ?>"></div><?php } ?>
+                  <?php if($image_overlay){ ?><div class="overlay" style="<?php echo esc_attr( silver_overlay_style( $image_overlay ) ); ?>"></div><?php } ?>
                   <?php if($style == 'shade'){ ?><div class="shade"></div><?php } ?>
                   </div>
                 </div>

@@ -27,7 +27,10 @@
 					<div class="xlarge-7 col">
 						<div class="entry-summary <?php silver_product_summary_classes();?>">
 							<?php
-								 silver_breadcrumb();
+								 // Unless they moved to the bar under the header (Breadcrumbs position).
+								 if ( ! silver_breadcrumbs_bar_printed() ) {
+								 	silver_breadcrumb();
+								 }
 								 woocommerce_template_single_title();
 								 woocommerce_template_single_rating();
 								 woocommerce_template_single_excerpt();

@@ -38,17 +38,17 @@ add_ux_builder_shortcode('ux_image', array(
             'default' => 'large',
             'options' => silver_ux_builder_image_sizes(),
         ),
+        // Typed value (drag to scrub): a number is %, or any unit
+        // (300px, 20rem, 50vw, calc(...)). Old values (numbers) stay in %.
         'width' => array(
-            'type' => 'slider',
+            'type' => 'scrubfield',
             'heading' => 'Width',
+            'description' => 'Number = %. Or a unit: 300px, 20rem, 50vw, calc(...).',
             'responsive' => true,
             'default' => '100',
-            'unit' => '%',
-            'max' => '100',
-            'min' => '0',
-            'on_change' => array(
-                'style' => 'width: {{ value }}%'
-            ),
+            'placeholder' => '100',
+            'min' => 0,
+            'step' => 1,
         ),
         'height' => array(
             'responsive' => true,
@@ -73,6 +73,38 @@ add_ux_builder_shortcode('ux_image', array(
             'min' => -100,
             'max' => 100,
             'step' => 1,
+        ),
+        // Space around the image (top / right / bottom / left), per screen.
+        'padding' => array(
+            'type' => 'margins',
+            'heading' => __('Padding'),
+            'full_width' => true,
+            'responsive' => true,
+            'min' => 0,
+            'max' => 200,
+            'step' => 1,
+        ),
+        // Rounded corners, per screen: a number is px, or a unit (8px, 1rem, 50%).
+        'radius' => array(
+            'type' => 'scrubfield',
+            'heading' => __('Radius'),
+            'description' => 'Number = px. Or a unit: 8px, 1rem, 50%.',
+            'responsive' => true,
+            'default' => '',
+            'placeholder' => '0',
+            'min' => 0,
+            'step' => 1,
+        ),
+        // Background behind the image (seen through the padding or a
+        // transparent image), per screen.
+        'bg_color' => array(
+            'type' => 'colorpicker',
+            'heading' => __('Background'),
+            'responsive' => true,
+            'alpha' => true,
+            'format' => 'rgb',
+            'position' => 'bottom right',
+            'helpers' => require(__DIR__ . '/helpers/colors.php'),
         ),
         'lightbox' => array(
             'type' => 'radio-buttons',

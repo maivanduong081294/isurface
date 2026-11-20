@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $post, $product;
 
-$badge_style = get_theme_mod( 'bubble_style', 'style1' );
+$badge_style = get_theme_mod( 'bubble_style', 'pill' );
 
 // Fix deprecated.
 if($badge_style == 'style1') $badge_style = 'circle';
@@ -27,7 +27,7 @@ if($badge_style == 'style3') $badge_style = 'frame';
 	$custom_text = get_theme_mod( 'sale_bubble_text' );
 	$text        = $custom_text ? $custom_text : __( 'Sale!', 'woocommerce' );
 
-	if ( get_theme_mod( 'sale_bubble_percentage' ) ) {
+	if ( get_theme_mod( 'sale_bubble_percentage', 1 ) ) {
 		$text = silver_presentage_bubble( $product, $text );
 	}
 	echo apply_filters( 'woocommerce_sale_flash', '<div class="callout badge badge-'.$badge_style.'"><div class="badge-inner secondary on-sale"><span class="onsale">' .  $text . '</span></div></div>', $post, $product ); ?>

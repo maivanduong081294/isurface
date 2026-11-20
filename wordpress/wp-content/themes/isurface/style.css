@@ -7,13 +7,37 @@ Version: 3.0
 */
 
 /* Small: mobile-first base styles below 550px, inherited upwards. */
+header#header .button {
+  color: inherit;
+}
+header#header .button:hover {
+  color: var(--fs-button-default-color-hover, var(--sv-btn-default-text));
+}
+.silver-button-wrapper.header-blog-button .button {
+  border: none;
+}
+div#top-bar {
+  font-size: 14px;
+}
+#footer {
+  font-size: 14px;
+}
 
 @media (min-width: 550px) {
   /* Medium: tablet portrait. */
+  .header-search {
+    flex: 1;
+  }
+  #header .col.header-main-right {
+    width: 100% !important;
+  }
 }
 
 @media (min-width: 850px) {
   /* Large: tablet landscape. */
+  .ux-mega-menu.is-open .ux-mega-menu-panel {
+    top: 75px;
+  }
 }
 
 @media (min-width: 1200px) {

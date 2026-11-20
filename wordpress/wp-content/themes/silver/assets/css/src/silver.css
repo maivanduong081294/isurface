@@ -1,4 +1,7 @@
 @charset "utf-8";
+p:last-child {
+  margin-bottom: 0;
+}
 .ux-container {
   position: relative;
   isolation: isolate;
@@ -421,6 +424,18 @@ object {
 }
 .align-right {
   justify-content: flex-end !important;
+}
+/* Row / Posts "Align Horizontal": Between, Around. */
+.align-between {
+  justify-content: space-between !important;
+}
+.align-around {
+  justify-content: space-around !important;
+}
+/* The clearfix ::after of .row is a flex item too and would take the last gap. */
+.align-between::after,
+.align-around::after {
+  display: none !important;
 }
 .small-1 {
   flex-basis: 8.3333333333%;
@@ -1867,33 +1882,133 @@ li.html > .button {
 li.hide-title > a {
   display: none !important;
 }
+/* Pagination (shop, blog, reviews, split posts, relay): a white pill of round
+   buttons. The current page is filled with the primary colour; previous and
+   next sit on a muted circle.
+   Mobile first: the templates print at most 9 items (end_size and mid_size 1:
+   ‹ 1 … 3 4 5 … 15 ›), about 280px wide at the small size below, so they
+   stay on one line of a 320px phone. From 550px the buttons grow and
+   previous / next move a little apart. */
+.page-numbers.nav-pagination {
+  align-items: center;
+  background-color: var(--sv-surface, #fff);
+  border-radius: 999px;
+  box-shadow:
+    0 0 0 1px rgba(15, 23, 42, 0.04),
+    0 10px 24px -14px rgba(15, 23, 42, 0.25);
+  display: flex;
+  flex-wrap: nowrap;
+  font-size: 0.875rem;
+  gap: 2px;
+  margin-bottom: 1.5em;
+  margin-top: 0.5em;
+  max-width: 100%;
+  padding: 4px;
+  width: fit-content;
+}
+.page-numbers.nav-pagination.text-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+/* Stronger than ul.links li and .woocommerce-pagination ul.links li. */
+.page-numbers.nav-pagination.links > li {
+  flex: none;
+  margin: 0;
+}
 .nav-pagination > li > a,
 .nav-pagination > li > span {
-  border: 2px solid;
-  border-radius: 99px;
-  display: block;
-  font-size: 1.1em;
-  font-weight: bolder;
+  align-items: center;
+  border: 0;
+  border-radius: 999px;
+  color: var(--sv-heading, #0f172a);
+  display: flex;
+  font-weight: 600;
   height: 2.25em;
-  line-height: 2em;
+  justify-content: center;
+  line-height: 1;
   min-width: 2.25em;
-  padding: 0 7px;
-  text-align: center;
-  transition: all 0.3s;
-  vertical-align: top;
-  width: auto;
+  padding: 0 0.4em;
+  transition:
+    background-color 0.2s,
+    box-shadow 0.2s,
+    color 0.2s;
 }
 .nav-pagination > li i {
-  font-size: 1.2em;
-  top: -1px;
-  vertical-align: middle;
+  font-size: 1.1em;
+}
+.nav-pagination > li > .prev,
+.nav-pagination > li > .next {
+  background-color: var(--sv-surface-muted, #f1f5f9);
+  color: var(--sv-text, #334155);
+}
+@media (min-width: 550px) {
+  .page-numbers.nav-pagination {
+    box-shadow:
+      0 0 0 1px rgba(15, 23, 42, 0.04),
+      0 12px 30px -14px rgba(15, 23, 42, 0.25);
+    font-size: 0.9375rem;
+    gap: 4px;
+    padding: 6px;
+  }
+  .nav-pagination > li > a,
+  .nav-pagination > li > span {
+    height: 2.75em;
+    min-width: 2.75em;
+    padding: 0 0.6em;
+  }
+  .nav-pagination > li > .prev {
+    margin-inline-end: 0.75em;
+  }
+  .nav-pagination > li > .next {
+    margin-inline-start: 0.75em;
+  }
+}
+.nav-pagination > li > a:hover {
+  background-color: var(--sv-surface-muted, #f1f5f9);
+  background-color: color-mix(in srgb, var(--fs-color-primary) 10%, transparent);
+  color: var(--fs-color-primary);
 }
 .nav-pagination > li > .current,
-.nav-pagination > li > a:hover,
-.nav-pagination > li > span:hover {
+.nav-pagination > li > .current:hover {
   background-color: var(--fs-color-primary);
-  border-color: var(--fs-color-primary);
+  box-shadow: 0 8px 16px -8px var(--fs-color-primary);
   color: #fff;
+}
+.nav-pagination > li > .dots {
+  color: var(--sv-text-muted, #64748b);
+  min-width: 1.25em;
+  padding: 0;
+}
+/* Load more button (Shop / Blog pagination: Load more button), in place of
+   the pagination: a primary pill like the current page, 44px tall to tap.
+   The spinner while loading is the theme's .button.loading. */
+.view-more-wrap {
+  margin: 0.5em 0 1.5em;
+}
+.view-more-wrap .view-more-button.button {
+  border-radius: 999px;
+  box-shadow: 0 8px 16px -8px var(--fs-color-primary);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 44px;
+  margin: 0;
+  min-height: 44px;
+  min-width: 11em;
+  padding: 0 1.75em;
+  text-transform: none;
+}
+.dark .page-numbers.nav-pagination {
+  background-color: rgba(255, 255, 255, 0.08);
+  box-shadow: none;
+}
+.dark .nav-pagination > li > a,
+.dark .nav-pagination > li > span {
+  color: #fff;
+}
+.dark .nav-pagination > li > .prev,
+.dark .nav-pagination > li > .next {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 .off-canvas .mobile-sidebar-slide {
   bottom: 0;
@@ -3953,6 +4068,33 @@ button.icon:not(.button) {
 .nav > li > a > i.icon-menu {
   font-size: 1.9em;
 }
+.ux-quick-cart .ux-quick-cart-link {
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  min-height: 40px;
+  padding: 8px;
+  border-radius: 8px;
+  line-height: 1;
+  color: inherit;
+  transition: background-color 0.2s;
+}
+.ux-quick-cart .ux-quick-cart-link:hover,
+.ux-quick-cart .ux-quick-cart-link[aria-expanded="true"] {
+  background-color: rgba(15, 23, 42, 0.06);
+}
+.ux-quick-cart .ux-quick-cart-icon {
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-width: 24px;
+  min-height: 24px;
+}
+.ux-quick-cart .ux-quick-cart-icon > i {
+  font-size: 20px;
+  line-height: 1;
+  margin: 0;
+}
 .nav > li.has-icon > a > i {
   min-width: 1em;
 }
@@ -4116,6 +4258,10 @@ img {
 .img,
 .img img {
   width: 100%;
+}
+/* Image element: a typed width (300px...) never wider than its column. */
+.img {
+  max-width: 100%;
 }
 .overlay {
   background-color: rgba(0, 0, 0, 0.15);
@@ -4961,8 +5107,10 @@ img.mfp-img {
   fill: var(--fs-color-primary);
 }
 .stack {
-  --stack-gap: 0;
+  --stack-gap: initial;
   display: flex;
+  row-gap: var(--stack-gap, var(--fs-row-gap));
+  column-gap: var(--stack-gap, var(--fs-column-gap));
 }
 .stack > .text > :first-child {
   margin-top: 0;
@@ -4976,9 +5124,6 @@ img.mfp-img {
 .stack-row > * {
   margin: 0 !important;
 }
-.stack-row > * ~ * {
-  margin-left: var(--stack-gap) !important;
-}
 .stack-inner.slider .swiper-slider > * ~ * {
   margin-left: var(--stack-gap) !important;
 }
@@ -4987,9 +5132,6 @@ img.mfp-img {
 }
 .stack-col > * {
   margin: 0 !important;
-}
-.stack-col > * ~ * {
-  margin-top: var(--stack-gap) !important;
 }
 .items-stretch {
   align-items: stretch;
@@ -5031,14 +5173,6 @@ img.mfp-img {
 .sm\:stack-col > * {
   margin: 0 !important;
 }
-.sm\:stack-row > * ~ * {
-  margin-top: 0 !important;
-  margin-left: var(--stack-gap) !important;
-}
-.sm\:stack-col > * ~ * {
-  margin-left: 0 !important;
-  margin-top: var(--stack-gap) !important;
-}
 .sm\:items-stretch {
   align-items: stretch;
 }
@@ -5079,14 +5213,6 @@ img.mfp-img {
   .md\:stack-row > *,
   .md\:stack-col > * {
     margin: 0 !important;
-  }
-  .md\:stack-row > * ~ * {
-    margin-top: 0 !important;
-    margin-left: var(--stack-gap) !important;
-  }
-  .md\:stack-col > * ~ * {
-    margin-left: 0 !important;
-    margin-top: var(--stack-gap) !important;
   }
   .md\:items-stretch {
     align-items: stretch;
@@ -5130,14 +5256,6 @@ img.mfp-img {
   .ml\:stack-col > * {
     margin: 0 !important;
   }
-  .ml\:stack-row > * ~ * {
-    margin-top: 0 !important;
-    margin-left: var(--stack-gap) !important;
-  }
-  .ml\:stack-col > * ~ * {
-    margin-left: 0 !important;
-    margin-top: var(--stack-gap) !important;
-  }
   .ml\:items-stretch {
     align-items: stretch;
   }
@@ -5179,14 +5297,6 @@ img.mfp-img {
   .lg\:stack-row > *,
   .lg\:stack-col > * {
     margin: 0 !important;
-  }
-  .lg\:stack-row > * ~ * {
-    margin-top: 0 !important;
-    margin-left: var(--stack-gap) !important;
-  }
-  .lg\:stack-col > * ~ * {
-    margin-left: 0 !important;
-    margin-top: var(--stack-gap) !important;
   }
   .lg\:items-stretch {
     align-items: stretch;
@@ -5943,6 +6053,15 @@ ul.ul-reset > li {
 .entry-summary ul li.tab {
   margin-left: 0;
 }
+/* The indent above is for content lists. A header / UX Block built with
+   rows sits in .col-inner too: dropdowns (mini cart, search, menus) and
+   product lists inside it must not get it. */
+.col-inner .nav-dropdown li,
+.col-inner ul.product_list_widget li,
+.entry-content .nav-dropdown li,
+.entry-content ul.product_list_widget li {
+  margin-left: 0;
+}
 ul li.bullet-arrow,
 ul li.bullet-checkmark,
 ul li.bullet-cross,
@@ -5995,7 +6114,7 @@ fieldset,
 input,
 select,
 textarea {
-  margin-bottom: 1em;
+  margin-bottom: 0;
 }
 blockquote,
 dl,
@@ -6378,8 +6497,7 @@ blockquote {
 }
 .clear:after,
 .clearfix:after,
-.container:after,
-.row:after {
+.container:after {
   clear: both;
   content: "";
   display: table;
@@ -6860,6 +6978,9 @@ img.inline {
   overflow: hidden;
   position: absolute !important;
   width: 1px;
+}
+.widget_shopping_cart_live_region.screen-reader-text {
+  bottom: 0;
 }
 .screen-reader-text:focus {
   clip: auto !important;
@@ -9069,6 +9190,24 @@ html {
 #main.dark {
   background-color: #333;
 }
+/* Short pages: the page fills the screen and the content area grows, so the
+   footer sits at the bottom instead of the html background (footer colour)
+   showing below it. dvh follows the mobile browser bars. */
+#wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+#wrapper > #main {
+  flex: 1 0 auto;
+}
+@media screen and (min-width: 1200px) {
+  /* Framed layout: 30px margin above and below the page. */
+  body.framed #wrapper {
+    min-height: calc(100dvh - 60px - var(--wp-admin--admin-bar--height, 0px));
+  }
+}
 .page-wrapper {
   padding-bottom: 30px;
   padding-top: 30px;
@@ -9170,11 +9309,15 @@ html {
   background-color: var(--fs-color-primary);
   min-height: 20px;
   position: relative;
-  z-index: 11;
+  z-index: 10;
 }
 .header-main {
   position: relative;
   z-index: 10;
+}
+.header-main > .header-inner {
+  height: auto;
+  min-height: inherit;
 }
 .header-bottom {
   min-height: 35px;
@@ -9203,7 +9346,7 @@ html {
   animation: stuckFadeIn 0.6s;
 }
 .sticky-shrink .stuck .header-main {
-  transition: height 0.8s;
+  transition: min-height 0.8s;
 }
 .stuck .header-inner,
 .stuck .logo,
@@ -9236,6 +9379,20 @@ html {
 .header-block {
   min-height: 15px;
   width: 100%;
+}
+/* Header area rendered by a UX Block: a plain block in the container (no
+   flex-row / flex-col). Header Main centres it vertically in its height;
+   its rows, stacks and sections take the full width. A grid, not a flex
+   column: the align-* classes of rows set align-self, which in a flex column
+   would shrink the row horizontally; in a grid it only aligns vertically. */
+.header-main > .header-block {
+  align-content: center;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+.header-top > .header-block,
+.header-bottom > .header-block {
+  align-self: center;
 }
 .header-full-width .container {
   max-width: 100% !important;
@@ -9720,6 +9877,32 @@ ul.menu > li.has-child {
 .dark .breadcrumbs a {
   color: #fff;
 }
+/* Divider icon (Customizer > Breadcrumbs > Divider icon): a bit smaller than
+   the text, centred on the letters. */
+.breadcrumbs .divider i {
+  font-size: 0.75em;
+  vertical-align: 0.1em;
+}
+/* Blog breadcrumbs (Blog > Blog Archive / Blog Single Post > Breadcrumbs),
+   above the archive or post title. */
+.blog-breadcrumbs {
+  margin-bottom: 0.75em;
+}
+.blog-breadcrumbs .breadcrumbs,
+.breadcrumbs-bar .breadcrumbs {
+  font-size: 0.85em;
+  line-height: 1.5;
+  margin: 0;
+}
+/* Bar under the header (Breadcrumbs > Breadcrumbs position > Below header),
+   on blog, shop, product category and product pages. */
+.breadcrumbs-bar {
+  border-bottom: 1px solid #ececec;
+  padding: 0.75em 0;
+}
+.breadcrumbs-bar .blog-breadcrumbs {
+  margin-bottom: 0;
+}
 .checkout-breadcrumbs {
   padding: 15px 0;
 }
@@ -9830,42 +10013,11 @@ ul.menu > li.has-child {
 .footer-secondary {
   padding: 7.5px 0;
 }
-.absolute-footer,
 html {
   background-color: #4d4d4d;
 }
 .footer ul {
   margin: 0;
-}
-.absolute-footer {
-  color: rgba(0, 0, 0, 0.5);
-  font-size: 0.9em;
-  padding: 10px 0 15px;
-}
-.absolute-footer.dark {
-  color: hsla(0, 0%, 100%, 0.8);
-}
-.absolute-footer.fixed {
-  background-color: transparent;
-  bottom: 0;
-  color: #fff;
-  left: 0;
-  padding: 7.5px 15px;
-  right: 0;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
-  z-index: 101;
-}
-.absolute-footer ul {
-  border-bottom: 1px solid #ddd;
-  opacity: 0.8;
-  padding-bottom: 5px;
-}
-.absolute-footer.dark ul {
-  border-color: hsla(0, 0%, 100%, 0.08);
-}
-.absolute-footer.text-center ul {
-  border: 0;
-  padding-top: 5px;
 }
 .reveal-footer {
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.5);
@@ -10955,9 +11107,9 @@ html {
   font-family: "Font Awesome 7 Free" !important;
   font-size: 16px;
   font-weight: 400 !important;
-  height: 1em;
+  height: 1.15em;
   letter-spacing: 0;
-  line-height: 1em;
+  line-height: 1.15em;
   margin: 0.5em 0;
   overflow: hidden;
   position: relative;
@@ -10967,7 +11119,7 @@ html {
 .star-rating:before,
 .woocommerce-page .star-rating:before {
   color: var(--fs-color-secondary);
-  content: "\f005 \f005 \f005 \f005 \f005 ";
+  content: "\f005\f005\f005\f005\f005"; /* no spaces: 5 glyphs = the 5.625em box */
   float: left;
   left: 0;
   position: absolute;
@@ -10977,17 +11129,17 @@ html {
   float: left;
   font-family: "Font Awesome 7 Free" !important;
   font-weight: 900 !important;
-  height: 10px;
+  height: 100%;
   left: 0;
   overflow: hidden;
-  padding-top: 1.5em;
+  padding-top: 0;
   position: absolute;
   top: 0;
   width: 10px;
 }
 .star-rating span:before {
   color: var(--fs-color-secondary);
-  content: "\f005 \f005 \f005 \f005 \f005 ";
+  content: "\f005\f005\f005\f005\f005"; /* no spaces: 5 glyphs = the 5.625em box */
   left: 0;
   position: absolute;
   top: 0;
@@ -11081,4 +11233,746 @@ li.wc-layered-nav-rating .star-rating {
   letter-spacing: 0.02em;
   line-height: 1;
   width: 100%;
+}
+
+/* Product card attributes (inc/woocommerce/structure-wc-card-attributes.php):
+   one pill per attribute, between the rating and the price. Values of the
+   same attribute share the pill, split by a faint slash ("Core i5 / Core i7");
+   the optional name comes first in a lighter tone. Selectors are one step
+   stronger than the list styles of page content (.entry-content ul li).
+
+   Colours: --card-attrs-bg / --card-attrs-color / --card-attrs-border, set
+   by Shop > Product Catalog (Attributes Background / Text / Border) or by a
+   product element; without them the --_attrs-* defaults below apply. The
+   name, the slash and "+N" are lighter tones of the text colour. */
+ul.product-card-attrs {
+  --_attrs-bg: var(--sv-surface-muted, #f1f5f9);
+  --_attrs-color: var(--sv-heading, #1e293b);
+  --_attrs-border: transparent;
+  --_attrs-plain-color: var(--sv-text-muted, #64748b);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  margin: 0.5em 0 0.6em;
+  padding: 0;
+}
+.dark ul.product-card-attrs {
+  --_attrs-bg: rgba(255, 255, 255, 0.1);
+  --_attrs-color: #fff;
+  --_attrs-plain-color: rgba(255, 255, 255, 0.75);
+}
+.text-center ul.product-card-attrs {
+  justify-content: center;
+}
+.text-right ul.product-card-attrs {
+  justify-content: flex-end;
+}
+.product-card-attrs > .product-card-attr {
+  background-color: var(--card-attrs-bg, var(--_attrs-bg));
+  border: 1px solid var(--card-attrs-border, var(--_attrs-border));
+  border-radius: 999px;
+  color: var(--card-attrs-color, var(--_attrs-color));
+  font-size: 0.8125em; /* 13px in a card */
+  font-weight: 500;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 100%;
+  padding: calc(0.1em - 1px) calc(0.7em - 1px);
+}
+.product-card-attr__body {
+  align-items: baseline;
+  display: flex;
+  min-width: 0;
+  white-space: nowrap;
+}
+.product-card-attr__name {
+  font-weight: 400;
+  margin-right: 0.4em;
+  opacity: 0.65;
+}
+.product-card-attr__sep {
+  opacity: 0.35;
+  padding: 0 0.35em;
+}
+.product-card-attr__value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.product-card-attr__more {
+  font-weight: 400;
+  margin-left: 0.4em;
+  opacity: 0.65;
+}
+/* Attribute block styles (Shop > Product Catalog > Attributes Style, or the
+   Attributes Style option of a product element). "pill" is the base above. */
+ul.product-card-attrs--outline {
+  --_attrs-border: var(--sv-border, #e2e8f0);
+}
+.dark ul.product-card-attrs--outline {
+  --_attrs-border: rgba(255, 255, 255, 0.24);
+}
+.product-card-attrs--outline > .product-card-attr {
+  background-color: transparent;
+}
+.product-card-attrs--tag > .product-card-attr {
+  border-radius: var(--sv-radius-sm, 6px);
+}
+/* Plain text: no box, attributes split by a middle dot. Every item has its
+   dot on the left; the list is pulled 1em to the left and that 1em is clipped,
+   so the first item of each line (wrapped lines too) shows no dot. */
+ul.product-card-attrs--plain {
+  column-gap: 0;
+  margin-left: -0.8125em; /* = the 1em padding of an item (its font is 0.8125em) */
+  clip-path: inset(0 0 0 0.8125em);
+}
+.product-card-attrs--plain > .product-card-attr {
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  color: var(--card-attrs-color, var(--_attrs-plain-color));
+  padding: 0 0 0 1em;
+  position: relative;
+}
+.product-card-attrs--plain > .product-card-attr:before {
+  content: "\00b7";
+  font-weight: 700;
+  left: 0.35em;
+  opacity: 0.45;
+  position: absolute;
+}
+
+/* ------------------------------------------------------------ Product card */
+/* Card frame (Shop > Product Catalog > Card Frame, .box-card): a bordered,
+   rounded card; the image runs to its edges on a muted background and the
+   text has its own padding. Colours set in Style > Colors (price, bubbles,
+   review stars) still win: the default colours here use :where().
+
+   Mobile first, sized by the card's own width (container queries), not by the
+   screen: the same card sits in grids of 2 to 4 columns and in sliders.
+   - base:   a card under 200px, two columns on a 360-414px phone;
+   - 200px+: larger phones in landscape, tablets, narrow desktop columns;
+   - 250px+: desktop columns.
+   Browsers without container queries keep the base (phone) sizes. */
+.product-small.box-card {
+  background-color: var(--sv-surface, #fff);
+  border: 1px solid var(--sv-border, #e5e7eb);
+  border-radius: var(--sv-radius, 12px);
+  container: sv-card / inline-size;
+  height: 100%;
+  overflow: hidden;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+@media (min-width: 550px) {
+  .product-small.box-card {
+    border-radius: var(--sv-radius-lg, 16px);
+  }
+}
+/* Equal cards: the columns of a row already stretch to the tallest one; the
+   card fills its column and lays its text out as a column. The price wrapper
+   goes last (order) and is pushed to the bottom (margin-top: auto), so the
+   prices line up across the row; title and rating stay together at the top.
+   No script sets heights on the title or the price. */
+.product-small.col > .col-inner:has(> .box-card) {
+  height: 100%;
+}
+.product-small.box-card {
+  display: flex;
+  flex-direction: column;
+}
+.product-small.box-card > .box-image {
+  flex: none;
+}
+/* One spacing for the whole text block: row-gap between its parts (title,
+   rating, attributes, price, anything a plugin adds), 6px, 8px from a 250px
+   card. The parts have no vertical margin of their own, so the gaps stay even
+   whichever parts are shown. The price wrapper keeps margin-top: auto (the gap
+   is the least space above it). */
+.product-small.box-card > .box-text {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  row-gap: 6px;
+}
+.product-small.box-card > .box-text > :not(.price-wrapper) {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+.box-card > .box-text > .price-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+  margin-top: auto;
+  order: 99;
+}
+.text-center .box-card > .box-text > .price-wrapper {
+  align-items: center;
+}
+/* Only where there is a real pointer: on touch screens the hover state would
+   stick after a tap. */
+@media (hover: hover) {
+  .product-small.box-card:hover {
+    border-color: var(--sv-border-strong, #cbd5e1);
+    box-shadow: 0 14px 30px -20px rgba(15, 23, 42, 0.3);
+  }
+}
+.product-small.box-card > .box-image {
+  background-color: var(--sv-surface-muted, #f1f5f9);
+  border-radius: 0;
+}
+/* No font size of its own: the base .box-text rule (0.9em, 85% on phones)
+   would shrink every size inside the card; here the text block takes the
+   size of the page, and the sizes below are the real ones (16px base). A
+   Text Size option (.is-small, .is-large...) still scales the whole block. */
+.product-small.box-card > .box-text:not([class*="is-"]) {
+  font-size: inherit;
+}
+.product-small.box-card > .box-text {
+  padding: 12px 12px 14px;
+}
+/* Title: two lines at most. 15px, 16px from a 200px card, 17px from 250px. */
+.box-card .title-wrapper .name {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  font-size: 0.9375em;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  font-weight: 700;
+  line-height: 1.35;
+  margin: 0;
+}
+/* Inline, not inline-block: the clamp counts lines of inline text, and an
+   inline-block link would be one block that is never cut. */
+.box-card .title-wrapper .name a {
+  color: var(--sv-heading, #0f172a);
+  display: inline;
+}
+.box-card .title-wrapper .name a:hover {
+  color: var(--fs-color-primary);
+}
+/* Category and name are one group: 2px apart, closer than the 6px between
+   the parts of the text block. */
+.box-card .title-wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2px;
+}
+.box-card .title-wrapper > * {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+/* Price: the selling price first and large, the struck-out price after it
+   (below it when the line is full). The most visible line of the card: 18px,
+   20px from a 200px card, 22px from 250px. Same-width digits. */
+.box-card .price-wrapper .price {
+  align-items: baseline;
+  column-gap: 0.4em;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 1.125em;
+  font-variant-numeric: tabular-nums;
+  margin-top: 0;
+  row-gap: 0.1em;
+}
+.text-center .box-card .price-wrapper .price {
+  justify-content: center;
+}
+.box-card .price ins {
+  order: -1;
+  text-decoration: none;
+}
+.box-card .price del {
+  font-size: max(12px, 0.636em); /* 12px on phones, 14px of the 22px price */
+}
+.box-card .price del .amount {
+  margin-right: 0;
+}
+/* The selling price: heavy and tight, like the reference card. */
+.box-card .price > .woocommerce-Price-amount,
+.box-card .price ins .woocommerce-Price-amount {
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+:where(.box-card) .price > .woocommerce-Price-amount,
+:where(.box-card) .price ins .woocommerce-Price-amount {
+  color: var(--fs-color-alert, #dc2626);
+  font-weight: 700;
+}
+:where(.box-card) .price del .woocommerce-Price-amount {
+  color: var(--sv-text-muted, #64748b);
+  font-weight: 400;
+  opacity: 1;
+}
+.dark .product-small.box-card {
+  background-color: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+.dark .box-card .title-wrapper .name a {
+  color: #fff;
+}
+/* Rating inside a card: one line; on a narrow card the count keeps only its
+   number, "★ 3,5 (2)". */
+.box-card .star-rating-compact {
+  font-size: 0.8125em;
+  gap: 4px;
+  white-space: nowrap;
+}
+.box-card .star-rating-compact__label {
+  display: none;
+}
+/* Attributes inside a card: 12px chips 4px apart. A value is never cut: a
+   chip wraps between its values ("Core i5 / | Core i7") before any value
+   would be shortened. */
+.box-card ul.product-card-attrs {
+  gap: 4px;
+}
+/* Not the plain style: its dot offset is tied to its own size and padding. */
+.box-card .product-card-attrs:not(.product-card-attrs--plain) > .product-card-attr {
+  font-size: 0.75em;
+  padding: 1px 7px;
+}
+.box-card .product-card-attr__body {
+  flex-wrap: wrap;
+  white-space: normal;
+}
+.box-card .product-card-attr__value {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: nowrap;
+}
+@container sv-card (min-width: 200px) {
+  .box-card .title-wrapper .name {
+    font-size: 1em;
+  }
+  .box-card .star-rating-compact__label {
+    display: inline;
+  }
+  .box-card .price-wrapper .price {
+    font-size: 1.25em;
+  }
+}
+@container sv-card (min-width: 250px) {
+  .product-small.box-card > .box-text {
+    padding: 14px 16px 16px;
+    row-gap: 8px;
+  }
+  .box-card .title-wrapper .name {
+    font-size: 1.0625em;
+  }
+  .box-card .star-rating-compact {
+    font-size: 0.875em;
+    gap: 0.35em;
+  }
+  .box-card ul.product-card-attrs {
+    gap: 6px;
+  }
+  .box-card .product-card-attrs:not(.product-card-attrs--plain) > .product-card-attr {
+    font-size: 0.8125em;
+    padding: calc(0.1em - 1px) calc(0.7em - 1px);
+  }
+  .box-card .price-wrapper .price {
+    font-size: 1.375em;
+  }
+}
+
+/* Compact rating (Shop > Product Catalog > Rating Style): "★ 4,6 (92 đánh giá)". */
+.star-rating-compact {
+  align-items: center;
+  display: inline-flex;
+  font-size: 0.875em;
+  gap: 0.35em;
+  line-height: 1.4;
+  margin: 0.1em 0 0.15em;
+}
+.star-rating-compact__icon {
+  color: var(--fs-color-primary);
+  flex: none;
+  font-size: 1.1em;
+}
+.star-rating-compact__value {
+  color: var(--sv-heading, #0f172a);
+  font-weight: 700;
+}
+.star-rating-compact__count {
+  color: var(--sv-text-muted, #64748b);
+}
+.dark .star-rating-compact__value {
+  color: #fff;
+}
+.dark .star-rating-compact__count {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Pill bubbles (Shop > Product Catalog > Bubble Style: Pill): small pills in
+   one row at the top of the image, the sale bubble on the right ("-18%"),
+   the others on the left ("Mới"). Stronger than the stacked circle layout. */
+.badge-container.absolute:has(> .badge-pill) {
+  align-items: flex-start;
+  display: flex;
+  gap: 6px;
+  margin: 0; /* the base CSS adds 30px on top */
+  padding: 10px;
+  pointer-events: none;
+  right: 0;
+}
+.badge-container.absolute > .badge.badge-pill {
+  display: block;
+  height: auto;
+  margin: 0;
+  opacity: 1;
+  width: auto;
+}
+.badge-container.absolute > .badge.badge-pill:has(.on-sale) {
+  margin-left: auto;
+  order: 2;
+}
+.badge-container .badge.badge-pill .badge-inner {
+  border-radius: 999px;
+  display: block;
+  font-size: 0.75em;
+  font-weight: 700;
+  height: auto;
+  line-height: 1.2;
+  padding: 0.35em 0.7em;
+  white-space: nowrap;
+}
+:where(.badge-pill) .badge-inner.on-sale {
+  background-color: var(--fs-color-alert, #dc2626);
+  color: #fff;
+}
+:where(.badge-pill) .badge-inner:not(.on-sale) {
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.12);
+  color: var(--sv-heading, #0f172a);
+}
+
+/* ------------------------------------------------ Header elements (UX Blocks) */
+/* [search display="icon-..."]: search icon opening a dropdown / lightbox. */
+.ux-search-icon {
+  display: inline-flex;
+}
+.ux-search-icon__nav {
+  margin: 0;
+}
+.ux-search-icon__nav > li {
+  margin: 0;
+}
+.ux-search-icon .ux-search-icon__link {
+  align-items: center;
+  color: currentColor;
+  display: inline-flex;
+  font-size: 20px;
+  justify-content: center;
+  min-height: 40px;
+  min-width: 40px;
+  padding: 0;
+}
+.ux-search-icon__link .icon-search {
+  font-size: inherit;
+}
+.ux-search-icon .nav-dropdown {
+  min-width: 300px;
+  padding: 16px;
+}
+
+/* [search] box: pill radius, colours, icon on the left, fill the stack. */
+.ux-search-box {
+  --ux-search-radius: initial;
+}
+.ux-search-box[style*="--ux-search-radius"] .search-field,
+.ux-search-box[style*="--ux-search-radius"] .search_categories {
+  border-radius: var(--ux-search-radius);
+}
+.ux-search-box[style*="--ux-search-radius"]:not(.form-flat):not(
+    .ux-search-icon-left
+  )
+  .search-field {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+.ux-search-box[style*="--ux-search-radius"]:not(.form-flat):not(
+    .ux-search-icon-left
+  )
+  .submit-button {
+  border-bottom-right-radius: var(--ux-search-radius) !important;
+  border-top-right-radius: var(--ux-search-radius) !important;
+}
+.ux-search-box[style*="--ux-search-bg"] .search-field {
+  background-color: var(--ux-search-bg);
+}
+.ux-search-box[style*="--ux-search-border"] .search-field {
+  border-color: var(--ux-search-border);
+}
+.ux-search-grow {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.ux-search-icon-left .searchform .flex-row {
+  position: relative;
+}
+.ux-search-icon-left .searchform .flex-col:last-of-type {
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+}
+/* Neutral like a field icon (Vivid UI colours flat search buttons with !important). */
+.ux-search-box.ux-search-icon-left .searchform .submit-button,
+.ux-search-box.ux-search-icon-left .searchform .submit-button:hover {
+  background: transparent !important;
+  border: 0;
+  box-shadow: none !important;
+  color: #64748b !important;
+  height: 100%;
+  min-height: 0;
+}
+.ux-search-icon-left .search-field {
+  padding-left: 2.6em;
+}
+
+/* Header dropdowns on small screens: the positioning script only runs on
+   desktop, so open them to the left of the icon and keep them on screen. */
+@media (max-width: 849px) {
+  .ux-search-icon li.has-dropdown > .nav-dropdown {
+    left: auto;
+    margin: 0 !important;
+    min-width: 0;
+    right: -8px;
+    width: min(340px, calc(100vw - 24px));
+  }
+}
+
+/* [ux_stack_spacer]: fills the free space of a Stack. */
+.ux-stack-spacer {
+  align-self: stretch;
+  flex: 1 1 0;
+  min-height: 1px;
+}
+
+/* Visibility "Only below 850px": same breakpoint as the mobile header
+   elements (Mega Menu drawer, mobile cart dropdown). */
+@media (min-width: 850px) {
+  .show-below-850,
+  [data-show="show-below-850"] {
+    display: none !important;
+  }
+}
+
+/* Header Mobile Menu / Overlay > "Disable Mobile Menu on": no mobile menu
+   (#main-menu) and no button opening it on the checked screens. */
+@media (max-width: 549px) {
+  body.mobile-menu-off-sm [data-open="#main-menu"],
+  body.mobile-menu-off-sm .nav-icon:has(> [data-open="#main-menu"]),
+  body.mobile-menu-off-sm
+    .nav-icon:has(> .header-button > [data-open="#main-menu"]),
+  body.mobile-menu-off-sm .mfp-wrap:has(#main-menu),
+  body.mobile-menu-off-sm .mfp-bg.main-menu-overlay {
+    display: none !important;
+  }
+}
+@media (min-width: 550px) and (max-width: 849px) {
+  body.mobile-menu-off-md [data-open="#main-menu"],
+  body.mobile-menu-off-md .nav-icon:has(> [data-open="#main-menu"]),
+  body.mobile-menu-off-md
+    .nav-icon:has(> .header-button > [data-open="#main-menu"]),
+  body.mobile-menu-off-md .mfp-wrap:has(#main-menu),
+  body.mobile-menu-off-md .mfp-bg.main-menu-overlay {
+    display: none !important;
+  }
+}
+@media (min-width: 850px) and (max-width: 1199px) {
+  body.mobile-menu-off-ml [data-open="#main-menu"],
+  body.mobile-menu-off-ml .nav-icon:has(> [data-open="#main-menu"]),
+  body.mobile-menu-off-ml
+    .nav-icon:has(> .header-button > [data-open="#main-menu"]),
+  body.mobile-menu-off-ml .mfp-wrap:has(#main-menu),
+  body.mobile-menu-off-ml .mfp-bg.main-menu-overlay {
+    display: none !important;
+  }
+}
+@media (min-width: 1200px) {
+  body.mobile-menu-off-lg [data-open="#main-menu"],
+  body.mobile-menu-off-lg .nav-icon:has(> [data-open="#main-menu"]),
+  body.mobile-menu-off-lg
+    .nav-icon:has(> .header-button > [data-open="#main-menu"]),
+  body.mobile-menu-off-lg .mfp-wrap:has(#main-menu),
+  body.mobile-menu-off-lg .mfp-bg.main-menu-overlay {
+    display: none !important;
+  }
+}
+
+/* "Disable Mobile Menu": #main-menu is not output, hide its buttons. */
+body.mobile-menu-disabled [data-open="#main-menu"],
+body.mobile-menu-disabled .nav-icon:has(> [data-open="#main-menu"]),
+body.mobile-menu-disabled
+  .nav-icon:has(> .header-button > [data-open="#main-menu"]) {
+  display: none !important;
+}
+
+/* Width per screen, mobile-first like the grid (small-*, medium-*, large-*,
+   xlarge-*): small = all screens, medium >= 550px, large >= 850px,
+   xlarge >= 1200px. {size}-full-width = width 100% from that size up,
+   {size}-width-auto resets it, e.g. "small-full-width medium-width-auto"
+   = full width on mobile only. */
+.small-full-width {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+.small-width-auto {
+  max-width: none !important;
+  width: auto !important;
+}
+@media (min-width: 550px) {
+  .medium-full-width {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  .medium-width-auto {
+    max-width: none !important;
+    width: auto !important;
+  }
+}
+@media (min-width: 850px) {
+  .large-full-width {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  .large-width-auto {
+    max-width: none !important;
+    width: auto !important;
+  }
+}
+@media (min-width: 1200px) {
+  .xlarge-full-width {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  .xlarge-width-auto {
+    max-width: none !important;
+    width: auto !important;
+  }
+}
+
+/* WP Menu element (ux_wp_menu), vertical: a plain list, no dividers;
+   sub menus open / close with the toggle (accordion). */
+.ux-wp-menu-vertical .nav-vertical > li + li {
+  border-top: 0;
+}
+.ux-wp-menu-vertical .nav-vertical li {
+  align-items: center;
+  display: flex;
+  flex-flow: row wrap;
+  margin: 0;
+  padding-left: 0;
+}
+.ux-wp-menu-vertical .nav-vertical li > a {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 6px 0;
+}
+.ux-wp-menu-vertical .nav-vertical .children {
+  display: none;
+  left: auto;
+  margin: 0;
+  opacity: 1;
+  padding: 0 0 0 1em;
+  position: static;
+  transform: none;
+  width: 100%;
+}
+.ux-wp-menu-vertical .nav-vertical li li.menu-item-has-children > a,
+.ux-wp-menu-vertical .nav-vertical li li a {
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  text-transform: inherit;
+}
+.ux-wp-menu-vertical .nav-vertical {
+  color: rgba(74, 74, 74, 0.85);
+}
+.dark .ux-wp-menu-vertical .nav-vertical {
+  color: hsla(0, 0%, 100%, 0.8);
+}
+.ux-wp-menu-vertical .nav-vertical > li > a {
+  font-weight: 400;
+}
+.ux-wp-menu-vertical .nav-vertical:not([class*="nav-size-"]) > li > a {
+  font-size: 1em;
+}
+.ux-wp-menu-vertical .nav-vertical li li.menu-item-has-children {
+  margin: 0;
+}
+.ux-wp-menu-vertical .nav-vertical .active > .children {
+  padding-bottom: 0;
+}
+.ux-wp-menu-vertical .nav-vertical .toggle {
+  margin: 0;
+  width: 2em;
+}
+.ux-wp-menu-vertical .nav-vertical .toggle i {
+  font-size: 1.2em;
+}
+
+/* Blog shortcode: normal layout only; other box styles retain their presentation. */
+.box-blog-post.blog-post-normal > .box-image {
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #e2e8f0;
+}
+.box-blog-post.blog-post-normal .blog-post-category {
+  position: absolute;
+  z-index: 2;
+  top: 10px;
+  left: 10px;
+  max-width: calc(100% - 20px);
+  padding: 4px 10px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: #fff;
+  color: #1d4ed8;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.box-blog-post.blog-post-normal > .box-text {
+  padding: 10px 0 0;
+}
+.box-blog-post.blog-post-normal .post-meta {
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+.box-blog-post.blog-post-normal .post-title:not(.has-custom-title-size) {
+  font-size: 16px;
+}
+.box-blog-post.blog-post-normal .post-title {
+  margin: 0;
+  font-weight: 650;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.box-blog-post.blog-post-normal .post-title a {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+.box-blog-post.blog-post-normal .box-image:focus-within {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+.box-blog-post.blog-post-normal .from_the_blog_excerpt {
+  margin-top: 8px;
 }

@@ -70,7 +70,8 @@ class AIOSEO {
 	 * @return string
 	 */
 	public function wrap_crumb_separator( $separator ) {
-		return '<span class="divider">' . $separator . '</span>';
+		// The divider icon of Customizer > Breadcrumbs wins; without one, AIOSEO's separator.
+		return '<span class="divider" aria-hidden="true">' . silver_breadcrumb_divider( $separator ) . '</span>';
 	}
 
 	/**

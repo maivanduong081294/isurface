@@ -182,72 +182,6 @@ function silver_customizer_footer_options() {
 		'active_callback' => $hide_on_custom_footer_block,
 	) );
 
-	Silver_Option::add_field( '', array(
-		'type'     => 'custom',
-		'settings' => 'custom_title_footer_absolute',
-		'label'    => '',
-		'section'  => 'footer',
-		'default'  => '<div class="options-title-divider">Absolute Footer</div>',
-	) );
-
-	Silver_Option::add_field( 'option', array(
-		'type'      => 'radio-image',
-		'settings'  => 'footer_bottom_text',
-		'label'     => __( 'Text color', 'silver' ),
-		'section'   => 'footer',
-		'default'   => 'dark',
-		'transport' => silver_customizer_transport(),
-		'choices'   => array(
-			'dark'  => silver_customizer_images_uri() . '/text-light.svg',
-			'light' => silver_customizer_images_uri() . '/text-dark.svg',
-		),
-	) );
-
-	Silver_Option::add_field( 'option', array(
-		'type'      => 'radio-buttonset',
-		'settings'  => 'footer_bottom_align',
-		'label'     => __( 'Align', 'silver' ),
-		'section'   => 'footer',
-		'default'   => '',
-		'transport' => silver_customizer_transport(),
-		'choices'   => array(
-			''       => __( 'Left/Right', 'silver' ),
-			'center' => __( 'Center', 'silver' ),
-		),
-	) );
-
-	Silver_Option::add_field( 'option', array(
-		'type'      => 'color-alpha',
-		'alpha'     => true,
-		'settings'  => 'footer_bottom_color',
-		'label'     => __( 'Background Color', 'silver' ),
-		'section'   => 'footer',
-		'default'   => '',
-		'transport' => silver_customizer_transport(),
-	) );
-
-	Silver_Option::add_field( 'option', array(
-		'type'              => 'textarea',
-		'settings'          => 'footer_left_text',
-		'label'             => __( 'Bottom Text - Primary', 'silver' ),
-		'description'       => __( 'Add Any HTML or Shortcode here...', 'silver' ),
-		'section'           => 'footer',
-		'transport'         => silver_customizer_transport(),
-		'sanitize_callback' => 'silver_custom_sanitize',
-		'default'           => 'Copyright [ux_current_year] &copy; <strong>Silver Theme</strong>',
-	) );
-
-	Silver_Option::add_field( 'option', array(
-		'type'              => 'textarea',
-		'settings'          => 'footer_right_text',
-		'label'             => __( 'Bottom Text - Secondary', 'silver' ),
-		'description'       => __( 'Add Any HTML or Shortcode here...', 'silver' ),
-		'section'           => 'footer',
-		'transport'         => silver_customizer_transport(),
-		'sanitize_callback' => 'silver_custom_sanitize',
-		'default'           => '',
-	) );
-
 	$hide_off_back_to_top = array(
 		array( 'setting' => 'back_to_top', 'operator' => '==', 'value' => true ),
 	);
@@ -362,31 +296,6 @@ function silver_refresh_footer_partials( WP_Customize_Manager $wp_customize ) {
 		),
 		'render_callback' => function () {
 			get_template_part( 'template-parts/footer/footer' );
-		},
-	) );
-
-	$wp_customize->selective_refresh->add_partial( 'footer-left-text', array(
-		'selector'        => '.copyright-footer',
-		'settings'        => array( 'footer_left_text' ),
-		'render_callback' => function () {
-			return do_shortcode( get_theme_mod( 'footer_left_text', 'Copyright [ux_current_year] &copy; <strong>Silver Theme</strong>' ) );
-		},
-	) );
-
-	$wp_customize->selective_refresh->add_partial( 'footer-right-text', array(
-		'selector'        => '.footer-secondary .footer-text',
-		'settings'        => array( 'footer_right_text' ),
-		'render_callback' => function () {
-			return do_shortcode( get_theme_mod( 'footer_right_text', '' ) );
-		},
-	) );
-
-	$wp_customize->selective_refresh->add_partial( 'footer-absolute', array(
-		'selector'            => '.absolute-footer',
-		'settings'            => array( 'footer_bottom_align', 'footer_bottom_text' ),
-		'container_inclusive' => true,
-		'render_callback'     => function () {
-			get_template_part( 'template-parts/footer/footer-absolute' );
 		},
 	) );
 

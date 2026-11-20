@@ -24,7 +24,7 @@ Silver_Option::add_field( 'option',  array(
 Silver_Option::add_field( 'option',  array(
   'type'        => 'code',
 	'settings'     => 'html_custom_css_tablet',
-	'label'       => __( 'Custom Tablet CSS', 'silver' ),
+	'label'       => __( 'Custom Tablet CSS (all tablets and mobile, up to 1199px)', 'silver' ),
 	'section'     => 'custom-css',
 	'default'     => '',
   'placeholder' => '.add-css-here{}',
@@ -32,6 +32,33 @@ Silver_Option::add_field( 'option',  array(
   'choices'     => array(
     'language' => 'css',
   ),
+));
+
+// One tier only each (no live preview script: the preview reloads).
+Silver_Option::add_field( 'option',  array(
+	'type'        => 'code',
+	'settings'    => 'html_custom_css_tablet_landscape',
+	'label'       => __( 'Custom Tablet Landscape CSS (850-1199px)', 'silver' ),
+	'section'     => 'custom-css',
+	'default'     => '',
+	'placeholder' => '.add-css-here{}',
+	'transport'   => 'refresh',
+	'choices'     => array(
+		'language' => 'css',
+	),
+));
+
+Silver_Option::add_field( 'option',  array(
+	'type'        => 'code',
+	'settings'    => 'html_custom_css_tablet_portrait',
+	'label'       => __( 'Custom Tablet Portrait CSS (550-849px)', 'silver' ),
+	'section'     => 'custom-css',
+	'default'     => '',
+	'placeholder' => '.add-css-here{}',
+	'transport'   => 'refresh',
+	'choices'     => array(
+		'language' => 'css',
+	),
 ));
 
 Silver_Option::add_field( 'option',  array(

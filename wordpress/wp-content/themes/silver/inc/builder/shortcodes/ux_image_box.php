@@ -27,6 +27,27 @@ add_ux_builder_shortcode( 'ux_image_box', array(
                     'group' => 'background',
                     'param_name' => 'img',
                 ),
+                // Space around the image (top / right / bottom / left), per screen.
+                'image_padding' => array(
+                    'type' => 'margins',
+                    'heading' => __( 'Image padding' ),
+                    'full_width' => true,
+                    'responsive' => true,
+                    'min' => 0,
+                    'max' => 200,
+                    'step' => 1,
+                ),
+                // Background behind the image (seen through the padding or a
+                // transparent image), per screen.
+                'image_bg' => array(
+                    'type' => 'colorpicker',
+                    'heading' => __( 'Image background' ),
+                    'responsive' => true,
+                    'alpha' => true,
+                    'format' => 'rgb',
+                    'position' => 'bottom right',
+                    'helpers' => require( __DIR__ . '/helpers/colors.php' ),
+                ),
             ),
         ),
         'depth' => array(

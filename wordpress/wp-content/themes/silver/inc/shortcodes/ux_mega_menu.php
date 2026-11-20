@@ -46,24 +46,52 @@ function silver_mega_menu_shortcode($atts, $content = null, $tag = 'ux_mega_menu
     'panel_width'   => '1100px',
     'panel_align'   => 'left',
     'sidebar_width' => '260px',
+    'panel_padding' => '', // Side padding of the panel inner (default: row gutter, 15px).
     'min_height'    => '',
     'trigger_bg'    => '',
     'trigger_color' => '',
+    // Per screen (responsive): button / icon (hamburger + drawer).
+    'display_mode'      => 'button',
+    'drawer_title'      => '',
+    'drawer_layout'     => 'expanded', // expanded / accordion
+    'drawer_columns'    => 3,
+    'drawer_pos'        => 'left',
+    'drawer_icon_size'  => 22,
+    'drawer_icon_color' => '',
   ), $atts, $tag);
 
   if ('hidden' === $atts['visibility']) return '';
 
   $id      = $atts['_id'] ? sanitize_html_class($atts['_id']) : 'ux-mega-menu-' . wp_rand();
   $trigger = 'click' === $atts['trigger'] ? 'click' : 'hover';
-  $align   = in_array($atts['panel_align'], array('left', 'center', 'right'), true) ? $atts['panel_align'] : 'left';
-  $builder = function_exists('ux_builder_is_active') && ux_builder_is_active();
+  $align   = in_array($atts['panel_align'], array('left', 'center', 'right', 'container'), true) ? $atts['panel_align'] : 'left';
+  // Only the edited element's AJAX preview, not the surrounding header/footer.
+  $builder = function_exists('ux_builder_is_active') && ux_builder_is_active()
+    && function_exists('ux_builder_is_doing_shortcode') && ux_builder_is_doing_shortcode();
 
   // Items render their own tab + pane; count them for the grid rows.
   silver_mega_menu_counter('reset');
   $items = do_shortcode((string) $content);
   $count = max(1, silver_mega_menu_counter('get'));
 
+  // Screens (UX Builder breakpoints: sm, md, ml, lg) that show the icon +
+  // drawer. Mobile-first: a screen without its own value inherits the
+  // next smaller one. CSS styles the icon per screen (no flash before JS);
+  // silver-mega-menu.js adds .is-drawer on those screens.
+  $drawer_screens = array();
+  $screen_names   = array_keys(get_ux_builder_breakpoints());
+  foreach (silver_responsive_filled($atts, 'display_mode', 'button') as $index => $mode) {
+    if ('icon' === $mode && isset($screen_names[$index])) $drawer_screens[] = $screen_names[$index];
+  }
+  $mobile_icon = ! empty($drawer_screens);
+
   $classes = array('ux-mega-menu', 'ux-mega-menu-trigger-' . $trigger, 'ux-mega-menu-align-' . $align);
+  if ($mobile_icon) {
+    $classes[] = 'ux-mega-menu-has-drawer';
+    $classes[] = 'ux-mega-menu-drawer-' . ('right' === $atts['drawer_pos'] ? 'right' : 'left');
+    $classes[] = 'ux-mega-menu-drawer-' . ('accordion' === $atts['drawer_layout'] ? 'accordion' : 'expanded');
+    foreach ($drawer_screens as $screen) $classes[] = 'ux-mega-menu-icon-' . sanitize_html_class($screen);
+  }
   // Always open while editing in UX Builder.
   if ($builder) $classes[] = 'is-open ux-mega-menu-builder';
   if ($atts['class']) $classes[] = $atts['class'];
@@ -75,21 +103,38 @@ function silver_mega_menu_shortcode($atts, $content = null, $tag = 'ux_mega_menu
 
   ob_start();
 ?>
-  <div id="<?php echo esc_attr($id); ?>" class="<?php echo esc_attr(implode(' ', $classes)); ?>" data-trigger="<?php echo esc_attr($trigger); ?>">
+  <div id="<?php echo esc_attr($id); ?>" class="<?php echo esc_attr(implode(' ', $classes)); ?>" data-trigger="<?php echo esc_attr($trigger); ?>"<?php if ($mobile_icon) echo ' data-drawer="' . esc_attr(implode(' ', $drawer_screens)) . '"'; ?>>
     <button type="button" class="ux-mega-menu-trigger" aria-expanded="<?php echo $builder ? 'true' : 'false'; ?>" aria-controls="<?php echo esc_attr($id); ?>-panel">
       <?php if ($icon) echo get_silver_icon($icon); // phpcs:ignore WordPress.Security.EscapeOutput ?>
       <span class="ux-mega-menu-trigger-text"><?php echo esc_html($atts['text']); ?></span>
     </button>
-    <div id="<?php echo esc_attr($id); ?>-panel" class="ux-mega-menu-panel" style="grid-template-rows: repeat(<?php echo (int) $count; ?>, min-content) 1fr;">
-      <?php echo $items; // phpcs:ignore WordPress.Security.EscapeOutput ?>
+    <div id="<?php echo esc_attr($id); ?>-panel" class="ux-mega-menu-panel">
+      <?php if ($mobile_icon) : ?>
+        <?php /* Drawer header: drawer only, outside the inner (full width). */ ?>
+        <div class="ux-mega-menu-drawer-head">
+          <span class="ux-mega-menu-drawer-title"><?php echo esc_html($atts['drawer_title'] ? $atts['drawer_title'] : $atts['text']); ?></span>
+          <button type="button" class="ux-mega-menu-close" aria-label="<?php esc_attr_e('Close', 'silver'); ?>">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+      <?php endif; ?>
+      <?php /* Inner: side padding like a row's columns (Panel > Padding); tabs | panes grid on desktop. */ ?>
+      <div class="ux-mega-menu-panel-inner" style="grid-template-rows: repeat(<?php echo (int) $count; ?>, min-content) 1fr;">
+        <?php echo $items; // phpcs:ignore WordPress.Security.EscapeOutput ?>
+      </div>
     </div>
     <?php
+    // Trigger colours are variables, so the mobile icon can drop the background.
     echo silver_responsive_style_tag($id, $atts, array( // phpcs:ignore WordPress.Security.EscapeOutput
-      'panel_width'   => array('selector' => '', 'property' => '--ux-mega-width', 'important' => false),
-      'sidebar_width' => array('selector' => '', 'property' => '--ux-mega-sidebar', 'important' => false),
-      'min_height'    => array('selector' => '', 'property' => '--ux-mega-min-height', 'important' => false),
-      'trigger_bg'    => array('selector' => '> .ux-mega-menu-trigger', 'property' => 'background-color'),
-      'trigger_color' => array('selector' => '> .ux-mega-menu-trigger', 'property' => 'color'),
+      'panel_width'       => array('selector' => '', 'property' => '--ux-mega-width', 'important' => false),
+      'sidebar_width'     => array('selector' => '', 'property' => '--ux-mega-sidebar', 'important' => false),
+      'panel_padding'     => array('selector' => '', 'property' => '--ux-mega-gutter', 'important' => false),
+      'min_height'        => array('selector' => '', 'property' => '--ux-mega-min-height', 'important' => false),
+      'trigger_bg'        => array('selector' => '', 'property' => '--ux-mega-trigger-bg', 'important' => false),
+      'trigger_color'     => array('selector' => '', 'property' => '--ux-mega-trigger-color', 'important' => false),
+      'drawer_columns'    => array('selector' => '', 'property' => '--ux-mega-drawer-columns', 'important' => false),
+      'drawer_icon_size'  => array('selector' => '', 'property' => '--ux-mega-drawer-icon-size', 'unit' => 'px', 'important' => false),
+      'drawer_icon_color' => array('selector' => '', 'property' => '--ux-mega-drawer-icon-color', 'important' => false),
     ));
     ?>
   </div>
@@ -226,14 +271,20 @@ function silver_mega_menu_item_shortcode($atts, $content = null, $tag = 'ux_mega
       <?php echo get_silver_icon('fa-solid fa-chevron-right', null, array('class' => 'ux-mega-menu-tab-arrow')); // phpcs:ignore WordPress.Security.EscapeOutput ?>
     </button>
     <div id="<?php echo esc_attr($id); ?>-pane" class="ux-mega-menu-pane">
-      <?php if ('yes' === $atts['show_heading']) : ?>
-        <div class="ux-mega-menu-heading">
-          <span class="ux-mega-menu-title"><?php echo esc_html($title); ?></span>
-          <?php if ($link && $atts['view_all']) : ?>
-            <a class="ux-mega-menu-view-all"<?php echo $link_atts; // phpcs:ignore WordPress.Security.EscapeOutput ?>><?php echo esc_html($atts['view_all']); ?></a>
-          <?php endif; ?>
-        </div>
-      <?php endif; ?>
+      <?php
+      // Always rendered: the expanded drawer (tabs hidden) needs the heading
+      // even when "Show heading" is off; then it is hidden on the desktop panel.
+      // The media (icon / image) only shows in the drawer.
+      ?>
+      <div class="ux-mega-menu-heading<?php echo 'yes' === $atts['show_heading'] ? '' : ' ux-mega-menu-heading--drawer-only'; ?>">
+        <span class="ux-mega-menu-title">
+          <?php if ($media) : ?><span class="ux-mega-menu-heading-media"><?php echo $media; // phpcs:ignore WordPress.Security.EscapeOutput ?></span><?php endif; ?>
+          <span class="ux-mega-menu-title-text"><?php echo esc_html($title); ?></span>
+        </span>
+        <?php if ($link && $atts['view_all']) : ?>
+          <a class="ux-mega-menu-view-all"<?php echo $link_atts; // phpcs:ignore WordPress.Security.EscapeOutput ?>><?php echo esc_html($atts['view_all']); ?></a>
+        <?php endif; ?>
+      </div>
       <?php echo $grid; // phpcs:ignore WordPress.Security.EscapeOutput ?>
       <?php if (trim((string) $content) !== '') : ?>
         <div class="ux-mega-menu-content"><?php echo do_shortcode($content); ?></div>

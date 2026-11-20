@@ -92,8 +92,11 @@ function button_shortcode($atts, $content = null)
 	if ($expand) {
 		$classes[] = 'expand';
 	}
+	// Visibility goes on the outer .silver-button-wrapper (template), not on
+	// the button: a hidden button must not leave an empty wrapper behind
+	// (it still takes a slot / gap in a Stack or a flex row).
 	if ($visibility) {
-		$classes[] = $visibility;
+		$class = trim($class . ' ' . $visibility);
 	}
 	if ($animate) {
 		$attributes['data-animate'] = esc_attr($animate);

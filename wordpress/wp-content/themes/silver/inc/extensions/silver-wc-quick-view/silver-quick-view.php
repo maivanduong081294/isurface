@@ -4,7 +4,7 @@
  * Add Button to Grid Tools
  */
 function silver_lightbox_button() {
-	if ( get_theme_mod( 'disable_quick_view', 0 ) ) {
+	if ( get_theme_mod( 'disable_quick_view', 1 ) ) {
 		return;
 	}
 

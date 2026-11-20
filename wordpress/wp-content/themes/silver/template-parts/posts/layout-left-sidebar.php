@@ -10,7 +10,8 @@ do_action('silver_before_blog');
 ?>
 
 <?php if(!is_single() && get_theme_mod('blog_featured', '') == 'top'){ get_template_part('template-parts/posts/featured-posts'); } ?>
-<div class="row row-large <?php if(get_theme_mod('blog_layout_divider', 1)) echo 'row-divided ';?>">
+<?php // The wide gutter (row-large) only goes with the sidebar divider. ?>
+<div class="row<?php if ( get_theme_mod( 'blog_layout_divider', 1 ) ) echo ' row-large row-divided'; ?>">
 
 	<div class="post-sidebar xlarge-3 col">
 		<?php silver_sticky_column_open( 'blog_sticky_sidebar' ); ?>

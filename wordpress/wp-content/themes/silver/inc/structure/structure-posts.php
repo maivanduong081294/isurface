@@ -10,6 +10,31 @@ function silver_remove_recent_comments_style() {
 add_action( 'widgets_init', 'silver_remove_recent_comments_style' );
 
 /**
+ * Generate excerpts without running the full the_content filter pipeline.
+ */
+function silver_trim_excerpt( $text = '', $post = null ) {
+	$raw_excerpt = $text;
+
+	if ( '' === trim( $text ) ) {
+		$post = get_post( $post );
+		$text = get_the_content( '', false, $post );
+		$text = strip_shortcodes( $text );
+		$text = excerpt_remove_blocks( $text );
+		$text = excerpt_remove_footnotes( $text );
+		$text = str_replace( ']]>', ']]&gt;', $text );
+
+		$excerpt_length = (int) apply_filters( 'excerpt_length', (int) _x( '55', 'excerpt_length' ) );
+		$excerpt_more   = apply_filters( 'excerpt_more', ' [&hellip;]' );
+		$text           = wp_trim_words( $text, $excerpt_length, $excerpt_more );
+	}
+
+	return apply_filters( 'wp_trim_excerpt', $text, $raw_excerpt );
+}
+
+remove_filter( 'get_the_excerpt', 'wp_trim_excerpt' );
+add_filter( 'get_the_excerpt', 'silver_trim_excerpt', 10, 2 );
+
+/**
  * Apply custom post excerpt suffix based on user setting.
  */
 function silver_excerpt_suffix() {
@@ -58,13 +83,184 @@ function silver_single_page_header(){
 add_action('silver_after_header','silver_single_page_header', 10);
 
 
-// Add Blog Archive title
+// Add Blog Archive title (and the archive breadcrumbs, which can show without it).
 function silver_archive_title() {
-	if ( get_theme_mod( 'blog_archive_title', 1 ) && ( is_archive() || is_search() ) ) {
-		get_template_part( 'template-parts/posts/partials/archive-title' );
+	$show_title       = get_theme_mod( 'blog_archive_title', 1 ) && ( is_archive() || is_search() );
+	$show_breadcrumbs = ! is_singular() && silver_blog_breadcrumbs_enabled() && ! silver_breadcrumbs_bar_printed();
+
+	if ( $show_title || $show_breadcrumbs ) {
+		get_template_part( 'template-parts/posts/partials/archive-title', null, array( 'show_title' => $show_title ) );
 	}
 }
 add_action( 'silver_before_blog', 'silver_archive_title', 15 );
+
+
+/**
+ * Whether blog breadcrumbs are on for the current view.
+ *
+ * Blog > Blog Archive > Breadcrumbs: posts page, categories, tags, post
+ * formats, author, date and search pages. Blog > Blog Single Post >
+ * Breadcrumbs: single posts.
+ *
+ * @return bool
+ */
+function silver_blog_breadcrumbs_enabled() {
+	if ( is_singular( 'post' ) ) {
+		$enabled = get_theme_mod( 'blog_single_breadcrumbs', 0 );
+	} elseif ( ( is_home() && ! is_front_page() ) || is_category() || is_tag() || is_tax( 'post_format' ) || is_author() || is_date() || is_search() ) {
+		$enabled = get_theme_mod( 'blog_archive_breadcrumbs', 0 );
+	} else {
+		$enabled = false;
+	}
+
+	return (bool) apply_filters( 'silver_blog_breadcrumbs_enabled', $enabled );
+}
+
+
+/**
+ * Outputs the blog breadcrumbs when enabled for the current view.
+ *
+ * Uses silver_breadcrumb() so the trail comes from the same source as the
+ * shop: WooCommerce, or Yoast SEO / Rank Math / AIOSEO / SEOPress when their
+ * breadcrumbs are turned on. Without any of them it falls back to
+ * silver_blog_breadcrumb_fallback(). On single posts it prints once, for the
+ * main post only (not for posts listed inside it).
+ *
+ * @param string $location "title" (archive/post title templates) or "header"
+ *                         (silver_breadcrumbs_bar()). The title templates
+ *                         print nothing once the bar under the header has
+ *                         printed the breadcrumbs.
+ */
+function silver_blog_breadcrumbs( $location = 'title' ) {
+	static $single_done = false;
+
+	if ( ! silver_blog_breadcrumbs_enabled() || ( 'title' === $location && silver_breadcrumbs_bar_printed() ) ) {
+		return;
+	}
+
+	if ( is_singular( 'post' ) ) {
+		if ( $single_done || get_the_ID() !== get_queried_object_id() ) {
+			return;
+		}
+		$single_done = true;
+	}
+
+	ob_start();
+	silver_breadcrumb();
+	$breadcrumb = trim( ob_get_clean() );
+
+	if ( '' === $breadcrumb ) {
+		$breadcrumb = silver_blog_breadcrumb_fallback();
+	}
+
+	if ( '' !== $breadcrumb ) {
+		echo '<div class="blog-breadcrumbs">' . $breadcrumb . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped by the breadcrumb source.
+	}
+}
+
+
+/**
+ * Builds a blog breadcrumb trail when no WooCommerce or SEO plugin prints one.
+ *
+ * Same markup and options (Show home link, Breadcrumbs case and divider) as
+ * the shop breadcrumbs, so both look alike.
+ *
+ * @return string Breadcrumb HTML, or an empty string when there is no trail.
+ */
+function silver_blog_breadcrumb_fallback() {
+	$crumbs = array();
+
+	if ( get_theme_mod( 'breadcrumb_home', 1 ) ) {
+		$crumbs[] = array( _x( 'Home', 'breadcrumb', 'silver' ), home_url( '/' ) );
+	}
+
+	$page_for_posts = (int) get_option( 'page_for_posts' );
+	if ( $page_for_posts && ! is_home() && ! is_search() ) {
+		$crumbs[] = array( get_the_title( $page_for_posts ), get_permalink( $page_for_posts ) );
+	}
+
+	if ( is_singular( 'post' ) ) {
+		$categories = get_the_category( get_queried_object_id() );
+		if ( $categories ) {
+			$crumbs = array_merge( $crumbs, silver_blog_breadcrumb_terms( $categories[0] ) );
+		}
+		$crumbs[] = array( single_post_title( '', false ), '' );
+	} elseif ( is_category() || is_tag() || is_tax( 'post_format' ) ) {
+		$crumbs = array_merge( $crumbs, silver_blog_breadcrumb_terms( get_queried_object() ) );
+	} elseif ( is_author() ) {
+		$crumbs[] = array( get_the_author_meta( 'display_name', get_queried_object_id() ), '' );
+	} elseif ( is_date() ) {
+		// Pretty permalinks set year/monthnum/day, plain ones set m=YYYYMMDD.
+		$m     = (string) get_query_var( 'm' );
+		$year  = (int) ( get_query_var( 'year' ) ? get_query_var( 'year' ) : substr( $m, 0, 4 ) );
+		$month = (int) ( get_query_var( 'monthnum' ) ? get_query_var( 'monthnum' ) : substr( $m, 4, 2 ) );
+		$day   = (int) ( get_query_var( 'day' ) ? get_query_var( 'day' ) : substr( $m, 6, 2 ) );
+		if ( $year ) {
+			$crumbs[] = array( (string) $year, get_year_link( $year ) );
+		}
+		if ( $year && $month ) {
+			$crumbs[] = array( $GLOBALS['wp_locale']->get_month( $month ), get_month_link( $year, $month ) );
+		}
+		if ( $year && $month && $day ) {
+			$crumbs[] = array( (string) $day, get_day_link( $year, $month, $day ) );
+		}
+	} elseif ( is_search() ) {
+		/* translators: %s: Search query. */
+		$crumbs[] = array( sprintf( __( 'Search Results for: %s', 'silver' ), get_search_query() ), '' );
+	} elseif ( is_home() && $page_for_posts ) {
+		$crumbs[] = array( get_the_title( $page_for_posts ), '' );
+	}
+
+	$crumbs = apply_filters( 'silver_blog_breadcrumb_fallback_crumbs', $crumbs );
+
+	if ( count( $crumbs ) < 2 ) {
+		return '';
+	}
+
+	$items = array();
+	$last  = count( $crumbs ) - 1;
+	foreach ( $crumbs as $i => $crumb ) {
+		if ( $i < $last && ! empty( $crumb[1] ) ) {
+			$items[] = '<a href="' . esc_url( $crumb[1] ) . '">' . esc_html( $crumb[0] ) . '</a>';
+		} elseif ( $i === $last ) {
+			$items[] = '<span aria-current="page">' . esc_html( $crumb[0] ) . '</span>';
+		} else {
+			$items[] = esc_html( $crumb[0] );
+		}
+	}
+
+	return '<nav class="breadcrumbs ' . esc_attr( get_theme_mod( 'breadcrumb_case', 'uppercase' ) ) . '" aria-label="Breadcrumb">'
+		. implode( ' <span class="divider" aria-hidden="true">' . silver_breadcrumb_divider() . '</span> ', $items )
+		. '</nav>';
+}
+
+
+/**
+ * Crumbs for a term and its parents, top-level first.
+ *
+ * @param WP_Term $term Term.
+ *
+ * @return array List of array( name, url ).
+ */
+function silver_blog_breadcrumb_terms( $term ) {
+	$crumbs = array();
+
+	if ( ! $term instanceof WP_Term ) {
+		return $crumbs;
+	}
+
+	foreach ( array_reverse( get_ancestors( $term->term_id, $term->taxonomy, 'taxonomy' ) ) as $ancestor_id ) {
+		$ancestor = get_term( $ancestor_id, $term->taxonomy );
+		if ( $ancestor instanceof WP_Term ) {
+			$crumbs[] = array( $ancestor->name, get_term_link( $ancestor ) );
+		}
+	}
+
+	$link     = get_term_link( $term );
+	$crumbs[] = array( $term->name, is_wp_error( $link ) ? '' : $link );
+
+	return $crumbs;
+}
 
 
 // Remove the Auto scrolling if a Read more link is clicked
@@ -263,6 +459,53 @@ function silver_enhanced_image_navigation( $url, $id ) {
 add_filter( 'attachment_link', 'silver_enhanced_image_navigation', 10, 2 );
 
 
+/**
+ * The older Two Col / Three Col posts layouts are the Grid layout now. They
+ * read as "grid" everywhere (templates and the Customizer, whose image
+ * choices no longer list them and would otherwise fall back to the default
+ * "normal"); the saved value stays as it is (see silver_blog_grid_columns()).
+ *
+ * @param mixed $value Saved Posts Layout.
+ * @return mixed
+ */
+function silver_blog_style_legacy_grid( $value ) {
+	return in_array( $value, array( '2-col', '3-col' ), true ) ? 'grid' : $value;
+}
+add_filter( 'theme_mod_blog_style', 'silver_blog_style_legacy_grid' );
+add_filter( 'theme_mod_blog_style_archive', 'silver_blog_style_legacy_grid' );
+
+if ( ! function_exists( 'silver_blog_grid_columns' ) ) {
+	/**
+	 * Columns of the blog Grid layout as blog_posts / repeater attributes,
+	 * mobile first: "columns" (Mobile), "columns__md" (Tablet portrait),
+	 * "columns__ml" (Tablet landscape, empty = Tablet portrait carries on) and
+	 * "columns__lg" (Desktop), from Blog Layout > Posts per row.
+	 *
+	 * @param int|null $desktop Desktop columns while "Posts per row - Desktop"
+	 *                          was never saved. Null: 2 when the layout in use
+	 *                          is still saved as the older Two Col, else 3
+	 *                          (the option default).
+	 * @return array
+	 */
+	function silver_blog_grid_columns( $desktop = null ) {
+		$saved = get_theme_mod( 'blog_columns', '' );
+
+		if ( null === $desktop ) {
+			// The raw saved layout (get_theme_mod() reads "2-col" as "grid").
+			$mods    = (array) get_theme_mods();
+			$setting = ( ! empty( $mods['blog_style_archive'] ) && ( is_archive() || is_search() ) ) ? 'blog_style_archive' : 'blog_style';
+			$desktop = isset( $mods[ $setting ] ) && '2-col' === $mods[ $setting ] ? 2 : 3;
+		}
+
+		return array(
+			'columns'     => max( 1, (int) get_theme_mod( 'blog_columns_mobile', 1 ) ),
+			'columns__md' => max( 1, (int) get_theme_mod( 'blog_columns_tablet', 2 ) ),
+			'columns__ml' => (int) get_theme_mod( 'blog_columns_tablet_landscape', 0 ) ?: '',
+			'columns__lg' => max( 1, (int) ( '' === $saved || null === $saved ? $desktop : $saved ) ),
+		);
+	}
+}
+
 // Numbered Pagination
 if ( !function_exists( 'silver_posts_pagination' ) ) {
 
@@ -288,7 +531,8 @@ if ( !function_exists( 'silver_posts_pagination' ) ) {
                 'format'        => $format,
                 'current'       => max( 1, get_query_var('paged') ),
                 'total'         => $total,
-                'mid_size'      => 3,
+                'end_size'      => 1, // Short enough for one line on phones: ‹ 1 … 3 4 5 … 15 ›.
+                'mid_size'      => 1,
                 'type'          => 'array',
                 'prev_text'     => $prev_arrow,
                 'next_text'     => $next_arrow,
@@ -304,6 +548,12 @@ if ( !function_exists( 'silver_posts_pagination' ) ) {
 					echo "<li>$page</li>";
                 }
                echo '</ul>';
+
+               /**
+                * After the numbered pagination of a blog archive (there is
+                * a next page). The Load more button hooks in here.
+                */
+               do_action( 'silver_after_posts_pagination' );
             }
         }
     }

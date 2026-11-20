@@ -36,13 +36,13 @@ if ( !empty($breadcrumb) ) {
 		if ( is_product() ) {
 				$key = $key+1;
 				if ( sizeof( $breadcrumb ) > $key+1) {
-					echo ' <span class="divider">'.$delimiter.'</span> ';
+					echo ' <span class="divider" aria-hidden="true">'.$delimiter.'</span> ';
 				}
 		} else{
 
 		// Category pages
 		if ( sizeof( $breadcrumb ) !== $key + 1 ) {
-				echo ' <span class="divider">'.$delimiter.'</span> ';
+				echo ' <span class="divider" aria-hidden="true">'.$delimiter.'</span> ';
 			}
 		}
 

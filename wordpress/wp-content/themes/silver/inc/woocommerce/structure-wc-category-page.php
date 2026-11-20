@@ -47,7 +47,11 @@ function silver_product_row_classes($cols = null){
     if($cols) $columns = $cols;
 	if ( is_cart() ) $columns = apply_filters( 'woocommerce_cross_sells_columns', 4 );
 
+	// Desktop >= 1200px, Tablet landscape 850-1199px (only when set, 0 = the
+	// Tablet portrait value carries on), Tablet portrait 550-849px, Mobile.
     $classes[] = 'xlarge-columns-'.$columns;
+	$landscape = (int) get_theme_mod( 'category_row_count_tablet_landscape', 0 );
+	if ( $landscape > 0 ) $classes[] = 'large-columns-' . $landscape;
 	$classes[] = 'medium-columns-' . get_theme_mod( 'category_row_count_tablet', 3 );
 	$classes[] = 'small-columns-' . get_theme_mod( 'category_row_count_mobile', 2 );
 
@@ -63,7 +67,7 @@ function silver_product_row_classes($cols = null){
       $classes[] = 'has-equal-box-heights';
     }
 
-	if ( get_theme_mod( 'equalize_product_box' ) ) {
+	if ( get_theme_mod( 'equalize_product_box', 1 ) ) {
 		$classes[] = 'equalize-box';
 	}
 

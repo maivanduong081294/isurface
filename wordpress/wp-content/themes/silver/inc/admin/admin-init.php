@@ -35,6 +35,7 @@ add_action( 'init', function () {
 		// Include Customizer Settings.
 		include_once(dirname( __FILE__ ).'/customizer/customizer-config.php');
 		include_once(dirname( __FILE__ ).'/customizer/customizer-reset.php');
+		include_once(dirname( __FILE__ ).'/customizer/customizer-icon-control.php');
 
 		// Include Options Helpers.
 		include_once(dirname( __FILE__ ).'/options/helpers/options-helpers.php');
@@ -55,12 +56,14 @@ add_action( 'init', function () {
 		include_once(dirname( __FILE__ ).'/options/styles/options-css.php');
 		include_once(dirname( __FILE__ ).'/options/styles/options-lightbox.php');
 		include_once(dirname( __FILE__ ).'/options/notifications/options-notifications.php');
+		include_once(dirname( __FILE__ ).'/options/contact/options-floating-contact.php');
 
 		if(get_theme_mod('fl_portfolio', 1)){
 			include_once(dirname( __FILE__ ).'/options/portfolio/options-portfolio.php');
 		}
 
 		include_once(dirname( __FILE__ ).'/options/blog/options-blog.php');
+		include_once(dirname( __FILE__ ).'/options/global/options-breadcrumbs.php');
 
 		// Depricated options
 		include_once(dirname( __FILE__ ).'/options/options-depricated.php');

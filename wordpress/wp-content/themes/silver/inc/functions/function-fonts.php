@@ -6,9 +6,9 @@
  * @return string The link
  */
 function silver_get_google_fonts_link() {
-	$type_headings = get_theme_mod( 'type_headings', array( 'font-family' => 'Lato', 'variant' => '700' ) );
-	$type_texts    = get_theme_mod( 'type_texts', array( 'font-family' => 'Lato', 'variant' => 'regular' ) );
-	$type_nav      = get_theme_mod( 'type_nav', array( 'font-family' => 'Lato', 'variant' => '700' ) );
+	$type_headings = get_theme_mod( 'type_headings', array( 'font-family' => 'Inter', 'variant' => '700' ) );
+	$type_texts    = get_theme_mod( 'type_texts', array( 'font-family' => 'Inter', 'variant' => 'regular' ) );
+	$type_nav      = get_theme_mod( 'type_nav', array( 'font-family' => 'Inter', 'variant' => '700' ) );
 	$type_alt      = get_theme_mod( 'type_alt', array( 'font-family' => 'Dancing Script', 'variant' => 'regular' ) );
 
 	// Fix old.

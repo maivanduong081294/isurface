@@ -233,7 +233,7 @@ function silver_ux_posts_shortcode($atts, $content = null, $tag = 'ux_posts')
   // Căn chỉnh cột giống Row: align-{top|equal|middle|bottom|center|right}.
   $row_class = array('ux-posts');
   if (in_array($atts['v_align'], array('equal', 'middle', 'bottom'), true)) $row_class[] = 'align-' . $atts['v_align'];
-  if (in_array($atts['h_align'], array('center', 'right'), true)) $row_class[] = 'align-' . $atts['h_align'];
+  if (in_array($atts['h_align'], array('center', 'right', 'between', 'around'), true)) $row_class[] = 'align-' . $atts['h_align'];
   if ($atts['class']) $row_class[] = $atts['class'];
 
   $repeater = array(

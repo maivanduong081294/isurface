@@ -12,6 +12,8 @@
 .ux-mega-menu {
   --ux-mega-width: 1100px;
   --ux-mega-sidebar: 260px;
+  /* Side padding of .ux-mega-menu-panel-inner, like a row's column gutter. */
+  --ux-mega-gutter: 15px;
   --ux-mega-min-height: 0px;
   /* Theme options: Header > Dropdown Style, Style > Colors. */
   --ux-mega-radius: var(--fs-dropdown-radius, 20px);
@@ -19,17 +21,18 @@
   --ux-mega-border: var(--fs-dropdown-border, rgba(0, 0, 0, 0.06));
   --ux-mega-accent: var(--fs-color-primary);
   /* No theme option. */
-  --ux-mega-sidebar-bg: #f7f7f5;
+  --ux-mega-sidebar-bg: #f8fafc;
   display: inline-block;
   position: relative;
   vertical-align: middle;
 }
 .ux-mega-menu-trigger {
   align-items: center;
-  background-color: rgba(var(--fs-color-primary-rgb, 68, 106, 179), 0.1);
+  /* --ux-mega-trigger-bg / -color: element options "Button background / text color". */
+  background-color: var(--ux-mega-trigger-bg, rgba(var(--fs-color-primary-rgb, 68, 106, 179), 0.1));
   border: 0;
   border-radius: 99px;
-  color: var(--ux-mega-accent);
+  color: var(--ux-mega-trigger-color, var(--ux-mega-accent));
   cursor: pointer;
   display: inline-flex;
   font-weight: 600;
@@ -41,10 +44,13 @@
   text-transform: none;
   white-space: nowrap;
 }
+/* --ux-mega-left / --ux-mega-fit-width / --ux-mega-shift are set by
+   silver-mega-menu.js: "Container" alignment and keeping the panel on screen. */
 .ux-mega-menu-panel {
   background: var(--ux-mega-bg);
+  border: 1px solid var(--ux-mega-border);
   border-radius: var(--ux-mega-radius);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 18px 40px -14px rgba(15, 23, 42, 0.18);
   display: none;
   inset-block-start: calc(100% + 12px);
   inset-inline-start: 0;
@@ -52,8 +58,13 @@
   overflow: hidden;
   position: absolute;
   text-align: start;
-  width: var(--ux-mega-width);
+  translate: var(--ux-mega-shift, 0) 0;
+  width: var(--ux-mega-fit-width, var(--ux-mega-width));
   z-index: 1000;
+}
+.ux-mega-menu-align-container .ux-mega-menu-panel {
+  inset-inline: auto;
+  left: var(--ux-mega-left, 0);
 }
 .ux-mega-menu-align-center .ux-mega-menu-panel {
   inset-inline-start: 50%;
@@ -137,8 +148,15 @@
   margin-block-end: 20px;
 }
 .ux-mega-menu-title {
+  align-items: center;
+  display: inline-flex;
   font-size: 1.25em;
   font-weight: 600;
+  gap: 10px;
+}
+.ux-mega-menu-heading-media,
+.ux-mega-menu-heading--drawer-only {
+  display: none;
 }
 .ux-mega-menu-view-all {
   background: rgba(var(--fs-color-primary-rgb, 68, 106, 179), 0.1);
@@ -199,16 +217,24 @@
 
 /* Desktop: tabs | active pane. */
 @media (min-width: 850px) {
+  /* Panel: frame + sidebar background (from the panel edge to the end of the
+     list column, i.e. gutter + list width). Inner: side padding (gutter)
+     and the tabs | panes grid, so the content lines up like a row. */
   .ux-mega-menu.is-open .ux-mega-menu-panel {
-    background: linear-gradient(to right, var(--ux-mega-sidebar-bg) var(--ux-mega-sidebar), var(--ux-mega-border) var(--ux-mega-sidebar), var(--ux-mega-border) calc(var(--ux-mega-sidebar) + 1px), var(--ux-mega-bg) calc(var(--ux-mega-sidebar) + 1px));
+    --ux-mega-split: calc(var(--ux-mega-gutter) + var(--ux-mega-sidebar));
+    background: linear-gradient(to right, var(--ux-mega-sidebar-bg) var(--ux-mega-split), var(--ux-mega-border) var(--ux-mega-split), var(--ux-mega-border) calc(var(--ux-mega-split) + 1px), var(--ux-mega-bg) calc(var(--ux-mega-split) + 1px));
+    display: block;
+    min-height: var(--ux-mega-min-height);
+    padding: 12px var(--ux-mega-gutter);
+  }
+  [dir="rtl"] .ux-mega-menu.is-open .ux-mega-menu-panel {
+    background: linear-gradient(to left, var(--ux-mega-sidebar-bg) var(--ux-mega-split), var(--ux-mega-border) var(--ux-mega-split), var(--ux-mega-border) calc(var(--ux-mega-split) + 1px), var(--ux-mega-bg) calc(var(--ux-mega-split) + 1px));
+  }
+  .ux-mega-menu-panel-inner {
     column-gap: 1px;
     display: grid;
     grid-template-columns: var(--ux-mega-sidebar) minmax(0, 1fr);
-    min-height: var(--ux-mega-min-height);
-    padding-block: 12px;
-  }
-  [dir="rtl"] .ux-mega-menu.is-open .ux-mega-menu-panel {
-    background: linear-gradient(to left, var(--ux-mega-sidebar-bg) var(--ux-mega-sidebar), var(--ux-mega-border) var(--ux-mega-sidebar), var(--ux-mega-border) calc(var(--ux-mega-sidebar) + 1px), var(--ux-mega-bg) calc(var(--ux-mega-sidebar) + 1px));
+    min-height: calc(var(--ux-mega-min-height) - 24px);
   }
   .ux-mega-menu-item {
     display: contents;
@@ -216,13 +242,14 @@
   .ux-mega-menu-tab {
     grid-column: 1;
     margin-block: 2px;
-    margin-inline: 12px;
+    margin-inline: 0 12px;
     width: auto;
   }
   .ux-mega-menu-pane {
     grid-column: 2;
     grid-row: 1 / -1;
     padding-block: 12px;
+    padding-inline: 24px 0;
   }
 }
 
@@ -251,6 +278,283 @@
   }
 }
 
+/* Display "Icon + drawer" (per screen): the trigger is only the icon
+   (hamburger) and the items open in a drawer from the side, over a dimmed
+   page. The icon look is set per screen below (no flash before the JS);
+   silver-mega-menu.js adds .is-drawer on those screens (data-drawer). */
+.ux-mega-menu-drawer-head {
+  display: none;
+}
+@media (max-width: 549px) {
+  .ux-mega-menu-icon-sm {
+    display: inline-block;
+  }
+  .ux-mega-menu-icon-sm > .ux-mega-menu-trigger {
+    background: transparent;
+    border-radius: 8px;
+    color: var(--ux-mega-drawer-icon-color, var(--sv-heading, currentColor));
+    font-size: var(--ux-mega-drawer-icon-size, 22px);
+    height: 40px;
+    justify-content: center;
+    padding: 0;
+    width: 40px;
+  }
+  .ux-mega-menu-icon-sm > .ux-mega-menu-trigger .ux-mega-menu-trigger-text {
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+}
+@media (min-width: 550px) and (max-width: 849px) {
+  .ux-mega-menu-icon-md {
+    display: inline-block;
+  }
+  .ux-mega-menu-icon-md > .ux-mega-menu-trigger {
+    background: transparent;
+    border-radius: 8px;
+    color: var(--ux-mega-drawer-icon-color, var(--sv-heading, currentColor));
+    font-size: var(--ux-mega-drawer-icon-size, 22px);
+    height: 40px;
+    justify-content: center;
+    padding: 0;
+    width: 40px;
+  }
+  .ux-mega-menu-icon-md > .ux-mega-menu-trigger .ux-mega-menu-trigger-text {
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+}
+@media (min-width: 850px) and (max-width: 1199px) {
+  .ux-mega-menu-icon-ml > .ux-mega-menu-trigger {
+    background: transparent;
+    border-radius: 8px;
+    color: var(--ux-mega-drawer-icon-color, var(--sv-heading, currentColor));
+    font-size: var(--ux-mega-drawer-icon-size, 22px);
+    height: 40px;
+    justify-content: center;
+    padding: 0;
+    width: 40px;
+  }
+  .ux-mega-menu-icon-ml > .ux-mega-menu-trigger .ux-mega-menu-trigger-text {
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+}
+@media (min-width: 1200px) {
+  .ux-mega-menu-icon-lg > .ux-mega-menu-trigger {
+    background: transparent;
+    border-radius: 8px;
+    color: var(--ux-mega-drawer-icon-color, var(--sv-heading, currentColor));
+    font-size: var(--ux-mega-drawer-icon-size, 22px);
+    height: 40px;
+    justify-content: center;
+    padding: 0;
+    width: 40px;
+  }
+  .ux-mega-menu-icon-lg > .ux-mega-menu-trigger .ux-mega-menu-trigger-text {
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+}
+.ux-mega-menu.is-drawer > .ux-mega-menu-trigger:hover {
+  background: rgba(15, 23, 42, 0.06);
+}
+
+/* The drawer (any screen; overrides the desktop grid above 850px). */
+.ux-mega-menu.is-drawer .ux-mega-menu-panel {
+  border-radius: 0;
+  box-shadow: 0 0 40px rgba(15, 23, 42, 0.24);
+  display: block;
+  inset-block: 0;
+  inset-inline: 0 auto;
+  max-width: none;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 0 24px;
+  position: fixed;
+  transform: none;
+  transition: translate 0.25s cubic-bezier(0.22, 0.61, 0.36, 1), visibility 0s 0.25s;
+  translate: -100% 0;
+  visibility: hidden;
+  width: min(360px, 88vw);
+  z-index: 1001;
+}
+.ux-mega-menu.is-drawer.is-open .ux-mega-menu-panel {
+  background: var(--ux-mega-bg);
+  display: block;
+  padding-block: 0 24px;
+  padding-inline: 0;
+  transition: translate 0.25s cubic-bezier(0.22, 0.61, 0.36, 1);
+  translate: 0 0;
+  visibility: visible;
+}
+.ux-mega-menu-drawer-right.is-drawer .ux-mega-menu-panel {
+  inset-inline: auto 0;
+  translate: 100% 0;
+}
+[dir="rtl"] .ux-mega-menu-drawer-left.is-drawer .ux-mega-menu-panel {
+  translate: 100% 0;
+}
+[dir="rtl"] .ux-mega-menu-drawer-right.is-drawer .ux-mega-menu-panel {
+  translate: -100% 0;
+}
+.ux-mega-menu.is-drawer.is-open .ux-mega-menu-panel {
+  translate: 0 0;
+}
+/* Dimmed page; a click on it closes the drawer (silver-mega-menu.js). */
+.ux-mega-menu.is-drawer::after {
+  background: rgba(15, 23, 42, 0.45);
+  content: "";
+  inset: 0;
+  opacity: 0;
+  position: fixed;
+  transition: opacity 0.25s, visibility 0s 0.25s;
+  visibility: hidden;
+  z-index: 1000;
+}
+.ux-mega-menu.is-drawer.is-open::after {
+  opacity: 1;
+  transition: opacity 0.25s;
+  visibility: visible;
+}
+.ux-mega-menu.is-drawer .ux-mega-menu-drawer-head {
+  align-items: center;
+  background: var(--ux-mega-bg);
+  border-bottom: 1px solid var(--ux-mega-border);
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  min-height: 60px;
+  padding: 0 8px 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.ux-mega-menu-drawer-title {
+  font-size: 1.0625rem;
+  font-weight: 700;
+}
+.ux-mega-menu-close {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  height: 40px;
+  justify-content: center;
+  margin: 0;
+  min-height: 0;
+  padding: 0;
+  width: 40px;
+}
+.ux-mega-menu-close:hover {
+  background: rgba(15, 23, 42, 0.06);
+}
+/* Drawer: no grid and no gutter on the inner (the drawer has its own spacing). */
+.ux-mega-menu.is-drawer .ux-mega-menu-panel-inner {
+  display: block;
+  min-height: 0;
+}
+/* Accordion inside the drawer, on every screen. */
+.ux-mega-menu.is-drawer .ux-mega-menu-item {
+  display: block;
+  padding-inline: 8px;
+}
+.ux-mega-menu.is-drawer .ux-mega-menu-tab {
+  margin: 0;
+  width: 100%;
+}
+.ux-mega-menu.is-drawer .ux-mega-menu-item.is-active > .ux-mega-menu-tab {
+  box-shadow: none;
+}
+.ux-mega-menu.is-drawer .ux-mega-menu-item.is-active > .ux-mega-menu-tab .ux-mega-menu-tab-arrow {
+  transform: rotate(90deg);
+}
+.ux-mega-menu.is-drawer .ux-mega-menu-pane {
+  padding: 12px 12px 20px;
+}
+.ux-mega-menu.is-drawer .ux-mega-menu-grid {
+  gap: 16px 8px;
+}
+html.ux-mega-menu-locked {
+  overflow: hidden;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ux-mega-menu.is-drawer .ux-mega-menu-panel,
+  .ux-mega-menu.is-drawer::after {
+    transition: none;
+  }
+}
+
+/* Drawer layout "Expanded" (default): no tabs, every item shows its heading
+   (icon + title + "Xem tất cả") and its grid, one after the other. */
+.ux-mega-menu.is-drawer.ux-mega-menu-drawer-expanded .ux-mega-menu-tab {
+  display: none;
+}
+.ux-mega-menu.is-drawer.ux-mega-menu-drawer-expanded .ux-mega-menu-item {
+  padding-inline: 0;
+}
+.ux-mega-menu.is-drawer.ux-mega-menu-drawer-expanded .ux-mega-menu-pane {
+  display: block;
+  padding: 12px 20px 20px;
+}
+.ux-mega-menu.is-drawer.ux-mega-menu-drawer-expanded .ux-mega-menu-heading {
+  display: flex;
+  margin-block-end: 16px;
+}
+.ux-mega-menu.is-drawer.ux-mega-menu-drawer-expanded .ux-mega-menu-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.ux-mega-menu.is-drawer.ux-mega-menu-drawer-expanded .ux-mega-menu-heading-media {
+  align-items: center;
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: 8px;
+  display: inline-flex;
+  flex: none;
+  height: 32px;
+  justify-content: center;
+  overflow: hidden;
+  width: 32px;
+}
+.ux-mega-menu.is-drawer.ux-mega-menu-drawer-expanded .ux-mega-menu-heading-media img {
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
+}
+.ux-mega-menu.is-drawer.ux-mega-menu-drawer-expanded .ux-mega-menu-view-all {
+  background: none;
+  padding: 0;
+}
+.ux-mega-menu.is-drawer.ux-mega-menu-drawer-expanded .ux-mega-menu-grid {
+  gap: 20px 12px;
+  grid-template-columns: repeat(var(--ux-mega-drawer-columns, 3), minmax(0, 1fr));
+}
+.ux-mega-menu.is-drawer.ux-mega-menu-drawer-expanded .ux-mega-menu-grid-name {
+  font-size: 0.875rem;
+  line-height: 1.3;
+}
+
 /* UX Builder: always open, not over the following elements. */
 .ux-mega-menu-builder {
   display: block;
@@ -260,4 +564,16 @@
   margin-block-start: 12px;
   position: relative;
   transform: none;
+}
+.ux-mega-menu-builder.is-drawer .ux-mega-menu-panel {
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+  inset: auto;
+  position: relative;
+  translate: none;
+  visibility: visible;
+  width: auto;
+  z-index: auto;
+}
+.ux-mega-menu-builder.is-drawer::after {
+  display: none;
 }

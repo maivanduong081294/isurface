@@ -65,6 +65,7 @@ require get_template_directory() . '/inc/functions/function-presets.php';
  */
 require get_template_directory() . '/inc/helpers/helpers-frontend.php';
 require get_template_directory() . '/inc/helpers/helpers-shortcode.php';
+require get_template_directory() . '/inc/helpers/helpers-markup.php';
 require get_template_directory() . '/inc/helpers/helpers-grid.php';
 require get_template_directory() . '/inc/helpers/helpers-responsive.php';
 require get_template_directory() . '/inc/helpers/helpers-icons.php';
@@ -136,6 +137,7 @@ require get_template_directory() . '/inc/shortcodes/ux_instagram_feed.php';
 require get_template_directory() . '/inc/shortcodes/ux_countdown/ux-countdown.php';
 require get_template_directory() . '/inc/shortcodes/ux_video.php';
 require get_template_directory() . '/inc/shortcodes/ux_nav.php';
+require get_template_directory() . '/inc/shortcodes/ux_wp_menu.php';
 require get_template_directory() . '/inc/shortcodes/ux_payment_icons.php';
 require get_template_directory() . '/inc/shortcodes/ux_stack.php';
 require get_template_directory() . '/inc/shortcodes/ux_container.php';
@@ -148,6 +150,7 @@ require get_template_directory() . '/inc/shortcodes/ux_mega_menu.php';
 require get_template_directory() . '/inc/shortcodes/ux_shortcode.php';
 require get_template_directory() . '/inc/shortcodes/ux_counter.php';
 require get_template_directory() . '/inc/shortcodes/ux_terms.php';
+require get_template_directory() . '/inc/shortcodes/ux_stack_spacer.php';
 
 if(is_portfolio_activated()){
   require get_template_directory() . '/inc/shortcodes/portfolio.php';
@@ -194,6 +197,9 @@ if (is_woocommerce_activated()) {
 if ( is_woocommerce_activated() ) {
   require get_template_directory() . '/inc/woocommerce/structure-wc-conditionals.php';
   require get_template_directory() . '/inc/woocommerce/structure-wc-global.php';
+  require get_template_directory() . '/inc/woocommerce/structure-wc-price.php';
+  require get_template_directory() . '/inc/woocommerce/structure-wc-attribute-display-name.php';
+  require get_template_directory() . '/inc/woocommerce/structure-wc-card-attributes.php';
   require get_template_directory() . '/inc/woocommerce/structure-wc-category-page.php';
   require get_template_directory() . '/inc/woocommerce/structure-wc-category-page-header.php';
   require get_template_directory() . '/inc/woocommerce/structure-wc-product-box.php';

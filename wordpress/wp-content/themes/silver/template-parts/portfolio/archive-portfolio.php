@@ -32,9 +32,12 @@ get_template_part( 'template-parts/portfolio/archive-portfolio-title', get_theme
 		'orderby'      => get_theme_mod( 'portfolio_archive_orderby', 'menu_order' ),
 		'order'        => get_theme_mod( 'portfolio_archive_order', 'desc' ),
 		'col_spacing'  => get_theme_mod( 'portfolio_archive_spacing', 'small' ),
-		'columns'      => get_theme_mod( 'portfolio_archive_columns', 4 ),
+		// Mobile first: "columns" is the mobile value, then Tablet portrait
+		// (__md), Tablet landscape (__ml, 0 = not set) and Desktop (__lg).
+		'columns'      => get_theme_mod( 'portfolio_archive_columns_mobile', 2 ),
 		'columns__md'  => get_theme_mod( 'portfolio_archive_columns_tablet', 3 ),
-		'columns__sm'  => get_theme_mod( 'portfolio_archive_columns_mobile', 2 ),
+		'columns__ml'  => (int) get_theme_mod( 'portfolio_archive_columns_tablet_landscape', 0 ) ?: '',
+		'columns__lg'  => get_theme_mod( 'portfolio_archive_columns', 4 ),
 		'depth'        => get_theme_mod( 'portfolio_archive_depth', 0 ),
 		'depth_hover'  => get_theme_mod( 'portfolio_archive_depth_hover', 0 ),
 		'image_radius' => get_theme_mod( 'portfolio_archive_image_radius', 0 ),

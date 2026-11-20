@@ -631,10 +631,25 @@ function silver_customizer_shop_product_page_options() {
 		),
 	) );
 
+	// Tablet landscape (850-1199px). 0: the Tablet portrait value.
+	Silver_Option::add_field( 'option', array(
+		'type'        => 'slider',
+		'settings'    => 'related_products_pr_row_tablet_landscape',
+		'label'       => __( 'Products per row - Tablet landscape', 'silver' ),
+		'description' => __( '0 = same as Tablet portrait.', 'silver' ),
+		'section'     => 'product-page',
+		'default'     => 0,
+		'choices'     => array(
+			'min'  => 0,
+			'max'  => 6,
+			'step' => 1,
+		),
+	) );
+
 	Silver_Option::add_field( 'option', array(
 		'type'     => 'slider',
 		'settings' => 'related_products_pr_row_tablet',
-		'label'    => __( 'Products per row - Tablet', 'silver' ),
+		'label'    => __( 'Products per row - Tablet portrait', 'silver' ),
 		'section'  => 'product-page',
 		'default'  => 3,
 		'choices'  => array(

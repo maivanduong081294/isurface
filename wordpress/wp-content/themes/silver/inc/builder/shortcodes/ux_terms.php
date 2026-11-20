@@ -121,6 +121,30 @@ add_ux_builder_shortcode('ux_terms', array(
 			'type'    => 'group',
 			'heading' => __('Display', 'silver'),
 			'options' => array(
+				'style'            => array(
+					'type'        => 'radio-buttons',
+					'heading'     => __('Style', 'silver'),
+					'description' => __('Card: khung viền bo góc, icon nhỏ trong ô nền nhạt, viền màu nhấn khi hover.', 'silver'),
+					'default'     => '',
+					'options'     => array(
+						''     => array('title' => 'Default'),
+						'card' => array('title' => 'Card'),
+					),
+				),
+				'icon_pos'         => array(
+					'type'       => 'select',
+					'heading'    => __('Icon position', 'silver'),
+					'conditions' => 'style === "card"',
+					'default'    => 'top',
+					'options'    => array(
+						'top'          => 'Top',
+						'center'       => 'Center',
+						'left'         => 'Left',
+						'left-center'  => 'Left Center',
+						'right'        => 'Right',
+						'right-center' => 'Right Center',
+					),
+				),
 				'show_thumbnail'   => array('type' => 'radio-buttons', 'heading' => __('Thumbnail', 'silver'), 'default' => 'yes', 'options' => $terms_yes_no),
 				'show_title'       => array('type' => 'radio-buttons', 'heading' => __('Title', 'silver'), 'default' => 'yes', 'options' => $terms_yes_no),
 				'show_count'       => array('type' => 'radio-buttons', 'heading' => __('Count', 'silver'), 'default' => 'yes', 'options' => $terms_yes_no),
@@ -159,6 +183,17 @@ add_ux_builder_shortcode('ux_terms', array(
 					'heading' => __('Size', 'silver'),
 					'default' => 'medium',
 					'options' => silver_ux_builder_image_sizes(),
+				),
+				'image_width'  => array(
+					'type'        => 'scrubfield',
+					'heading'     => __('Icon width', 'silver'),
+					'description' => __('Kiểu Card: kích thước ô icon (mặc định 56px).', 'silver'),
+					'conditions'  => 'style === "card"',
+					'responsive'  => true,
+					'default'     => '',
+					'unit'        => 'px',
+					'min'         => 24,
+					'max'         => 240,
 				),
 				'image_height' => array(
 					'type'        => 'scrubfield',

@@ -108,6 +108,26 @@ function get_silver_icon( $name, $size = null, $atts = null ) {
 }
 
 /**
+ * Keeps an icon value only when it is a Font Awesome icon of the picker
+ * ("fa-solid fa-chevron-right") or a legacy theme icon name ("icon-angle-right").
+ *
+ * Sanitize callback of the Customizer icon control, also used before output.
+ *
+ * @param string $value Icon classes.
+ *
+ * @return string The icon classes, or an empty string.
+ */
+function silver_sanitize_icon_class( $value ) {
+	$value = trim( (string) $value );
+
+	if ( preg_match( '/^fa-(solid|regular|brands) fa-[a-z0-9-]+$/', $value ) || preg_match( '/^icon-[a-z0-9-]+$/', $value ) ) {
+		return $value;
+	}
+
+	return '';
+}
+
+/**
  * Load self-hosted Font Awesome before the theme styles.
  */
 function silver_add_icons_css() {

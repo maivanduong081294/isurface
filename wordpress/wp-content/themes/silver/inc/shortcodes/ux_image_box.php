@@ -66,6 +66,28 @@ function ux_image_box( $atts, $content = null ) {
 	$image_height = silver_responsive_base( (array) $atts, 'image_height' ) ?: $image_height;
 	list( $_id, $responsive_style ) = silver_responsive_single_box( $_id, $atts, 'image-box-' );
 
+	// Image padding (top / right / bottom / left) and background, per screen.
+	$atts = (array) $atts;
+	if ( ! array_key_exists( 'image_padding', $atts ) ) $atts['image_padding'] = '';
+	if ( ! array_key_exists( 'image_bg', $atts ) ) $atts['image_bg'] = '';
+	$has_image_style = false;
+	foreach ( $atts as $key => $value ) {
+		if ( preg_match( '/^image_(padding|bg)(__|$)/', $key ) && trim( (string) $value ) !== '' ) $has_image_style = true;
+	}
+	if ( $has_image_style ) {
+		if ( ! $_id ) $_id = 'image-box-' . wp_rand();
+		$responsive_style .= ux_builder_element_style_tag( $_id, array(
+			'image_padding' => array(
+				'selector' => '.box-image',
+				'property' => 'padding',
+			),
+			'image_bg'      => array(
+				'selector' => '.box-image',
+				'property' => 'background-color',
+			),
+		), $atts );
+	}
+
 	if ( $image_height ) $classes_image[] = 'image-cover';
 
 	// Text classes
@@ -98,7 +120,7 @@ function ux_image_box( $atts, $content = null ) {
 			<?php if ( $link ) echo $link_start; ?>
 			<div class="<?php echo esc_attr( implode( ' ', $classes_image ) ); ?>" <?php echo get_shortcode_inline_css( $css_image_height ); ?>>
 				<?php echo silver_get_image( $img, $image_size ); ?>
-				<?php if ( $image_overlay ) { ?><div class="overlay" style="background-color:<?php echo esc_attr( $image_overlay ); ?>"></div><?php } ?>
+				<?php if ( $image_overlay ) { ?><div class="overlay" style="<?php echo esc_attr( silver_overlay_style( $image_overlay ) ); ?>"></div><?php } ?>
 				<?php if ( $style == 'shade' ) { ?><div class="shade"></div><?php } ?>
 			</div>
 			<?php if ( $link ) echo $link_end; ?>

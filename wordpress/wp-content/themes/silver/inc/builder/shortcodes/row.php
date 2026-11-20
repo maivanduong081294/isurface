@@ -189,7 +189,9 @@ add_ux_builder_shortcode( 'row', array(
             'options' => array(
                  'left' => array( 'title' => 'Left'),
                  'center' => array( 'title' => 'Center'),
-                 'right' => array( 'title' => 'Right')
+                 'right' => array( 'title' => 'Right'),
+                 'between' => array( 'title' => 'Between'),
+                 'around' => array( 'title' => 'Around'),
             )
         ),
 

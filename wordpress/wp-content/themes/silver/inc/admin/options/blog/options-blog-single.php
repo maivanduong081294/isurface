@@ -47,6 +47,16 @@ Silver_Option::add_field( '', array(
 	'default'  => '<div class="options-title-divider">Header</div>',
 ) );
 
+// See silver_blog_breadcrumbs() in inc/structure/structure-posts.php.
+Silver_Option::add_field( 'option', array(
+	'type'        => 'checkbox',
+	'settings'    => 'blog_single_breadcrumbs',
+	'label'       => __( 'Breadcrumbs', 'silver' ),
+	'description' => __( 'Shown above the post title.', 'silver' ),
+	'section'     => 'blog-single',
+	'default'     => 0,
+) );
+
 Silver_Option::add_field( 'option', array(
 	'type'     => 'checkbox',
 	'settings' => 'blog_single_header_category',
@@ -125,6 +135,15 @@ Silver_Option::add_field( 'option', array(
 	'label'    => __( 'Next/Prev navigation', 'silver' ),
 	'section'  => 'blog-single',
 	'default'  => 1,
+) );
+
+Silver_Option::add_field( 'option', array(
+	'type'        => 'checkbox',
+	'settings'    => 'blog_single_comments',
+	'label'       => __( 'Show comments', 'silver' ),
+	'section'     => 'blog-single',
+	'description' => __( 'Show the comment list and form on blog posts. WordPress discussion settings still apply. Product reviews are not affected.', 'silver' ),
+	'default'     => 1,
 ) );
 
 Silver_Option::add_field( 'option', array(

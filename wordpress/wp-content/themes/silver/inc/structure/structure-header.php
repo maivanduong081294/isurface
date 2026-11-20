@@ -1041,6 +1041,12 @@ function silver_header_block_id( $position ) {
 		return 0;
 	}
 
+	// An empty block shows nothing to visitors: hide the whole header bar
+	// (editors still see it with the "Open this in UX Builder" hint).
+	if ( '' === trim( (string) get_post_field( 'post_content', $block_id ) ) && ! silver_current_user_can_edit_ux_block( $block_id ) ) {
+		return 0;
+	}
+
 	return $block_id;
 }
 
@@ -1120,6 +1126,50 @@ function silver_has_bottom_bar() {
  *
  * @return void
  */
+/**
+ * Visibility classes for an option "Hide on" (multicheck of UX Builder
+ * screens): hide-for-sm / -md / -ml / -lg.
+ *
+ * @param string $setting Theme mod name.
+ *
+ * @return array
+ */
+function silver_header_hide_screen_classes( $setting ) {
+	$screens = get_theme_mod( $setting, array() );
+	if ( is_string( $screens ) ) $screens = array_filter( explode( ',', $screens ) );
+
+	$classes = array();
+	foreach ( (array) $screens as $screen ) {
+		if ( in_array( $screen, array( 'sm', 'md', 'ml', 'lg' ), true ) ) $classes[] = 'hide-for-' . $screen;
+	}
+
+	return $classes;
+}
+
+/**
+ * Header Mobile Menu / Overlay > "Disable Mobile Menu on": body classes
+ * mobile-menu-off-{sm|md|ml|lg}, used by silver.css to hide the menu and the
+ * buttons that open it on those screens.
+ *
+ * @param array $classes Body classes.
+ *
+ * @return array
+ */
+function silver_mobile_menu_hide_body_class( $classes ) {
+	// Menu not output at all: buttons that would open it are hidden everywhere.
+	if ( get_theme_mod( 'mobile_menu_disable' ) ) {
+		$classes[] = 'mobile-menu-disabled';
+		return $classes;
+	}
+
+	foreach ( silver_header_hide_screen_classes( 'mobile_menu_hide_screens' ) as $class ) {
+		$classes[] = 'mobile-menu-off-' . substr( $class, strlen( 'hide-for-' ) );
+	}
+
+	return $classes;
+}
+add_filter( 'body_class', 'silver_mobile_menu_hide_body_class' );
+
 function header_inner_class( $position ) {
 
 	$classes      = null;
@@ -1170,6 +1220,11 @@ function header_inner_class( $position ) {
 				$classes[] = 'show-for-medium';
 			}
 		}
+	}
+
+	// Hide the bar per screen (Top Bar / Header Bottom > "Hide ... on").
+	if ( in_array( $position, array( 'top', 'bottom' ), true ) ) {
+		$classes = array_merge( (array) $classes, silver_header_hide_screen_classes( 'header_' . $position . '_hide_screens' ) );
 	}
 
 	// Dark nav on light headers.

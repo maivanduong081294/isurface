@@ -128,6 +128,8 @@ function silver_terms_shortcode($atts, $content = null, $tag = 'ux_terms')
     'hide_empty'  => 'false',
 
     // Display.
+    'style'            => '', // '' / card
+    'icon_pos'         => 'top', // Card style: top / center / left / left-center / right / right-center
     'show_thumbnail'   => 'yes',
     'show_title'       => 'yes',
     'show_count'       => 'yes',
@@ -136,6 +138,7 @@ function silver_terms_shortcode($atts, $content = null, $tag = 'ux_terms')
     'title_tag'        => 'h4',
     'image_meta'       => 'thumbnail_id',
     'image_size'       => 'medium',
+    'image_width'      => '', // Card style: icon size.
     'image_height'     => '100%',
     'image_radius'     => '',
     'image_fit'        => 'cover',
@@ -171,6 +174,12 @@ function silver_terms_shortcode($atts, $content = null, $tag = 'ux_terms')
 
   $title_tag = in_array($atts['title_tag'], array('h2', 'h3', 'h4', 'h5', 'h6', 'p', 'div'), true) ? $atts['title_tag'] : 'h4';
   $image_fit = 'contain' === $atts['image_fit'] ? 'contain' : 'cover';
+  $is_card   = 'card' === $atts['style'];
+  // Card style: icon position, the same values as the Featured box.
+  $icon_pos  = in_array($atts['icon_pos'], array('top', 'center', 'left', 'left-center', 'right', 'right-center'), true) ? $atts['icon_pos'] : 'top';
+  $card_cls  = $is_card ? ' ux-terms-card ux-terms-icon-' . $icon_pos : '';
+  // On a term archive, the current term is marked (Card style draws it active).
+  $current   = (is_category() || is_tag() || is_tax()) ? get_queried_object_id() : 0;
   $grid      = 'grid' === $atts['type'] ? silver_get_grid($atts['grid']) : array();
   $animate   = $atts['animate'] ? ' data-animate="' . esc_attr($atts['animate']) . '"' : '';
 
@@ -178,7 +187,7 @@ function silver_terms_shortcode($atts, $content = null, $tag = 'ux_terms')
     'id'                  => $atts['_id'],
     'tag'                 => $tag,
     'type'                => $atts['type'],
-    'class'               => trim('ux-terms ux-terms-fit-' . $image_fit . ' text-' . $atts['text_align'] . ' ' . $atts['class']),
+    'class'               => trim('ux-terms ux-terms-fit-' . $image_fit . $card_cls . ' text-' . $atts['text_align'] . ' ' . $atts['class']),
     'visibility'          => $atts['visibility'],
     'style'               => '',
     'slider_style'        => $atts['slider_nav_style'],
@@ -211,6 +220,7 @@ function silver_terms_shortcode($atts, $content = null, $tag = 'ux_terms')
     if (is_wp_error($url)) continue;
 
     $col_class = array('col', 'ux-terms-item', 'ux-terms-item-' . $term->slug);
+    if ($current && (int) $term->term_id === (int) $current) $col_class[] = 'is-current';
     if ($grid) {
       $current     = min($index, count($grid) - 1);
       $col_class[] = 'grid-col';
@@ -248,6 +258,7 @@ function silver_terms_shortcode($atts, $content = null, $tag = 'ux_terms')
 
   // Image ratio / radius and text align, per screen.
   echo silver_responsive_style_tag($atts['_id'], $atts, array( // phpcs:ignore WordPress.Security.EscapeOutput
+    'image_width'  => array('selector' => '.ux-terms-image', 'property' => 'width', 'unit' => 'px'),
     'image_height' => array('selector' => '.ux-terms-image-inner', 'property' => 'padding-top'),
     'image_radius' => array('selector' => '.ux-terms-image-inner', 'property' => 'border-radius', 'unit' => 'px'),
     'text_align'   => array('selector' => '.ux-terms-item', 'only_overrides' => true, 'default' => 'center', 'map' => silver_responsive_map('text_align')),

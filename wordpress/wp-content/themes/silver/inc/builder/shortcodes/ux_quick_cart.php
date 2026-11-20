@@ -55,6 +55,22 @@ add_ux_builder_shortcode('ux_quick_cart', array(
 				'no'  => array('title' => 'Hide'),
 			),
 		),
+		'count_bg'    => array(
+			'type'       => 'colorpicker',
+			'heading'    => __('Count background', 'silver'),
+			'conditions' => 'show_count === "yes"',
+			'alpha'      => true,
+			'format'     => 'rgb',
+			'position'   => 'bottom right',
+		),
+		'count_color' => array(
+			'type'       => 'colorpicker',
+			'heading'    => __('Count text', 'silver'),
+			'conditions' => 'show_count === "yes"',
+			'alpha'      => true,
+			'format'     => 'rgb',
+			'position'   => 'bottom right',
+		),
 		'show_title' => array(
 			'type'    => 'radio-buttons',
 			'heading' => __('Title', 'silver'),

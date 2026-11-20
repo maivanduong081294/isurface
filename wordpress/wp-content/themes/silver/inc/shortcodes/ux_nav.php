@@ -23,7 +23,7 @@ function ux_navigation($atts) {
       $classes = array('nav');
       
       if($class) $classes[] = $class;
-      if($visibility) $classes[] = $visibility;
+      // Visibility on the outer wrapper (a hidden element leaves no empty box).
       if($case) $classes[] = 'nav-'.$case;
       if($type) $classes[] = 'nav-'.$type;
       if($size) $classes[] = 'nav-size-'.$size;
@@ -42,7 +42,7 @@ function ux_navigation($atts) {
         ) );
       }
 
-      echo '<div' . ( $_id ? ' id="' . esc_attr( $_id ) . '"' : '' ) . ' class="nav-wrapper">';
+      echo '<div' . ( $_id ? ' id="' . esc_attr( $_id ) . '"' : '' ) . ' class="' . esc_attr( trim( 'nav-wrapper ' . $visibility ) ) . '">';
       echo '<ul class="'.esc_attr(implode(' ',$classes)).'">';
 
       if ( is_page() && $post->post_parent && !$parent ){

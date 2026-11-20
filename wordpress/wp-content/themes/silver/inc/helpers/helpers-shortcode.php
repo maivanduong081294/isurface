@@ -1,5 +1,67 @@
 <?php
 
+/** Accept CSS lengths without allowing a value to escape its declaration. */
+function silver_builder_css_value( $value, $unit = 'rem' ) {
+  $value = trim( (string) $value );
+  if ( preg_match( '/^(?:\d+(?:\.\d*)?|\.\d+)$/D', $value ) ) return $value . $unit;
+  if ( preg_match( '/^(?:\d+(?:\.\d*)?|\.\d+)(?:px|rem|em|%|vw|vh|vmin|vmax|svw|svh|lvw|lvh|dvw|dvh|ch|ex|lh|rlh|cqw|cqh|cqi|cqb|cqmin|cqmax)$/iD', $value ) ) return $value;
+  if ( in_array( $value, array( 'inherit', 'initial', 'unset', 'revert', 'normal' ), true ) ) return $value;
+  if ( ! preg_match( '/^(?:var|calc|min|max|clamp)\(/', $value ) || preg_match( '/[^a-zA-Z0-9_.,%()+*\s\/-]/', $value ) ) return '';
+  if ( strpos( $value, '/*' ) !== false ) return '';
+  preg_match_all( '/([a-zA-Z][a-zA-Z0-9_-]*)\s*\(/', $value, $functions );
+  foreach ( $functions[1] as $function ) {
+    if ( ! in_array( $function, array( 'var', 'calc', 'min', 'max', 'clamp' ), true ) ) return '';
+  }
+  $depth = 0;
+  foreach ( str_split( $value ) as $char ) {
+    if ( $char === '(' ) $depth++;
+    if ( $char === ')' && --$depth < 0 ) return '';
+  }
+  return $depth === 0 ? $value : '';
+}
+
+/**
+ * Inline style of an image overlay (.overlay): its colour. An empty colour, or
+ * "1" / "true" (the Overlay box layout without a colour), prints nothing, so
+ * the default overlay colour of silver.css applies.
+ *
+ * @param string $color Overlay colour.
+ *
+ * @return string
+ */
+function silver_overlay_style( $color ) {
+  $color = trim( (string) $color );
+  if ( $color === '' || $color === '1' || $color === 'true' ) return '';
+
+  return 'background-color:' . $color . ';';
+}
+
+/** Apply Advanced > Order to the rendered root without adding a layout wrapper. */
+function silver_shortcode_order( $output, $tag, $atts ) {
+  if ( ! is_array( $atts ) || ! class_exists( 'WP_HTML_Tag_Processor' ) ) return $output;
+  $values = array();
+  foreach ( array( 'order', 'order__sm', 'order__md', 'order__ml', 'order__lg' ) as $key ) {
+    if ( isset( $atts[$key] ) && preg_match( '/^[+-]?\d+$/D', trim( (string) $atts[$key] ) ) ) {
+      $values[$key] = (string) intval( $atts[$key] );
+    }
+  }
+  if ( ! $values ) return $output;
+  $html = new WP_HTML_Tag_Processor( $output );
+  while ( $html->next_tag() ) {
+    if ( in_array( $html->get_tag(), array( 'STYLE', 'SCRIPT', 'LINK' ), true ) ) continue;
+    $id = $html->get_attribute( 'id' );
+    if ( ! $id ) {
+      $id = wp_unique_id( 'silver-order-' );
+      $html->set_attribute( 'id', $id );
+    }
+    return $html->get_updated_html() . silver_responsive_style_tag( $id, $values, array(
+      'order' => array( 'property' => 'order', 'default' => '0' ),
+    ) );
+  }
+  return $output;
+}
+add_filter( 'do_shortcode_tag', 'silver_shortcode_order', 20, 3 );
+
 /**
  * Generate position classes for banner content.
  *
@@ -169,7 +231,8 @@ function get_silver_repeater_start( $atts ) {
   ?>
 
   <?php if($atts['title']){?>
-  <div class="row">
+  <?php /* The title row is outside the items row: it needs the visibility too. */ ?>
+  <div class="<?php echo esc_attr( trim( 'row ' . $atts['visibility'] ) ); ?>">
     <div class="xlarge-12 col">
       <h3 class="section-title"><span><?php echo wp_kses_post( $atts['title'] ); ?></span></h3>
     </div>
@@ -330,7 +393,15 @@ function get_shortcode_inline_css($args){
     $style = '';
       foreach ($args as $key => $value) {
         $unit = array_key_exists( 'unit', $value ) ? $value['unit'] : null;
-        if($value['value']) $style .=  $value['attribute'].':'.$value['value'].$unit.';';
+        if ( ! $value['value'] ) continue;
+        // A typed value with its own unit (300px, 20rem, calc(...)) is kept;
+        // a number gets the default unit, as before. Invalid values are dropped.
+        if ( $unit !== null && ! is_numeric( trim( (string) $value['value'] ) ) ) {
+          $css = silver_builder_css_value( $value['value'], $unit );
+          if ( $css !== '' ) $style .= $value['attribute'] . ':' . $css . ';';
+          continue;
+        }
+        $style .=  $value['attribute'].':'.$value['value'].$unit.';';
        }
     if($style) return 'style="'.esc_attr($style).'"';
 }

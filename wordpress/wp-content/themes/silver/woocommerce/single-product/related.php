@@ -28,12 +28,15 @@ if ( $type == 'hidden' ) return;
 if ( $type == 'grid' ) $type = 'row';
 
  if ( get_theme_mod('category_force_image_height' ) ) $repeater_classes[] = 'has-equal-box-heights';
- if ( get_theme_mod('equalize_product_box' ) ) $repeater_classes[]        = 'equalize-box';
+ if ( get_theme_mod( 'equalize_product_box', 1 ) ) $repeater_classes[]        = 'equalize-box';
 
 $repeater['type']         = $type;
-$repeater['columns']      = get_theme_mod( 'related_products_pr_row', 4 );
+// Mobile first: "columns" is the mobile value, then Tablet portrait (__md),
+// Tablet landscape (__ml, 0 = not set) and Desktop (__lg).
+$repeater['columns']      = get_theme_mod( 'related_products_pr_row_mobile', 2 );
 $repeater['columns__md']  = get_theme_mod( 'related_products_pr_row_tablet', 3 );
-$repeater['columns__sm']  = get_theme_mod( 'related_products_pr_row_mobile', 2 );
+$repeater['columns__ml']  = (int) get_theme_mod( 'related_products_pr_row_tablet_landscape', 0 ) ?: '';
+$repeater['columns__lg']  = get_theme_mod( 'related_products_pr_row', 4 );
 $repeater['class']        = implode( ' ', $repeater_classes );
 $repeater['slider_style'] = 'reveal';
 $repeater['row_spacing']  = 'small';

@@ -7,29 +7,47 @@
  */
 
 /* ------------------------------------------------------------------ Tokens */
+/* Enterprise SaaS system: slate neutrals, one accent (the primary colour),
+   flat surfaces separated by space and 1px lines. Shadows only for layers
+   that float (dropdowns, modals). Spacing follows a 4px grid. */
 :root {
-	--sv-radius-sm: 6px;
-	--sv-radius: 10px;
+	--sv-radius-sm: 8px;
+	--sv-radius: 12px;
 	--sv-radius-lg: 16px;
 	--sv-radius-pill: 999px;
-	--sv-border: rgba(15, 23, 42, 0.1);
-	--sv-border-strong: rgba(15, 23, 42, 0.2);
+	--sv-border: #e2e8f0;
+	--sv-border-strong: #cbd5e1;
 	--sv-surface: #fff;
-	--sv-surface-muted: #f6f7f9;
+	--sv-surface-muted: #f8fafc;
+	--sv-heading: #0f172a;
 	--sv-text-muted: #64748b;
-	--sv-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.05);
-	--sv-shadow: 0 8px 20px -6px rgba(15, 23, 42, 0.14), 0 2px 6px -2px rgba(15, 23, 42, 0.06);
-	--sv-shadow-lg: 0 20px 44px -12px rgba(15, 23, 42, 0.24);
+	--sv-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+	--sv-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
+	--sv-shadow-lg: 0 12px 32px -8px rgba(15, 23, 42, 0.16), 0 0 0 1px rgba(15, 23, 42, 0.04);
 	--sv-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
-	--sv-dur: 0.25s;
-	--sv-primary: var(--fs-color-primary, #446084);
-	--sv-focus: 0 0 0 3px color-mix(in srgb, var(--sv-primary) 22%, transparent);
+	--sv-dur: 0.2s;
+	--sv-primary: var(--fs-color-primary, #2563eb);
+	--sv-focus: 0 0 0 3px color-mix(in srgb, var(--sv-primary) 24%, transparent);
+	--sv-space-section: 64px;
+}
+
+@media (max-width: 849px) {
+	:root {
+		--sv-space-section: 48px;
+	}
+}
+
+@media (max-width: 549px) {
+	:root {
+		--sv-space-section: 40px;
+	}
 }
 
 .dark {
 	--sv-border: rgba(255, 255, 255, 0.14);
 	--sv-border-strong: rgba(255, 255, 255, 0.28);
 	--sv-surface-muted: rgba(255, 255, 255, 0.06);
+	--sv-heading: #fff;
 	--sv-text-muted: rgba(255, 255, 255, 0.72);
 }
 
@@ -37,6 +55,88 @@
 html {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+}
+
+/* ------------------------------------------------------------- Typography */
+/* One clear scale. Sizes stay in em, so the Base Font Size option and the
+   Text Size of UX Builder elements still scale everything. Customizer fonts,
+   weights and the Headline Color (inline <style>, printed later) still win. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: var(--sv-heading);
+	letter-spacing: -0.01em;
+	text-rendering: optimizeLegibility;
+}
+
+.h1,
+h1 {
+	font-size: clamp(1.75em, 1.3em + 1.4vw, 2.5em);
+	letter-spacing: -0.025em;
+	line-height: 1.2;
+}
+
+.h2,
+h2 {
+	font-size: clamp(1.5em, 1.25em + 0.8vw, 1.875em);
+	letter-spacing: -0.02em;
+	line-height: 1.25;
+}
+
+.h3,
+h3 {
+	font-size: 1.375em;
+	line-height: 1.3;
+}
+
+.h4,
+h4 {
+	font-size: 1.125em;
+	line-height: 1.4;
+}
+
+.h5,
+h5 {
+	line-height: 1.45;
+}
+
+.h6,
+h6 {
+	color: var(--sv-text-muted);
+	font-size: 0.8125em;
+	letter-spacing: 0.06em;
+	line-height: 1.4;
+	opacity: 1;
+}
+
+@media (max-width: 549px) {
+	.h3,
+	h3 {
+		font-size: 1.2em;
+	}
+
+	.h4,
+	h4 {
+		font-size: 1.0625em;
+	}
+}
+
+p.lead,
+a.lead {
+	font-size: 1.2em;
+	line-height: 1.55;
+}
+
+.is-xsmall {
+	font-size: 0.75em;
+}
+
+hr {
+	border-color: var(--sv-border);
 }
 
 ::selection {
@@ -60,24 +160,24 @@ a {
 	--sv-btn-letter-spacing: 0.01em;
 	--sv-btn-text-transform: none;
 	--sv-btn-radius: var(--sv-radius-sm);
-	--sv-btn-height: 2.75em; /* ~44px touch target */
-	--sv-btn-line-height: calc(2.75em - 2px);
-	--sv-btn-line-height-outline: calc(2.75em - 3px);
-	--sv-btn-padding-x: 1.35em;
-	--sv-btn-hover-shadow: inset 0 0 0 100px rgba(0, 0, 0, 0.08), 0 6px 14px -6px rgba(15, 23, 42, 0.45);
-	--sv-btn-hover-transform: translateY(-1px);
-	--sv-control-height: 2.75em;
-	--sv-control-padding-x: 0.9em;
+	--sv-btn-height: 2.625em; /* 42px: dense, still a comfortable target */
+	--sv-btn-line-height: calc(2.625em - 2px);
+	--sv-btn-line-height-outline: calc(2.625em - 3px);
+	--sv-btn-padding-x: 1.25em;
+	--sv-btn-hover-shadow: inset 0 0 0 100px rgba(0, 0, 0, 0.08);
+	--sv-btn-hover-transform: none;
+	--sv-control-height: 2.625em;
+	--sv-control-padding-x: 0.875em;
 	--sv-control-radius: var(--sv-radius-sm);
-	--sv-control-color: #1f2937;
-	--sv-control-border: #d0d5dd;
-	--sv-control-border-hover: #98a2b3;
-	--sv-control-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+	--sv-control-color: #0f172a;
+	--sv-control-border: #cbd5e1;
+	--sv-control-border-hover: #94a3b8;
+	--sv-control-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
 	--sv-control-hover-shadow: var(--sv-control-shadow);
 	--sv-control-focus-border: var(--sv-primary);
 	--sv-control-focus-shadow: var(--sv-focus);
-	--sv-control-placeholder: #8a94a6;
-	--sv-control-disabled-bg: #f2f4f7;
+	--sv-control-placeholder: #94a3b8;
+	--sv-control-disabled-bg: #f1f5f9;
 	--sv-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
 	--sv-select-padding-right: 2.4em;
 	--sv-select-shadow: var(--sv-control-shadow);
@@ -147,7 +247,9 @@ input[type="reset"] {
 	--sv-btn-depth-3: 0 1px 2px rgba(15, 23, 42, 0.16), 0 10px 20px -8px color-mix(in srgb, var(--sv-btn-accent) 60%, transparent);
 	--sv-btn-depth-4: 0 2px 4px -1px rgba(15, 23, 42, 0.16), 0 16px 28px -10px color-mix(in srgb, var(--sv-btn-accent) 65%, transparent);
 	--sv-btn-depth-5: 0 2px 4px -1px rgba(15, 23, 42, 0.16), 0 22px 36px -12px color-mix(in srgb, var(--sv-btn-accent) 70%, transparent);
-	--sv-btn-depth-hover: 0 8px 18px -8px color-mix(in srgb, var(--sv-btn-accent) 65%, #0f172a);
+	/* Flat by default: a hover only darkens the button. Depth presets below
+	   bring their own shadow. */
+	--sv-btn-depth-hover: 0 0 0 0 transparent;
 	--sv-btn-hover-tint: rgba(0, 0, 0, 0.08); /* darkens any colour */
 	--sv-btn-hover-shadow: inset 0 0 0 100px var(--sv-btn-hover-tint), var(--sv-btn-depth-hover);
 	/* Darker tone of the button colour: the edge under a Bevel button. */
@@ -223,7 +325,7 @@ input[type="reset"] {
 /* Shade: light-to-colour gradient with a crisp top edge instead of the glossy
    overlay. */
 .button.is-shade {
-	background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 70%);
+	background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0) 70%);
 }
 
 .button.is-shade:after {
@@ -260,7 +362,7 @@ input[type="reset"] {
    and a light that sweeps across the button on hover. */
 .button.is-gloss {
 	--sv-btn-hover-shadow: var(--sv-btn-rim), inset 0 0 0 100px var(--sv-btn-hover-tint), var(--sv-btn-depth-hover);
-	background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.08) 50%, rgba(255, 255, 255, 0) 50%, rgba(15, 23, 42, 0.08));
+	background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0) 50%, rgba(15, 23, 42, 0.05));
 	box-shadow: var(--sv-btn-rim), var(--sv-btn-depth);
 }
 
@@ -341,16 +443,6 @@ input[type="reset"] {
 .dark .button.is-link:hover,
 .dark .button.is-underline:hover {
 	opacity: 1;
-}
-
-.searchform .flex-grow .search-field {
-	border-top-right-radius: 0;
-	border-bottom-right-radius: 0;
-}
-
-.searchform .submit-button {
-	border-top-left-radius: 0;
-	border-bottom-left-radius: 0;
 }
 
 .quantity .minus {
@@ -660,13 +752,13 @@ label:has(> input[type="radio"]) > input {
 .pricing-table {
 	border-color: var(--sv-border);
 	border-radius: var(--sv-radius-lg);
-	box-shadow: var(--sv-shadow-sm);
-	transition: transform var(--sv-dur) var(--sv-ease), box-shadow var(--sv-dur) var(--sv-ease);
+	box-shadow: none;
+	transition: border-color var(--sv-dur) var(--sv-ease), box-shadow var(--sv-dur) var(--sv-ease);
 }
 
 .pricing-table:hover {
-	box-shadow: var(--sv-shadow);
-	transform: translateY(-3px);
+	border-color: var(--sv-border-strong);
+	box-shadow: var(--sv-shadow-sm);
 }
 
 .featured-table {
@@ -700,8 +792,8 @@ label:has(> input[type="radio"]) > input {
 /* ------------------------------------------------------------ Testimonial */
 .testimonial-box {
 	background-color: var(--sv-surface-muted);
-	border-radius: var(--sv-radius-lg);
-	padding: 1.75em;
+	border-radius: var(--sv-radius);
+	padding: 1.5em;
 }
 
 .testimonial-meta,
@@ -716,7 +808,7 @@ label:has(> input[type="radio"]) > input {
 }
 
 .social-icons .button.icon:hover {
-	transform: translateY(-2px);
+	transform: none;
 }
 
 /* -------------------------------------------------------------- Countdown */
@@ -773,6 +865,10 @@ label:has(> input[type="radio"]) > input {
 	box-shadow: var(--sv-shadow-lg);
 }
 
+.nav-dropdown-has-border .nav-dropdown {
+	border-color: var(--sv-border);
+}
+
 .nav-dropdown > li > a,
 .nav-dropdown .nav-column > li > a {
 	border-radius: var(--sv-radius-sm);
@@ -782,6 +878,449 @@ label:has(> input[type="radio"]) > input {
 
 .ux-quick-cart-count {
 	font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------- Off-canvas cart drawer */
+/* Header with the title on the left and the close button on the same row,
+   product rows as small cards, a footer pinned to the bottom with the total
+   and Checkout as the main action (View cart is the secondary one). */
+/* --sv-price: Style > Colors > Sale Price (function-custom-css.php);
+   --sv-price-default: heading colour, the accent with Vivid UI. */
+.off-canvas-cart,
+.nav-dropdown {
+	--sv-cart-pad: 24px;
+	--sv-cart-price: var(--sv-price, var(--sv-price-default, var(--sv-heading)));
+}
+
+/* Solid panel (the base off-canvas is 95% white, so the page showed through). */
+.off-canvas-right .mfp-content.off-canvas-cart {
+	background-color: var(--sv-surface);
+	box-shadow: -16px 0 48px -12px rgba(15, 23, 42, 0.24);
+}
+
+.dark.off-canvas .off-canvas-cart,
+.dark .off-canvas-cart {
+	--sv-surface: #0f172a;
+}
+
+.off-canvas-cart .cart-popup-inner {
+	padding: 0 var(--sv-cart-pad);
+}
+
+.off-canvas-cart .cart-popup-title {
+	align-items: center;
+	border-bottom: 1px solid var(--sv-border);
+	display: flex;
+	margin: 0 calc(var(--sv-cart-pad) * -1);
+	min-height: 64px;
+	padding: 0 64px 0 var(--sv-cart-pad);
+	text-align: left;
+}
+
+.off-canvas-cart .cart-popup-title > span {
+	color: var(--sv-heading);
+	font-size: 1.125rem;
+	font-weight: 700;
+	letter-spacing: -0.01em;
+	text-transform: none;
+}
+
+.off-canvas-cart .cart-popup-title .is-divider {
+	display: none;
+}
+
+/* Close button: same row as the title, dark on the white panel. */
+.off-canvas-right:has(.off-canvas-cart) .mfp-close {
+	align-items: center;
+	border-radius: var(--sv-radius-sm);
+	color: var(--sv-heading);
+	display: flex;
+	height: 40px;
+	justify-content: center;
+	mix-blend-mode: normal; /* base uses "difference" for the dark overlay */
+	opacity: 1;
+	right: 12px;
+	top: 12px;
+	transition: background-color var(--sv-dur) var(--sv-ease);
+	width: 40px;
+}
+
+.off-canvas-right:has(.off-canvas-cart) .mfp-close:hover {
+	background-color: var(--sv-surface-muted);
+}
+
+.off-canvas-right:has(.off-canvas-cart) .mfp-close svg {
+	height: 22px;
+	width: 22px;
+}
+
+.off-canvas-right.dark:has(.off-canvas-cart) .mfp-close {
+	color: #fff;
+}
+
+/* Product rows */
+:is(.off-canvas-cart, .nav-dropdown) .woocommerce-mini-cart {
+	margin-bottom: 16px;
+}
+
+/* Row is at least as tall as the thumbnail (72px + 2 x 16px padding):
+   with a 1-line name the image used to hang past the row and get cut by
+   the next row's border (li has overflow: hidden). */
+:is(.off-canvas-cart, .nav-dropdown) ul.product_list_widget li {
+	--sv-cart-thumb: 72px;
+	margin: 0; /* never the content-list indent (.col-inner ul li) */
+	min-height: calc(var(--sv-cart-thumb) + 32px);
+	padding: 16px 40px 16px calc(var(--sv-cart-thumb) + 16px);
+}
+
+:is(.off-canvas-cart, .nav-dropdown) ul.product_list_widget li + li {
+	border-top-color: var(--sv-border);
+}
+
+:is(.off-canvas-cart, .nav-dropdown) ul.product_list_widget li img {
+	background-color: var(--sv-surface-muted);
+	border: 1px solid var(--sv-border);
+	border-radius: var(--sv-radius-sm);
+	height: var(--sv-cart-thumb);
+	margin: 0;
+	top: 16px;
+	width: var(--sv-cart-thumb);
+}
+
+:is(.off-canvas-cart, .nav-dropdown) ul.product_list_widget li a:not(.remove) {
+	-webkit-box-orient: vertical;
+	color: var(--sv-heading);
+	display: -webkit-box;
+	font-size: 0.9375rem;
+	font-weight: 600;
+	-webkit-line-clamp: 2;
+	line-clamp: 2;
+	line-height: 1.35;
+	margin-bottom: 6px;
+	min-height: 0;
+	transition: color var(--sv-dur) var(--sv-ease);
+}
+
+:is(.off-canvas-cart, .nav-dropdown) ul.product_list_widget li a:not(.remove):hover {
+	color: var(--sv-primary);
+}
+
+/* Variation attributes (Size, Color, ...): one compact wrapping line
+   "Size M · Color Red" instead of the base stacked, floated dt/dd. */
+:is(.off-canvas-cart, .nav-dropdown) .woocommerce-mini-cart-item dl.variation {
+	align-items: baseline;
+	color: var(--sv-text-muted);
+	display: flex;
+	flex-wrap: wrap;
+	font-size: 0.8125rem;
+	gap: 2px 0;
+	line-height: 1.4;
+	margin: 0 0 6px;
+}
+
+:is(.off-canvas-cart, .nav-dropdown) .woocommerce-mini-cart-item dl.variation dt {
+	clear: none;
+	float: none;
+	font-weight: 400;
+	margin: 0 4px 0 0;
+}
+
+:is(.off-canvas-cart, .nav-dropdown) .woocommerce-mini-cart-item dl.variation dd {
+	color: var(--sv-heading);
+	font-weight: 600;
+	margin: 0;
+	min-width: 0;
+	overflow-wrap: anywhere;
+}
+
+:is(.off-canvas-cart, .nav-dropdown) .woocommerce-mini-cart-item dl.variation dd:not(:last-child)::after {
+	color: var(--sv-border-strong);
+	content: "·";
+	font-weight: 400;
+	margin: 0 8px;
+}
+
+:is(.off-canvas-cart, .nav-dropdown) .woocommerce-mini-cart-item dl.variation dd p {
+	display: inline;
+	margin: 0;
+}
+
+/* Same bottom line for every row, with or without the stepper:
+   quantity on the left, price on the right, same size and colour. */
+:is(.off-canvas-cart, .nav-dropdown) .woocommerce-mini-cart-item .ux-mini-cart-qty {
+	align-items: center;
+	gap: 8px;
+	justify-content: space-between;
+	margin-right: 0;
+	margin-top: 2px;
+	min-height: 34px;
+}
+
+/* Header > Cart > "Quantity in mini cart": compact stepper + line subtotal. */
+:is(.off-canvas-cart, .nav-dropdown) .ux-mini-cart-qty .quantity.buttons_added {
+	border: 1px solid var(--sv-border-strong);
+	border-radius: var(--sv-radius-sm);
+	opacity: 1;
+	overflow: hidden;
+}
+
+:is(.off-canvas-cart, .nav-dropdown) .ux-mini-cart-qty .quantity.buttons_added input {
+	border: 0;
+	box-shadow: none;
+	height: 32px;
+	line-height: 32px;
+	min-height: 32px;
+}
+
+:is(.off-canvas-cart, .nav-dropdown) .ux-mini-cart-qty .quantity.buttons_added .ux-quantity__button {
+	background: transparent;
+	color: var(--sv-heading);
+	min-width: 32px;
+	padding: 0;
+	width: 32px;
+}
+
+:is(.off-canvas-cart, .nav-dropdown) .ux-mini-cart-qty .quantity.buttons_added .ux-quantity__button:hover {
+	background: var(--sv-surface-muted);
+}
+
+:is(.off-canvas-cart, .nav-dropdown) .ux-mini-cart-qty .quantity.buttons_added input[type="number"] {
+	font-size: 0.875rem;
+	font-variant-numeric: tabular-nums;
+	width: 2.25em;
+}
+
+:is(.off-canvas-cart, .nav-dropdown) .ux-mini-cart-qty .product-subtotal {
+	font-size: 0.9375rem;
+	font-variant-numeric: tabular-nums;
+	margin-left: auto;
+	opacity: 1;
+}
+
+/* Without the stepper: "1 × price" becomes "1 ×" left, price right. */
+:is(.off-canvas-cart, .nav-dropdown) ul.product_list_widget li span.quantity {
+	align-items: baseline;
+	color: var(--sv-text-muted);
+	display: flex;
+	flex: 1;
+	font-size: 0.875rem;
+	font-variant-numeric: tabular-nums;
+	gap: 8px;
+	justify-content: space-between;
+	margin: 0;
+	opacity: 1;
+}
+
+:is(.off-canvas-cart, .nav-dropdown) ul.product_list_widget li .ux-mini-cart-qty .amount {
+	color: var(--sv-cart-price);
+	font-size: 0.9375rem;
+	font-weight: 700;
+}
+
+/* Remove: 32px target, quiet until hovered, red on hover. */
+:is(.off-canvas-cart, .nav-dropdown) .widget_shopping_cart ul.product_list_widget li a.remove {
+	align-items: center;
+	border: 0;
+	border-radius: var(--sv-radius-sm);
+	color: var(--sv-text-muted);
+	display: flex;
+	font-size: 22px;
+	font-weight: 400;
+	height: 32px;
+	justify-content: center;
+	line-height: 1;
+	right: 0;
+	top: 12px;
+	transition: background-color var(--sv-dur) var(--sv-ease), color var(--sv-dur) var(--sv-ease);
+	width: 32px;
+}
+
+/* silver.css forces the × glyph to 15px (!important): hide it and draw an
+   X icon that follows the link colour. */
+:is(.off-canvas-cart, .nav-dropdown) .widget_shopping_cart ul.product_list_widget li a.remove {
+	overflow: hidden;
+	position: absolute;
+	text-indent: -999px;
+}
+
+:is(.off-canvas-cart, .nav-dropdown) .widget_shopping_cart ul.product_list_widget li a.remove::before {
+	background-color: currentColor;
+	content: "";
+	height: 16px;
+	left: 50%;
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M18 6 6 18M6 6l12 12'/%3E%3C/svg%3E") center / contain no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M18 6 6 18M6 6l12 12'/%3E%3C/svg%3E") center / contain no-repeat;
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 16px;
+}
+
+:is(.off-canvas-cart, .nav-dropdown) ul.product_list_widget li a.remove:hover,
+:is(.off-canvas-cart, .nav-dropdown) ul.product_list_widget li a.remove:focus-visible {
+	background-color: #fef2f2;
+	color: #dc2626;
+}
+
+/* Footer pinned to the bottom */
+.off-canvas-cart .ux-mini-cart-footer {
+	background-color: var(--sv-surface);
+	border-top: 1px solid var(--sv-border);
+	box-shadow: 0 -12px 24px -16px rgba(15, 23, 42, 0.16);
+	margin-left: calc(var(--sv-cart-pad) * -1);
+	margin-right: calc(var(--sv-cart-pad) * -1);
+	padding: 16px var(--sv-cart-pad) calc(var(--sv-cart-pad) + env(safe-area-inset-bottom, 0px));
+}
+
+:is(.off-canvas-cart, .nav-dropdown) .widget_shopping_cart p.total {
+	align-items: baseline;
+	border: 0;
+	display: flex;
+	justify-content: space-between;
+	margin: 0 0 16px;
+	padding: 0;
+}
+
+:is(.off-canvas-cart, .nav-dropdown) .widget_shopping_cart p.total strong {
+	color: var(--sv-text-muted);
+	font-size: 0.9375rem;
+	font-weight: 500;
+}
+
+:is(.off-canvas-cart, .nav-dropdown) .widget_shopping_cart p.total .amount {
+	color: var(--sv-cart-price);
+	font-size: 1.25rem;
+	font-variant-numeric: tabular-nums;
+	font-weight: 700;
+}
+
+:is(.off-canvas-cart, .nav-dropdown) .woocommerce-mini-cart__buttons {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	margin: 0;
+}
+
+:is(.off-canvas-cart, .nav-dropdown) .widget_shopping_cart .woocommerce-mini-cart__buttons .button {
+	--sv-btn-height: 48px;
+	--sv-btn-line-height: 46px;
+	font-size: 1rem;
+	margin: 0;
+	min-height: 48px;
+}
+
+/* Checkout first and filled; View cart second and outlined. */
+:is(.off-canvas-cart, .nav-dropdown) .woocommerce-mini-cart__buttons .button.checkout {
+	--sv-btn-accent: var(--sv-primary);
+	background-color: var(--sv-primary);
+	border-color: var(--sv-primary);
+	color: #fff;
+	order: -1;
+}
+
+:is(.off-canvas-cart, .nav-dropdown) .woocommerce-mini-cart__buttons .button:not(.checkout) {
+	--sv-btn-accent: var(--sv-border-strong);
+	background: transparent;
+	border: 1px solid var(--sv-border-strong);
+	box-shadow: none;
+	color: var(--sv-heading);
+}
+
+:is(.off-canvas-cart, .nav-dropdown) .woocommerce-mini-cart__buttons .button:not(.checkout):hover {
+	background: var(--sv-surface-muted);
+	border-color: var(--sv-control-border-hover);
+	color: var(--sv-heading);
+}
+
+/* Dropdown cart (quick cart "Dropdown" style and the header cart dropdown):
+   same rows, prices and buttons as the drawer, sized for a small panel. */
+/* Side padding on the inner li: the theme's dropdown positioning (silver.js)
+   measures the width without padding, so padding here pushed it off screen. */
+.nav-dropdown:has(> .widget_shopping_cart) {
+	min-width: 340px;
+	padding: 8px 0 20px;
+}
+
+.nav-dropdown > .widget_shopping_cart {
+	padding: 0 20px;
+}
+
+/* Below 850px the theme does not reposition dropdowns: the cart opened to
+   the right of the icon (left: -15px) and ran off the screen. Open it to the
+   left, under the icon, and never wider than the screen. The margin set by
+   the desktop positioning script (inline style) is cleared. */
+@media (max-width: 849px) {
+	li.has-dropdown > .nav-dropdown:has(> .widget_shopping_cart) {
+		left: auto;
+		margin: 0 !important;
+		min-width: 0;
+		right: -8px;
+		width: min(340px, calc(100vw - 24px));
+	}
+}
+
+.nav-dropdown .woocommerce-mini-cart {
+	margin-bottom: 0;
+}
+
+.nav-dropdown .ux-mini-cart-footer {
+	border-top: 1px solid var(--sv-border);
+	padding-top: 16px;
+}
+
+.nav-dropdown .widget_shopping_cart .woocommerce-mini-cart__buttons .button {
+	--sv-btn-height: 44px;
+	--sv-btn-line-height: 42px;
+	font-size: 0.9375rem;
+	min-height: 44px;
+}
+
+.nav-dropdown .ux-mini-cart-empty {
+	gap: 8px;
+	padding: 24px 0 8px;
+}
+
+/* Empty cart */
+.off-canvas-cart .ux-mini-cart-empty {
+	gap: 12px;
+	margin: auto 0;
+	padding: 48px 0;
+}
+
+.off-canvas-cart .ux-mini-cart-empty-icon {
+	align-items: center;
+	background-color: var(--sv-surface-muted);
+	border-radius: 50%;
+	color: var(--sv-text-muted);
+	display: flex;
+	height: 96px;
+	justify-content: center;
+	margin: 0 auto 4px;
+	width: 96px;
+}
+
+.off-canvas-cart .ux-mini-cart-empty-icon svg {
+	height: 40px !important; /* inline height: 80px from the template */
+	opacity: 0.55 !important;
+}
+
+.off-canvas-cart .woocommerce-mini-cart__empty-message {
+	color: var(--sv-text-muted);
+	margin: 0;
+}
+
+.off-canvas-cart .return-to-shop {
+	margin: 8px 0 0;
+}
+
+@media (max-width: 549px) {
+	.off-canvas-cart {
+		--sv-cart-pad: 16px;
+	}
+
+	.off-canvas-cart ul.product_list_widget li {
+		--sv-cart-thumb: 64px;
+	}
 }
 
 /* ---------------------------------------------------------------- Sliders */
@@ -889,6 +1428,7 @@ label:has(> input[type="radio"]) > input {
 /* Featured: the header in the primary colour (the muted header above hid its
    white title) and a card that stands 12px taller on both sides. */
 .featured-table {
+	border-width: 1.5px;
 	box-shadow: var(--sv-shadow);
 	margin-bottom: -12px;
 	margin-top: -12px;
@@ -1217,6 +1757,829 @@ label:has(> input[type="radio"]) > input {
 	border-width: 1.5px;
 }
 
+/* ------------------------------------------------------------------ Header */
+/* A hairline instead of a shadow separates the header from the page. The
+   Header Shadow option (.header-shadow) and transparent headers keep their
+   own look. */
+.header-wrapper:not(.transparent) .header-bg-color {
+	box-shadow: inset 0 -1px 0 var(--sv-border);
+}
+
+.header-shadow .header-bg-color,
+.header-wrapper.stuck .header-bg-color {
+	box-shadow: inset 0 -1px 0 var(--sv-border), var(--sv-shadow-sm);
+}
+
+.header-main .nav > li > a {
+	transition: color var(--sv-dur) var(--sv-ease), opacity var(--sv-dur) var(--sv-ease);
+}
+
+.nav-uppercase > li > a {
+	letter-spacing: 0.04em;
+}
+
+.top-divider {
+	border-top-color: var(--sv-border);
+}
+
+/* -------------------------------------------------------------- Blog posts */
+/* Category, title, meta: one tight group, without the decorative bar. */
+.entry-header-text .entry-divider {
+	display: none;
+}
+
+.entry-header .entry-category {
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	margin-bottom: 0.75em;
+}
+
+.entry-header .entry-category a {
+	color: var(--sv-primary);
+}
+
+.entry-header .entry-title {
+	margin-bottom: 0.4em;
+}
+
+.entry-header .entry-title a {
+	color: inherit;
+}
+
+.entry-header .entry-title a:hover {
+	color: var(--sv-primary);
+}
+
+.entry-header .entry-meta {
+	color: var(--sv-text-muted);
+	font-size: 0.875em;
+	letter-spacing: 0;
+	text-transform: none;
+}
+
+.entry-header .entry-meta a {
+	color: inherit;
+	font-weight: 500;
+}
+
+.entry-header .entry-meta a:hover {
+	color: var(--sv-primary);
+}
+
+.entry-content {
+	padding-bottom: 1.25em;
+	padding-top: 1.25em;
+}
+
+.more-link.button {
+	margin-top: 0.5em;
+}
+
+footer.entry-meta {
+	border-bottom: 1px solid var(--sv-border);
+	border-top: 1px solid var(--sv-border);
+	color: var(--sv-text-muted);
+	font-size: 0.875em;
+	margin-bottom: var(--sv-space-section);
+	padding: 0.75em 0;
+}
+
+footer.entry-meta a {
+	color: inherit;
+}
+
+footer.entry-meta a:hover {
+	color: var(--sv-primary);
+}
+
+/* The date badge on post images: flat, no heavy frame. */
+.post-date .badge-inner,
+.badge-square .badge-inner {
+	box-shadow: none;
+}
+
+.article-inner.has-shadow {
+	border: 1px solid var(--sv-border);
+	border-radius: var(--sv-radius);
+	box-shadow: none;
+	overflow: hidden;
+}
+
+.entry-content blockquote {
+	border-left: 3px solid var(--sv-primary);
+	color: var(--sv-heading);
+	font-size: 1.1em;
+}
+
+/* --------------------------------------------------------- Widgets / footer */
+/* The label of the Search block is the title of its widget: same look. */
+.widget-title,
+span.widget-title,
+.widget .wp-block-heading,
+.widget .wp-block-search__label {
+	color: var(--sv-heading);
+	font-size: 0.8125em;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.widget .is-divider {
+	display: none;
+}
+
+.widget ul li {
+	border-top-color: var(--sv-border);
+}
+
+.widget > ul > li > a,
+.widget .wp-block-archives a,
+.widget .wp-block-categories a,
+.widget .wp-block-latest-posts a {
+	color: inherit;
+}
+
+.widget > ul > li > a:hover,
+.widget .wp-block-archives a:hover,
+.widget .wp-block-categories a:hover,
+.widget .wp-block-latest-posts a:hover {
+	color: var(--sv-primary);
+}
+
+.footer-widgets.footer {
+	border-top: 1px solid var(--sv-border);
+	padding-top: calc(var(--sv-space-section) * 0.75);
+}
+
+.footer-widgets.footer:not(.dark) {
+	color: #475569;
+}
+
+/* --------------------------------------------------------- Sidebar widgets */
+/* Blog sidebar (.widget-area) and shop sidebar (.sidebar-inner, .shop-sidebar):
+   every widget is a flat card (surface, 1px line, large radius) with the same
+   title. Built for the classic widgets of WordPress, WooCommerce and the theme
+   (Appearance > Widgets is classic, see function-setup.php); the matching
+   blocks get the same look. Each kind of content gets one clear pattern:
+   - search: one field with the button inside it, one focus ring;
+   - link lists (categories, archives, pages, menus): rows split by a hairline,
+     a chevron that follows the link on hover, post counts as small pills;
+   - post lists (latest posts): numbered rows, or the thumbnail when shown;
+   - comments: author and post on one line, date and excerpt muted below;
+   - tags: pills of one size;
+   - nothing to show: a dashed empty state with an icon.
+   Nothing names an industry: colours are the tokens above with the primary
+   colour as the only accent, so it follows the site branding. Footer widgets
+   keep their own look. One sidebar can be tuned with the tokens, e.g.
+   `.widget-area { --sv-widget-bg: transparent; --sv-widget-padding: 0; }` */
+:is(.widget-area, .sidebar-inner, .shop-sidebar) {
+	--sv-widget-bg: var(--sv-surface);
+	--sv-widget-border: var(--sv-border);
+	--sv-widget-radius: var(--sv-radius-lg);
+	--sv-widget-padding: 20px;
+	--sv-widget-gap: 20px;
+	--sv-widget-row-y: 10px;
+	--sv-widget-tint: color-mix(in srgb, var(--sv-primary) 9%, transparent);
+	--sv-widget-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E");
+	--sv-widget-chat: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z'/%3E%3Cpath d='M8 9h8M8 13h5'/%3E%3C/svg%3E");
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar):is(.dark, .dark *) {
+	--sv-widget-bg: var(--sv-surface-muted);
+}
+
+/* The chevron points the other way in right-to-left languages. */
+html[dir="rtl"] {
+	--sv-widget-dir: -1;
+}
+
+/* Full-width sidebar (below the posts under 1200px, or in a wide column):
+   the cards flow into as many columns as fit, at least 260px wide. In the
+   narrow sidebar column this is one column, as before. */
+:is(.widget-area, .sidebar-inner) {
+	align-items: start;
+	display: grid;
+	gap: var(--sv-widget-gap);
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+}
+
+:is(.widget-area, .sidebar-inner) > * {
+	min-width: 0;
+}
+
+/* Card */
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget {
+	background-color: var(--sv-widget-bg);
+	border: 1px solid var(--sv-widget-border);
+	border-radius: var(--sv-widget-radius);
+	margin-bottom: var(--sv-widget-gap);
+	padding: var(--sv-widget-padding);
+}
+
+:is(.widget-area, .sidebar-inner) > .widget {
+	margin-bottom: 0; /* the grid gap spaces them */
+}
+
+/* A widget that holds only a heading (a heading block added on its own)
+   titles the cards after it: no card around it. */
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget:has(> .wp-block-heading:only-child) {
+	background-color: transparent;
+	border: 0;
+	padding: 0;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget:empty {
+	display: none;
+}
+
+/* Title */
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget :is(.widget-title, .wp-block-heading, .wp-block-search__label) {
+	align-items: center;
+	display: flex;
+	gap: 0.6em;
+	line-height: 1.4;
+	margin: 0 0 14px;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget .wp-block-heading:only-child {
+	margin-bottom: 0;
+}
+
+/* Widget text does not add space under the card's padding. */
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget :is(p, form, .textwidget, .wp-block-group):last-child {
+	margin-bottom: 0;
+}
+
+/* Search: the Search block and the theme search form. The frame is the
+   field; the input inside has no frame of its own, so the focus ring wraps
+   the whole control. Only the input shrinks, the button keeps its label. */
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget :is(.wp-block-search__inside-wrapper, .searchform > .flex-row) {
+	align-items: center;
+	background-color: var(--sv-control-bg, #fff);
+	border: 1px solid var(--sv-border-strong);
+	border-radius: var(--sv-radius);
+	display: flex;
+	gap: 4px;
+	padding: 4px;
+	transition: border-color var(--sv-dur) var(--sv-ease), box-shadow var(--sv-dur) var(--sv-ease);
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget :is(.wp-block-search__inside-wrapper, .searchform > .flex-row):hover {
+	border-color: var(--sv-control-border-hover, var(--sv-border-strong));
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget :is(.wp-block-search__inside-wrapper, .searchform > .flex-row):focus-within {
+	border-color: var(--sv-primary);
+	box-shadow: var(--sv-focus);
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget .wp-block-search .wp-block-search__input,
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget .searchform .search-field {
+	background-color: transparent;
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+	flex: 1 1 0;
+	height: 40px;
+	margin: 0;
+	min-width: 0;
+	padding: 0 10px;
+}
+
+/* The ring is on the frame (focus-within above). */
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget .wp-block-search .wp-block-search__input:focus,
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget .searchform .search-field:focus {
+	box-shadow: none;
+	outline: none;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget .wp-block-search .wp-block-search__button,
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget .searchform .submit-button {
+	align-items: center;
+	background-color: var(--sv-primary);
+	border: 0;
+	border-radius: var(--sv-radius-sm);
+	box-shadow: none;
+	color: #fff;
+	display: inline-flex;
+	flex: none;
+	font-size: 0.875em;
+	font-weight: 600;
+	gap: 6px;
+	height: 40px;
+	justify-content: center;
+	letter-spacing: 0;
+	line-height: 1;
+	margin: 0;
+	min-height: 0;
+	min-width: 40px;
+	padding: 0 16px;
+	text-transform: none;
+	transition: background-color var(--sv-dur) var(--sv-ease);
+	white-space: nowrap;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget .wp-block-search .wp-block-search__button:hover,
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget .searchform .submit-button:hover {
+	background-color: color-mix(in srgb, var(--sv-primary) 84%, #000);
+	color: #fff;
+}
+
+/* Icon-only buttons are square. */
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget .wp-block-search__icon-button .wp-block-search__button,
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget .searchform .submit-button {
+	padding: 0;
+	width: 40px;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget :is(.wp-block-search__button, .submit-button) svg {
+	fill: currentColor;
+	height: 20px;
+	min-width: 0;
+	width: 20px;
+}
+
+/* Link lists: categories, archives, pages, meta and menus (widget or block).
+   One row per link, the post count as a pill, a chevron at the end. */
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.widget_categories, .widget_archive, .widget_pages, .widget_meta, .widget_nav_menu, .widget_product_categories, .wp-block-categories-list, .wp-block-archives-list, .wp-block-page-list) li:not(li li) {
+	align-items: center;
+	border-top: 1px solid var(--sv-border);
+	color: var(--sv-text-muted);
+	column-gap: 8px;
+	display: flex;
+	flex-wrap: wrap;
+	font-size: 0.875em;
+	margin: 0;
+	padding: 0;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.widget_categories, .widget_archive, .widget_pages, .widget_meta, .widget_nav_menu, .widget_product_categories, .wp-block-categories-list, .wp-block-archives-list, .wp-block-page-list) li:not(li li):first-child {
+	border-top: 0;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.widget_categories, .widget_archive, .widget_pages, .widget_meta, .widget_nav_menu, .widget_product_categories, .wp-block-categories-list, .wp-block-archives-list, .wp-block-page-list) li:not(li li) > a {
+	color: var(--sv-heading);
+	display: block;
+	flex: 1 1 0;
+	font-size: calc(1em / 0.875);
+	line-height: 1.45;
+	min-width: 0;
+	padding: var(--sv-widget-row-y) 0;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.widget_categories, .widget_archive, .widget_pages, .widget_meta, .widget_nav_menu, .widget_product_categories, .wp-block-categories-list, .wp-block-archives-list, .wp-block-page-list) li:not(li li) > a:hover,
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.widget_categories, .widget_archive, .widget_pages, .widget_meta, .widget_nav_menu, .widget_product_categories, .wp-block-categories-list, .wp-block-archives-list, .wp-block-page-list) li:is(.current-cat, .current-menu-item, .current_page_item) > a {
+	color: var(--sv-primary);
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.widget_categories, .widget_archive, .widget_pages, .widget_meta, .widget_nav_menu, .widget_product_categories, .wp-block-categories-list, .wp-block-archives-list, .wp-block-page-list) li:not(li li)::after {
+	background-color: currentColor;
+	content: "";
+	flex: none;
+	height: 16px;
+	-webkit-mask: var(--sv-widget-chevron) center / contain no-repeat;
+	mask: var(--sv-widget-chevron) center / contain no-repeat;
+	opacity: 0.45;
+	order: 1;
+	transform: scaleX(var(--sv-widget-dir, 1));
+	transition: opacity var(--sv-dur) var(--sv-ease), transform var(--sv-dur) var(--sv-ease);
+	width: 16px;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.widget_categories, .widget_archive, .widget_pages, .widget_meta, .widget_nav_menu, .widget_product_categories, .wp-block-categories-list, .wp-block-archives-list, .wp-block-page-list) li:not(li li):has(> a:hover)::after,
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.widget_categories, .widget_archive, .widget_pages, .widget_meta, .widget_nav_menu, .widget_product_categories, .wp-block-categories-list, .wp-block-archives-list, .wp-block-page-list) li:is(.current-cat, .current-menu-item, .current_page_item):not(li li)::after {
+	color: var(--sv-primary);
+	opacity: 1;
+	transform: scaleX(var(--sv-widget-dir, 1)) translateX(2px);
+}
+
+/* Rows with sub-items keep the theme's toggle instead of the chevron; the
+   sub-list goes on its own line under the row. */
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.widget_categories, .widget_archive, .widget_pages, .widget_meta, .widget_nav_menu, .widget_product_categories, .wp-block-categories-list, .wp-block-archives-list, .wp-block-page-list) li:not(li li):has(> .toggle)::after {
+	display: none;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.widget_categories, .widget_archive, .widget_pages, .widget_meta, .widget_nav_menu, .widget_product_categories, .wp-block-categories-list, .wp-block-archives-list, .wp-block-page-list) li:not(li li) > ul {
+	border-inline-start: 1px solid var(--sv-border);
+	flex-basis: 100%;
+	margin: 0 0 var(--sv-widget-row-y) 2px;
+	order: 2;
+	padding-inline-start: 12px;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.widget_categories, .widget_archive, .widget_pages, .widget_meta, .widget_nav_menu, .widget_product_categories, .wp-block-categories-list, .wp-block-archives-list, .wp-block-page-list) li li > a {
+	color: var(--sv-text-muted);
+	display: inline-block;
+	padding: 4px 0;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.widget_categories, .widget_archive, .widget_pages, .widget_meta, .widget_nav_menu, .widget_product_categories, .wp-block-categories-list, .wp-block-archives-list, .wp-block-page-list) li li > a:hover {
+	color: var(--sv-primary);
+}
+
+/* WooCommerce wraps the count in span.count, WordPress prints it as text:
+   both read the same, muted next to the link. */
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget li .count {
+	color: var(--sv-text-muted);
+	font-size: 1em;
+	font-variant-numeric: tabular-nums;
+	line-height: inherit;
+	opacity: 1;
+}
+
+/* Silver Recent Posts widget: date badge or thumbnail, then the title. The
+   badge keeps the shape set in Blog > Badge style. */
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .flatsome_recent_posts > ul {
+	margin: calc(var(--sv-widget-row-y) * -1) 0;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .flatsome_recent_posts .recent-blog-posts {
+	gap: 12px;
+	margin: 0;
+	padding: var(--sv-widget-row-y) 0;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .flatsome_recent_posts .recent-blog-posts > .flex-col {
+	margin: 0;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .flatsome_recent_posts .recent-blog-posts a {
+	color: var(--sv-heading);
+	font-weight: 500;
+	line-height: 1.45;
+	margin: 0;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .flatsome_recent_posts .recent-blog-posts a:hover {
+	color: var(--sv-primary);
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .flatsome_recent_posts .post_comments {
+	color: var(--sv-text-muted);
+	margin-top: 2px;
+	opacity: 1;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .flatsome_recent_posts .post_comments a {
+	color: inherit;
+	font-weight: 400;
+}
+
+/* Calendar: today and the days with posts stand out, the grid stays quiet. */
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget_calendar caption {
+	color: var(--sv-heading);
+	font-weight: 600;
+	padding-bottom: 8px;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget_calendar :is(th, td) {
+	border: 0;
+	font-variant-numeric: tabular-nums;
+	padding: 6px 0;
+	text-align: center;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget_calendar th {
+	color: var(--sv-text-muted);
+	font-size: 0.8125em;
+	font-weight: 600;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget_calendar td a {
+	color: var(--sv-primary);
+	font-weight: 600;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget_calendar #today {
+	background-color: var(--sv-widget-tint);
+	border-radius: var(--sv-radius-sm);
+	color: var(--sv-primary);
+	font-weight: 600;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .wp-calendar-nav {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 8px;
+}
+
+/* Post lists: Latest Posts block (list view) and the Recent Posts widget.
+   A number in front of each title; the thumbnail takes its place when the
+   block shows featured images. */
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.wp-block-latest-posts:not(.is-grid), .widget_recent_entries ul) {
+	counter-reset: sv-widget-post;
+	margin: calc(var(--sv-widget-row-y) * -1) 0;
+	padding: 0;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.wp-block-latest-posts:not(.is-grid), .widget_recent_entries ul) > li {
+	border-top: 1px solid var(--sv-border);
+	column-gap: 12px;
+	counter-increment: sv-widget-post;
+	display: grid;
+	grid-template-columns: 26px minmax(0, 1fr);
+	margin: 0;
+	padding: var(--sv-widget-row-y) 0;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.wp-block-latest-posts:not(.is-grid), .widget_recent_entries ul) > li:first-child {
+	border-top: 0;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.wp-block-latest-posts:not(.is-grid), .widget_recent_entries ul) > li::before {
+	align-items: center;
+	align-self: start;
+	background-color: var(--sv-surface-muted);
+	border-radius: var(--sv-radius-sm);
+	color: var(--sv-text-muted);
+	content: counter(sv-widget-post, decimal-leading-zero);
+	display: flex;
+	font-family: inherit; /* silver.css sets the icon font on .widget > ul > li:before */
+	font-size: 0.75em;
+	font-variant-numeric: tabular-nums;
+	font-weight: 600;
+	grid-row: 1 / span 4;
+	height: 26px;
+	justify-content: center;
+	margin: 0;
+	opacity: 1;
+	transition: background-color var(--sv-dur) var(--sv-ease), color var(--sv-dur) var(--sv-ease);
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.wp-block-latest-posts:not(.is-grid), .widget_recent_entries ul) > li:has(> a:hover)::before {
+	background-color: var(--sv-widget-tint);
+	color: var(--sv-primary);
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.wp-block-latest-posts:not(.is-grid), .widget_recent_entries ul) > li > * {
+	grid-column: 2;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.wp-block-latest-posts:not(.is-grid), .widget_recent_entries ul) > li > a {
+	color: var(--sv-heading);
+	display: block;
+	font-weight: 500;
+	line-height: 1.45;
+	padding: 2px 0 0;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.wp-block-latest-posts:not(.is-grid), .widget_recent_entries ul) > li > a:hover {
+	color: var(--sv-primary);
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.wp-block-latest-posts__post-date, .wp-block-latest-posts__post-author, .widget_recent_entries .post-date) {
+	color: var(--sv-text-muted);
+	display: block;
+	font-size: 0.8125em;
+	margin-top: 2px;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .wp-block-latest-posts__post-excerpt {
+	color: var(--sv-text-muted);
+	font-size: 0.875em;
+	line-height: 1.5;
+	margin-top: 4px;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .wp-block-latest-posts__post-excerpt p {
+	margin: 0;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .wp-block-latest-posts:not(.is-grid) > li:has(> .wp-block-latest-posts__featured-image) {
+	grid-template-columns: 64px minmax(0, 1fr);
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .wp-block-latest-posts:not(.is-grid) > li:has(> .wp-block-latest-posts__featured-image)::before {
+	display: none;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .wp-block-latest-posts:not(.is-grid) > li > .wp-block-latest-posts__featured-image {
+	float: none;
+	grid-column: 1;
+	grid-row: 1 / span 4;
+	margin: 0;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .wp-block-latest-posts:not(.is-grid) .wp-block-latest-posts__featured-image img {
+	aspect-ratio: 1;
+	border-radius: var(--sv-radius-sm);
+	display: block;
+	height: auto;
+	max-width: none;
+	object-fit: cover;
+	width: 64px;
+}
+
+/* Comments: Latest Comments block and the Recent Comments widget. */
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.wp-block-latest-comments, .widget_recent_comments ul) {
+	margin: calc(var(--sv-widget-row-y) * -1) 0;
+	padding: 0;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.wp-block-latest-comments__comment, .widget_recent_comments li) {
+	border-top: 1px solid var(--sv-border);
+	color: var(--sv-text-muted);
+	font-size: 0.875em;
+	line-height: 1.5;
+	list-style: none;
+	margin: 0;
+	padding: var(--sv-widget-row-y) 0;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.wp-block-latest-comments__comment, .widget_recent_comments li):first-child {
+	border-top: 0;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.wp-block-latest-comments__comment-author, .comment-author-link) {
+	color: var(--sv-heading);
+	font-weight: 600;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.wp-block-latest-comments__comment-link, .widget_recent_comments li > a) {
+	color: var(--sv-heading);
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.wp-block-latest-comments__comment-link, .widget_recent_comments li > a, a.wp-block-latest-comments__comment-author):hover {
+	color: var(--sv-primary);
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .wp-block-latest-comments__comment-date {
+	display: block;
+	font-size: 0.857em;
+	margin-top: 2px;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .wp-block-latest-comments__comment-excerpt p {
+	margin: 4px 0 0;
+}
+
+/* Nothing to show yet: a quiet dashed box with an icon, not a bare line.
+   The Recent Comments widget prints an empty list: the text comes from
+   --sv-widget-empty-comments (translated, set in function-setup.php). */
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget :is(.wp-block-latest-comments.no-comments, .widget_recent_comments ul:empty) {
+	align-items: center;
+	background-color: var(--sv-surface-muted);
+	border: 1px dashed var(--sv-border-strong);
+	border-radius: var(--sv-radius);
+	color: var(--sv-text-muted);
+	display: flex;
+	flex-direction: column;
+	font-size: 0.875em;
+	gap: 8px;
+	line-height: 1.5;
+	margin: 0;
+	padding: 20px 16px;
+	text-align: center;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget :is(.wp-block-latest-comments.no-comments, .widget_recent_comments ul:empty)::before {
+	background-color: currentColor;
+	content: "";
+	height: 24px;
+	-webkit-mask: var(--sv-widget-chat) center / contain no-repeat;
+	mask: var(--sv-widget-chat) center / contain no-repeat;
+	opacity: 0.7;
+	width: 24px;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget_recent_comments ul:empty::after {
+	content: var(--sv-widget-empty-comments, "");
+}
+
+/* Tags: one size of pill. The tag cloud prints a font size per tag as an
+   inline style, so !important is the only way to even them out (WordPress
+   does the same for its Outline tag cloud style). */
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.tagcloud, .wp-block-tag-cloud) {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 0;
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.tagcloud, .wp-block-tag-cloud) a {
+	background-color: var(--sv-surface-muted);
+	border: 1px solid var(--sv-border);
+	border-radius: var(--sv-radius-pill);
+	color: var(--sv-heading);
+	display: inline-flex;
+	font-size: 0.8125em !important;
+	gap: 4px;
+	line-height: 1.5;
+	margin: 0;
+	padding: 5px 12px;
+	transition: background-color var(--sv-dur) var(--sv-ease), border-color var(--sv-dur) var(--sv-ease), color var(--sv-dur) var(--sv-ease);
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) :is(.tagcloud, .wp-block-tag-cloud) a:hover {
+	background-color: var(--sv-widget-tint);
+	border-color: color-mix(in srgb, var(--sv-primary) 40%, transparent);
+	color: var(--sv-primary);
+}
+
+:is(.widget-area, .sidebar-inner, .shop-sidebar) .tag-link-count {
+	color: var(--sv-text-muted);
+}
+
+/* ------------------------------------------------------------------- Shop */
+.product-small .box-text {
+	padding-bottom: 0.25em;
+}
+
+.product-small .name a {
+	color: var(--sv-heading);
+}
+
+.dark .product-small .name a {
+	color: inherit;
+}
+
+/* Product badges (Sale, New, custom bubble): inside the image with an even
+   inset, stacked with a gap, all the same size and fully opaque. The base CSS
+   made each next badge smaller (2.5em), faded and overlapping the previous one
+   (-0.4em), hanging off the image edge. The shape still follows Shop >
+   Bubble style (circle / square / frame / outline). */
+.badge-container.absolute {
+	margin: 0; /* silver.css adds 30px on top */
+	padding: 10px;
+}
+
+.badge-container > .badge {
+	height: 2.8em;
+	margin: 0;
+	opacity: 1;
+	width: 2.8em;
+}
+
+.badge-container > .badge + .badge {
+	margin-top: 6px;
+}
+
+.badge-container .badge-inner {
+	font-weight: 600;
+}
+
+/* The New bubble is printed with .is-small: same text size as Sale here, so
+   both badges have the same size. */
+.badge-container .badge-inner.is-small {
+	font-size: 1em;
+}
+
+.woocommerce-result-count,
+.woocommerce-breadcrumb,
+.breadcrumbs {
+	color: var(--sv-text-muted);
+}
+
+/* Blog breadcrumbs and the bar under the header: small and muted, links take
+   the primary colour on hover, the current page is the darkest item. On the
+   dark title of the "Top" single post layout everything stays light. */
+:is(.blog-breadcrumbs, .breadcrumbs-bar) .breadcrumbs {
+	color: var(--sv-heading);
+	font-size: 0.8125em;
+	font-weight: 500;
+}
+
+:is(.blog-breadcrumbs, .breadcrumbs-bar) .breadcrumbs a {
+	color: var(--sv-text-muted);
+}
+
+:is(.blog-breadcrumbs, .breadcrumbs-bar) .breadcrumbs a:hover {
+	color: var(--sv-primary);
+}
+
+.dark :is(.blog-breadcrumbs, .breadcrumbs-bar) .breadcrumbs,
+.dark :is(.blog-breadcrumbs, .breadcrumbs-bar) .breadcrumbs a {
+	color: rgba(255, 255, 255, 0.85);
+}
+
+.dark :is(.blog-breadcrumbs, .breadcrumbs-bar) .breadcrumbs a:hover {
+	color: #fff;
+}
+
+/* Bar under the header: a hairline like the other section separators. */
+.breadcrumbs-bar {
+	border-bottom-color: var(--sv-border);
+	padding: 12px 0;
+}
+
+.shop_table th,
+.shop_table thead th {
+	color: var(--sv-text-muted);
+	font-size: 0.8125em;
+	font-weight: 600;
+	letter-spacing: 0.06em;
+}
+
+.shop_table td,
+.shop_table th {
+	border-color: var(--sv-border);
+}
+
+.cart-collaterals .cart_totals,
+.woocommerce-checkout-review-order {
+	border-color: var(--sv-border);
+}
+
 /* --------------------------------------------------------- Reduced motion */
 @media (prefers-reduced-motion: reduce) {
 	*,
@@ -1235,5 +2598,9 @@ label:has(> input[type="radio"]) > input {
 	.icon-box:hover .icon-box-img img,
 	.social-icons .button.icon:hover {
 		transform: none;
+	}
+
+	:is(.widget-area, .sidebar-inner, .shop-sidebar) .widget li::after {
+		transition: none;
 	}
 }

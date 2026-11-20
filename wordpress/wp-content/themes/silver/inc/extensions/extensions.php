@@ -23,12 +23,22 @@ if ( get_theme_mod( 'cookie_notice' ) || is_customize_preview() ) {
 	require $extensions_url . '/silver-cookie-notice/silver-cookie-notice.php';
 }
 
+if ( get_theme_mod( 'floating_contact' ) || is_customize_preview() ) {
+	require $extensions_url . '/silver-floating-contact/silver-floating-contact.php';
+}
+
+// Infinite scroll / Load more button: shop archives (Shop pagination) and
+// blog archives (Blog pagination, no WooCommerce needed).
+if (
+	( is_woocommerce_activated() && in_array( get_theme_mod( 'shop_pagination' ), array( 'infinite-scroll', 'load-more' ), true ) )
+	|| 'load-more' === get_theme_mod( 'blog_pagination' )
+) {
+	require $extensions_url . '/silver-infinite-scroll/class-silver-infinite-scroll.php';
+}
+
 if(is_woocommerce_activated()){
-	if(!get_theme_mod('disable_quick_view', 0)){
+	if(!get_theme_mod('disable_quick_view', 1)){
 		require $extensions_url.'/silver-wc-quick-view/silver-quick-view.php';
-	}
-	if ( get_theme_mod( 'shop_pagination' ) === 'infinite-scroll' ) {
-		require $extensions_url . '/silver-infinite-scroll/class-silver-infinite-scroll.php';
 	}
 	if ( get_theme_mod( 'cart_auto_refresh' ) ) {
 		require $extensions_url . '/silver-cart-refresh/silver-cart-refresh.php';

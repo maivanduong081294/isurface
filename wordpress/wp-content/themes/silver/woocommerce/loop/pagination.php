@@ -43,8 +43,8 @@ if ( $total <= 1 ) {
 					'prev_text' => get_silver_icon( 'icon-angle-left' ),
 					'next_text' => get_silver_icon( 'icon-angle-right' ),
 					'type'      => 'array',
-					'end_size'  => 3,
-					'mid_size'  => 3,
+					'end_size'  => 1, // Short enough for one line on phones: ‹ 1 … 3 4 5 … 15 ›.
+					'mid_size'  => 1,
 				)
 			)
 		);

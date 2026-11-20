@@ -59,7 +59,7 @@ function silver_page_header_shortcode($atts) {
   $content_classes = array();
 
   if( $class ) $classes[] = $class;
-  if( $visibility ) $classes[] = $visibility;
+  // Visibility on the outer wrapper (a hidden element leaves no empty box).
 
   if ($text_color == 'light') $classes[] = 'dark';
   if ($text_color == 'dark') $classes[] = 'light';
@@ -156,7 +156,7 @@ function silver_page_header_shortcode($atts) {
    ob_end_clean();
    ob_start();
   ?>
-  <div id="<?php echo esc_attr( $_id ); ?>" class="page-header-wrapper">
+  <div id="<?php echo esc_attr( $_id ); ?>" class="<?php echo esc_attr( trim( 'page-header-wrapper ' . $visibility ) ); ?>">
   <div class="page-title <?php echo esc_attr( implode( ' ', $classes ) ); ?>">
 
     <?php if ( $bg || silver_responsive_values( $atts, 'bg' ) || silver_responsive_values( $atts, 'bg_color' ) ) { ?>

@@ -218,6 +218,11 @@ function silver_scripts() {
 			file_exists( $modern_file ) ? filemtime( $modern_file ) : $style_version
 		);
 
+		// Text of the empty state of the Recent Comments widget in the sidebar
+		// (it prints an empty list); same string as the Latest Comments block.
+		$empty_comments = addcslashes( wp_strip_all_tags( __( 'No comments to show.' ) ), "\"\\\n\r" );
+		wp_add_inline_style( 'silver-modern', ':root{--sv-widget-empty-comments:"' . $empty_comments . '"}' );
+
 		// Vivid UI: color accents on top of Modern UI (Global Styles > Vivid UI).
 		if ( get_theme_mod( 'silver_vivid_ui', 0 ) ) {
 			$vivid_file = $css_dir . 'silver-vivid.css';

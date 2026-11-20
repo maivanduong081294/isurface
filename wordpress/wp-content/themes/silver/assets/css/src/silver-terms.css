@@ -71,3 +71,176 @@
 .row-grid > .ux-terms-item .ux-terms-text {
   flex: none;
 }
+
+/* Card style ([ux_terms style="card"]): a bordered, rounded card with a small
+   icon tile above the title and count. The tile follows Text align (it is an
+   inline block) and its size comes from Icon width (56px by default).
+   Tokens come from the Modern UI layer, with fallbacks when it is off. */
+.ux-terms-card .col-inner {
+  height: 100%;
+}
+.ux-terms-card .ux-terms-link {
+  background-color: var(--sv-surface, #fff);
+  border: 1px solid var(--sv-border, #e5e7eb);
+  border-radius: var(--sv-radius-lg, 16px);
+  height: 100%;
+  padding: 24px;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+.ux-terms-card .ux-terms-link:hover {
+  border-color: color-mix(in srgb, var(--fs-color-primary) 45%, var(--sv-border, #e5e7eb));
+  box-shadow: 0 10px 24px -14px rgba(15, 23, 42, 0.22);
+}
+.ux-terms-card .is-current .ux-terms-link {
+  border-color: var(--fs-color-primary);
+  box-shadow: 0 10px 24px -14px rgba(15, 23, 42, 0.22);
+}
+.ux-terms-card .ux-terms-link:focus-visible {
+  border-color: var(--fs-color-primary);
+  outline: 0;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--fs-color-primary) 22%, transparent);
+}
+.ux-terms-card .ux-terms-image {
+  display: inline-block;
+  margin-block-end: 20px;
+  max-width: 100%;
+  vertical-align: top;
+  width: 56px;
+}
+.ux-terms-card .ux-terms-image-inner {
+  background-color: var(--sv-surface-muted, #f4f5f7);
+  border-radius: 12px;
+}
+/* Contain: the icon sits inside the tile with some room around it. Cover:
+   the picture fills the tile. */
+.ux-terms-card.ux-terms-fit-contain .ux-terms-image-inner img,
+.ux-terms-card.ux-terms-fit-contain .ux-terms-image-inner .ux-terms-placeholder {
+  height: auto;
+  inset: 14%;
+  width: auto;
+}
+.ux-terms-card .ux-terms-link:hover .ux-terms-image-inner img {
+  transform: scale(1.06);
+}
+.ux-terms-card .ux-terms-title {
+  color: var(--sv-heading, #0f172a);
+  font-size: 1em;
+  font-weight: 600;
+  line-height: 1.35;
+  margin-block: 0 0.2em;
+}
+/* The border marks hover; the title keeps its colour. */
+.ux-terms-card .ux-terms-link:hover .ux-terms-title {
+  color: var(--sv-heading, #0f172a);
+}
+.dark .ux-terms-card .ux-terms-link:hover .ux-terms-title,
+.ux-terms-card.dark .ux-terms-link:hover .ux-terms-title {
+  color: #fff;
+}
+.ux-terms-card .ux-terms-count {
+  color: var(--sv-text-muted, #64748b);
+  font-size: 0.875em;
+  opacity: 1;
+}
+.ux-terms-card .ux-terms-description {
+  color: var(--sv-text-muted, #64748b);
+  font-size: 0.875em;
+}
+@media (max-width: 549px) {
+  .ux-terms-card .ux-terms-link {
+    padding: 16px;
+  }
+  .ux-terms-card .ux-terms-image {
+    margin-block-end: 14px;
+  }
+}
+/* Card, Icon position (same values as the Featured box):
+   - top:    icon above the text, both follow Text align (the default above).
+   - center: icon above the text, both centred.
+   - left / right: icon beside the text, aligned to its first line.
+   - left-center / right-center: icon beside the text, centred vertically.
+   Beside the text, the text starts at the icon (left) or ends at it (right);
+   Text align does not apply. */
+.ux-terms-icon-center .ux-terms-link {
+  text-align: center;
+}
+.ux-terms-card:is(.ux-terms-icon-left, .ux-terms-icon-left-center, .ux-terms-icon-right, .ux-terms-icon-right-center) .ux-terms-link {
+  align-items: flex-start;
+  display: flex;
+  gap: 16px;
+  padding: 16px 20px;
+}
+.ux-terms-card:is(.ux-terms-icon-left-center, .ux-terms-icon-right-center) .ux-terms-link {
+  align-items: center;
+}
+.ux-terms-card:is(.ux-terms-icon-right, .ux-terms-icon-right-center) .ux-terms-link {
+  flex-direction: row-reverse;
+}
+.ux-terms-card:is(.ux-terms-icon-left, .ux-terms-icon-left-center, .ux-terms-icon-right, .ux-terms-icon-right-center) .ux-terms-image {
+  flex: none;
+  margin: 0;
+}
+.ux-terms-card:is(.ux-terms-icon-left, .ux-terms-icon-left-center, .ux-terms-icon-right, .ux-terms-icon-right-center) .ux-terms-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: break-word;
+  text-align: start;
+}
+.ux-terms-card:is(.ux-terms-icon-right, .ux-terms-icon-right-center) .ux-terms-text {
+  text-align: end;
+}
+/* Side layouts follow the width of the card, not of the screen: a card too
+   narrow for icon + text side by side (many columns on a tablet) stacks them
+   like "top", instead of squeezing the text to a letter per line. */
+.ux-terms-card:is(.ux-terms-icon-left, .ux-terms-icon-left-center, .ux-terms-icon-right, .ux-terms-icon-right-center) .col-inner {
+  container-type: inline-size;
+}
+@container (max-width: 300px) {
+  .ux-terms-card:is(.ux-terms-icon-left, .ux-terms-icon-left-center, .ux-terms-icon-right, .ux-terms-icon-right-center) .ux-terms-link {
+    gap: 12px;
+    padding: 14px 16px;
+  }
+}
+@container (max-width: 219px) {
+  .ux-terms-card:is(.ux-terms-icon-left, .ux-terms-icon-left-center, .ux-terms-icon-right, .ux-terms-icon-right-center) .ux-terms-link {
+    display: block;
+    padding: 16px;
+    text-align: start;
+  }
+  /* The icon stays on the side of the text. */
+  .ux-terms-card:is(.ux-terms-icon-right, .ux-terms-icon-right-center) .ux-terms-link {
+    text-align: end;
+  }
+  .ux-terms-card:is(.ux-terms-icon-left, .ux-terms-icon-left-center, .ux-terms-icon-right, .ux-terms-icon-right-center) .ux-terms-image {
+    margin-block-end: 14px;
+  }
+}
+/* On a dark section. */
+.dark .ux-terms-card .ux-terms-link,
+.ux-terms-card.dark .ux-terms-link {
+  background-color: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+.dark .ux-terms-card .ux-terms-image-inner,
+.ux-terms-card.dark .ux-terms-image-inner {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+.dark .ux-terms-card .ux-terms-title,
+.ux-terms-card.dark .ux-terms-title {
+  color: #fff;
+}
+.dark .ux-terms-card .ux-terms-count,
+.ux-terms-card.dark .ux-terms-count {
+  color: rgba(255, 255, 255, 0.7);
+}
+/* Grid type: the icon keeps its size instead of filling the cell. */
+.row-grid.ux-terms-card > .ux-terms-item .ux-terms-image {
+  background: none;
+  flex: none;
+  overflow: visible;
+}
+.row-grid.ux-terms-card > .ux-terms-item .ux-terms-image-inner {
+  position: relative;
+}

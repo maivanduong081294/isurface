@@ -293,3 +293,47 @@
 .silver-icon-picker__none:hover {
 	background-color: #3e474f;
 }
+
+/* ---- Customizer (inc/admin/customizer/customizer-icon-control.php) ----
+   Same popup as in UX Builder; the field uses the light Customizer controls. */
+.wp-customizer .silver-icon-picker {
+	z-index: 600000; /* above the Customizer overlay (500000) */
+}
+
+.wp-customizer .silver-icon-picker .silver-icon-picker__search input[type="text"] {
+	background-color: #333a41;
+	border-color: hsla(0, 0%, 100%, .08);
+	color: #f1f1f1;
+	min-height: 36px;
+}
+
+.customize-control-silver-icon .silver-icon-field__select,
+.customize-control-silver-icon .silver-icon-field__clear {
+	background-color: #fff;
+	border: 1px solid #8c8f94;
+	border-radius: 4px;
+	color: #2c3338;
+	min-height: 36px;
+}
+
+.customize-control-silver-icon .silver-icon-field__select:hover,
+.customize-control-silver-icon .silver-icon-field__select:focus,
+.customize-control-silver-icon .silver-icon-field__clear:hover,
+.customize-control-silver-icon .silver-icon-field__clear:focus {
+	background-color: #f6f7f7;
+	border-color: #2271b1;
+	color: #135e96;
+}
+
+.customize-control-silver-icon .silver-icon-field__select:focus,
+.customize-control-silver-icon .silver-icon-field__clear:focus {
+	box-shadow: 0 0 0 1px #2271b1;
+}
+
+.customize-control-silver-icon .silver-icon-field__clear {
+	flex-basis: 36px;
+}
+
+.customize-control-silver-icon .silver-icon-field:not(.has-icon) .silver-icon-field__clear {
+	display: none;
+}

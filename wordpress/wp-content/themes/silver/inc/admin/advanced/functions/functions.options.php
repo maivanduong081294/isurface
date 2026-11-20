@@ -102,6 +102,22 @@ if ( ! function_exists( 'of_options' ) ) {
 		);
 
 		$of_options[] = array(
+			'name' => 'Tablet landscape only',
+			'desc' => 'Add custom CSS here for tablets in landscape (850-1199px)',
+			'id'   => 'html_custom_css_tablet_landscape',
+			'std'  => '',
+			'type' => 'textarea',
+		);
+
+		$of_options[] = array(
+			'name' => 'Tablet portrait only',
+			'desc' => 'Add custom CSS here for tablets in portrait (550-849px)',
+			'id'   => 'html_custom_css_tablet_portrait',
+			'std'  => '',
+			'type' => 'textarea',
+		);
+
+		$of_options[] = array(
 			'name' => 'Mobile only',
 			'desc' => 'Add custom CSS here for mobile view',
 			'id'   => 'html_custom_css_mobile',
@@ -195,8 +211,9 @@ if ( ! function_exists( 'of_options' ) ) {
 			'std'     => '',
 			'type'    => 'select',
 			'options' => array(
-				''     => 'Normal navigation',
-				'ajax' => 'AJAX navigation',
+				''          => 'Normal navigation',
+				'ajax'      => 'AJAX navigation',
+				'load-more' => 'Load more button',
 			),
 		);
 
@@ -209,6 +226,7 @@ if ( ! function_exists( 'of_options' ) ) {
 				'options' => array(
 					''                => 'Normal navigation',
 					'ajax'            => 'AJAX navigation',
+					'load-more'       => 'Load more button',
 					'infinite-scroll' => 'Infinite scroll',
 				),
 			);
@@ -233,7 +251,7 @@ if ( ! function_exists( 'of_options' ) ) {
 		$of_options[] = array(
 			'name' => '',
 			'type' => '',
-			'desc' => '<h2 style="font-size:1rem; margin-top: 40px;">Infinite scroll settings</h2>',
+			'desc' => '<h2 style="font-size:1rem; margin-top: 40px;">Infinite scroll settings</h2><p style="font-size:14px">For Shop pagination: Infinite scroll. "Load more button" (Shop or Blog pagination) always loads on click.</p>',
 		);
 
 		$of_options[] = array(

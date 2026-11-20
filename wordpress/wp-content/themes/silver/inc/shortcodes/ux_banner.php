@@ -175,7 +175,7 @@ function silver_ux_banner( $atts, $content = null ){
         </div>
 		<?php require __DIR__ . '/commons/shape-divider.php'; ?>
         <div class="banner-layers <?php if($container_width !== 'full-width') echo 'container'; ?>">
-            <?php echo $start_link; ?><div class="fill banner-link"></div><?php echo $end_link; ?>
+            <?php if ( $start_link ) { echo $start_link; ?><div class="fill banner-link"></div><?php echo $end_link; } ?>
             <?php
             // Get Layers
             if (!get_theme_mod('flatsome_fallback', 1) || (has_shortcode( $content, 'text_box' ) || has_shortcode( $content, 'ux_hotspot' ) || has_shortcode( $content, 'ux_image' ))) {
@@ -213,7 +213,8 @@ function silver_ux_banner( $atts, $content = null ){
 
       <?php
        // Add invisible image if height is not set.
-      if(!$height) { ?>
+      // Without a background image it would be an empty, zero-height box.
+      if ( ! $height && $bg ) { ?>
         <div class="height-fix is-invisible"><?php if($bg) echo silver_get_image($bg, $bg_size, $alt, true); ?></div>
       <?php } ?>
       <?php

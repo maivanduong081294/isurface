@@ -6,6 +6,9 @@
  * @silver-version 3.20.0
  */
 
+// No mobile menu in the page (Header Mobile Menu / Overlay > Disable): no icon.
+if ( get_theme_mod( 'mobile_menu_disable' ) ) return;
+
 $icon_style = get_theme_mod( 'menu_icon_style', '' );
 $link_atts  = [
 	'href'          => '#',

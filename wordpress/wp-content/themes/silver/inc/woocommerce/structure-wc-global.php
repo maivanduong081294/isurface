@@ -123,7 +123,7 @@ function silver_woocommerce_breadcrumbs() {
 	$home = ( get_theme_mod( 'breadcrumb_home', 1 ) ) ? _x( 'Home', 'breadcrumb', 'woocommerce' ) : false;
 
 	return array(
-		'delimiter'   => '&#47;',
+		'delimiter'   => silver_breadcrumb_divider(), // Customizer > Breadcrumbs > Divider icon.
 		'wrap_before' => '<nav class="woocommerce-breadcrumb breadcrumbs ' . get_theme_mod( 'breadcrumb_case', 'uppercase' ) . '" aria-label="Breadcrumb">',
 		'wrap_after'  => '</nav>',
 		'before'      => '',
@@ -422,7 +422,7 @@ function silver_percentage_format( $value ) {
  * Clear cached percentage whenever a product or variation is saved.
  */
 function silver_percentage_clear( $object ) {
-	if ( ! get_theme_mod( 'sale_bubble_percentage' ) ) return;
+	if ( ! get_theme_mod( 'sale_bubble_percentage', 1 ) ) return;
 
 	$post_id = 'variation' === $object->get_type()
 		? $object->get_parent_id()
@@ -483,17 +483,6 @@ function silver_account_login_lightbox() {
 }
 
 add_action( 'wp_footer', 'silver_account_login_lightbox' );
-
-/**
- * Payment icons to footer
- */
-function silver_footer_payment_icons() {
-	$icons = get_theme_mod( 'payment_icons_placement' );
-	if ( is_array( $icons ) && ! in_array( 'footer', $icons ) ) return;
-	echo do_shortcode( '[ux_payment_icons]' );
-}
-
-add_action( 'silver_absolute_footer_secondary', 'silver_footer_payment_icons' );
 
 /**
  * Disable reviews globally
@@ -700,4 +689,54 @@ function silver_get_rating_html( float $rating, int $count = 0, bool $single_pro
 
 	return apply_filters( 'woocommerce_product_get_rating_html', $html, $rating, $count );
 }
+
+if ( ! function_exists( 'silver_variable_price_from' ) ) {
+	/**
+	 * Variable products show their lowest price, "Từ 15 ₫", instead of a
+	 * range. When the cheapest variation is on sale, its regular price is
+	 * struck out, as for a simple product on sale. Variations that all cost
+	 * the same keep WooCommerce's own output; wp-admin is left alone.
+	 *
+	 * "Từ" goes inside the amount of the selling price (inside <ins> on sale),
+	 * so it is never read with the struck-out price and takes the same colour,
+	 * size and weight as the price:
+	 * <span class="woocommerce-Price-amount amount"><span class="price-from">Từ</span> <bdi>15 ₫</bdi></span>
+	 *
+	 * @param string     $price   Price HTML.
+	 * @param WC_Product $product Variable product.
+	 *
+	 * @return string
+	 */
+	function silver_variable_price_from( $price, $product ) {
+		if ( is_admin() && ! wp_doing_ajax() ) {
+			return $price;
+		}
+
+		$prices = $product->get_variation_prices( true ); // Display prices, sorted from low to high.
+		if ( empty( $prices['price'] ) ) {
+			return $price;
+		}
+
+		$min_id    = array_key_first( $prices['price'] );
+		$min_price = (float) $prices['price'][ $min_id ];
+		$max_price = (float) end( $prices['price'] );
+
+		if ( $min_price === $max_price ) {
+			return $price;
+		}
+
+		$from   = '<span class="price-from">' . esc_html_x( 'Từ', 'variable product price', 'silver' ) . '</span> ';
+		$amount = wc_price( $min_price );
+		$pos    = strpos( $amount, '<bdi>' );
+		$amount = false === $pos ? $from . $amount : substr_replace( $amount, $from, $pos, 0 );
+
+		$min_regular = isset( $prices['regular_price'][ $min_id ] ) ? (float) $prices['regular_price'][ $min_id ] : $min_price;
+		if ( $min_regular > $min_price ) {
+			$amount = wc_format_sale_price( $min_regular, $amount );
+		}
+
+		return $amount . $product->get_price_suffix();
+	}
+}
+add_filter( 'woocommerce_variable_price_html', 'silver_variable_price_from', 10, 2 );
 

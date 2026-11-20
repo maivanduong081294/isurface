@@ -23,6 +23,10 @@ function ux_hotspot( $atts, $content = null ) {
 		'prod_id'        => '149',
 	), $atts ) );
 
+	// Shortcodes must return their HTML: echoing printed the hotspot before
+	// the content instead of in its place.
+	ob_start();
+
 	$classes       = array( 'hotspot-wrapper' );
 	$classes_inner = array( 'hotspot tooltip' );
 
@@ -61,7 +65,7 @@ function ux_hotspot( $atts, $content = null ) {
 	);
 
 	// load quick view script for products.
-	if ( $type == 'product' && ! get_theme_mod( 'disable_quick_view' ) ) {
+	if ( $type == 'product' && ! get_theme_mod( 'disable_quick_view', 1 ) ) {
 		wp_enqueue_script( 'wc-add-to-cart-variation' );
 	}
 
@@ -93,7 +97,7 @@ function ux_hotspot( $atts, $content = null ) {
 			elseif ( $type == 'product' ) :
 				$product_title = get_the_title( $prod_id );
 
-				if ( get_theme_mod( 'disable_quick_view' ) ) :
+				if ( get_theme_mod( 'disable_quick_view', 1 ) ) :
 					$link_atts     = array(
 						'href'       => esc_url( get_permalink( $prod_id ) ),
 						'class'      => esc_attr( $classes_inner ),
@@ -127,6 +131,7 @@ function ux_hotspot( $atts, $content = null ) {
 		</div>
 	</div>
 	<?php
+	return ob_get_clean();
 }
 
 add_shortcode( 'ux_hotspot', 'ux_hotspot' );

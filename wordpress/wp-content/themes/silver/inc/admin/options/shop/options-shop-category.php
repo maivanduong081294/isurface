@@ -179,10 +179,26 @@ Silver_Option::add_field( 'option', array(
 	),
 ) );
 
+// Tablet landscape (850-1199px). 0: the Tablet portrait value, as before.
+Silver_Option::add_field( 'option', array(
+	'type'        => 'slider',
+	'settings'    => 'category_row_count_tablet_landscape',
+	'label'       => __( 'Products per row - Tablet landscape', 'silver' ),
+	'description' => __( '0 = same as Tablet portrait.', 'silver' ),
+	'section'     => 'woocommerce_product_catalog',
+	'transport'   => silver_customizer_transport(),
+	'default'     => 0,
+	'choices'     => array(
+		'min'  => 0,
+		'max'  => 6,
+		'step' => 1,
+	),
+) );
+
 Silver_Option::add_field( 'option', array(
 	'type'      => 'slider',
 	'settings'  => 'category_row_count_tablet',
-	'label'     => __( 'Products per row - Tablet', 'silver' ),
+	'label'     => __( 'Products per row - Tablet portrait', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
 	'transport' => silver_customizer_transport(),
 	'default'   => 3,
@@ -238,20 +254,8 @@ Silver_Option::add_field( 'option', array(
 	'default'   => '0',
 ) );
 
-Silver_Option::add_field( 'option', array(
-	'type'            => 'checkbox',
-	'settings'        => 'breadcrumb_home',
-	'transport'       => silver_customizer_transport(),
-	'label'           => __( 'Show home link in breadcrumb', 'silver' ),
-	'section'         => 'woocommerce_product_catalog',
-	'active_callback' => function () {
-		$wpseo     = class_exists( 'WPSEO_Options' ) && get_theme_mod( 'wpseo_breadcrumb' ) ? true : false;
-		$rank_math = class_exists( 'RankMath' ) && get_theme_mod( 'rank_math_breadcrumb' ) ? true : false;
-
-		return ! $wpseo && ! $rank_math;
-	},
-	'default'         => 1,
-) );
+// Show home link in breadcrumb (breadcrumb_home): see the Breadcrumbs section
+// (inc/admin/options/global/options-breadcrumbs.php).
 
 Silver_Option::add_field( 'option', array(
 	'type'      => 'checkbox',
@@ -336,7 +340,9 @@ Silver_Option::add_field( '', array(
 	'settings' => 'custom_title_category_breadcrumbs',
 	'label'    => '',
 	'section'  => 'woocommerce_product_catalog',
-	'default'  => '<div class="options-title-divider">Breadcrumbs</div>',
+	'default'  => '<div class="options-title-divider">Breadcrumbs</div>'
+		/* translators: Link to the Breadcrumbs section of the Customizer. */
+		. '<p class="description">' . sprintf( __( 'Home link, case and divider icon: %s.', 'silver' ), '<a href="#" onclick="wp.customize.section(\'breadcrumbs\').focus();return false;">' . __( 'Breadcrumbs', 'silver' ) . '</a>' ) . '</p>',
 ) );
 
 Silver_Option::add_field( 'option', array(
@@ -350,17 +356,8 @@ Silver_Option::add_field( 'option', array(
 ) );
 
 
-Silver_Option::add_field( 'option', array(
-	'type'     => 'radio-buttonset',
-	'settings' => 'breadcrumb_case',
-	'label'    => esc_attr__( 'Breadcrumbs Case', 'silver' ),
-	'section'  => 'woocommerce_product_catalog',
-	'default'  => 'uppercase',
-	'choices'  => array(
-		'uppercase' => 'UPPERCASE',
-		''          => 'Normal',
-	),
-) );
+// Breadcrumbs Case (breadcrumb_case) and the divider icon: see the
+// Breadcrumbs section (inc/admin/options/global/options-breadcrumbs.php).
 
 Silver_Option::add_field( '', array(
 	'type'     => 'custom',
@@ -506,7 +503,7 @@ Silver_Option::add_field( 'option', array(
 	'transport' => silver_customizer_transport(),
 	'label'     => __( 'Show Category', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
-	'default'   => 1,
+	'default'   => 0,
 ) );
 
 Silver_Option::add_field( 'option', array(
@@ -516,6 +513,26 @@ Silver_Option::add_field( 'option', array(
 	'label'     => __( 'Show Ratings', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
 	'default'   => 1,
+) );
+
+Silver_Option::add_field( 'option', array(
+	'type'            => 'select',
+	'settings'        => 'product_box_rating_style',
+	'transport'       => silver_customizer_transport(),
+	'label'           => __( 'Rating Style', 'silver' ),
+	'section'         => 'woocommerce_product_catalog',
+	'default'         => 'compact',
+	'choices'         => array(
+		'compact' => __( 'Compact (★ 4,6 (92 đánh giá))', 'silver' ),
+		'stars'   => __( 'Stars', 'silver' ),
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'product_box_rating',
+			'operator' => '==',
+			'value'    => true,
+		),
+	),
 ) );
 
 Silver_Option::add_field( 'option', array(
@@ -540,10 +557,93 @@ Silver_Option::add_field( 'option', array(
 	'transport'       => silver_customizer_transport(),
 	'label'           => esc_html__( 'Show review count', 'silver' ),
 	'section'         => 'woocommerce_product_catalog',
-	'default'         => 0,
+	'default'         => 1,
 	'active_callback' => array(
 		array(
 			'setting'  => 'product_box_rating',
+			'operator' => '==',
+			'value'    => true,
+		),
+	),
+) );
+
+// Product attributes on cards (inc/woocommerce/structure-wc-card-attributes.php).
+// Which attributes show is set on product categories / products; these are
+// the site-wide display settings. Product shortcodes can override them.
+Silver_Option::add_field( 'option', array(
+	'type'        => 'checkbox',
+	'settings'    => 'product_box_attrs',
+	'transport'   => silver_customizer_transport(),
+	'label'       => __( 'Show Attributes', 'silver' ),
+	'description' => __( 'Thuộc tính chọn ở Danh mục sản phẩm / Sản phẩm (ví dụ Core i7 · 16GB · 512GB).', 'silver' ),
+	'section'     => 'woocommerce_product_catalog',
+	'default'     => 1,
+) );
+
+Silver_Option::add_field( 'option', array(
+	'type'            => 'select',
+	'settings'        => 'product_box_attrs_style',
+	'transport'       => silver_customizer_transport(),
+	'label'           => __( 'Attributes Style', 'silver' ),
+	'section'         => 'woocommerce_product_catalog',
+	'default'         => 'pill',
+	'choices'         => array(
+		'pill'    => __( 'Pill', 'silver' ),
+		'outline' => __( 'Outline', 'silver' ),
+		'tag'     => __( 'Tag', 'silver' ),
+		'plain'   => __( 'Plain text', 'silver' ),
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'product_box_attrs',
+			'operator' => '==',
+			'value'    => true,
+		),
+	),
+) );
+
+// Colours of the attribute block; empty: the colours of the style.
+foreach ( array(
+	'product_box_attrs_bg'     => array( __( 'Attributes Background', 'silver' ), __( 'Pill, Tag. Để trống: màu mặc định.', 'silver' ) ),
+	'product_box_attrs_color'  => array( __( 'Attributes Text Color', 'silver' ), __( 'Tên thuộc tính, dấu "/" và "+N" tự nhạt theo màu này.', 'silver' ) ),
+	'product_box_attrs_border' => array( __( 'Attributes Border Color', 'silver' ), __( 'Outline; Pill và Tag có viền khi chọn màu.', 'silver' ) ),
+) as $silver_attrs_setting => $silver_attrs_field ) {
+	Silver_Option::add_field( 'option', array(
+		'type'            => 'color',
+		'settings'        => $silver_attrs_setting,
+		'transport'       => silver_customizer_transport(),
+		'label'           => $silver_attrs_field[0],
+		'description'     => $silver_attrs_field[1],
+		'section'         => 'woocommerce_product_catalog',
+		'default'         => '',
+		'choices'         => array( 'alpha' => true ),
+		'active_callback' => array(
+			array(
+				'setting'  => 'product_box_attrs',
+				'operator' => '==',
+				'value'    => true,
+			),
+		),
+	) );
+}
+unset( $silver_attrs_setting, $silver_attrs_field );
+
+Silver_Option::add_field( 'option', array(
+	'type'            => 'slider',
+	'settings'        => 'product_box_attrs_max',
+	'transport'       => silver_customizer_transport(),
+	'label'           => __( 'Attribute Values Shown', 'silver' ),
+	'description'     => __( 'Số giá trị tối đa của một thuộc tính; phần còn lại hiện "+N".', 'silver' ),
+	'section'         => 'woocommerce_product_catalog',
+	'default'         => 3,
+	'choices'         => array(
+		'min'  => 1,
+		'max'  => 10,
+		'step' => 1,
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'product_box_attrs',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -565,7 +665,7 @@ Silver_Option::add_field( 'option', array(
 	'transport' => silver_customizer_transport(),
 	'label'     => __( 'Disable Quick View', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
-	'default'   => 0,
+	'default'   => 1,
 ) );
 
 Silver_Option::add_field( 'option', array(
@@ -574,7 +674,17 @@ Silver_Option::add_field( 'option', array(
 	'transport'   => silver_customizer_transport(),
 	'label'       => esc_attr__( 'Equalize Items', 'silver' ),
 	'section'     => 'woocommerce_product_catalog',
-	'default'     => '0',
+	'default'     => '1',
+) );
+
+Silver_Option::add_field( 'option', array(
+	'type'        => 'checkbox',
+	'settings'    => 'product_box_card',
+	'transport'   => silver_customizer_transport(),
+	'label'       => esc_attr__( 'Card Frame', 'silver' ),
+	'description' => __( 'Khung viền bo góc, ảnh tràn viền trên nền nhạt, nội dung có khoảng đệm.', 'silver' ),
+	'section'     => 'woocommerce_product_catalog',
+	'default'     => 1,
 ) );
 
 Silver_Option::add_field( 'option', array(
@@ -583,8 +693,9 @@ Silver_Option::add_field( 'option', array(
 	'label'     => __( 'Bubble Style', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
 	'transport' => silver_customizer_transport(),
-	'default'   => 'style1',
+	'default'   => 'pill',
 	'choices'   => array(
+		'pill'   => $image_url . 'badge-pill.svg',
 		'style1' => $image_url . 'badge-circle.svg',
 		'style2' => $image_url . 'badge-square.svg',
 		'style3' => $image_url . 'badge-border.svg',
@@ -629,7 +740,7 @@ Silver_Option::add_field( 'option', array(
 			'value'    => false,
 		),
 	),
-	'default'  => '0',
+	'default'  => '1',
 ) );
 
 Silver_Option::add_field( 'option', array(

@@ -29,6 +29,10 @@ function silver_shortcode_demo_block( $title, $code ) {
 				// phpcs:ignore WordPress.Security.EscapeOutput
 				echo '' !== $html ? $html : '<em class="sc-demo-empty">Renders nothing here (needs content or a specific page).</em>';
 			} catch ( Throwable $e ) {
+				// The failed shortcode never closed its level of the style collector.
+				if ( function_exists( 'silver_inline_style_reset' ) ) {
+					silver_inline_style_reset();
+				}
 				echo '<em class="sc-demo-error">' . esc_html( $e->getMessage() ) . '</em>';
 			}
 			?>
@@ -218,7 +222,8 @@ $sc_follow = 'facebook="#" instagram="#" x="#" youtube="#" email="#"';
 $groups['People, social, search'] = array(
 	'team_member: social icons outline / fill / small, round image' => '[row] ' . $sc_person( 'Outline' ) . $sc_person( 'Fill', 'icon_style="fill"' ) . $sc_person( 'Small', 'icon_style="small"' ) . $sc_person( 'Round image', 'image_radius="100" image_width="80"' ) . ' [/row]',
 	'team_member: style overlay / shade / bounce, depth' => '[row] ' . $sc_person( 'Overlay', 'style="overlay"' ) . $sc_person( 'Shade', 'style="shade"' ) . $sc_person( 'Bounce', 'style="bounce"' ) . $sc_person( 'Depth', 'depth="1" depth_hover="4"' ) . ' [/row]',
-	'testimonial: initials / image / no avatar' => '[row] ' . $sc_quote( 'avatar="initials"' ) . $sc_quote( 'image="' . $sc_img . '" image_width="56"' ) . $sc_quote( 'stars="3"' ) . ' [/row]',
+	'testimonial: default (auto avatar, 44px)' => '[row] [col span="6" span__sm="12"] [testimonial name="Minh Anh" company="Sinh viên"]<p>Máy đúng như mô tả, pin dùng cả ngày học. Giao hàng nhanh và đóng gói cẩn thận.</p>[/testimonial] [/col] [/row]',
+	'testimonial: initials / image / auto without image' => '[row] ' . $sc_quote( 'avatar="initials"' ) . $sc_quote( 'image="' . $sc_img . '" image_width="56"' ) . $sc_quote( 'stars="3"' ) . ' [/row]',
 	'testimonial: align center / right, text size, no stars' => '[row] ' . $sc_quote( 'avatar="initials" text_align="center"' ) . $sc_quote( 'avatar="initials" initials="JS" initials_bg="rgb(210, 110, 75)" text_align="right"' ) . $sc_quote( 'avatar="initials" stars="0" font_size="large"' ) . ' [/row]',
 	'testimonial: on a dark section' => '[section bg_color="rgb(34, 48, 68)" dark="true" padding="30px"] [row] ' . $sc_quote( 'avatar="initials"' ) . $sc_quote( 'avatar="initials" stars="4"' ) . $sc_quote( 'avatar="initials" stars="0"' ) . ' [/row] [/section]',
 	'featured_box: icon position top / center' => '[row] [col span="6" span__sm="12"] ' . $sc_feature( 'Top', 'icon="icon-star" pos="top"' ) . ' [/col] [col span="6" span__sm="12"] ' . $sc_feature( 'Center', 'icon="icon-heart" pos="center"' ) . ' [/col] [/row]',
@@ -257,6 +262,13 @@ $groups['Posts, portfolio, terms'] = array(
 	'featured_items_grid'   => '[featured_items_grid]',
 	'featured_items_slider' => '[featured_items_slider]',
 	'ux_terms'        => '[ux_terms]',
+	'ux_terms: style card (icon tile, left)' => '[ux_terms style="card" number="4" columns="2" columns__md="4" text_align="left" image_fit="contain" count_format="{count} mẫu" title_tag="h3"]',
+	'ux_terms: style card, center, 64px'     => '[ux_terms style="card" number="4" columns="2" columns__md="4" text_align="center" image_fit="contain" image_width="64px" count_format="{count} mẫu"]',
+	'ux_terms: card, icon center'            => '[ux_terms style="card" icon_pos="center" number="4" columns="2" columns__md="4" image_fit="contain" count_format="{count} mẫu"]',
+	'ux_terms: card, icon left center'       => '[ux_terms style="card" icon_pos="left-center" number="4" columns="1" columns__md="2" columns__lg="4" image_fit="contain" count_format="{count} mẫu" title_tag="h3"]',
+	'ux_terms: card, icon left (description)' => '[ux_terms style="card" icon_pos="left" number="2" columns="1" columns__md="2" image_fit="contain" count_format="{count} mẫu" show_description="yes"]',
+	'ux_terms: card, icon right center'      => '[ux_terms style="card" icon_pos="right-center" number="4" columns="1" columns__md="2" columns__lg="4" image_fit="contain" count_format="{count} mẫu"]',
+	'ux_terms: card, icon right'             => '[ux_terms style="card" icon_pos="right" number="2" columns="1" columns__md="2" image_fit="contain" count_format="{count} mẫu" show_description="yes"]',
 	'ux_excerpt'      => '[ux_excerpt]',
 	'block'           => '[block id=""]',
 	'ux_gutenberg'    => '[ux_gutenberg]',
@@ -335,23 +347,32 @@ do_action( 'silver_before_page' );
 
 <div id="content" role="main" class="content-area sc-demo">
 	<style>
-		.sc-demo { background: #f6f7f9; padding: 30px 16px 60px; }
-		.sc-demo > h1, .sc-demo > p, .sc-demo-nav, .sc-demo-section { max-width: 1100px; margin-left: auto; margin-right: auto; }
-		.sc-demo-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; padding: 0; list-style: none; }
-		.sc-demo-nav li { margin: 0; }
-		.sc-demo-nav a { display: inline-block; padding: 6px 14px; border: 1px solid #e2e5ea; border-radius: 99px; background: #fff; font-size: 13px; transition: border-color .2s, box-shadow .2s; }
-		.sc-demo-nav a:hover { border-color: #98a2b3; box-shadow: 0 1px 3px rgba(16, 24, 40, .1); }
-		.sc-demo-section { margin-bottom: 56px; scroll-margin-top: 20px; }
-		.sc-demo-section > h2 { margin-bottom: 20px; font-size: 1.5em; }
-		.sc-demo-block { margin-bottom: 20px; padding: 18px 20px 12px; border: 1px solid #e8eaee; border-radius: 12px; background: #fff; box-shadow: 0 1px 2px rgba(16, 24, 40, .04); }
-		.sc-demo-title { margin: 0 0 14px; color: #667085; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-		.sc-demo-preview { padding: 16px 0 14px; overflow: hidden; }
-		.sc-demo-empty, .sc-demo-error { color: #98a2b3; font-size: 13px; }
-		.sc-demo-error { color: #b20000; }
-		.sc-demo-code-wrap { margin-top: 10px; border-top: 1px solid #eef0f3; padding-top: 8px; }
-		.sc-demo-code-wrap summary { color: #667085; cursor: pointer; font-size: 12px; font-weight: 600; }
-		.sc-demo-code { margin: 8px 0 4px; padding: 10px 12px; background: #f6f7f9; border-radius: 8px; font-size: 12px; white-space: pre-wrap; word-break: break-all; }
+		.sc-demo { background: #fff; padding: 48px 16px 64px; }
+		.sc-demo > h1, .sc-demo > p, .sc-demo-nav, .sc-demo-section { max-width: 1120px; margin-left: auto; margin-right: auto; }
+		.sc-demo > p { color: #64748b; }
+		.sc-demo-nav { display: flex; gap: 4px; margin-bottom: 48px; padding: 8px 0; overflow-x: auto; list-style: none; background: #fff; border-bottom: 1px solid #e2e8f0; scrollbar-width: thin; }
+		.sc-demo-nav li { flex: none; margin: 0; }
+		.sc-demo-nav a { display: inline-block; padding: 6px 12px; border-radius: 8px; color: #475569; font-size: 13px; font-weight: 500; white-space: nowrap; transition: background-color .2s, color .2s; }
+		.sc-demo-nav a:hover { background: #f1f5f9; color: #0f172a; }
+		.sc-demo-section { margin-bottom: 64px; scroll-margin-top: 64px; }
+		.sc-demo-section > h2 { margin-bottom: 8px; padding-bottom: 12px; border-bottom: 1px solid #e2e8f0; }
+		.sc-demo-block { display: grid; grid-template-columns: 200px minmax(0, 1fr); column-gap: 32px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; }
+		.sc-demo-title { grid-row: span 2; margin: 16px 0 0; color: #64748b; font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+		.sc-demo-preview { min-width: 0; padding: 12px 0; overflow: hidden; }
+		.sc-demo-empty, .sc-demo-error { color: #94a3b8; font-size: 13px; }
+		.sc-demo-error { color: #dc2626; }
+		.sc-demo-preview > :last-child { margin-bottom: 0; }
+		.sc-demo-code-wrap { margin-bottom: 12px; }
+		.sc-demo-code-wrap summary { display: inline-block; color: #64748b; cursor: pointer; font-size: 12px; font-weight: 500; }
+		.sc-demo-code-wrap summary:hover { color: #0f172a; }
+		.sc-demo-code { margin: 8px 0 0; padding: 12px 14px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 12px; white-space: pre-wrap; word-break: break-all; }
 		.sc-demo-list { columns: 3 200px; font-size: 13px; }
+		@media (max-width: 849px) {
+			.sc-demo { padding-top: 32px; }
+			.sc-demo-block { grid-template-columns: minmax(0, 1fr); padding: 8px 0; }
+			.sc-demo-title { grid-row: auto; margin-bottom: 0; }
+			.sc-demo-section { margin-bottom: 48px; }
+		}
 	</style>
 
 	<h1>Shortcode Demo</h1>

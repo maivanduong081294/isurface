@@ -35,7 +35,6 @@ Silver_Option::add_field( 'option', array(
 	'section'     => 'payment-icons',
 	'default'     => '',
 	'choices'     => array(
-		'footer' => __( 'Absolute Footer', 'silver' ),
 		'cart'   => __( 'Cart Sidebar', 'silver' ),
 	),
 ) );

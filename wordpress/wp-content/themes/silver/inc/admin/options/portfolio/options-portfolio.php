@@ -242,10 +242,25 @@ Silver_Option::add_field( 'option', array(
 	),
 ) );
 
+// Tablet landscape (850-1199px). 0: the Tablet portrait value.
+Silver_Option::add_field( 'option', array(
+	'type'        => 'slider',
+	'settings'    => 'portfolio_archive_columns_tablet_landscape',
+	'label'       => __( 'Items per row - Tablet landscape', 'silver' ),
+	'description' => __( '0 = same as Tablet portrait.', 'silver' ),
+	'section'     => 'fl-portfolio',
+	'default'     => 0,
+	'choices'     => array(
+		'min'  => 0,
+		'max'  => 6,
+		'step' => 1,
+	),
+) );
+
 Silver_Option::add_field( 'option', array(
 	'type'     => 'slider',
 	'settings' => 'portfolio_archive_columns_tablet',
-	'label'    => __( 'Items per row - Tablet', 'silver' ),
+	'label'    => __( 'Items per row - Tablet portrait', 'silver' ),
 	'section'  => 'fl-portfolio',
 	'default'  => 3,
 	'choices'  => array(

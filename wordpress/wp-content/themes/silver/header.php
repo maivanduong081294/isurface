@@ -26,7 +26,7 @@
 
 	<?php do_action( 'silver_before_header' ); ?>
 
-	<header id="header" class="header <?php silver_header_classes(); ?>">
+	<header id="header" class="header header-shadow <?php silver_header_classes(); ?>">
 		<div class="header-wrapper">
 			<?php get_template_part( 'template-parts/header/header', 'wrapper' ); ?>
 		</div>

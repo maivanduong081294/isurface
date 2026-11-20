@@ -20,7 +20,14 @@ if ( post_password_required() ) {
 }
 ?>
 
-<?php do_action('silver_before_comments'); ?>
+<?php
+do_action('silver_before_comments');
+
+// Keep after-post content visible; only hide the blog comment area itself.
+if ( 'post' === get_post_type() && ! get_theme_mod( 'blog_single_comments', 1 ) ) {
+	return;
+}
+?>
 
 <div id="comments" class="comments-area">
 

@@ -150,7 +150,7 @@ function silver_team_member($atts, $content = null, $tag = ''){
          <div class="box-image <?php echo esc_attr( implode( ' ', $classes_image ) ); ?>" <?php echo get_shortcode_inline_css($css_image); ?>>
            <div class="box-image-inner <?php echo esc_attr( implode( ' ', $classes_image_inner ) ); ?>" <?php echo get_shortcode_inline_css($css_image_inner); ?>>
               <?php echo silver_get_image($img, $image_size); ?>
-              <?php if($image_overlay) { ?><div class="overlay" style="background-color:<?php echo esc_attr( $image_overlay ); ?>"></div><?php } ?>
+              <?php if($image_overlay) { ?><div class="overlay" style="<?php echo esc_attr( silver_overlay_style( $image_overlay ) ); ?>"></div><?php } ?>
            </div>
           </div>
          <?php if($link) echo $link_end; ?>

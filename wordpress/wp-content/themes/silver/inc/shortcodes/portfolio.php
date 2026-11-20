@@ -265,7 +265,7 @@ get_silver_repeater_start($repeater);
             <div class="box-image" <?php echo get_shortcode_inline_css( $css_args_img ); ?>>
                 <div class="<?php echo esc_attr( implode( ' ', $classes_image ) ); ?>" <?php echo get_shortcode_inline_css($css_image_height); ?>>
                 <?php echo wp_get_attachment_image($image, $image_size); ?>
-                <?php if($image_overlay) { ?><div class="overlay" style="background-color:<?php echo esc_attr( $image_overlay ); ?>"></div><?php } ?>
+                <?php if($image_overlay) { ?><div class="overlay" style="<?php echo esc_attr( silver_overlay_style( $image_overlay ) ); ?>"></div><?php } ?>
                 <?php if($style == 'shade'){ ?><div class="shade"></div><?php } ?>
                 </div>
             </div>

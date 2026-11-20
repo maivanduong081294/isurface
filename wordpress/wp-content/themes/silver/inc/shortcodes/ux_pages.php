@@ -189,7 +189,7 @@ function ux_pages($atts) {
                       <div class="<?php echo esc_attr( implode(' ', $classes_image) ); ?>" <?php echo get_shortcode_inline_css($css_image_height); ?>>
                       <?php $img_id = get_post_thumbnail_id($page->ID); echo wp_get_attachment_image($img_id, $image_size); ?>
                       </div>
-                      <?php if($image_overlay){ ?><div class="overlay" style="background-color: <?php echo esc_attr( $image_overlay );?>"></div><?php } ?>
+                      <?php if($image_overlay){ ?><div class="overlay" style="<?php echo esc_attr( silver_overlay_style( $image_overlay ) ); ?>"></div><?php } ?>
                       <?php if($style == 'shade'){ ?><div class="shade"></div><?php } ?>
                   </div>
                   <div class="<?php echo esc_attr( implode(' ', $classes_text) ); ?>" <?php echo get_shortcode_inline_css($css_args); ?>>

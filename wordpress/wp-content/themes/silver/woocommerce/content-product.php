@@ -53,15 +53,12 @@ if ( $out_of_stock ) $classes[] = 'out-of-stock';
 					?>
 				</a>
 			</div>
-			<div class="image-tools is-small top right show-on-hover">
-				<?php do_action( 'silver_product_box_tools_top' ); ?>
-			</div>
-			<div class="image-tools is-small hide-for-small bottom left show-on-hover">
-				<?php do_action( 'silver_product_box_tools_bottom' ); ?>
-			</div>
-			<div class="image-tools <?php echo silver_product_box_actions_class(); ?>">
-				<?php do_action( 'silver_product_box_actions' ); ?>
-			</div>
+			<?php
+			// Each tool bar is printed only when its hook outputs something.
+			silver_action_wrapper( 'silver_product_box_tools_top', 'image-tools is-small top right show-on-hover' );
+			silver_action_wrapper( 'silver_product_box_tools_bottom', 'image-tools is-small hide-for-small bottom left show-on-hover' );
+			silver_action_wrapper( 'silver_product_box_actions', 'image-tools ' . silver_product_box_actions_class() );
+			?>
 			<?php if ( $out_of_stock ) { ?><div class="out-of-stock-label"><?php _e( 'Out of stock', 'woocommerce' ); ?></div><?php } ?>
 		</div>
 
@@ -73,10 +70,8 @@ if ( $out_of_stock ) $classes[] = 'out-of-stock';
 				do_action( 'woocommerce_shop_loop_item_title' );
 				echo '</div>';
 
-
-				echo '<div class="price-wrapper">';
-				do_action( 'woocommerce_after_shop_loop_item_title' );
-				echo '</div>';
+				// Rating and attributes, then <div class="price-wrapper">.
+				silver_product_box_price_wrapper();
 
 				do_action( 'silver_product_box_after' );
 

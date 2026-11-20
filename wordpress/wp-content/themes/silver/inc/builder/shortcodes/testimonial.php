@@ -34,8 +34,10 @@ add_ux_builder_shortcode( 'testimonial', array(
         'avatar' => array(
             'type' => 'radio-buttons',
             'heading' => 'Avatar',
-            'default' => 'image',
+            'description' => 'Auto: ảnh nếu có, không có ảnh thì dùng Short name.',
+            'default' => 'auto',
             'options' => array(
+                'auto' => array( 'title' => 'Auto' ),
                 'image' => array( 'title' => 'Image' ),
                 'initials' => array( 'title' => 'Short name' ),
             ),
@@ -51,7 +53,7 @@ add_ux_builder_shortcode( 'testimonial', array(
             'heading' => 'Short name',
             'description' => 'Để trống: tự lấy chữ đầu của Name (Minh Anh → MA).',
             'default' => '',
-            'conditions' => 'avatar === "initials"',
+            'conditions' => 'avatar !== "image"',
         ),
         'initials_bg' => array(
             'type' => 'colorpicker',
@@ -59,7 +61,7 @@ add_ux_builder_shortcode( 'testimonial', array(
             'alpha' => true,
             'format' => 'rgb',
             'position' => 'bottom right',
-            'conditions' => 'avatar === "initials"',
+            'conditions' => 'avatar !== "image"',
             'helpers' => require( __DIR__ . '/helpers/colors.php' ),
         ),
         'initials_color' => array(
@@ -68,7 +70,7 @@ add_ux_builder_shortcode( 'testimonial', array(
             'alpha' => true,
             'format' => 'rgb',
             'position' => 'bottom right',
-            'conditions' => 'avatar === "initials"',
+            'conditions' => 'avatar !== "image"',
             'helpers' => require( __DIR__ . '/helpers/colors-text.php' ),
         ),
         'image_width' => array(
@@ -76,7 +78,7 @@ add_ux_builder_shortcode( 'testimonial', array(
           "type" => "slider",
           "heading" => "Image Width",
           "unit" => "px",
-          "default" => 80,
+          "default" => 44,
           "max" => 300,
           "min" => 20,
           'on_change' => array(

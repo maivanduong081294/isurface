@@ -78,8 +78,8 @@ $fs_option_vars     = array_filter(
 $fs_layout_spacing = apply_filters(
 	'silver_layout_spacing',
 	array(
-		'column-gap'        => array( '20px', '30px' ),
-		'row-gap'           => array( '20px', '30px' ),
+		'column-gap'        => array( '20px' ),
+		'row-gap'           => array( '20px' ),
 		'column-gap-small'  => '19.6px',
 		'row-gap-small'     => '19.6px',
 		'column-gap-xsmall' => '4px',
@@ -157,9 +157,12 @@ ob_start();
 }
 <?php endif;
 
-// Screen sizes
+// Screen sizes: Mobile < 550px, Tablet portrait 550-849px, Tablet landscape
+// 850-1199px, Desktop >= 1200px (same tiers as UX Builder and the grid CSS).
 $small_screen = '550px';
 $small_screen_max = '549px';
+$large_screen = '850px';
+$large_screen_max = '849px';
 $medium_screen = '1200px';
 $medium_screen_max = '1199px';
 $admin_bar = 0;
@@ -201,7 +204,7 @@ if ( $cookie_notice_bg_color ) { ?>
 
 <?php
 $header_height = get_theme_mod('header_height', 90); ?>
-.header-main{height: <?php echo $header_height; ?>px}
+.header-main{min-height: <?php echo $header_height; ?>px}
 #logo img{max-height: <?php echo $header_height; ?>px}
 
 #logo{width:<?php echo get_theme_mod('logo_width', 200); ?>px;}
@@ -217,7 +220,7 @@ $header_height = get_theme_mod('header_height', 90); ?>
 .header-top{min-height: <?php echo get_theme_mod('header_top_height', 30); ?>px}
 
 <?php $header_height_transparent = get_theme_mod( 'header_height_transparent', 90 ); ?>
-.transparent .header-main{height: <?php echo $header_height_transparent; ?>px}
+.transparent .header-main{min-height: <?php echo $header_height_transparent; ?>px}
 .transparent #logo img{max-height: <?php echo $header_height_transparent; ?>px}
 
 <?php
@@ -242,9 +245,9 @@ padding-top: <?php echo $height; ?>px;
 <?php } ?>
 
 <?php
-$header_height_sticky = get_theme_mod('header_height_sticky', 70); ?>
+$header_height_sticky = get_theme_mod('header_height_sticky', 40); ?>
 .header.show-on-scroll,
-.stuck .header-main{height:<?php echo $header_height_sticky; ?>px!important}
+.stuck .header-main{min-height:<?php echo $header_height_sticky; ?>px!important}
 .stuck #logo img{max-height: <?php echo $header_height_sticky; ?>px!important}
 
 <?php if(get_theme_mod('header_search_width')){ ?>
@@ -282,10 +285,10 @@ $header_height_sticky = get_theme_mod('header_height_sticky', 70); ?>
 <?php } ?>
 
 <?php
-$header_height_mobile = get_theme_mod('header_height_mobile', 70);
+$header_height_mobile = get_theme_mod('header_height_mobile', 40);
 if($header_height_mobile){ ?>
 @media (max-width: <?php echo $small_screen_max ?>) {
-	.header-main{height: <?php echo $header_height_mobile;?>px}
+	.header-main{min-height: <?php echo $header_height_mobile;?>px}
 	#logo img{max-height: <?php echo $header_height_mobile; ?>px}
 }
 <?php } ?>
@@ -331,14 +334,21 @@ if($header_height_mobile){ ?>
 <?php
 // Get Type options.
 if ( ! get_theme_mod( 'disable_fonts', 0 ) ) :
-	$type_nav      = \Kirki_Field_Typography::sanitize( get_theme_mod( 'type_nav', array( 'font-family' => 'Lato', 'variant' => '700' ) ) );
-	$type_texts    = \Kirki_Field_Typography::sanitize( get_theme_mod( 'type_texts', array( 'font-family' => 'Lato', 'variant' => 'regular' ) ) );
-	$type_headings = \Kirki_Field_Typography::sanitize( get_theme_mod( 'type_headings', array( 'font-family' => 'Lato', 'variant' => '700' ) ) );
+	$type_nav      = \Kirki_Field_Typography::sanitize( get_theme_mod( 'type_nav', array( 'font-family' => 'Inter', 'variant' => '700' ) ) );
+	$type_texts    = \Kirki_Field_Typography::sanitize( get_theme_mod( 'type_texts', array( 'font-family' => 'Inter', 'variant' => 'regular' ) ) );
+	$type_headings = \Kirki_Field_Typography::sanitize( get_theme_mod( 'type_headings', array( 'font-family' => 'Inter', 'variant' => '700' ) ) );
 	$type_alt      = \Kirki_Field_Typography::sanitize( get_theme_mod( 'type_alt', array( 'font-family' => 'Dancing Script', 'variant' => 'regular' ) ) );
 
 	// Type sizes
 	if(get_theme_mod('type_size', 100) !== 100){
 	   echo 'body{font-size: '.get_theme_mod('type_size').'%;}';
+	}
+	// Tablets (100 = the base size above).
+	if ( 100 !== (int) get_theme_mod( 'type_size_tablet_landscape', 100 ) ) {
+	   echo '@media screen and (min-width: ' . $large_screen . ') and (max-width: ' . $medium_screen_max . '){body{font-size: ' . (int) get_theme_mod( 'type_size_tablet_landscape' ) . '%;}}';
+	}
+	if ( 100 !== (int) get_theme_mod( 'type_size_tablet_portrait', 100 ) ) {
+	   echo '@media screen and (min-width: ' . $small_screen . ') and (max-width: ' . $large_screen_max . '){body{font-size: ' . (int) get_theme_mod( 'type_size_tablet_portrait' ) . '%;}}';
 	}
 	if(get_theme_mod('type_size_mobile', 100) !== 100){
 	   echo '@media screen and (max-width: ' . $small_screen_max . '){body{font-size: '.get_theme_mod('type_size_mobile').'%;}}';
@@ -540,15 +550,25 @@ background-color: <?php echo get_theme_mod('header_shop_bg_color') ?>;}
 <?php } ?>
 
 <?php if(get_theme_mod('color_review')) { ?>
-	.star-rating span:before,.star-rating:before, .woocommerce-page .star-rating:before, .stars a:hover:after, .stars a.active:after{color: <?php echo get_theme_mod('color_review'); ?>}
+	.star-rating span:before,.star-rating:before, .woocommerce-page .star-rating:before, .stars a:hover:after, .stars a.active:after, .star-rating-compact__icon{color: <?php echo get_theme_mod('color_review'); ?>}
+<?php } ?>
+
+<?php
+// Price colours (Style > Colors):
+// - Sale Price: the price a product sells at, on sale or not (a single
+//   price, a price range, the price after a discount).
+// - Regular Price: the struck-out price of a product on sale, at full colour
+//   (the base CSS fades it to 60%).
+// The Sale Price rule comes first, so the struck-out price keeps its own
+// colour even when both are set.
+if ( is_woocommerce_activated() && get_theme_mod( 'color_sale_price' ) ) { ?>
+:root { --sv-price: <?php echo esc_attr( get_theme_mod( 'color_sale_price' ) ); ?>; }
+.price > .woocommerce-Price-amount, .price ins .woocommerce-Price-amount, ins .woocommerce-Price-amount { color: <?php echo esc_attr( get_theme_mod( 'color_sale_price' ) ); ?>; }
 <?php } ?>
 
 <?php if ( is_woocommerce_activated() && get_theme_mod( 'color_regular_price' ) ) { ?>
-.price del, .product_list_widget del, del .woocommerce-Price-amount { color: <?php echo get_theme_mod( 'color_regular_price' ); ?>; }
-<?php } ?>
-
-<?php if ( is_woocommerce_activated() && get_theme_mod( 'color_sale_price' ) ) { ?>
-ins .woocommerce-Price-amount { color: <?php echo get_theme_mod( 'color_sale_price' ); ?>; }
+.price del, .product_list_widget del, del .woocommerce-Price-amount, .price del .woocommerce-Price-amount { color: <?php echo esc_attr( get_theme_mod( 'color_regular_price' ) ); ?>; }
+del span.amount { opacity: 1; }
 <?php } ?>
 
 <?php if(is_woocommerce_activated() && get_theme_mod('header_shop_bg_image')){ ?>
@@ -654,9 +674,6 @@ if($header_icons_color){ ?>
 .footer-2{background-color: <?php echo get_theme_mod('footer_2_bg_color') ;?>}
 <?php } ?>
 
-<?php if(get_theme_mod('footer_bottom_color')){ ?>
-.absolute-footer, html{background-color: <?php echo get_theme_mod('footer_bottom_color') ;?>}
-<?php } ?>
 
 <?php if(get_theme_mod('product_header') == 'top') {
 echo '.page-title-small + main .product-container > .row{padding-top:0;}';
@@ -731,6 +748,20 @@ echo get_theme_mod('html_custom_css');
 echo '/* Custom CSS Tablet */';
 echo '@media (max-width: ' . $medium_screen_max . '){';
 echo get_theme_mod('html_custom_css_tablet');
+echo '}';
+} ?>
+
+<?php if(get_theme_mod('html_custom_css_tablet_landscape')){
+echo '/* Custom CSS Tablet landscape */';
+echo '@media (min-width: ' . $large_screen . ') and (max-width: ' . $medium_screen_max . '){';
+echo get_theme_mod('html_custom_css_tablet_landscape');
+echo '}';
+} ?>
+
+<?php if(get_theme_mod('html_custom_css_tablet_portrait')){
+echo '/* Custom CSS Tablet portrait */';
+echo '@media (min-width: ' . $small_screen . ') and (max-width: ' . $large_screen_max . '){';
+echo get_theme_mod('html_custom_css_tablet_portrait');
 echo '}';
 } ?>
 

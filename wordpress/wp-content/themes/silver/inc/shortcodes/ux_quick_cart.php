@@ -50,6 +50,8 @@ function silver_quick_cart_shortcode($atts, $content = null, $tag = 'ux_quick_ca
     'icon_size'  => '',
     'icon_color' => '',
     'show_count' => 'yes',
+    'count_bg'   => '',
+    'count_color' => '',
     'show_title' => 'no',
     'show_total' => 'yes',
     'align'      => 'left',
@@ -171,6 +173,14 @@ function silver_quick_cart_shortcode($atts, $content = null, $tag = 'ux_quick_ca
       ),
       'icon_color' => array(
         'selector' => '.ux-quick-cart-icon > i',
+        'property' => 'color',
+      ),
+      'count_bg'    => array(
+        'selector' => '.ux-quick-cart-count[data-icon-label]::after',
+        'property' => 'background-color',
+      ),
+      'count_color' => array(
+        'selector' => '.ux-quick-cart-count[data-icon-label]::after',
         'property' => 'color',
       ),
     ));

@@ -31,7 +31,8 @@ function ux_price_table( $atts, $content = null ){
   $classes[] = 'text-center';
 
   if( $class ) $classes[] = $class;
-  if( $visibility ) $classes[] = $visibility;
+  // Visibility on the outer wrapper (a hidden element leaves no empty box).
+  if( $visibility ) $classes_wrapper[] = $visibility;
 
   if($color == 'dark') $classes_wrapper[] = 'dark';
   if($depth) $classes[] = 'box-shadow-'.$depth;

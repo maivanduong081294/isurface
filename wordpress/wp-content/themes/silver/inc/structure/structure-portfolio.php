@@ -49,11 +49,11 @@ function get_silver_portfolio_breadcrumbs(){
     echo '">';
     echo _x( 'Home', 'breadcrumb', 'silver' );
     echo "</a>";
-    echo "<span class='divider'>/</span>";
+    echo '<span class="divider" aria-hidden="true">' . silver_breadcrumb_divider() . '</span>';
 	if ( get_theme_mod( 'featured_items_page' ) && ! is_page() ) {
 		$page_parent = get_page_by_path( get_theme_mod( 'featured_items_page' ) );
       echo '<a href="'.get_the_permalink($page_parent->ID).'">'.get_the_title($page_parent->ID).'</a>';
-      echo "<span class='divider'>/</span>";
+      echo '<span class="divider" aria-hidden="true">' . silver_breadcrumb_divider() . '</span>';
     }
     if(is_single()){
     echo get_the_term_list( get_the_ID(), 'featured_item_category', '', '<span class="divider">-</span>', '' );

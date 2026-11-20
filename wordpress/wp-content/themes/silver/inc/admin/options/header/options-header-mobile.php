@@ -10,6 +10,42 @@ Silver_Option::add_section( 'header_mobile', array(
 	//'description' => __( 'This is the section description', 'silver' ),
 ) );
 
+// Do not output the mobile menu (overlay #main-menu) at all: no markup in the
+// page and no theme menu icon. For headers that open their own menu (e.g. the
+// Mega Menu drawer).
+Silver_Option::add_field( 'option', array(
+	'type'        => 'checkbox',
+	'settings'    => 'mobile_menu_disable',
+	'label'       => __( 'Disable Mobile Menu', 'silver' ),
+	'description' => __( 'The mobile menu is not output in the page (no HTML), on every screen.', 'silver' ),
+	'section'     => 'header_mobile',
+	'default'     => false,
+) );
+
+// Turn the mobile menu (overlay #main-menu) off per screen: its open buttons
+// are hidden there and an open menu is hidden when the screen changes.
+Silver_Option::add_field( 'option', array(
+	'type'        => 'multicheck',
+	'settings'    => 'mobile_menu_hide_screens',
+	'label'       => __( 'Disable Mobile Menu on', 'silver' ),
+	'description' => __( 'The menu and the buttons that open it are hidden on the checked screens.', 'silver' ),
+	'section'     => 'header_mobile',
+	'default'     => array(),
+	'active_callback' => array(
+		array(
+			'setting'  => 'mobile_menu_disable',
+			'operator' => '!=',
+			'value'    => true,
+		),
+	),
+	'choices'     => array(
+		'sm' => __( 'Mobile (< 550px)', 'silver' ),
+		'md' => __( 'Tablet portrait (550 - 849px)', 'silver' ),
+		'ml' => __( 'Tablet landscape (850 - 1199px)', 'silver' ),
+		'lg' => __( 'Desktop (>= 1200px)', 'silver' ),
+	),
+) );
+
 
 Silver_Option::add_field( 'option',  array(
 	'type'        => 'slider',

@@ -151,7 +151,7 @@ function silver_responsive_style_tag($id, $atts, $rules)
 			: $css;
 	}
 
-	return $output !== '' ? '<style>' . $output . '</style>' : '';
+	return silver_inline_style_tag( $output );
 }
 
 /**
@@ -332,7 +332,7 @@ function silver_responsive_background_images($atts)
 			: '';
 	}
 
-	return $html . ($css ? '<style>' . $css . '</style>' : '');
+	return $html . silver_inline_style_tag( $css );
 }
 
 /**
@@ -355,12 +355,26 @@ function silver_responsive_box_rules($scope = '', $self = false)
 				'property'       => 'padding-top',
 				'only_overrides' => true,
 			),
+			// Number = %, or a typed unit (300px, 20rem, calc(...)).
 			'image_width'  => array(
 				'selector'       => $scope . '.box-image',
-				'property'       => 'width',
-				'unit'           => '%',
 				'only_overrides' => true,
 				'default'        => '100',
+				'callback'       => function ($value) {
+					$css = silver_builder_css_value($value, '%');
+					return $css !== '' ? 'width: ' . $css : '';
+				},
+			),
+			// Number = % (old slider values), or a typed unit (12px, 1rem).
+			// Some layouts round .box-image, others .box-image-inner (inline).
+			'image_radius' => array(
+				'selector'       => $scope . '.box-image, ' . $scope . '.box-image-inner',
+				'only_overrides' => true,
+				'default'        => '0',
+				'callback'       => function ($value) {
+					$css = silver_builder_css_value($value, '%');
+					return $css !== '' ? 'border-radius: ' . $css : '';
+				},
 			),
 			'text_pos'     => array(
 				'selector'       => $box . '.box-overlay .box-text, ' . $box . '.box-shade .box-text',
@@ -475,6 +489,21 @@ function silver_responsive_row_align_rules()
 			'default'        => 'left',
 			'map'            => silver_responsive_map('justify'),
 		),
+		// Between / Around: the clearfix ::after of .row is a flex item and
+		// would take the last gap.
+		'h_align|after' => array(
+			'option'         => 'h_align',
+			'selector'       => '&::after',
+			'only_overrides' => true,
+			'default'        => 'left',
+			'map'            => array(
+				'left'    => 'display: table',
+				'center'  => 'display: table',
+				'right'   => 'display: table',
+				'between' => 'display: none',
+				'around'  => 'display: none',
+			),
+		),
 	);
 }
 
@@ -485,7 +514,7 @@ function silver_responsive_row_align_rules()
  */
 function silver_responsive_box_options()
 {
-	return array('image_height', 'image_width', 'text_pos', 'text_align', 'text_bg', 'text_color');
+	return array('image_height', 'image_width', 'image_radius', 'text_pos', 'text_align', 'text_bg', 'text_color');
 }
 
 /**
@@ -551,12 +580,14 @@ function silver_responsive_map($type)
 				'right'  => 'text-align: right',
 			);
 
-		// Justify flex children (align-center / align-right on rows).
+		// Justify flex children (align-center / -right / -between / -around on rows).
 		case 'justify':
 			return array(
-				'left'   => 'justify-content: flex-start',
-				'center' => 'justify-content: center',
-				'right'  => 'justify-content: flex-end',
+				'left'    => 'justify-content: flex-start',
+				'center'  => 'justify-content: center',
+				'right'   => 'justify-content: flex-end',
+				'between' => 'justify-content: space-between',
+				'around'  => 'justify-content: space-around',
 			);
 
 		// Share / Follow icons: inline or a full width line (full-width + text-*).

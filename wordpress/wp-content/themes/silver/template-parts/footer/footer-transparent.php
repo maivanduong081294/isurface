@@ -1,16 +1,6 @@
 <?php
 /**
- * Transparent footer.
+ * Legacy footer template retained without output.
  *
- * @package          Silver\Templates
- * @silver-version 3.19.9
+ * @package Silver\Templates
  */
-
-?>
-<div class="absolute-footer fixed dark nav-dark text-center">
-		<div class="footer-primary">
-				<div class="copyright-footer">
-					<?php if ( get_theme_mod( 'footer_left_text', 'Copyright [ux_current_year] &copy; <strong>Silver Theme</strong>' ) ) { echo do_shortcode( get_theme_mod( 'footer_left_text', 'Copyright [ux_current_year] &copy; <strong>Silver Theme</strong>' ) ); } ?>
-				</div>
-		</div>
-</div>

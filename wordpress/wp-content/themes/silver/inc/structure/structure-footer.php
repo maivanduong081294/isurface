@@ -2,6 +2,8 @@
 
 // Get Mobile Sidebar Menu
 function silver_mobile_menu(){
+   // Header Mobile Menu / Overlay > "Disable Mobile Menu": no markup at all.
+   if ( get_theme_mod( 'mobile_menu_disable' ) ) return;
    get_template_part('template-parts/overlays/overlay','menu');
 }
 add_action('wp_footer', 'silver_mobile_menu', 7);
@@ -66,14 +68,12 @@ function silver_page_footer(){
 				}
 			} else {
 				echo do_shortcode( '[block id="' . $block . '"]' );
-				get_template_part( 'template-parts/footer/footer-absolute' );
 			}
 		}
 	} else {
 		// Global footer.
 		if ( $block ) {
 			echo do_shortcode( '[block id="' . $block . '"]' );
-			get_template_part( 'template-parts/footer/footer-absolute' );
 		} else {
 			get_template_part( 'template-parts/footer/footer' );
 		}

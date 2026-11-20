@@ -6,6 +6,13 @@
  * @silver-version 3.18.0
  */
 
+// A shared item style overrides presentation while retaining the archive layout.
+$item_style = get_theme_mod( 'blog_post_item_style', '' );
+if ( in_array( $item_style, array( 'none', 'default', 'normal', 'overlay', 'shade', 'vertical', 'label', 'push', 'badge', 'bounce' ), true ) ) {
+	get_template_part( 'template-parts/posts/archive', 'items', array( 'layout' => 'list', 'style' => $item_style ) );
+	return;
+}
+
 if ( have_posts() ) : ?>
 	<div id="post-list">
 		<?php

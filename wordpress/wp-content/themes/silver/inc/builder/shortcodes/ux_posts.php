@@ -62,6 +62,8 @@ $ux_posts_layout['options'] = silver_ux_builder_array_insert_after($ux_posts_lay
 			'left'   => array('title' => 'Left'),
 			'center' => array('title' => 'Center'),
 			'right'  => array('title' => 'Right'),
+			'between' => array('title' => 'Between'),
+			'around' => array('title' => 'Around'),
 		),
 	),
 ));

@@ -30,7 +30,9 @@ function featured_box( $atts, $content = null ) {
 	$classes_img = array( 'icon-box-img' );
 	
 	if( $class ) $classes[] = $class;
-	if( $visibility ) $classes[] = $visibility;
+	// Visibility goes on the outermost element: the link around the box when
+	// there is one, otherwise the box itself.
+	if( $visibility && ! $link ) $classes[] = $visibility;
 
 	$classes[] = 'icon-box-' . $pos;
 	if ( $pos == 'left-center' ) $classes[] = 'icon-box-left';
@@ -82,7 +84,7 @@ function featured_box( $atts, $content = null ) {
 	ob_start();
 	?>
 
-	<?php if ( $link ) echo '<a class="plain" href="' . esc_url( $link ) . '"' . silver_parse_target_rel( $link_atts ) . '>'; ?>
+	<?php if ( $link ) echo '<a class="' . esc_attr( trim( 'plain ' . $visibility ) ) . '" href="' . esc_url( $link ) . '"' . silver_parse_target_rel( $link_atts ) . '>'; ?>
 	<div<?php if ( $_id ) : ?> id="<?php echo esc_attr( $_id ); ?>"<?php endif; ?> class="icon-box <?php echo esc_attr( $classes ); ?>" <?php if ( $tooltip )
 		echo 'title="' . esc_attr( $tooltip ) . '"' ?> <?php echo get_shortcode_inline_css( $css_args_out ); ?>>
 		<?php if ( $img || $use_icon ) { ?>

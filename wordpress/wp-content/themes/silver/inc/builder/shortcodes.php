@@ -53,6 +53,7 @@ require_once __DIR__ . '/shortcodes/price_table.php';
 require_once __DIR__ . '/shortcodes/ux_video.php';
 require_once __DIR__ . '/shortcodes/ux_sidebar.php';
 require_once __DIR__ . '/shortcodes/ux_nav.php';
+require_once __DIR__ . '/shortcodes/ux_wp_menu.php';
 require_once __DIR__ . '/shortcodes/ux_stack.php';
 require_once __DIR__ . '/shortcodes/ux_container.php';
 require_once __DIR__ . '/shortcodes/ux_lottie.php';
@@ -62,6 +63,7 @@ require_once __DIR__ . '/shortcodes/ux_mega_menu.php';
 require_once __DIR__ . '/shortcodes/ux_shortcode.php';
 require_once __DIR__ . '/shortcodes/ux_counter.php';
 require_once __DIR__ . '/shortcodes/ux_terms.php';
+require_once __DIR__ . '/shortcodes/ux_stack_spacer.php';
 
 if ( get_theme_mod( 'fl_portfolio', 1 ) ) {
 	require_once __DIR__ . '/shortcodes/ux_portfolio.php';

@@ -18,23 +18,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Silver_Default {
 
 	/** Primary Color */
-	const COLOR_PRIMARY = '#446084';
+	const COLOR_PRIMARY = '#2563eb';
 
 	/** Secondary Color */
-	const COLOR_SECONDARY = '#C05530';
+	const COLOR_SECONDARY = '#0f172a';
 
 	/** Success Color */
-	const COLOR_SUCCESS = '#627D47';
+	const COLOR_SUCCESS = '#15803d';
 
 	/** Alert Color */
-	const COLOR_ALERT = '#b20000';
+	const COLOR_ALERT = '#dc2626';
 
 	/** Base Color */
-	const COLOR_BASE = '#4a4a4a';
+	const COLOR_BASE = '#334155';
 
 	/** Link Color */
-	const LINK_COLOR       = '#334862';
-	const LINK_COLOR_HOVER = '#111';
+	const LINK_COLOR       = '#2563eb';
+	const LINK_COLOR_HOVER = '#1d4ed8';
 
 	/** Tooltip color */
 	const TOOLTIP_COLOR    = '#fff';

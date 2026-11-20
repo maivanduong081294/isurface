@@ -54,6 +54,7 @@ function silver_render_ux_text_shortcode($atts, $content, $tag)
 				'font_size'   => array(
 					'property' => 'font-size',
 					'unit'     => 'rem',
+                    'css_value' => true,
 				),
 				'line_height' => array(
 					'property' => 'line-height',

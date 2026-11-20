@@ -5,14 +5,13 @@ return array(
 	'heading' => 'Typography',
 	'options' => array(
 		'font_size'   => array(
-			'type'       => 'slider',
-			'heading'    => __( 'Font size', 'silver' ),
-			'responsive' => true,
-			'unit'       => 'rem',
-			'max'        => 4,
-			'min'        => 0.75,
-			'step'       => 0.05,
-		),
+            'type' => 'css-value',
+            'heading' => __( 'Font size', 'silver' ),
+            'responsive' => true,
+            'default' => '',
+            'css_property' => 'font-size',
+            'placeholder' => '16px, 1rem, clamp(1rem, 2vw, 2rem)',
+        ),
 		'line_height' => array(
 			'type'       => 'slider',
 			'heading'    => __( 'Line height', 'silver' ),

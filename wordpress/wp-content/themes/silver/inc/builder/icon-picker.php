@@ -32,38 +32,37 @@ function silver_icon_picker_get_icons() {
 }
 
 /**
- * Enqueue the icon picker assets in the UX Builder editor.
+ * Enqueue the shared picker: Font Awesome (to preview icons), the picker
+ * styles and the popup script with the icon list.
  *
- * @param string $context Context is «editor» or «content».
+ * Used by the UX Builder editor and the Customizer icon control
+ * (inc/admin/customizer/customizer-icon-control.php).
+ *
+ * @param array $style_deps Dependencies of the stylesheets.
  */
-function silver_icon_picker_enqueue( $context ) {
-	if ( 'editor' !== $context ) {
-		return;
-	}
-
+function silver_icon_picker_enqueue_popup( $style_deps = array() ) {
 	$uri     = get_template_directory_uri();
 	$theme   = wp_get_theme( get_template() );
 	$version = $theme->get( 'Version' );
 
-	// Font Awesome must be available in the editor sidebar to preview icons.
 	wp_enqueue_style(
 		'silver-fontawesome-editor',
 		$uri . '/assets/css/icons/fontawesome/css/all.min.css',
-		array( 'ux-builder-core' ),
+		$style_deps,
 		'7.3.1'
 	);
 
 	wp_enqueue_style(
 		'silver-icon-picker',
 		$uri . '/assets/css/builder/custom/icon-picker.css',
-		array( 'ux-builder-core' ),
+		$style_deps,
 		$version
 	);
 
 	wp_enqueue_script(
-		'silver-icon-picker',
-		$uri . '/assets/js/builder/custom/icon-picker.js',
-		array( 'ux-builder-core' ),
+		'silver-icon-picker-popup',
+		$uri . '/assets/js/builder/custom/icon-picker-popup.js',
+		array(),
 		$version,
 		true
 	);
@@ -74,9 +73,32 @@ function silver_icon_picker_enqueue( $context ) {
 	);
 
 	wp_add_inline_script(
-		'silver-icon-picker',
+		'silver-icon-picker-popup',
 		'window.silverIconPicker = ' . wp_json_encode( $data ) . ';',
 		'before'
+	);
+}
+
+/**
+ * Enqueue the icon picker assets in the UX Builder editor.
+ *
+ * @param string $context Context is «editor» or «content».
+ */
+function silver_icon_picker_enqueue( $context ) {
+	if ( 'editor' !== $context ) {
+		return;
+	}
+
+	$theme = wp_get_theme( get_template() );
+
+	silver_icon_picker_enqueue_popup( array( 'ux-builder-core' ) );
+
+	wp_enqueue_script(
+		'silver-icon-picker',
+		get_template_directory_uri() . '/assets/js/builder/custom/icon-picker.js',
+		array( 'ux-builder-core', 'silver-icon-picker-popup' ),
+		$theme->get( 'Version' ),
+		true
 	);
 }
 

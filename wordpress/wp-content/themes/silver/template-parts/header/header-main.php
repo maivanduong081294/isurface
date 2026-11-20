@@ -9,10 +9,9 @@
 ?>
 <div id="masthead" class="header-main <?php header_inner_class('main'); ?>">
       <?php if ( silver_header_block_id( 'main' ) ) { ?>
-      <div class="header-inner flex-row container" role="navigation">
-          <div class="flex-col flex-grow header-block header-block-main">
-            <?php silver_header_block( 'main' ); ?>
-          </div>
+      <?php /* UX Block: a plain block in the container (no flex-row / flex-col), its own rows and stacks do the layout. */ ?>
+      <div class="header-inner header-block header-block-main" role="navigation">
+        <?php silver_header_block( 'main' ); ?>
       </div>
       <?php } else { ?>
       <div class="header-inner flex-row container <?php silver_logo_position(); ?>" role="navigation">

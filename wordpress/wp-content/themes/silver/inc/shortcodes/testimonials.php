@@ -14,11 +14,11 @@ function silver_testimonial($atts, $content = null) {
     'font_size' => '',
     'text_align' => '',
     'image'  => '',
-    'avatar' => 'image', // image / initials
+    'avatar' => 'auto', // auto (image, else short name) / image / initials
     'initials' => '',
     'initials_bg' => '',
     'initials_color' => '',
-    'image_width' => '80',
+    'image_width' => '44',
     'pos' => 'left',
     'link' => '',
   ), $atts));
@@ -59,14 +59,15 @@ function silver_testimonial($atts, $content = null) {
   if ( silver_responsive_has_overrides( (array) $atts, 'image_width' ) ) {
     if ( ! $_id ) $_id = 'testimonial-' . wp_rand();
     echo silver_responsive_style_tag( $_id, (array) $atts, array( // phpcs:ignore WordPress.Security.EscapeOutput
-      'image_width' => array( 'selector' => '.icon-box-img', 'property' => 'width', 'unit' => 'px', 'only_overrides' => true, 'default' => '80' ),
+      'image_width' => array( 'selector' => '.icon-box-img', 'property' => 'width', 'unit' => 'px', 'only_overrides' => true, 'default' => '44' ),
     ) );
   }
   ?>
   <?php
   // Short name avatar: the "Short name" option, else the initials of the name.
+  // Auto (default): the image when there is one, else the short name.
   $short_name = '';
-  if ( 'initials' === $avatar ) {
+  if ( 'initials' === $avatar || ( 'auto' === $avatar && ! $image ) ) {
     $short_name = trim( wp_strip_all_tags( $initials ) );
     if ( '' === $short_name ) $short_name = silver_testimonial_initials( wp_strip_all_tags( $name ) );
   }

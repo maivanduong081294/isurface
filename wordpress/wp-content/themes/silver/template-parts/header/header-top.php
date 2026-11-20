@@ -8,12 +8,13 @@
 
 if(silver_has_top_bar()['large_or_mobile']){ ?>
 <div id="top-bar" class="header-top <?php header_inner_class('top'); ?>">
+    <?php if ( silver_header_block_id( 'top' ) ) { ?>
+    <?php /* UX Block: a plain block in the container (no flex-row / flex-col), its own rows and stacks do the layout. */ ?>
+    <div class="header-block header-block-top">
+        <?php silver_header_block( 'top' ); ?>
+    </div>
+    <?php } else { ?>
     <div class="flex-row container">
-      <?php if ( silver_header_block_id( 'top' ) ) { ?>
-      <div class="flex-col flex-grow header-block header-block-top">
-          <?php silver_header_block( 'top' ); ?>
-      </div>
-      <?php } else { ?>
       <div class="flex-col hide-for-medium flex-left">
           <ul class="nav nav-left medium-nav-center nav-small <?php silver_nav_classes('top'); ?>">
               <?php silver_header_elements('topbar_elements_left'); ?>
@@ -39,8 +40,7 @@ if(silver_has_top_bar()['large_or_mobile']){ ?>
           </ul>
       </div>
       <?php } ?>
-      <?php } ?>
-
     </div>
+    <?php } ?>
 </div>
 <?php } ?>

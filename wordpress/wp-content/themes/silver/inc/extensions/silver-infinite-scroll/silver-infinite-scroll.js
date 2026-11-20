@@ -3,8 +3,32 @@
 ;(function ($) {
   $.fn.silverInfiniteScroll = function () {
     return this.each(function () {
-      var $container = jQuery('.shop-container .products')
-      var paginationNext = '.woocommerce-pagination li a.next'
+      var isBlog = flatsome_infinite_scroll.context === 'blog'
+      var $container, paginationNext, append, hideNav, viewMoreButton
+
+      if (isBlog) {
+        // Blog archives: posts are either articles right in #post-list
+        // (Normal / Inline layouts) or the columns of a blog_posts row
+        // (List / 2 / 3 columns, item styles).
+        var $list = jQuery('#post-list')
+        var $row = $list.children('.row').filter(function () {
+          return jQuery(this).children('.post-item').length > 0
+        }).last()
+        $container = $row.length ? $row : $list
+        if ($container.hasClass('slider')) return
+        paginationNext = '#post-list .nav-pagination li a.next'
+        append = $row.length ? '#post-list > .row > .post-item' : '#post-list > article'
+        hideNav = '#post-list .page-numbers.nav-pagination'
+        viewMoreButton = jQuery('button.view-more-button.posts-archive')
+        // New articles go at the end of #post-list: keep the button below them.
+        $list.after(viewMoreButton.closest('.view-more-wrap'))
+      } else {
+        $container = jQuery('.shop-container .products')
+        paginationNext = '.woocommerce-pagination li a.next'
+        append = '.shop-container .product'
+        hideNav = '.archive .woocommerce-pagination'
+        viewMoreButton = jQuery('button.view-more-button.products-archive')
+      }
 
       if ($container.length === 0 ||
         jQuery(paginationNext).length === 0 ||
@@ -12,18 +36,19 @@
         return
       }
 
-      var viewMoreButton = jQuery('button.view-more-button.products-archive')
       var byButton = flatsome_infinite_scroll.type === 'button'
-      var isMasonry = flatsome_infinite_scroll.list_style === 'masonry'
+      var isMasonry = isBlog
+        ? $container.is('[data-packery-options], .has-packery')
+        : flatsome_infinite_scroll.list_style === 'masonry'
       // Set packery instance as outlayer when masonry is set.
-      var outlayer = isMasonry ? Packery.data($container[0]) : false
+      var outlayer = isMasonry && window.Packery ? Packery.data($container[0]) : false
 
       var $infiScrollContainer = $container.infiniteScroll({
         path: paginationNext,
-        append: '.shop-container .product',
+        append: append,
         checkLastPage: true,
         status: '.page-load-status',
-        hideNav: '.archive .woocommerce-pagination',
+        hideNav: hideNav,
         button: '.view-more-button',
         history: flatsome_infinite_scroll.history,
         historyTitle: true,
@@ -45,12 +70,17 @@
       })
 
       $infiScrollContainer.on('request.infiniteScroll', function (event, path) {
-        if (byButton) viewMoreButton.addClass('loading')
+        if (byButton) viewMoreButton.addClass('loading').attr('aria-busy', 'true')
+      })
+
+      // No next page left: no button.
+      $infiScrollContainer.on('last.infiniteScroll', function () {
+        if (byButton) viewMoreButton.closest('.view-more-wrap').remove()
       })
 
       $infiScrollContainer.on('append.infiniteScroll', function (event, response, path, items) {
         jQuery(document).trigger('silver-infiniteScroll-append', [response, path, items])
-        if (byButton) viewMoreButton.removeClass('loading')
+        if (byButton) viewMoreButton.removeClass('loading').removeAttr('aria-busy')
 
         // Fix Safari bug
         jQuery(items).find('img').each(function (index, img) {
@@ -64,7 +94,7 @@
         Silver.attach('lazy-load-images', $container)
         silverInfiniteScroll.animateNewItems(items)
 
-        if (isMasonry) {
+        if (isMasonry && $infiScrollContainer.packery) {
           setTimeout(function () {
             $infiScrollContainer.imagesLoaded(function () {
               $infiScrollContainer.packery('layout')

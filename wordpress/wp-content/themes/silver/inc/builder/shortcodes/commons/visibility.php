@@ -17,5 +17,8 @@
         'hide-for-md'      => 'Hide for Tablet - Portrait',
         'hide-for-md hide-for-ml' => 'Hide for Tablet (Portrait + Landscape)',
         'hide-for-small'   =>  'Hide for Mobile',
+        // Same breakpoint as the mobile header elements (Mega Menu drawer, cart).
+        'hide-for-sm hide-for-md' => 'Hide below 850px (Mobile + Tablet Portrait)',
+        'show-below-850'   =>  'Only below 850px (Mobile + Tablet Portrait)',
     ),
 );

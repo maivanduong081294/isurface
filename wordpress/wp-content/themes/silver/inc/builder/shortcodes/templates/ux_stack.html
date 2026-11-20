@@ -22,7 +22,7 @@
   </div>
   <style>
     #{{:: shortcode.$id }} .stack-inner {
-      --stack-gap: {{ shortcode.options.gap }}rem;
+      --stack-gap: {{ (shortcode.options.gap | silverCssValue) || 'initial' }};
     }
   </style>
 </div>

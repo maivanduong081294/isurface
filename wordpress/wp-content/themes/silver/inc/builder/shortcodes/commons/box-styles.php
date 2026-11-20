@@ -29,31 +29,30 @@ return array(
                 )
             ),
 
+            // Typed value (drag to scrub): a number is %, or any unit
+            // (300px, 20rem, 50vw, calc(...)). Old values (numbers) stay in %.
             'image_width' => array(
                 'responsive' => true,
-                'type' => 'slider',
+                'type' => 'scrubfield',
                 'heading' => __( 'Width' ),
-                'unit' => '%',
+                'description' => __( 'Number = %. Or a unit: 300px, 20rem, 50vw, calc(...).' ),
                 'default' => 100,
-                'max' => 100,
+                'placeholder' => '100',
                 'min' => 0,
-                'on_change' => array(
-                    'selector' => '.box-image',
-                    'style' => 'width: {{ value }}%'
-                )
+                'step' => 1,
             ),
 
+            // Typed value, per screen: a number is % (old slider values), or a
+            // unit (12px, 1rem, 50%).
             'image_radius' => array(
-                'type' => 'slider',
+                'type' => 'scrubfield',
                 'heading' => __( 'Radius' ),
-                'unit' => '%',
+                'description' => __( 'Number = %. Or a unit: 12px, 1rem, 50%.' ),
+                'responsive' => true,
                 'default' => 0,
-                'max' => 100,
+                'placeholder' => '0',
                 'min' => 0,
-                'on_change' => array(
-                    'selector' => '.box-image-inner',
-                    'style' => 'border-radius: {{ value }}%'
-                )
+                'step' => 1,
             ),
 
             'image_size' => array(

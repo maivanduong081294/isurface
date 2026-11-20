@@ -28,4 +28,3 @@ do_action('silver_before_footer'); ?>
 
 <?php do_action('silver_after_footer'); ?>
 
-<?php get_template_part('template-parts/footer/footer-absolute'); ?>

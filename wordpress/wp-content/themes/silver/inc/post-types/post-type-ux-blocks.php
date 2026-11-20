@@ -110,6 +110,25 @@ function ux_block_frontend() {
 
 add_action( 'wp_footer', 'ux_block_frontend' );
 
+/**
+ * Whether the current user can edit UX Blocks: a given block, or UX Blocks
+ * in general when no ID is given. Uses the post type capabilities, so it
+ * follows any role / capability plugin.
+ *
+ * @param int $block_id Block post ID, 0 for any block.
+ *
+ * @return bool
+ */
+function silver_current_user_can_edit_ux_block( $block_id = 0 ) {
+	if ( $block_id ) {
+		return current_user_can( 'edit_post', $block_id );
+	}
+
+	$post_type = get_post_type_object( 'blocks' );
+
+	return $post_type && current_user_can( $post_type->cap->edit_posts );
+}
+
 function block_shortcode( $atts, $content = null ) {
 	global $post;
 
@@ -120,9 +139,14 @@ function block_shortcode( $atts, $content = null ) {
 		)
 	);
 
+	// Notices (no ID, block not found, empty block) are only for users who
+	// can edit UX Blocks: everyone else gets nothing on the live site.
+	$builder  = function_exists( 'ux_builder_is_active' ) && ux_builder_is_active();
+	$can_edit = $builder || silver_current_user_can_edit_ux_block();
+
 	// Abort if ID is empty.
 	if ( empty ( $id ) ) {
-		return '<p><mark>No block ID is set</mark></p>';
+		return $can_edit ? '<p><mark>No block ID is set</mark></p>' : '';
 	}
 
 	if ( is_woocommerce_activated() && is_shop() ) {
@@ -135,14 +159,18 @@ function block_shortcode( $atts, $content = null ) {
 	$the_post = $post_id ? get_post( $post_id, OBJECT, 'display' ) : null;
 
 	if ( $the_post ) {
-		$html = $the_post->post_content;
+		$html           = $the_post->post_content;
+		$can_edit_block = $builder || silver_current_user_can_edit_ux_block( $post_id );
 
-		if ( empty( $html ) ) {
+		if ( empty( trim( $html ) ) ) {
+			if ( ! $can_edit_block ) {
+				return '';
+			}
 			$html = '<p class="lead shortcode-error">Open this in UX Builder to add and edit content</p>';
 		}
 
-		// Add edit link for admins.
-		if ( isset( $post ) && current_user_can( 'edit_pages' )
+		// Add edit link for users who can edit this block.
+		if ( isset( $post ) && $can_edit_block
 		     && ! is_customize_preview()
 		     && function_exists( 'ux_builder_is_active' )
 		     && ! ux_builder_is_active()
@@ -153,6 +181,9 @@ function block_shortcode( $atts, $content = null ) {
 			                     . '" data-link="' . esc_url( $edit_link ) . '"></div>' . $html . '';
 		}
 	} else {
+		if ( ! $can_edit ) {
+			return '';
+		}
 		$html = '<p class="text-center"><mark>Block <strong>"' . esc_html( $id ) . '"</strong> not found</mark></p>';
 	}
 

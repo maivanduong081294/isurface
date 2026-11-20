@@ -102,7 +102,7 @@ if ( ! function_exists( 'silver_woocommerce_shop_loop_category' ) ) {
 	 * Add and/or Remove Categories
 	 */
 	function silver_woocommerce_shop_loop_category() {
-		if ( ! get_theme_mod( 'product_box_category', 1 ) ) {
+		if ( ! get_theme_mod( 'product_box_category', 0 ) ) {
 			return;
 		} ?>
 		<p class="category uppercase is-smaller no-text-overflow product-cat op-8">
@@ -141,6 +141,49 @@ if ( ! function_exists( 'silver_woocommerce_shop_loop_ratings' ) ) {
 	}
 }
 add_action( 'woocommerce_shop_loop_item_title', 'silver_woocommerce_shop_loop_ratings', 0 );
+
+if ( ! function_exists( 'silver_product_box_price_wrapper' ) ) {
+	/**
+	 * Prints the rating and the attribute chips of a product box, then its
+	 * price wrapper.
+	 *
+	 * Both stay hooked on woocommerce_after_shop_loop_item_title, so the
+	 * options that add or remove them (Product Box rating, Disable reviews,
+	 * Card Attributes, the box items of the Products element) keep working,
+	 * but they are printed before the price wrapper, in hook order, as
+	 * siblings of it, not inside it.
+	 */
+	function silver_product_box_price_wrapper() {
+		$hook    = 'woocommerce_after_shop_loop_item_title';
+		$outside = array();
+
+		foreach ( array( 'woocommerce_template_loop_rating', 'silver_card_attrs_output' ) as $callback ) {
+			$priority = has_action( $hook, $callback );
+			if ( false !== $priority ) {
+				$outside[ $callback ] = $priority;
+			}
+		}
+		asort( $outside );
+
+		foreach ( $outside as $callback => $priority ) {
+			call_user_func( $callback );
+			remove_action( $hook, $callback, $priority );
+		}
+
+		// No wrapper when nothing is printed in it (a product without a price):
+		// an empty box would still take a gap of the card's text block.
+		ob_start();
+		do_action( $hook );
+		$price = ob_get_clean();
+		if ( '' !== trim( $price ) ) {
+			echo '<div class="price-wrapper">' . $price . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput
+		}
+
+		foreach ( $outside as $callback => $priority ) {
+			add_action( $hook, $callback, $priority );
+		}
+	}
+}
 
 
 /* Remove and add Product image */
@@ -358,3 +401,19 @@ if ( ! function_exists( 'silver_product_box_text_class' ) ) {
 		return '';
 	}
 }
+
+/**
+ * Card frame of product boxes (Shop > Product Catalog > Card Frame): adds
+ * .box-card, styled in assets/css/src/silver.css. List style boxes (image
+ * beside the text) keep their layout.
+ *
+ * @param array $classes Box classes.
+ * @return array
+ */
+function silver_product_box_card_class( $classes ) {
+	if ( get_theme_mod( 'product_box_card', 1 ) && ! in_array( 'box-vertical', (array) $classes, true ) ) {
+		$classes[] = 'box-card';
+	}
+	return $classes;
+}
+add_filter( 'silver_product_box_classes', 'silver_product_box_card_class' );

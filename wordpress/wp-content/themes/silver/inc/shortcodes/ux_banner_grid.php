@@ -21,7 +21,7 @@ function silver_banner_grid($atts, $content = null) {
     $classes = array('row','row-grid');
 
     if ( $class ) $classes[] = $class;
-    if ( $visibility ) $classes[] = $visibility;
+    // Visibility on the outer wrapper (a hidden element leaves no empty box).
 	if ( silver_is_multi_gallery( 'banner-grid' ) ) $classes[] = 'lightbox-multi-gallery';
 
     // Fix old
@@ -41,7 +41,7 @@ function silver_banner_grid($atts, $content = null) {
     // script and no data-packery-options attribute.
     ob_start();
   ?>
-  <div class="banner-grid-wrapper">
+  <div class="<?php echo esc_attr( trim( 'banner-grid-wrapper ' . $visibility ) ); ?>">
   <div id="<?php echo esc_attr( $_id ); ?>" class="banner-grid <?php echo esc_attr( implode( ' ', $classes ) ); ?>">
           <?php if(has_shortcode( $content, 'col_grid' ) || has_shortcode( $content, 'col' )) { ?>
             <?php echo do_shortcode( $content ) ?>

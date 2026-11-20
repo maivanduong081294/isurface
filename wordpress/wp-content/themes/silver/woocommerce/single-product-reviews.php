@@ -57,6 +57,8 @@ $tab_style = get_theme_mod( 'product_display' );
 							'next_text' => is_rtl() ? '&larr;' : '&rarr;',
 							'type'      => 'list',
 							'echo'      => false,
+							'end_size'  => 1, // Short enough for one line on phones.
+							'mid_size'  => 1,
 						)
 					)
 				);

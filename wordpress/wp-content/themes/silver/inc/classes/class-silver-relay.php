@@ -269,7 +269,8 @@ final class Silver_Relay {
 			'format'    => '#/page/%#%',
 			'current'   => 1,
 			'total'     => self::$query->max_num_pages,
-			'mid_size'  => 3,
+			'end_size'  => 1, // Short enough for one line on phones: ‹ 1 … 3 4 5 … 15 ›.
+			'mid_size'  => 1,
 			'type'      => 'array',
 			'prev_text' => $prev_arrow,
 			'next_text' => $next_arrow,

@@ -143,7 +143,7 @@ function ux_image($atts, $content = null)
 		<div class="<?php echo esc_attr($classes_inner); ?> dark" <?php echo get_shortcode_inline_css($css_image_height); ?>>
 			<?php echo silver_get_image($image_id, $image_size, $caption, false, $image_title); ?>
 			<?php if ($image_overlay) { ?>
-				<div class="overlay" style="background-color: <?php echo esc_attr($image_overlay); ?>"></div>
+				<div class="overlay" style="<?php echo esc_attr( silver_overlay_style( $image_overlay ) ); ?>"></div>
 			<?php } ?>
 			<?php if ($icon) { ?>
 				<div class="absolute no-click x50 y50 md-x50 md-y50 xl-x50 xl-y50 text-shadow-2">
@@ -162,12 +162,35 @@ function ux_image($atts, $content = null)
 		<?php echo $link_end; ?>
 		<?php
 		$args = array(
+			// A number is % (old slider values); a value with a unit is kept.
 			'width' => array(
+				'selector'  => '',
+				'property'  => 'width',
+				'unit'      => '%',
+				'css_value' => true,
+			),
+			// Padding (top / right / bottom / left), per screen.
+			'padding' => array(
 				'selector' => '',
-				'property' => 'width',
-				'unit'     => '%',
+				'property' => 'padding',
+			),
+			// Background behind the image, per screen.
+			'bg_color' => array(
+				'selector' => '',
+				'property' => 'background-color',
+			),
+			// Rounded corners: the element (background / padding) and the inner
+			// box, which clips the image (overflow: hidden). Number = px.
+			'radius' => array(
+				'selector'  => ', .img-inner', // .img-inner can be inside a link / animation wrapper.
+				'property'  => 'border-radius',
+				'unit'      => 'px',
+				'css_value' => true,
 			),
 		);
+		if (! array_key_exists('radius', (array) $atts)) $atts['radius'] = '';
+		if (! array_key_exists('padding', (array) $atts)) $atts['padding'] = '';
+		if (! array_key_exists('bg_color', (array) $atts)) $atts['bg_color'] = '';
 		echo ux_builder_element_style_tag($_id, $args, $atts);
 
 		// Responsive height (larger screens).

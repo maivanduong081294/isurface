@@ -14,9 +14,8 @@ add_ux_builder_shortcode( 'ux_banner_grid', array(
     'add_buttons' => array( 'bottom-right' ),
     'addable_spots' => array(),
 
-    'scripts' => array(
-        'silver-packery' => get_template_directory_uri() . '/assets/libs/packery.pkgd.min.js',
-    ),
+    // Laid out by CSS grid (.row-grid), in the builder as on the front end:
+    // no Packery script.
 
     // Override children data.
     'children' => array(

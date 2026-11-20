@@ -9,13 +9,13 @@
 if(silver_has_bottom_bar()['large_or_mobile']) {
 ?>
 <div id="wide-nav" class="header-bottom wide-nav <?php header_inner_class('bottom'); ?>">
+    <?php if ( silver_header_block_id( 'bottom' ) ) { ?>
+    <?php /* UX Block: a plain block in the container (no flex-row / flex-col), its own rows and stacks do the layout. */ ?>
+    <div class="header-block header-block-bottom">
+        <?php silver_header_block( 'bottom' ); ?>
+    </div>
+    <?php } else { ?>
     <div class="flex-row container">
-
-            <?php if ( silver_header_block_id( 'bottom' ) ) { ?>
-            <div class="flex-col flex-grow header-block header-block-bottom">
-                <?php silver_header_block( 'bottom' ); ?>
-            </div>
-            <?php } else { ?>
 
             <?php if(get_theme_mod('header_elements_bottom_left') || get_theme_mod('header_elements_bottom_right')){ ?>
             <div class="flex-col hide-for-medium flex-left">
@@ -49,9 +49,8 @@ if(silver_has_bottom_bar()['large_or_mobile']) {
               </div>
             <?php } ?>
 
-            <?php } ?>
-
     </div>
+    <?php } ?>
 </div>
 <?php } ?>
 

@@ -117,7 +117,7 @@ Silver_Option::add_field( 'option',
 		'label'       => esc_attr__( 'Font', 'silver' ),
 		'section'     => 'type',
 		'default'     => array(
-			'font-family' => 'Lato',
+			'font-family' => 'Inter',
 			'variant'     => '700',
 		),
 		'active_callback' => array(
@@ -155,7 +155,7 @@ Silver_Option::add_field( 'option',
 		'label'    => esc_attr__( 'Base Text Font', 'silver' ),
 		'section'  => 'type',
 		'default'  => array(
-			'font-family' => 'Lato',
+			'font-family' => 'Inter',
 			'variant'     => 'regular',
 		),
 		'active_callback' => array(
@@ -182,6 +182,56 @@ Silver_Option::add_field( 'option',
 			'step' => 1,
 		),
 		'transport'   => 'postMessage',
+		'active_callback' => array(
+			array(
+				'setting'  => 'disable_fonts',
+				'operator' => '==',
+				'value'    => false,
+			),
+		),
+	)
+);
+
+// Tablets: 100 keeps the Base Font Size (no live preview script: the
+// preview reloads).
+Silver_Option::add_field( 'option',
+	array(
+		'type'        => 'slider',
+		'settings'    => 'type_size_tablet_landscape',
+		'label'       => __( 'Tablet Landscape Base Font Size', 'silver' ),
+		'section'     => 'type',
+		'description' => 'Set tablet landscape (850-1199px) base font size in %. 100 = Base Font Size.',
+		'default'     => 100,
+		'choices'     => array(
+			'min'  => 50,
+			'max'  => 200,
+			'step' => 1,
+		),
+		'transport'   => 'refresh',
+		'active_callback' => array(
+			array(
+				'setting'  => 'disable_fonts',
+				'operator' => '==',
+				'value'    => false,
+			),
+		),
+	)
+);
+
+Silver_Option::add_field( 'option',
+	array(
+		'type'        => 'slider',
+		'settings'    => 'type_size_tablet_portrait',
+		'label'       => __( 'Tablet Portrait Base Font Size', 'silver' ),
+		'section'     => 'type',
+		'description' => 'Set tablet portrait (550-849px) base font size in %. 100 = Base Font Size.',
+		'default'     => 100,
+		'choices'     => array(
+			'min'  => 50,
+			'max'  => 200,
+			'step' => 1,
+		),
+		'transport'   => 'refresh',
 		'active_callback' => array(
 			array(
 				'setting'  => 'disable_fonts',
@@ -240,7 +290,7 @@ Silver_Option::add_field( 'option',
 		'label'     => esc_attr__( 'Font', 'silver' ),
 		'section'   => 'type',
 		'default'   => array(
-			'font-family' => 'Lato',
+			'font-family' => 'Inter',
 			'variant'     => '700',
 		),
 		'active_callback' => array(
