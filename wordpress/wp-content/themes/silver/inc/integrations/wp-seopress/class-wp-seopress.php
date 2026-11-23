@@ -52,7 +52,7 @@ class WP_SEOPress {
 			$classes = array(
 				'seopress-breadcrumb',
 				'breadcrumbs',
-				get_theme_mod( 'breadcrumb_case', 'uppercase' ),
+				get_theme_mod( 'breadcrumb_case', '' ),
 			);
 			$classes = implode( ' ', $classes );
 

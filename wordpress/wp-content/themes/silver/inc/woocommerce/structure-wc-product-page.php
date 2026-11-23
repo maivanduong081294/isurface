@@ -39,10 +39,20 @@ add_action('silver_before_product_sidebar','silver_product_upsell_sidebar', 1);
 /* Add Share to product description */
 if ( ! function_exists( 'silver_product_share' ) ) {
 	function silver_product_share() {
-		echo silver_apply_shortcode( 'share', array(
+		$icons = silver_apply_shortcode( 'share', array(
 			'style'   => get_theme_mod( 'social_icons_style', 'outline' ),
 			'tooltip' => get_theme_mod( 'social_icons_tooltip', 1 ) ? 'true' : 'false',
 		) );
+
+		if ( '' === trim( (string) $icons ) ) {
+			return;
+		}
+
+		// A group named "Chia sẻ" for screen readers (no visible label, the
+		// icons say it); the icons keep the format of [share].
+		echo '<div class="product-share" role="group" aria-label="' . esc_attr__( 'Share', 'silver' ) . '">'
+			. $icons // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- shortcode output.
+			. '</div>';
 	}
 }
 add_action( 'woocommerce_share', 'silver_product_share', 10 );
@@ -140,7 +150,7 @@ add_action( 'silver_product_image_tools_bottom', 'silver_product_lightbox_button
 function silver_product_body_classes( $classes ) {
 
     // Add Frame Class for Posts
-    if(is_product() && get_theme_mod('product_lightbox', 'default') == 'flatsome'){
+    if ( is_product() && 'disabled' !== get_theme_mod( 'product_lightbox', 'default' ) ) {
        $classes[] = 'has-lightbox';
     }
 
@@ -323,9 +333,43 @@ function silver_sticky_add_to_cart_template() {
 				<div class="product-title-small hide-for-small"><strong><?php the_title(); ?></strong></div>
 				<?php
 				if ( $product->is_type( 'simple' ) ) :
+					// The price before the form (quantity, buttons), as for the
+					// other products; regular price struck out when on sale.
+					$silver_sticky_price = function_exists( 'silver_product_buy_box_price_html' ) ? silver_product_buy_box_price_html( $product ) : $product->get_price_html();
+					if ( '' !== $silver_sticky_price ) {
+						echo '<span class="price sticky-add-to-cart__price">' . $silver_sticky_price . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput
+					}
 					woocommerce_simple_add_to_cart();
 				else :
-					echo $product->get_price_html(); // phpcs:ignore WordPress.Security.EscapeOutput
+					// Same price as the buy box: "Từ 15 ₫" for variable products
+					// (lowest price, "Từ" in the format of the price), in a .price
+					// so it takes the Sale Price colour (silver-modern.css).
+					$silver_sticky_price = function_exists( 'silver_product_buy_box_price_html' ) ? silver_product_buy_box_price_html( $product ) : $product->get_price_html();
+					echo '<span class="price sticky-add-to-cart__price">' . $silver_sticky_price . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput
+
+					// Variable products, once every attribute is chosen
+					// (silver-variation-pills.js): quantity, "Add to cart" and
+					// "Buy now", which press the buttons of the product form (the
+					// chosen variation); "Select options" until then. The theme
+					// keeps both quantities in step (woocommerce.js).
+					if ( $product->is_type( 'variable' ) ) :
+						?>
+						<div class="sticky-add-to-cart__variation" hidden>
+							<?php
+							woocommerce_quantity_input( array(
+								'min_value'   => $product->get_min_purchase_quantity(),
+								'max_value'   => $product->get_max_purchase_quantity(),
+								'input_value' => $product->get_min_purchase_quantity(),
+							), $product );
+							?>
+							<button type="button" class="single_add_to_cart_button button alt sticky-add-to-cart__add"><?php echo esc_html( $product->single_add_to_cart_text() ); ?></button>
+							<?php if ( get_theme_mod( 'product_buy_now' ) ) : ?>
+								<button type="button" class="ux-buy-now-button button primary sticky-add-to-cart__buy-now"><?php esc_html_e( 'Buy now', 'silver' ); ?></button>
+							<?php endif; ?>
+						</div>
+						<?php
+					endif;
+
 					echo silver_apply_shortcode( 'button', array(
 						'as'    => 'button',
 						'class' => 'sticky-add-to-cart-select-options-button mb-0 ml-half',
@@ -375,3 +419,263 @@ function silver_woocommerce_gallery_image_html_attachment_image_params( $atts, $
 }
 
 add_filter( 'woocommerce_gallery_image_html_attachment_image_params', 'silver_woocommerce_gallery_image_html_attachment_image_params', 10, 4 );
+
+/**
+ * The parts under the product (woocommerce_after_single_product_summary:
+ * tabs, upsells, related products, and what plugins add), each in a section
+ * of its own with its own container, so a section can have a full-width
+ * background. Used by the layouts whose .product-footer is full width
+ * (single-product/layouts/product.php...). The callbacks run in the order and
+ * with the priority of the hook; a part that prints nothing gets no section.
+ */
+function silver_product_footer_sections() {
+	global $wp_filter;
+
+	$tag = 'woocommerce_after_single_product_summary';
+
+	// Tells the tabs template that the section has the container.
+	do_action( 'silver_product_footer_sections' );
+
+	if ( empty( $wp_filter[ $tag ] ) || ! $wp_filter[ $tag ] instanceof WP_Hook ) {
+		return;
+	}
+
+	// The hook still runs for code that listens to it (did_action()).
+	$GLOBALS['wp_actions'][ $tag ] = isset( $GLOBALS['wp_actions'][ $tag ] ) ? $GLOBALS['wp_actions'][ $tag ] + 1 : 1;
+
+	$callbacks = $wp_filter[ $tag ]->callbacks;
+	ksort( $callbacks );
+
+	foreach ( $callbacks as $priority => $items ) {
+		foreach ( $items as $item ) {
+			// Unhooked while the previous parts printed.
+			if ( false === has_action( $tag, $item['function'] ) ) {
+				continue;
+			}
+
+			ob_start();
+			call_user_func( $item['function'] );
+			$html = (string) ob_get_clean();
+
+			if ( '' === trim( $html ) ) {
+				continue;
+			}
+
+			$name = is_string( $item['function'] ) ? $item['function'] : 'part';
+			$name = sanitize_html_class( str_replace( '_', '-', preg_replace( '/^(woocommerce_output_|woocommerce_|silver_)/', '', $name ) ) );
+
+			// The tabs in the "Sections" style have a full-width section and a
+			// container per tab (single-product/tabs/sections.php).
+			$contain = ! ( 'woocommerce_output_product_data_tabs' === $item['function'] && 'sections' === get_theme_mod( 'product_display', 'tabs' ) );
+
+			/**
+			 * Whether a part under the product gets a container in its section.
+			 *
+			 * @param bool  $contain  True for a container.
+			 * @param mixed $callback The hooked callback.
+			 */
+			$contain = apply_filters( 'silver_product_footer_section_container', $contain, $item['function'] );
+
+			echo '<div class="product-footer-section product-footer-section--' . esc_attr( $name ) . '">'
+				. ( $contain ? '<div class="container">' . $html . '</div>' : $html )
+				. '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- output of the hooked templates.
+		}
+	}
+}
+
+/*
+ * Order of the product tabs (Product Page > Product tabs order): a sortable
+ * list of the tabs of the theme and WooCommerce, the eye hides one. Applies to
+ * every tabs style (tabs, sections, accordion). Tabs added by plugins and not
+ * in the list keep their own priority.
+ */
+
+/**
+ * Tabs that can be sorted: key => label.
+ *
+ * @return array
+ */
+function silver_product_tabs_order_choices() {
+	return (array) apply_filters( 'silver_product_tabs_order_choices', array(
+		'description'            => __( 'Mô tả', 'silver' ),
+		'additional_information' => __( 'Thông số kỹ thuật', 'silver' ),
+		'silver_faq'             => __( 'Câu hỏi thường gặp', 'silver' ),
+		'reviews'                => __( 'Đánh giá', 'silver' ),
+		'ux_custom_tab'          => __( 'Tab tùy chỉnh của sản phẩm', 'silver' ),
+		'ux_global_tab'          => __( 'Tab chung', 'silver' ),
+	) );
+}
+
+/**
+ * The saved order with the tabs added to the list since it was saved.
+ *
+ * @param mixed $order Saved order.
+ *
+ * @return mixed
+ */
+function silver_product_tabs_order_add_new( $order ) {
+	if ( ! is_array( $order ) || ! function_exists( 'silver_sortable_insert_new' ) ) {
+		return $order;
+	}
+
+	$defaults = array_keys( silver_product_tabs_order_choices() );
+
+	return silver_sortable_insert_new( $order, $defaults, get_theme_mod( 'product_tabs_order_known', $defaults ) );
+}
+add_filter( 'theme_mod_product_tabs_order', 'silver_product_tabs_order_add_new' );
+
+/** Remembers the tabs known when the Customizer is saved. */
+function silver_product_tabs_order_remember_known() {
+	set_theme_mod( 'product_tabs_order_known', array_keys( silver_product_tabs_order_choices() ) );
+}
+add_action( 'customize_save_after', 'silver_product_tabs_order_remember_known' );
+
+/**
+ * Sorts and hides the tabs (after woocommerce_sort_product_tabs, 99): the
+ * listed tabs take the priorities 10, 20, 30... in the saved order; the
+ * hidden ones are removed; the other tabs keep their priority.
+ *
+ * @param array $tabs Product tabs.
+ *
+ * @return array
+ */
+function silver_product_tabs_order( $tabs ) {
+	$choices = array_keys( silver_product_tabs_order_choices() );
+	$order   = get_theme_mod( 'product_tabs_order', $choices );
+	$order   = is_array( $order ) ? array_values( array_intersect( $order, $choices ) ) : $choices;
+
+	foreach ( $choices as $key ) {
+		if ( isset( $tabs[ $key ] ) && ! in_array( $key, $order, true ) ) {
+			unset( $tabs[ $key ] );
+		}
+	}
+
+	foreach ( $order as $index => $key ) {
+		if ( isset( $tabs[ $key ] ) ) {
+			$tabs[ $key ]['priority'] = ( $index + 1 ) * 10;
+		}
+	}
+
+	uasort( $tabs, function ( $a, $b ) {
+		$pa = isset( $a['priority'] ) ? (float) $a['priority'] : 0;
+		$pb = isset( $b['priority'] ) ? (float) $b['priority'] : 0;
+		return $pa === $pb ? 0 : ( $pa < $pb ? -1 : 1 );
+	} );
+
+	return $tabs;
+}
+add_filter( 'woocommerce_product_tabs', 'silver_product_tabs_order', 100 );
+
+/*
+ * Table of contents in the Description tab: the content goes through
+ * [ux_toc] (inc/shortcodes/ux_toc.php) with the h3 and h4 headings: a box
+ * "Nội dung chính" before the content that opens and closes. No such headings: the content as it is.
+ * Filters "silver_product_description_toc" (false turns it off) and
+ * "silver_product_description_toc_atts".
+ */
+
+/**
+ * The Description tab prints through silver_product_description_toc_tab().
+ *
+ * @param array $tabs Product tabs.
+ *
+ * @return array
+ */
+function silver_product_description_toc_tabs( $tabs ) {
+	if ( empty( $tabs['description']['callback'] ) || ! function_exists( 'silver_toc_shortcode' ) || ! apply_filters( 'silver_product_description_toc', true ) ) {
+		return $tabs;
+	}
+
+	$tabs['description']['silver_toc_callback'] = $tabs['description']['callback'];
+	$tabs['description']['callback']            = 'silver_product_description_toc_tab';
+
+	return $tabs;
+}
+add_filter( 'woocommerce_product_tabs', 'silver_product_description_toc_tabs', 98 );
+
+/**
+ * The Description tab: its content with the table of contents.
+ *
+ * @param string $key Tab key.
+ * @param array  $tab Tab.
+ */
+function silver_product_description_toc_tab( $key, $tab ) {
+	ob_start();
+	if ( ! empty( $tab['silver_toc_callback'] ) && is_callable( $tab['silver_toc_callback'] ) ) {
+		call_user_func( $tab['silver_toc_callback'], $key, $tab );
+	}
+	$html = (string) ob_get_clean();
+
+	// Product page: before the content, a box "Nội dung chính" that opens and
+	// closes (closed at first); on phones the box stays and the bar sticks
+	// under the header while the description is read.
+	$atts = apply_filters( 'silver_product_description_toc_atts', array(
+		'_id'      => 'product-description-toc',
+		'title'    => __( 'Nội dung chính', 'silver' ),
+		'levels'   => 'h3,h4',
+		'position' => 'top',
+		'mobile'   => 'bar',
+		'collapse' => 'closed',
+	) );
+
+	echo silver_toc_shortcode( $atts, $html, 'ux_toc' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- the tab content, with the list built by ux_toc.
+}
+
+/*
+ * Read more in the product tabs (Product Page > Read more in the product
+ * tabs): the content of each tab goes through [ux_readmore]
+ * (inc/shortcodes/ux_readmore.php), cut to a height with a "Xem thêm" button
+ * when it is taller. Every tabs style; a hidden tab is measured once shown
+ * (silver-readmore.js). Filter "silver_product_tabs_readmore_keys" picks the
+ * tabs (all by default).
+ */
+
+/**
+ * The tabs print through silver_product_tab_readmore() (after the order of
+ * the tabs, 100).
+ *
+ * @param array $tabs Product tabs.
+ *
+ * @return array
+ */
+function silver_product_tabs_readmore( $tabs ) {
+	if ( ! get_theme_mod( 'product_tabs_readmore', 1 ) || ! function_exists( 'silver_readmore_shortcode' ) ) {
+		return $tabs;
+	}
+
+	$keys = apply_filters( 'silver_product_tabs_readmore_keys', array_keys( $tabs ), $tabs );
+
+	foreach ( $tabs as $key => $tab ) {
+		if ( empty( $tab['callback'] ) || ! in_array( $key, (array) $keys, true ) ) {
+			continue;
+		}
+		$tabs[ $key ]['silver_readmore_callback'] = $tab['callback'];
+		$tabs[ $key ]['callback']                 = 'silver_product_tab_readmore';
+	}
+
+	return $tabs;
+}
+add_filter( 'woocommerce_product_tabs', 'silver_product_tabs_readmore', 101 );
+
+/**
+ * A tab: its content in a read more.
+ *
+ * @param string $key Tab key.
+ * @param array  $tab Tab.
+ */
+function silver_product_tab_readmore( $key, $tab ) {
+	ob_start();
+	if ( ! empty( $tab['silver_readmore_callback'] ) && is_callable( $tab['silver_readmore_callback'] ) ) {
+		call_user_func( $tab['silver_readmore_callback'], $key, $tab );
+	}
+	$html = (string) ob_get_clean();
+
+	if ( '' === trim( $html ) ) {
+		return;
+	}
+
+	echo silver_readmore_shortcode( array( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- the tab content in the read more.
+		'_id'    => 'product-tab-readmore-' . sanitize_html_class( $key ),
+		'height' => absint( get_theme_mod( 'product_tabs_readmore_height', 600 ) ),
+	), $html, 'ux_readmore' );
+}

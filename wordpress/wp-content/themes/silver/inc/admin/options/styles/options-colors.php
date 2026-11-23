@@ -233,4 +233,13 @@ if ( is_woocommerce_activated() ) {
 		'section'     => 'colors',
 		'transport'   => silver_customizer_transport(),
 	) );
+
+	Silver_Option::add_field( 'option', array(
+		'type'        => 'color',
+		'settings'    => 'color_price_badge',
+		'label'       => __( 'Discount label', 'silver' ),
+		'description' => __( 'Change color of the discount label next to the price on the product page ("-16%"). Default is the Sale bubble color.', 'silver' ),
+		'section'     => 'colors',
+		'transport'   => silver_customizer_transport(),
+	) );
 }

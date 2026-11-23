@@ -1,0 +1,102 @@
+/* Read more element ([ux_readmore], assets/js/src/silver-readmore.js). */
+.ux-readmore {
+	margin-bottom: 1.5em;
+	overflow-anchor: none; /* The script scrolls back itself after a collapse. */
+}
+
+.ux-readmore__content > :last-child {
+	margin-bottom: 0;
+}
+
+/* Cut by the script only (.is-collapsible): without it the content is shown
+   in full. The end fades out with a mask, on any background. */
+.ux-readmore.is-collapsible:not(.is-expanded) > .ux-readmore__content {
+	-webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 120px), transparent);
+	mask-image: linear-gradient(to bottom, #000 calc(100% - 120px), transparent);
+	max-height: var(--ux-readmore-height, 400px);
+	overflow: hidden;
+	overflow: clip; /* Clips without being a scroll container (sticky children). */
+}
+
+/* Expanded: nothing clipped, so a sticky element inside (the table of
+   contents) keeps working. The script clips it while the height animates. */
+.ux-readmore.is-collapsible.is-expanded > .ux-readmore__content {
+	overflow: visible;
+}
+
+.ux-readmore__actions {
+	display: none;
+	margin-top: 16px;
+}
+
+.ux-readmore.is-collapsible > .ux-readmore__actions {
+	display: flex;
+}
+
+.ux-readmore--center > .ux-readmore__actions {
+	justify-content: center;
+}
+
+.ux-readmore--right > .ux-readmore__actions {
+	justify-content: flex-end;
+}
+
+.ux-readmore .ux-readmore__toggle {
+	align-items: center;
+	background-color: var(--sv-surface, #fff);
+	border: 1px solid var(--sv-border, #e5e7eb);
+	border-radius: 999px;
+	box-shadow: none;
+	color: var(--sv-heading, #0f172a);
+	cursor: pointer;
+	display: inline-flex;
+	font-size: 0.875rem;
+	font-weight: 600;
+	gap: 8px;
+	letter-spacing: 0;
+	line-height: 1.2;
+	margin: 0;
+	min-height: 44px;
+	padding: 0 20px;
+	text-transform: none;
+	transition: border-color 0.2s, color 0.2s;
+}
+
+.ux-readmore .ux-readmore__toggle:hover {
+	border-color: var(--sv-primary, #2563eb);
+	color: var(--sv-primary, #2563eb);
+}
+
+.ux-readmore .ux-readmore__toggle:focus-visible {
+	outline: 2px solid var(--sv-primary, #2563eb);
+	outline-offset: 2px;
+}
+
+.ux-readmore__icon {
+	flex: 0 0 auto;
+	transition: transform 0.2s;
+}
+
+.ux-readmore.is-expanded .ux-readmore__icon {
+	transform: rotate(180deg);
+}
+
+/* UX Builder: the content in full, with a label. */
+.ux-readmore-builder__label {
+	border: 1px dashed var(--sv-border, #e5e7eb);
+	border-radius: 8px;
+	color: var(--sv-text-muted, #64748b);
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	margin-bottom: 12px;
+	padding: 6px 10px;
+	text-transform: uppercase;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ux-readmore .ux-readmore__toggle,
+	.ux-readmore__icon {
+		transition: none;
+	}
+}

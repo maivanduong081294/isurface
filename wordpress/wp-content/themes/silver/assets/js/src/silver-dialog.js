@@ -214,7 +214,7 @@
 
 			const index = open.indexOf(api);
 			if (index > -1) open.splice(index, 1);
-			if (!open.length) document.documentElement.classList.remove('silver-dialog-open');
+			if (!open.length) document.documentElement.classList.remove('silver-dialog-open', 'silver-dialog-has-scrollbar');
 
 			root.classList.remove('is-visible');
 			root.classList.add('is-closing');
@@ -224,7 +224,7 @@
 			reduced ? remove() : setTimeout(remove, 200);
 
 			if (previousFocus && typeof previousFocus.focus === 'function' && document.contains(previousFocus)) {
-				previousFocus.focus();
+				previousFocus.focus({ preventScroll: true });
 			}
 
 			resolvePromise(value);
@@ -295,6 +295,9 @@
 		document.addEventListener('keydown', onKeydown, true);
 
 		const api = { element: root, close, setLoading, promise, dismissValue: opts.dismissValue };
+		if (!open.length && document.documentElement.clientWidth < window.innerWidth) {
+			document.documentElement.classList.add('silver-dialog-has-scrollbar');
+		}
 		open.push(api);
 
 		root.style.zIndex = String(100000 + open.length);

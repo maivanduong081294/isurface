@@ -25,6 +25,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php the_title(); ?>
 </h1>
 
-<?php if ( get_theme_mod( 'product_title_divider', 1 ) ) { ?>
+<?php
+// No divider by default with the buy box (Product Page > Buy box).
+$silver_title_divider = function_exists( 'silver_product_buy_box_enabled' ) && silver_product_buy_box_enabled() ? 0 : 1;
+if ( get_theme_mod( 'product_title_divider', $silver_title_divider ) ) { ?>
 	<div class="is-divider small"></div>
 <?php } ?>

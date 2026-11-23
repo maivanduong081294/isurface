@@ -52,7 +52,7 @@ class AIOSEO {
 		if ( function_exists( 'aioseo_breadcrumbs' ) ) {
 			$classes = array(
 				'breadcrumbs',
-				get_theme_mod( 'breadcrumb_case', 'uppercase' ),
+				get_theme_mod( 'breadcrumb_case', '' ),
 			);
 			$classes = implode( ' ', $classes );
 

@@ -31,7 +31,7 @@ if ( ! empty( $product_tabs ) ) : ?>
 		<div id="accordion-<?php echo esc_attr( $key ) ?>" class="accordion-item">
 			<a id="accordion-<?php echo esc_attr( $key ) ?>-label" class="accordion-title plain<?php echo $is_open ? ' active' : ''; ?>" aria-expanded="<?php echo $is_open ? 'true' : 'false'; ?>" aria-controls="accordion-<?php echo esc_attr( $key ) ?>-content" href="<?php echo esc_url( '#accordion-item-' . $key ); ?>">
 				<button class="toggle" aria-label="<?php echo esc_attr__( 'Toggle', 'silver' ); ?>"><?php echo get_silver_icon( 'icon-angle-down' ); ?></button>
-				<?php echo apply_filters( 'woocommerce_product_' . $key . '_tab_title', $product_tab['title'], $key ); ?>
+				<h2 class="product-tab-title"><?php echo apply_filters( 'woocommerce_product_' . $key . '_tab_title', $product_tab['title'], $key ); ?></h2>
 			</a>
 			<div id="accordion-<?php echo esc_attr( $key ) ?>-content" class="accordion-inner"<?php echo $is_open ? ' style="display: block;"' : ''; ?> aria-labelledby="accordion-<?php echo esc_attr( $key ) ?>-label">
 				<?php

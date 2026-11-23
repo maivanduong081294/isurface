@@ -1958,3 +1958,856 @@ msgctxt "Color name"
 msgid "Alert"
 msgstr "Cảnh báo"
 
+#. translators: %s: Number of products.
+#: inc/functions/fl-template-functions.php
+msgid "%s product available"
+msgid_plural "%s products available"
+msgstr[0] "%s sản phẩm đang có sẵn"
+
+#: inc/functions/fl-template-functions.php
+msgid "Product categories"
+msgstr "Danh mục sản phẩm"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Show page title and description in the bar"
+msgstr "Hiện tiêu đề và mô tả trang trong thanh"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Shop, product categories, blog page and blog archives: the title (H1) and the description move from the content to the bar under the header."
+msgstr "Cửa hàng, danh mục sản phẩm, trang blog và lưu trữ blog: tiêu đề (H1) và mô tả chuyển từ nội dung lên thanh dưới header."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Show category chips on shop pages"
+msgstr "Hiện chip danh mục trên trang cửa hàng"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Subcategories of the current category, or the categories next to it when it has none."
+msgstr "Danh mục con của danh mục hiện tại, hoặc các danh mục cùng cấp khi không có danh mục con."
+
+#: inc/functions/function-short-description.php
+msgid "Short description"
+msgstr "Mô tả ngắn"
+
+#: inc/functions/function-short-description.php
+msgid "Shown under the title in the bar under the header, instead of the default description."
+msgstr "Hiển thị dưới tiêu đề trong thanh dưới header, thay cho mô tả mặc định."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Bar background color"
+msgstr "Màu nền thanh"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Bar text color"
+msgstr "Màu chữ thanh"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Choose light text when the background color is dark."
+msgstr "Chọn chữ sáng khi màu nền tối."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Dark"
+msgstr "Tối"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Light"
+msgstr "Sáng"
+
+#: inc/woocommerce/structure-wc-category-page-header.php
+msgid "Price: low to high"
+msgstr "Giá thấp đến cao"
+
+#: inc/woocommerce/structure-wc-category-page-header.php
+msgid "Price: high to low"
+msgstr "Giá cao đến thấp"
+
+#: inc/woocommerce/structure-wc-category-page-header.php
+msgid "Sort products"
+msgstr "Sắp xếp sản phẩm"
+
+#: inc/admin/options/shop/options-shop-category.php
+msgid "Catalog ordering style"
+msgstr "Kiểu sắp xếp sản phẩm"
+
+#: inc/admin/options/shop/options-shop-category.php
+msgid "Buttons: default, price low to high and price high to low, on the left of the toolbar."
+msgstr "Nút: mặc định, giá thấp đến cao và giá cao đến thấp, ở bên trái thanh công cụ."
+
+#: inc/admin/options/shop/options-shop-category.php
+msgid "Buttons"
+msgstr "Nút"
+
+#: inc/admin/options/shop/options-shop-category.php
+msgid "Dropdown"
+msgstr "Danh sách thả xuống"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Use H1 for the bar title"
+msgstr "Dùng thẻ H1 cho tiêu đề trong thanh"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Off: the title is a plain div tag with the same look. Turn it off only when the page has another H1."
+msgstr "Tắt: tiêu đề dùng thẻ div thường, giao diện giữ nguyên. Chỉ tắt khi trang đã có thẻ H1 khác."
+
+#: inc/shortcodes/ux_toc.php
+msgid "Table of contents"
+msgstr "Mục lục"
+
+#: inc/builder/shortcodes/ux_toc.php
+msgid "Table of Contents"
+msgstr "Mục lục"
+
+#: inc/builder/shortcodes/ux_toc.php
+msgid "Headings"
+msgstr "Tiêu đề"
+
+#: inc/builder/shortcodes/ux_toc.php
+msgid "Numbers"
+msgstr "Đánh số"
+
+#: inc/builder/shortcodes/ux_toc.php
+msgid "Position"
+msgstr "Vị trí"
+
+#: inc/builder/shortcodes/ux_toc.php
+msgid "From 850px."
+msgstr "Từ 850px."
+
+#: inc/builder/shortcodes/ux_toc.php
+msgid "Sticky"
+msgstr "Dính khi cuộn"
+
+#: inc/builder/shortcodes/ux_toc.php
+msgid "Stays in view while the content scrolls."
+msgstr "Luôn hiển thị khi cuộn nội dung."
+
+#: inc/builder/shortcodes/ux_toc.php
+msgid "Mobile"
+msgstr "Mobile"
+
+#: inc/builder/shortcodes/ux_toc.php
+msgid "Below 850px. Bar: fixed under the header while the content is read, it opens the list."
+msgstr "Dưới 850px. Thanh: cố định dưới header khi đang đọc nội dung, bấm để mở danh sách."
+
+#: inc/builder/shortcodes/ux_toc.php
+msgid "Bar"
+msgstr "Thanh"
+
+#: inc/builder/shortcodes/ux_toc.php
+msgid "Box"
+msgstr "Hộp"
+
+#: inc/builder/shortcodes/ux_toc.php
+msgid "Hidden"
+msgstr "Ẩn"
+
+#: inc/builder/shortcodes/ux_toc.php
+msgid "Left"
+msgstr "Trái"
+
+#: inc/builder/shortcodes/ux_toc.php
+msgid "Right"
+msgstr "Phải"
+
+#: inc/builder/shortcodes/ux_toc.php
+msgid "Top"
+msgstr "Trên"
+
+#: inc/admin/options/shop/options-shop-category.php
+msgid "Category description position"
+msgstr "Vị trí mô tả danh mục"
+
+#: inc/admin/options/shop/options-shop-category.php
+msgid "Above products"
+msgstr "Trên sản phẩm"
+
+#: inc/admin/options/shop/options-shop-category.php
+msgid "Below products"
+msgstr "Dưới sản phẩm"
+
+#: inc/admin/options/shop/options-shop-category.php
+msgid "Table of contents in the category description"
+msgstr "Mục lục trong mô tả danh mục"
+
+#: inc/admin/options/shop/options-shop-category.php
+msgid "The headings (H2, H3) of the description are listed next to it; a bar on phones."
+msgstr "Các tiêu đề (H2, H3) của mô tả được liệt kê bên cạnh; trên điện thoại là thanh cố định."
+
+#: inc/admin/options/shop/options-shop-category.php
+msgid "Category description background"
+msgstr "Màu nền mô tả danh mục"
+
+#: inc/admin/options/shop/options-shop-category.php
+msgid "Full-width section below the products."
+msgstr "Section rộng toàn màn hình bên dưới sản phẩm."
+
+#: inc/admin/options/shop/options-shop-category.php
+msgid "Category description padding"
+msgstr "Padding mô tả danh mục"
+
+#: inc/admin/options/shop/options-shop-category.php
+msgid "Top and bottom, from 850px (px)."
+msgstr "Trên và dưới, từ 850px (px)."
+
+#: inc/admin/options/shop/options-shop-category.php
+msgid "Category description padding (mobile)"
+msgstr "Padding mô tả danh mục (mobile)"
+
+#: inc/admin/options/shop/options-shop-category.php
+msgid "Top and bottom, below 850px (px)."
+msgstr "Trên và dưới, dưới 850px (px)."
+
+#: inc/admin/options/shop/options-shop-category.php
+msgid "Table of contents width"
+msgstr "Độ rộng mục lục"
+
+#: inc/admin/options/shop/options-shop-category.php
+msgid "From 850px. In px or %, e.g. 40% or 420px."
+msgstr "Từ 850px. Tính bằng px hoặc %, ví dụ 40% hoặc 420px."
+
+#: inc/shortcodes/ux_readmore.php
+msgid "Read more"
+msgstr "Xem thêm"
+
+#: inc/shortcodes/ux_readmore.php
+msgid "Read less"
+msgstr "Thu gọn"
+
+#: inc/builder/shortcodes/ux_readmore.php
+msgid "Read More"
+msgstr "Xem thêm"
+
+#: inc/builder/shortcodes/ux_readmore.php
+msgid "Collapsed height"
+msgstr "Chiều cao khi thu gọn"
+
+#: inc/builder/shortcodes/ux_readmore.php
+msgid "Content taller than this (plus 80px) is cut, with a button to read it all."
+msgstr "Nội dung cao hơn mức này (cộng 80px) sẽ được thu gọn, kèm nút để đọc toàn bộ."
+
+#: inc/builder/shortcodes/ux_readmore.php
+msgid "Read more text"
+msgstr "Chữ nút Xem thêm"
+
+#: inc/builder/shortcodes/ux_readmore.php
+msgid "Read less text"
+msgstr "Chữ nút Thu gọn"
+
+#: inc/builder/shortcodes/ux_readmore.php
+msgid "Button align"
+msgstr "Canh nút"
+
+#: inc/admin/options/shop/options-shop-category.php
+msgid "Read more in the category description"
+msgstr "Xem thêm trong mô tả danh mục"
+
+#: inc/admin/options/shop/options-shop-category.php
+msgid "A long description is cut, with a button to read it all."
+msgstr "Mô tả dài sẽ được thu gọn, kèm nút để đọc toàn bộ."
+
+#: inc/builder/shortcodes/ux_toc.php
+msgid "Sub-headings"
+msgstr "Mục con"
+
+#: inc/builder/shortcodes/ux_toc.php
+msgid "Section being read: the second level shows under the current section only, so a long list stays short."
+msgstr "Phần đang đọc: mục con chỉ hiện dưới phần đang đọc, giúp mục lục dài vẫn gọn."
+
+#: inc/builder/shortcodes/ux_toc.php
+msgid "Section being read"
+msgstr "Phần đang đọc"
+
+#: inc/builder/shortcodes/ux_toc.php
+msgid "Always"
+msgstr "Luôn hiện"
+
+#: inc/woocommerce/structure-wc-quick-description.php
+msgid "Quick description"
+msgstr "Mô tả nhanh"
+
+#: inc/woocommerce/structure-wc-quick-description.php
+msgid "Shown on product cards (shop, categories, Products element), in place of the short description. One or two sentences; cards show two lines."
+msgstr "Hiển thị trên thẻ sản phẩm (cửa hàng, danh mục, element Products), thay cho mô tả ngắn. Một đến hai câu; thẻ hiện tối đa hai dòng."
+
+#: inc/admin/options/shop/options-shop-category.php
+msgid "Show quick description"
+msgstr "Hiện mô tả nhanh"
+
+#: inc/admin/options/shop/options-shop-category.php
+msgid "On product cards: the \"Quick description\" of each product (Edit product), not the short description."
+msgstr "Trên thẻ sản phẩm: dùng \"Mô tả nhanh\" của từng sản phẩm (trang sửa sản phẩm), không dùng mô tả ngắn."
+
+#: inc/woocommerce/structure-wc-faq.php
+msgid "Show FAQs"
+msgstr "Hiển thị FAQs"
+
+#: inc/woocommerce/structure-wc-faq.php
+msgid "Rank Math FAQ schema"
+msgstr "FAQ schema của Rank Math"
+
+#: inc/woocommerce/structure-wc-faq.php
+msgid "Custom questions"
+msgstr "Tự nhập câu hỏi"
+
+#: inc/woocommerce/structure-wc-faq.php
+msgid "— Select a schema template —"
+msgstr "— Chọn schema template —"
+
+#: inc/woocommerce/structure-wc-faq.php
+msgid "The questions of the template are shown here. If the template also applies to this page (its display conditions in Rank Math), its FAQ schema is printed twice."
+msgstr "Các câu hỏi của template được hiển thị tại đây. Nếu template cũng áp dụng cho trang này (điều kiện hiển thị trong Rank Math), FAQ schema sẽ bị in hai lần."
+
+#: inc/woocommerce/structure-wc-faq.php
+msgid "No FAQ schema template found. Create one in Rank Math PRO > Schema Templates (FAQ type)."
+msgstr "Chưa có schema template loại FAQ. Tạo trong Rank Math PRO > Schema Templates (loại FAQ)."
+
+#: inc/woocommerce/structure-wc-faq.php
+msgid "Add question"
+msgstr "Thêm câu hỏi"
+
+#: inc/woocommerce/structure-wc-faq.php
+msgid "Question"
+msgstr "Câu hỏi"
+
+#: inc/woocommerce/structure-wc-faq.php
+msgid "Answer"
+msgstr "Câu trả lời"
+
+#: inc/woocommerce/structure-wc-faq.php
+msgid "Move up"
+msgstr "Chuyển lên"
+
+#: inc/woocommerce/structure-wc-faq.php
+msgid "Move down"
+msgstr "Chuyển xuống"
+
+#: inc/woocommerce/structure-wc-faq.php
+msgid "Remove question"
+msgstr "Xóa câu hỏi"
+
+#: inc/woocommerce/structure-wc-faq.php
+msgid "Shown under the category description, with the FAQ schema."
+msgstr "Hiển thị dưới mô tả danh mục, kèm FAQ schema."
+
+#: inc/woocommerce/structure-wc-faq.php
+msgid "FAQs"
+msgstr "FAQs"
+
+#: inc/woocommerce/structure-wc-faq.php
+msgid "Shown under the product tabs, with the FAQ schema."
+msgstr "Hiển thị dưới các tab sản phẩm, kèm FAQ schema."
+
+#: inc/woocommerce/structure-wc-faq.php
+msgid "Frequently asked questions"
+msgstr "Câu hỏi thường gặp"
+
+#: inc/woocommerce/structure-wc-faq.php
+msgid "No FAQs"
+msgstr "Không"
+
+#: inc/woocommerce/structure-wc-faq.php
+msgid "Drag to reorder"
+msgstr "Kéo để sắp xếp"
+
+#: inc/woocommerce/structure-wc-faq.php
+msgid "FAQ in the Schema tab of this product"
+msgstr "FAQ trong tab Schema của sản phẩm này"
+
+#: inc/woocommerce/structure-wc-faq.php
+msgid "FAQ in the Schema tab of this category"
+msgstr "FAQ trong tab Schema của danh mục này"
+
+#: inc/woocommerce/structure-wc-faq.php
+msgid "Schema Templates"
+msgstr "Schema Templates"
+
+#: inc/woocommerce/structure-wc-faq.php
+msgid "The questions of the FAQ schema added in the Schema tab of Rank Math SEO (Schema Generator), or of a schema template. Rank Math prints the schema of the Schema tab, the theme only shows the questions. A template is printed by the theme, twice if its display conditions in Rank Math also apply to this page."
+msgstr "Lấy câu hỏi từ FAQ schema thêm trong tab Schema của Rank Math SEO (Schema Generator), hoặc từ một schema template. Schema trong tab Schema do Rank Math in, theme chỉ hiển thị câu hỏi. Schema template do theme in, sẽ bị in hai lần nếu điều kiện hiển thị của template trong Rank Math cũng áp dụng cho trang này."
+
+#: inc/woocommerce/structure-wc-category-page-header.php
+msgid "Sort by:"
+msgstr "Sắp xếp:"
+
+#: inc/admin/options/shop/options-shop-category.php
+msgid "Top and bottom of the description and FAQs sections, from 850px (px)."
+msgstr "Trên và dưới của section mô tả và section FAQs, từ 850px (px)."
+
+#: inc/admin/options/shop/options-shop-category.php
+msgid "Top and bottom of the description and FAQs sections, below 850px (px)."
+msgstr "Trên và dưới của section mô tả và section FAQs, dưới 850px (px)."
+
+#: inc/woocommerce/structure-wc-product-buy-box.php
+msgid "Call now %s"
+msgstr "Gọi ngay %s"
+
+#: inc/admin/options/shop/options-shop-product-page.php
+msgid "Buy box"
+msgstr "Khung mua hàng"
+
+#: inc/admin/options/shop/options-shop-product-page.php
+msgid "Price, attribute buttons, \"Add to cart\" and \"Call now\" in a card under the short description; rating with five stars; no title divider unless turned on."
+msgstr "Giá, nút chọn thuộc tính, \"Thêm vào giỏ\" và \"Gọi ngay\" trong một khung dưới mô tả ngắn; đánh giá dạng 5 sao; không có gạch dưới tiêu đề trừ khi bật."
+
+#: inc/admin/options/shop/options-shop-product-page.php
+msgid "Buy box: show quantity"
+msgstr "Khung mua hàng: hiện số lượng"
+
+#: inc/admin/options/shop/options-shop-product-page.php
+msgid "Buy box: \"Call now\" phone"
+msgstr "Khung mua hàng: số điện thoại \"Gọi ngay\""
+
+#: inc/admin/options/shop/options-shop-product-page.php
+msgid "E.g. 0900 000 000. Empty: no \"Call now\" button."
+msgstr "Ví dụ 0900 000 000. Để trống: không hiện nút \"Gọi ngay\"."
+
+#: inc/admin/options/styles/options-colors.php
+msgid "Discount label"
+msgstr "Nhãn tỉ lệ giảm giá"
+
+#: inc/admin/options/styles/options-colors.php
+msgid "Change color of the discount label next to the price on the product page (\"-16%\"). Default is the Sale bubble color."
+msgstr "Đổi màu nhãn tỉ lệ giảm giá cạnh giá ở trang sản phẩm (\"-16%\"). Mặc định theo màu Sale bubble."
+
+#: inc/woocommerce/structure-wc-product-buy-box.php
+msgid "Clear choices"
+msgstr "Xóa lựa chọn"
+
+#: inc/woocommerce/structure-wc-product-buy-box.php
+msgid "Clear all choices"
+msgstr "Xóa tất cả lựa chọn"
+
+#: inc/woocommerce/structure-wc-cart-notices.php
+msgid "Added %s to cart"
+msgstr "Đã thêm %s vào giỏ hàng"
+
+#: woocommerce/single-product/meta.php
+msgid "SKU"
+msgstr "Mã SP"
+
+#: woocommerce/single-product/meta.php
+msgid "N/A"
+msgstr "Không có"
+
+#: woocommerce/single-product/meta.php
+msgid "Category"
+msgstr "Danh mục"
+
+#: woocommerce/single-product/meta.php
+msgid "Tag"
+msgstr "Thẻ"
+
+#: inc/woocommerce/structure-wc-product-page.php
+msgid "Share"
+msgstr "Chia sẻ"
+
+#: inc/woocommerce/structure-wc-product-buy-box.php
+msgid "Rating"
+msgstr "Đánh giá"
+
+#: inc/woocommerce/structure-wc-product-buy-box.php
+msgid "Buy box (price, options, add to cart)"
+msgstr "Khung mua hàng (giá, tùy chọn, thêm vào giỏ)"
+
+#: inc/woocommerce/structure-wc-product-buy-box.php
+msgid "SKU and categories"
+msgstr "Mã SP và danh mục"
+
+#: inc/admin/options/shop/options-shop-product-page.php
+msgid "Product info elements"
+msgstr "Thành phần thông tin sản phẩm"
+
+#: inc/admin/options/shop/options-shop-product-page.php
+msgid "Drag to sort the parts next to the gallery, click the eye to show or hide one. Hiding the buy box hides \"Add to cart\"."
+msgstr "Kéo để sắp xếp các phần bên cạnh ảnh sản phẩm, bấm biểu tượng con mắt để ẩn/hiện. Ẩn khung mua hàng sẽ ẩn luôn nút \"Thêm vào giỏ\"."
+
+#: inc/woocommerce/structure-wc-product-siblings.php
+msgid "Product siblings"
+msgstr "Sản phẩm cùng nhóm"
+
+#: inc/woocommerce/structure-wc-product-siblings.php
+msgid "Product sibling group"
+msgstr "Nhóm sản phẩm"
+
+#: inc/woocommerce/structure-wc-product-siblings.php
+msgid "All groups"
+msgstr "Tất cả nhóm"
+
+#: inc/woocommerce/structure-wc-product-siblings.php
+msgid "Edit group"
+msgstr "Sửa nhóm"
+
+#: inc/woocommerce/structure-wc-product-siblings.php
+msgid "Add new group"
+msgstr "Thêm nhóm mới"
+
+#: inc/woocommerce/structure-wc-product-siblings.php
+msgid "New group name"
+msgstr "Tên nhóm mới"
+
+#: inc/woocommerce/structure-wc-product-siblings.php
+msgid "Search groups"
+msgstr "Tìm nhóm"
+
+#: inc/woocommerce/structure-wc-product-siblings.php
+msgid "No groups found."
+msgstr "Không tìm thấy nhóm nào."
+
+#: inc/woocommerce/structure-wc-product-siblings.php
+msgid "Versions of one product sold as separate products. A product belongs to one group."
+msgstr "Các phiên bản của cùng một sản phẩm được bán thành sản phẩm riêng. Mỗi sản phẩm chỉ thuộc một nhóm."
+
+#: inc/woocommerce/structure-wc-product-siblings.php
+msgid "Group"
+msgstr "Nhóm"
+
+#: inc/woocommerce/structure-wc-product-siblings.php
+msgid "— No group —"
+msgstr "— Không thuộc nhóm —"
+
+#: inc/woocommerce/structure-wc-product-siblings.php
+msgid "Or a new group"
+msgstr "Hoặc tạo nhóm mới"
+
+#: inc/woocommerce/structure-wc-product-siblings.php
+msgid "E.g. Surface Pro 4"
+msgstr "Ví dụ: Surface Pro 4"
+
+#: inc/woocommerce/structure-wc-product-siblings.php
+msgid "Label in the group"
+msgstr "Nhãn trong nhóm"
+
+#: inc/woocommerce/structure-wc-product-siblings.php
+msgid "E.g. Core i5 8GB - 128GB (Like New)"
+msgstr "Ví dụ: Core i5 8GB - 128GB (Like New)"
+
+#: inc/woocommerce/structure-wc-product-siblings.php
+msgid "A product belongs to one group. The product page shows the products of its group, from the lowest price, with this label (else the product name)."
+msgstr "Mỗi sản phẩm chỉ thuộc một nhóm. Trang sản phẩm hiển thị các sản phẩm cùng nhóm, xếp theo giá từ thấp đến cao, với nhãn này (để trống thì dùng tên sản phẩm)."
+
+#: inc/builder/shortcodes/ux_toc.php
+msgid "Collapsible"
+msgstr "Thu gọn"
+
+#: inc/builder/shortcodes/ux_toc.php
+msgid "The list in a box that opens and closes, the title as its button."
+msgstr "Mục lục trong một hộp đóng/mở được, tiêu đề là nút bấm."
+
+#: inc/builder/shortcodes/ux_toc.php
+msgid "Closed"
+msgstr "Đóng sẵn"
+
+#: inc/builder/shortcodes/ux_toc.php
+msgid "Open"
+msgstr "Mở sẵn"
+
+#. translators: %d: number of photos
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "Up to %d photo."
+msgid_plural "Up to %d photos."
+msgstr[0] "Tối đa %d ảnh."
+
+#. translators: %d: number of photos
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "%d photo"
+msgid_plural "%d photos"
+msgstr[0] "%d ảnh"
+
+#. translators: %s: rating
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "Rated %s out of 5"
+msgstr "Được xếp hạng %s/5"
+
+#. translators: %s: time, e.g. "2 hours"
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "%s ago"
+msgstr "%s trước"
+
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "Shop"
+msgstr "Cửa hàng"
+
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "Purchased"
+msgstr "Đã mua hàng"
+
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "Your review is awaiting approval"
+msgstr "Đánh giá của bạn đang chờ duyệt"
+
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "View photo"
+msgstr "Xem ảnh"
+
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "Customer photos"
+msgstr "Ảnh thực tế từ khách hàng"
+
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "A photo could not be uploaded."
+msgstr "Không tải được ảnh lên."
+
+#. translators: %s: size, e.g. "1 MB"
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "Each photo up to %s."
+msgstr "Mỗi ảnh tối đa %s."
+
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "Photos only (JPG, PNG, WebP)."
+msgstr "Chỉ nhận ảnh JPG, PNG, WebP."
+
+#. translators: 1: comment ID, 2: photo number
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "Review %1$d photo %2$d"
+msgstr "Ảnh %2$d của đánh giá %1$d"
+
+#. translators: %s: site name
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "New review on %s"
+msgstr "Có đánh giá mới trên %s"
+
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "Product"
+msgstr "Sản phẩm"
+
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "Phone"
+msgstr "Số điện thoại"
+
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "Open in the admin"
+msgstr "Xem trong trang quản trị"
+
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "Invalid request."
+msgstr "Yêu cầu không hợp lệ."
+
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "Only logged in customers who have purchased this product may leave a review."
+msgstr "Chỉ khách hàng đã đăng nhập và đã mua sản phẩm này mới có thể đánh giá."
+
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "Please select a rating"
+msgstr "Vui lòng chọn số sao"
+
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "Please enter your name."
+msgstr "Vui lòng nhập họ tên."
+
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "Please enter your phone number."
+msgstr "Vui lòng nhập số điện thoại."
+
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "Please enter a valid phone number."
+msgstr "Số điện thoại không hợp lệ."
+
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "Please enter your email address."
+msgstr "Vui lòng nhập email."
+
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "Please enter a valid email address."
+msgstr "Email không hợp lệ."
+
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "Your review could not be sent."
+msgstr "Chưa gửi được đánh giá, vui lòng thử lại."
+
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "Thank you for your review!"
+msgstr "Cảm ơn bạn đã đánh giá sản phẩm!"
+
+#: inc/woocommerce/structure-wc-product-reviews.php
+msgid "Thank you! Your review will appear once it is approved."
+msgstr "Cảm ơn bạn! Đánh giá sẽ hiển thị sau khi được duyệt."
+
+#. translators: %s: number of reviews
+#: woocommerce/single-product/reviews-layout.php
+msgid "%s review"
+msgid_plural "%s reviews"
+msgstr[0] "%s đánh giá"
+
+#. translators: 1: number of stars, 2: number of reviews
+#: woocommerce/single-product/reviews-layout.php
+msgid "%1$s star: %2$s"
+msgid_plural "%1$s stars: %2$s"
+msgstr[0] "%1$s sao: %2$s đánh giá"
+
+#: woocommerce/single-product/reviews-layout.php
+msgid "Write a review"
+msgstr "Viết đánh giá"
+
+#: woocommerce/single-product/reviews-layout.php
+msgid "Previous photo"
+msgstr "Ảnh trước"
+
+#: woocommerce/single-product/reviews-layout.php
+msgid "Next photo"
+msgstr "Ảnh sau"
+
+#: woocommerce/single-product/reviews-layout.php
+msgid "Remove photo"
+msgstr "Xoá ảnh"
+
+#: woocommerce/single-product/reviews-layout.php
+msgid "Loading…"
+msgstr "Đang tải…"
+
+#: woocommerce/single-product/reviews-layout.php
+msgid "No reviews yet"
+msgstr "Chưa có đánh giá"
+
+#: woocommerce/single-product/reviews-layout.php
+msgid "Used this product? Share your thoughts."
+msgstr "Bạn đã dùng sản phẩm này? Hãy chia sẻ cảm nhận."
+
+#: woocommerce/single-product/reviews-layout.php
+msgid "Be the first to review this product."
+msgstr "Hãy là người đầu tiên đánh giá sản phẩm này."
+
+#: woocommerce/single-product/reviews-layout.php
+msgid "More reviews"
+msgstr "Xem thêm đánh giá"
+
+#: woocommerce/single-product/reviews-layout.php
+msgid "There are no reviews yet."
+msgstr "Chưa có đánh giá nào."
+
+#: woocommerce/single-product/reviews-layout.php
+msgid "Very poor"
+msgstr "Rất tệ"
+
+#: woocommerce/single-product/reviews-layout.php
+msgid "Not that bad"
+msgstr "Tệ"
+
+#: woocommerce/single-product/reviews-layout.php
+msgid "Average"
+msgstr "Bình thường"
+
+#: woocommerce/single-product/reviews-layout.php
+msgid "Good"
+msgstr "Tốt"
+
+#: woocommerce/single-product/reviews-layout.php
+msgid "Perfect"
+msgstr "Tuyệt vời"
+
+#: woocommerce/single-product/reviews-layout.php
+msgid "How would you rate this product?"
+msgstr "Bạn đánh giá sản phẩm này bao nhiêu sao?"
+
+#: woocommerce/single-product/reviews-layout.php
+msgid "Email"
+msgstr "Email"
+
+#: woocommerce/single-product/reviews-layout.php
+msgid "Your review"
+msgstr "Nội dung đánh giá"
+
+#: woocommerce/single-product/reviews-layout.php
+msgid "What did you like or dislike? How do you use it?"
+msgstr "Bạn thích hoặc chưa hài lòng điều gì? Bạn dùng sản phẩm thế nào?"
+
+#: woocommerce/single-product/reviews-layout.php
+msgid "Photos"
+msgstr "Ảnh thực tế"
+
+#. translators: 1: number of photos, 2: size, e.g. "1 MB"
+#: woocommerce/single-product/reviews-layout.php
+msgid "(up to %1$d, %2$s each)"
+msgstr "(tối đa %1$d ảnh, mỗi ảnh %2$s)"
+
+#: woocommerce/single-product/reviews-layout.php
+msgid "Add photos"
+msgstr "Thêm ảnh"
+
+#: woocommerce/single-product/reviews-layout.php
+msgid "Send review"
+msgstr "Gửi đánh giá"
+
+#. translators: %s opening and closing link tags respectively
+#: woocommerce/single-product/reviews-layout.php
+msgid "You must be %1$slogged in%2$s to post a review."
+msgstr "Bạn phải %1$sđăng nhập%2$s để gửi đánh giá."
+
+#: inc/admin/options/shop/options-shop-product-reviews.php
+msgid "Product Reviews"
+msgstr "Đánh giá sản phẩm"
+
+#: inc/admin/options/shop/options-shop-product-reviews.php
+msgid "Optional"
+msgstr "Không bắt buộc"
+
+#: inc/admin/options/shop/options-shop-product-reviews.php
+msgid "Required"
+msgstr "Bắt buộc"
+
+#: inc/admin/options/shop/options-shop-product-reviews.php
+msgid "Theme review layout"
+msgstr "Dùng giao diện đánh giá của theme"
+
+#: inc/admin/options/shop/options-shop-product-reviews.php
+msgid "Overview with a bar per star, the form in a popup, customer photos, \"More reviews\". Off: the WooCommerce layout."
+msgstr "Bảng tổng quan theo số sao, form trong popup, ảnh thực tế, nút \"Xem thêm đánh giá\". Tắt: giao diện của WooCommerce."
+
+#: inc/admin/options/shop/options-shop-product-reviews.php
+msgid "List"
+msgstr "Danh sách"
+
+#: inc/admin/options/shop/options-shop-product-reviews.php
+msgid "Reviews shown at a time"
+msgstr "Số đánh giá mỗi lần hiển thị"
+
+#: inc/admin/options/shop/options-shop-product-reviews.php
+msgid "Shown first, then on each \"More reviews\"."
+msgstr "Hiển thị lúc đầu và sau mỗi lần bấm \"Xem thêm đánh giá\"."
+
+#: inc/admin/options/shop/options-shop-product-reviews.php
+msgid "Form"
+msgstr "Form"
+
+#: inc/admin/options/shop/options-shop-product-reviews.php
+msgid "Vietnamese mobile numbers. A phone of a completed order gives the review the \"Purchased\" badge."
+msgstr "Số di động Việt Nam. Số điện thoại trùng với đơn hàng đã hoàn thành sẽ gắn nhãn \"Đã mua hàng\" cho đánh giá."
+
+#: inc/admin/options/shop/options-shop-product-reviews.php
+msgid "JPG, PNG, WebP; checked by their content."
+msgstr "JPG, PNG, WebP; kiểm tra theo nội dung file thật."
+
+#: inc/admin/options/shop/options-shop-product-reviews.php
+msgid "Photos per review"
+msgstr "Số ảnh tối đa mỗi đánh giá"
+
+#: inc/admin/options/shop/options-shop-product-reviews.php
+msgid "Size of a photo (MB)"
+msgstr "Dung lượng tối đa mỗi ảnh (MB)"
+
+#: inc/admin/options/shop/options-shop-product-reviews.php
+msgid "Telegram notification"
+msgstr "Thông báo Telegram"
+
+#: inc/admin/options/shop/options-shop-product-reviews.php
+msgid "Bot token"
+msgstr "Bot token"
+
+#: inc/admin/options/shop/options-shop-product-reviews.php
+msgid "A message for each new review. Empty: none."
+msgstr "Gửi tin nhắn khi có đánh giá mới. Để trống: không gửi."
+
+#: inc/admin/options/shop/options-shop-product-reviews.php
+msgid "Chat ID"
+msgstr "Chat ID"
+
+#: inc/admin/options/shop/options-shop-product-reviews.php
+msgid "E.g. 123456789, -1001234567890 (group) or @channel."
+msgstr "Ví dụ: 123456789, -1001234567890 (nhóm) hoặc @kenh."
+
+#. translators: %s: link to WooCommerce > Settings > Products
+#: inc/admin/options/shop/options-shop-product-reviews.php
+msgid "Star rating required, \"verified owners\" only and the \"verified owner\" label: %s."
+msgstr "Bắt buộc chọn sao, chỉ cho khách đã mua đánh giá và nhãn \"đã mua\": %s."
+
+#: inc/admin/options/shop/options-shop-product-reviews.php
+msgid "WooCommerce > Settings > Products"
+msgstr "WooCommerce > Cài đặt > Sản phẩm"

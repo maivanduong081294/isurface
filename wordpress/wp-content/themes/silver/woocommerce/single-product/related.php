@@ -64,9 +64,9 @@ if ( $related_products ) :
 
 		if ( $heading ) :
 			?>
-			<h3 class="product-section-title container-width product-section-title-related pt-half pb-half uppercase">
+			<h2 class="product-section-title container-width product-section-title-related pt-half pb-half uppercase">
 				<?php echo esc_html( $heading ); ?>
-			</h3>
+			</h2>
 		<?php endif; ?>
 
 		<?php get_silver_repeater_start( $repeater ); ?>

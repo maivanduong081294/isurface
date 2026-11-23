@@ -11,6 +11,7 @@ Silver_Option::add_panel( 'woocommerce', array(
 
 include_once(dirname( __FILE__ ).'/options-shop-category.php');
 include_once(dirname( __FILE__ ).'/options-shop-product-page.php');
+include_once(dirname( __FILE__ ).'/options-shop-product-reviews.php');
 include_once(dirname( __FILE__ ).'/options-shop-my-account.php');
 include_once(dirname( __FILE__ ).'/options-shop-cart-checkout.php');
 include_once(dirname( __FILE__ ).'/options-shop-payments-icons.php');
@@ -122,7 +123,7 @@ function silver_refresh_shop_partials( WP_Customize_Manager $wp_customize ) {
 	$wp_customize->selective_refresh->add_partial( 'refresh_css_shop', array(
 	    'selector' => 'head > style#custom-css',
 	    'container_inclusive' => true,
-	    'settings' => array('category_image_height','color_new_bubble','color_new_bubble_auto','color_checkout','color_sale','color_review','color_regular_price','color_sale_price'),
+	    'settings' => array('category_image_height','color_new_bubble','color_new_bubble_auto','color_checkout','color_sale','color_review','color_regular_price','color_sale_price','color_price_badge'),
 	    'render_callback' => function() {
 	        silver_custom_css();
 	    },

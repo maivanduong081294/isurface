@@ -4,14 +4,6 @@ function silver_woocommerce_setup() {
 	// Theme support for default WC gallery.
 	if ( get_theme_mod( 'product_gallery_woocommerce') ) {
 		add_theme_support( 'wc-product-gallery-slider' );
-		// Force default lightbox when default gallery is chosen.
-		if ( get_theme_mod( 'product_lightbox','default' ) !== 'default' ) {
-			set_theme_mod( 'product_lightbox', 'default' );
-		}
-	}
-	// Theme support for default WC gallery lightbox.
-	if ( get_theme_mod( 'product_lightbox','default' ) === 'default' ) {
-		add_theme_support( 'wc-product-gallery-lightbox' );
 	}
 	// Remove default row and column options.
 	remove_theme_support( 'product_grid' );
@@ -70,13 +62,11 @@ add_filter( 'woocommerce_account_menu_items', 'silver_remove_logout_account_item
  */
 function silver_woocommerce_scripts_styles() {
 	// Remove default WooCommerce Lightbox.
-	if ( get_theme_mod( 'product_lightbox', 'default' ) !== 'woocommerce' || ! is_product() ) {
-		wp_dequeue_style( 'woocommerce_prettyPhoto_css' );
-		wp_deregister_style( 'woocommerce_prettyPhoto_css' );
+	wp_dequeue_style( 'woocommerce_prettyPhoto_css' );
+	wp_deregister_style( 'woocommerce_prettyPhoto_css' );
 
-		wp_dequeue_script( 'prettyPhoto' );
-		wp_dequeue_script( 'prettyPhoto-init' );
-	}
+	wp_dequeue_script( 'prettyPhoto' );
+	wp_dequeue_script( 'prettyPhoto-init' );
 
 	if ( ! is_admin() ) {
 		wp_dequeue_style( 'woocommerce-layout' );
@@ -124,7 +114,7 @@ function silver_woocommerce_breadcrumbs() {
 
 	return array(
 		'delimiter'   => silver_breadcrumb_divider(), // Customizer > Breadcrumbs > Divider icon.
-		'wrap_before' => '<nav class="woocommerce-breadcrumb breadcrumbs ' . get_theme_mod( 'breadcrumb_case', 'uppercase' ) . '" aria-label="Breadcrumb">',
+		'wrap_before' => '<nav class="woocommerce-breadcrumb breadcrumbs ' . get_theme_mod( 'breadcrumb_case', '' ) . '" aria-label="Breadcrumb">',
 		'wrap_after'  => '</nav>',
 		'before'      => '',
 		'after'       => '',
@@ -140,6 +130,48 @@ add_filter( 'woocommerce_breadcrumb_defaults', 'silver_woocommerce_breadcrumbs' 
  * @see woocommerce_breadcrumb()
  */
 add_action( 'silver_breadcrumb' , 'woocommerce_breadcrumb', 20 );
+
+/**
+ * Puts the main category of a post first (see silver_post_main_category()).
+ * WooCommerce builds the single post trail from its first category.
+ *
+ * @param WP_Term[] $categories Post categories.
+ * @param int|false $post_id    Post ID.
+ *
+ * @return WP_Term[]
+ */
+function silver_woocommerce_breadcrumb_post_categories( $categories, $post_id ) {
+	if ( count( $categories ) < 2 || ! function_exists( 'silver_post_main_category' ) ) {
+		return $categories;
+	}
+
+	remove_filter( 'get_the_categories', 'silver_woocommerce_breadcrumb_post_categories', 10 );
+	$main = silver_post_main_category( $post_id );
+	add_filter( 'get_the_categories', 'silver_woocommerce_breadcrumb_post_categories', 10, 2 );
+
+	if ( ! $main ) {
+		return $categories;
+	}
+
+	$others = array_filter( $categories, function ( $category ) use ( $main ) {
+		return (int) $category->term_id !== (int) $main->term_id;
+	} );
+
+	return array_merge( array( $main ), array_values( $others ) );
+}
+
+/**
+ * Single posts: Home > root category > ... > main category > post.
+ * The main category is only moved first while the breadcrumbs are built.
+ */
+add_action( 'silver_breadcrumb', function () {
+	if ( is_singular( 'post' ) ) {
+		add_filter( 'get_the_categories', 'silver_woocommerce_breadcrumb_post_categories', 10, 2 );
+	}
+}, 19 );
+add_action( 'silver_breadcrumb', function () {
+	remove_filter( 'get_the_categories', 'silver_woocommerce_breadcrumb_post_categories', 10 );
+}, 21 );
 
 /**
  * Update cart price.

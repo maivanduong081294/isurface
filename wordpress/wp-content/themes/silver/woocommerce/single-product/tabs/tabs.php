@@ -50,7 +50,8 @@ $panel_count = 0;
 
 if ( ! empty( $product_tabs ) ) : ?>
 
-	<div class="woocommerce-tabs wc-tabs-wrapper container tabbed-content">
+	<?php // No .container: the section around it has one (silver_product_footer_sections()), except in the layouts without it. ?>
+	<div class="woocommerce-tabs wc-tabs-wrapper<?php echo did_action( 'silver_product_footer_sections' ) ? '' : ' container'; ?> tabbed-content">
 		<ul class="tabs wc-tabs product-tabs small-nav-collapse <?php silver_product_tabs_classes(); ?>" role="tablist">
 			<?php foreach ( $product_tabs as $key => $product_tab ) : ?>
 				<li role="presentation" class="<?php echo esc_attr( $key ); ?>_tab <?php if ( $tab_count == 0 ) echo 'active'; ?>" id="tab-title-<?php echo esc_attr( $key ); ?>">
@@ -64,6 +65,11 @@ if ( ! empty( $product_tabs ) ) : ?>
 		<div class="tab-panels">
 			<?php foreach ( $product_tabs as $key => $product_tab ) : ?>
 				<div class="woocommerce-Tabs-panel woocommerce-Tabs-panel--<?php echo esc_attr( $key ); ?> panel entry-content <?php if ( $panel_count == 0 ) echo 'active'; ?>" id="tab-<?php echo esc_attr( $key ); ?>" role="tabpanel" aria-labelledby="tab-title-<?php echo esc_attr( $key ); ?>">
+					<?php
+					// Each panel opens with its title as an h2, so the headings of its
+					// content sit under it (the tab label shows it, so it is visually hidden).
+					?>
+					<h2 class="product-tab-panel-title screen-reader-text"><?php echo wp_kses_post( apply_filters( 'woocommerce_product_' . $key . '_tab_title', $product_tab['title'], $key ) ); ?></h2>
 					<?php if ( $key == 'description' && ux_builder_is_active() ) echo silver_dummy_text(); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 					<?php
 					if ( isset( $product_tab['callback'] ) ) {

@@ -3,16 +3,13 @@
     "prefetch": {
       "js": [
         "js/chunk.slider.js",
-        "js/chunk.popups.js",
         "js/chunk.tooltips.js"
       ]
     }
   },
   "js/woocommerce": {
     "prefetch": {
-      "js": [
-        "js/chunk.popups.js"
-      ]
+      "js": []
     }
   }
 }

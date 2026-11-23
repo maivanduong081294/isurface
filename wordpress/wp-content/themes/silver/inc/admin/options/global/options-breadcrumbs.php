@@ -37,7 +37,7 @@ Silver_Option::add_field( 'option', array(
 	'settings' => 'breadcrumb_case',
 	'label'    => esc_attr__( 'Breadcrumbs Case', 'silver' ),
 	'section'  => 'breadcrumbs',
-	'default'  => 'uppercase',
+	'default'  => '',
 	'choices'  => array(
 		'uppercase' => 'UPPERCASE',
 		''          => 'Normal',
@@ -63,7 +63,7 @@ Silver_Option::add_field( 'option', array(
 	'type'        => 'radio-buttonset',
 	'settings'    => 'breadcrumbs_position',
 	'label'       => __( 'Breadcrumbs position', 'silver' ),
-	'description' => __( 'Default: above the blog title, in the shop toolbar and above the product title. Below header: in a bar under the header on blog, shop, product category and product pages. Pages with a transparent header and UX Builder product layouts keep the default.', 'silver' ),
+	'description' => __( 'Default: above the blog title, in the shop toolbar and above the product title. Below header: in a bar under the header on blog, shop, product category and product pages; on the shop, categories and blog archives the bar also shows the page title. Pages with a transparent header and UX Builder product layouts keep the default.', 'silver' ),
 	'section'     => 'breadcrumbs',
 	// Until it is saved, show the value of the first, blog-only version of
 	// this option (same fallback as silver_breadcrumbs_position()).
@@ -71,5 +71,105 @@ Silver_Option::add_field( 'option', array(
 	'choices'     => array(
 		'title'  => __( 'Default', 'silver' ),
 		'header' => __( 'Below header', 'silver' ),
+	),
+) );
+
+// Background of the bar under the header: printed as --sv-breadcrumbs-bar-bg
+// (silver_custom_css()), white when empty.
+Silver_Option::add_field( 'option', array(
+	'type'            => 'color',
+	'settings'        => 'breadcrumbs_bar_bg',
+	'label'           => __( 'Bar background color', 'silver' ),
+	'section'         => 'breadcrumbs',
+	'default'         => '',
+	'active_callback' => array(
+		array(
+			'setting'  => 'breadcrumbs_position',
+			'operator' => '===',
+			'value'    => 'header',
+		),
+	),
+) );
+
+// Text color of the bar: "dark" adds the .dark class (light text).
+Silver_Option::add_field( 'option', array(
+	'type'            => 'radio-buttonset',
+	'settings'        => 'breadcrumbs_bar_text',
+	'label'           => __( 'Bar text color', 'silver' ),
+	'description'     => __( 'Choose light text when the background color is dark.', 'silver' ),
+	'section'         => 'breadcrumbs',
+	'default'         => '',
+	'choices'         => array(
+		''     => __( 'Dark', 'silver' ),
+		'dark' => __( 'Light', 'silver' ),
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'breadcrumbs_position',
+			'operator' => '===',
+			'value'    => 'header',
+		),
+	),
+) );
+
+// Page header of the bar under the header (silver_page_header_title_data()).
+Silver_Option::add_field( 'option', array(
+	'type'            => 'checkbox',
+	'settings'        => 'breadcrumbs_bar_title',
+	'label'           => __( 'Show page title and description in the bar', 'silver' ),
+	'description'     => __( 'Shop, product categories, blog page and blog archives: the title (H1) and the description move from the content to the bar under the header.', 'silver' ),
+	'section'         => 'breadcrumbs',
+	'default'         => 1,
+	'active_callback' => array(
+		array(
+			'setting'  => 'breadcrumbs_position',
+			'operator' => '===',
+			'value'    => 'header',
+		),
+	),
+) );
+
+// Tag of the bar title (silver_breadcrumbs_bar()): H1, or a <div> when the
+// page has its own H1 (in the description, a custom header...).
+Silver_Option::add_field( 'option', array(
+	'type'            => 'checkbox',
+	'settings'        => 'breadcrumbs_bar_title_h1',
+	'label'           => __( 'Use H1 for the bar title', 'silver' ),
+	'description'     => __( 'Off: the title is a plain div tag with the same look. Turn it off only when the page has another H1.', 'silver' ),
+	'section'         => 'breadcrumbs',
+	'default'         => 1,
+	'active_callback' => array(
+		array(
+			'setting'  => 'breadcrumbs_position',
+			'operator' => '===',
+			'value'    => 'header',
+		),
+		array(
+			'setting'  => 'breadcrumbs_bar_title',
+			'operator' => '==',
+			'value'    => true,
+		),
+	),
+) );
+
+// Category chips of the bar under the header (silver_page_header_product_cats()).
+Silver_Option::add_field( 'option', array(
+	'type'            => 'checkbox',
+	'settings'        => 'breadcrumbs_bar_subcategories',
+	'label'           => __( 'Show category chips on shop pages', 'silver' ),
+	'description'     => __( 'Subcategories of the current category, or the categories next to it when it has none.', 'silver' ),
+	'section'         => 'breadcrumbs',
+	'default'         => 1,
+	'active_callback' => array(
+		array(
+			'setting'  => 'breadcrumbs_position',
+			'operator' => '===',
+			'value'    => 'header',
+		),
+		array(
+			'setting'  => 'breadcrumbs_bar_title',
+			'operator' => '==',
+			'value'    => true,
+		),
 	),
 ) );

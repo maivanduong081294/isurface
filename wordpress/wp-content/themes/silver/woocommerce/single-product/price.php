@@ -26,7 +26,17 @@ global $product;
 $classes = array();
 if($product->is_on_sale()) $classes[] = 'price-on-sale';
 if(!$product->is_in_stock()) $classes[] = 'price-not-in-stock'; ?>
-<div class="price-wrapper">
+<?php
+// Buy box (structure-wc-product-buy-box.php): the sale badge "-16%" after the
+// price; silver-variation-pills.js updates both for the chosen variation.
+$silver_badge = function_exists( 'silver_product_buy_box_enabled' ) && silver_product_buy_box_enabled() ? silver_product_buy_box_badge( $product ) : '';
+$silver_badge_format = get_theme_mod( 'sale_bubble_percentage_formatting' ) ? get_theme_mod( 'sale_bubble_percentage_formatting' ) : '-{value}%';
+$silver_price_html   = $silver_badge || ( function_exists( 'silver_product_buy_box_enabled' ) && silver_product_buy_box_enabled() )
+	? silver_product_buy_box_price_html( $product )
+	: $product->get_price_html();
+?>
+<div class="price-wrapper" data-badge-format="<?php echo esc_attr( $silver_badge_format ); ?>">
 	<p class="price product-page-price <?php echo implode(' ', $classes); ?>">
-  <?php echo $product->get_price_html(); ?></p>
+  <?php echo $silver_price_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- WooCommerce price HTML. ?></p>
+	<?php echo $silver_badge; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in silver_product_buy_box_badge(). ?>
 </div>

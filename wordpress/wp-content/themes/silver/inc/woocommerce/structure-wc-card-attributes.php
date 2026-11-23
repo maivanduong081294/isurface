@@ -365,17 +365,19 @@ add_action( 'woocommerce_after_shop_loop_item_title', 'silver_card_attrs_output'
 /* ------------------------------------------------------------ Admin: shared */
 
 /**
- * The mode radios and the attribute checklist.
+ * The mode radios and the attribute select (select2 multiple, in the order
+ * chosen: silver-ordered-select.js).
  *
  * @param string $mode     inherit / custom.
- * @param array  $selected Ticked taxonomies.
+ * @param array  $selected Chosen taxonomies, in order.
  * @param string $inherit  Description of what Inherit gives now.
  */
 function silver_card_attrs_fields( $mode, $selected, $inherit ) {
 	$choices  = silver_card_attrs_choices();
 	$mode     = 'custom' === $mode ? 'custom' : 'inherit';
 	$selected = (array) $selected;
-	// Ticked attributes first, in their saved order, then the others.
+	// Chosen attributes first, in their saved order: select2 shows and posts
+	// them in the order of the options.
 	$ordered = array_merge( array_intersect_key( array_flip( $selected ), $choices ), $choices );
 
 	wp_nonce_field( 'silver_card_attrs', 'silver_card_attrs_nonce' );
@@ -398,20 +400,12 @@ function silver_card_attrs_fields( $mode, $selected, $inherit ) {
 					?>
 				</p>
 			<?php else : ?>
-				<?php // The order of the ticked items is the order of the chips on product cards. ?>
-				<ul class="silver-card-attrs-sortable">
+				<select class="silver-ordered-select silver-card-attrs-select" name="silver_card_attrs[]" multiple="multiple" data-placeholder="<?php esc_attr_e( 'Chọn thuộc tính theo thứ tự hiển thị', 'silver' ); ?>" aria-label="<?php esc_attr_e( 'Thuộc tính trên thẻ sản phẩm', 'silver' ); ?>" style="width:100%">
 					<?php foreach ( $ordered as $taxonomy => $label ) : ?>
-						<li>
-							<span class="silver-card-attrs-handle dashicons dashicons-menu" title="<?php esc_attr_e( 'Kéo để sắp xếp', 'silver' ); ?>" aria-hidden="true"></span>
-							<label><input type="checkbox" name="silver_card_attrs[]" value="<?php echo esc_attr( $taxonomy ); ?>" <?php checked( in_array( $taxonomy, $selected, true ) ); ?>> <?php echo esc_html( $label ); ?></label>
-							<span class="silver-card-attrs-move">
-								<button type="button" class="button-link" data-move="up" aria-label="<?php echo esc_attr( sprintf( /* translators: %s: attribute */ __( 'Đưa %s lên', 'silver' ), $label ) ); ?>"><span class="dashicons dashicons-arrow-up-alt2" aria-hidden="true"></span></button>
-								<button type="button" class="button-link" data-move="down" aria-label="<?php echo esc_attr( sprintf( /* translators: %s: attribute */ __( 'Đưa %s xuống', 'silver' ), $label ) ); ?>"><span class="dashicons dashicons-arrow-down-alt2" aria-hidden="true"></span></button>
-							</span>
-						</li>
+						<option value="<?php echo esc_attr( $taxonomy ); ?>" <?php selected( in_array( $taxonomy, $selected, true ) ); ?>><?php echo esc_html( $label ); ?></option>
 					<?php endforeach; ?>
-				</ul>
-				<p class="description"><?php esc_html_e( 'Kéo thả hoặc dùng nút mũi tên để sắp xếp: thẻ sản phẩm hiển thị theo đúng thứ tự này. Không chọn thuộc tính nào: ẩn thuộc tính trên thẻ sản phẩm.', 'silver' ); ?></p>
+				</select>
+				<p class="description"><?php esc_html_e( 'Thẻ sản phẩm hiển thị theo đúng thứ tự chọn; kéo các thuộc tính đã chọn để đổi thứ tự. Không chọn thuộc tính nào: ẩn thuộc tính trên thẻ sản phẩm.', 'silver' ); ?></p>
 			<?php endif; ?>
 		</div>
 	</div>
@@ -426,35 +420,6 @@ function silver_card_attrs_fields( $mode, $selected, $inherit ) {
 				box.querySelector( '.silver-card-attrs-list' ).hidden = ! custom;
 				box.querySelector( '.silver-card-attrs-inherit' ).hidden = custom;
 			} );
-
-			var list = box.querySelector( '.silver-card-attrs-sortable' );
-			if ( ! list ) return;
-
-			// Up / down buttons (keyboard friendly). The checkboxes are posted in
-			// the order of the list, which is the saved order.
-			list.addEventListener( 'click', function ( e ) {
-				var button = e.target.closest( '[data-move]' );
-				if ( ! button ) return;
-				e.preventDefault();
-				var item = button.closest( 'li' );
-				if ( button.dataset.move === 'up' && item.previousElementSibling ) {
-					list.insertBefore( item, item.previousElementSibling );
-				} else if ( button.dataset.move === 'down' && item.nextElementSibling ) {
-					list.insertBefore( item.nextElementSibling, item );
-				}
-				button.focus();
-			} );
-
-			// Drag and drop.
-			if ( window.jQuery && jQuery.fn.sortable ) {
-				jQuery( list ).sortable( {
-					axis: 'y',
-					containment: 'parent',
-					handle: '.silver-card-attrs-handle',
-					items: '> li',
-					tolerance: 'pointer'
-				} );
-			}
 		} )();
 	</script>
 	<?php
@@ -462,7 +427,7 @@ function silver_card_attrs_fields( $mode, $selected, $inherit ) {
 }
 
 /**
- * Styles of the sortable list (printed once).
+ * Styles of the field (printed once).
  */
 function silver_card_attrs_admin_style() {
 	static $done = false;
@@ -472,32 +437,30 @@ function silver_card_attrs_admin_style() {
 	$done = true;
 	?>
 	<style>
-		.silver-card-attrs-sortable { margin: 0 0 6px; max-width: 420px; }
-		.silver-card-attrs-sortable li { align-items: center; background: #fff; border: 1px solid #dcdcde; border-radius: 4px; display: flex; gap: 8px; margin: 0 0 4px; padding: 4px 8px; }
-		.silver-card-attrs-sortable li.ui-sortable-helper { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); }
-		.silver-card-attrs-sortable li.ui-sortable-placeholder { background: #f6f7f7; border-style: dashed; visibility: visible !important; }
-		.silver-card-attrs-sortable label { flex: 1 1 auto; margin: 0 !important; }
-		.silver-card-attrs-handle { color: #8c8f94; cursor: move; flex: none; }
-		.silver-card-attrs-move { display: flex; flex: none; gap: 2px; }
-		.silver-card-attrs-move .button-link { color: #50575e; line-height: 1; }
-		.silver-card-attrs-move .button-link:hover, .silver-card-attrs-move .button-link:focus { color: #2271b1; }
-		.silver-card-attrs-sortable li:first-child [data-move="up"], .silver-card-attrs-sortable li:last-child [data-move="down"] { visibility: hidden; }
+		.silver-card-attrs-list { max-width: 560px; }
+		.silver-card-attrs-list[hidden] { display: none; }
+		.silver-card-attrs .select2-selection__choice { cursor: move; }
+		.woocommerce_options_panel .silver-card-attrs .select2-container { width: 100% !important; }
 	</style>
 	<?php
 }
 
 /**
- * jQuery UI Sortable on the category and product screens.
+ * Ordered select2 (assets/js/admin/silver-ordered-select.js) on the product
+ * category and product screens; the specification groups use it too.
  *
  * @param string $hook Admin page.
  */
 function silver_card_attrs_admin_scripts( $hook ) {
+	$file = '/assets/js/admin/silver-ordered-select.js';
+	wp_register_script( 'silver-ordered-select', get_template_directory_uri() . $file, array( 'jquery', 'jquery-ui-sortable', 'selectWoo' ), filemtime( get_template_directory() . $file ), true );
+
 	$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
 	if ( $screen && in_array( $screen->id, array( 'edit-product_cat', 'product' ), true ) ) {
-		wp_enqueue_script( 'jquery-ui-sortable' );
+		wp_enqueue_script( 'silver-ordered-select' );
 	}
 }
-add_action( 'admin_enqueue_scripts', 'silver_card_attrs_admin_scripts' );
+add_action( 'admin_enqueue_scripts', 'silver_card_attrs_admin_scripts', 5 );
 
 /**
  * "Inherit" description for a rule: the attribute names, hidden, or none.

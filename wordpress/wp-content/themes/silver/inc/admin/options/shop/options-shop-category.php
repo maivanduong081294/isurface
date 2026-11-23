@@ -275,6 +275,159 @@ Silver_Option::add_field( 'option', array(
 	'default'   => 1,
 ) );
 
+// Category description (inc/woocommerce/structure-wc-category-description.php).
+Silver_Option::add_field( 'option', array(
+	'type'     => 'radio-buttonset',
+	'settings' => 'category_description_position',
+	'label'    => esc_html__( 'Category description position', 'silver' ),
+	'section'  => 'woocommerce_product_catalog',
+	'default'  => 'bottom',
+	'choices'  => array(
+		'top'    => esc_html__( 'Above products', 'silver' ),
+		'bottom' => esc_html__( 'Below products', 'silver' ),
+	),
+) );
+
+// Printed as --sv-term-description-bg (silver_custom_css()), white when empty.
+Silver_Option::add_field( 'option', array(
+	'type'            => 'color',
+	'settings'        => 'category_description_bg',
+	'label'           => esc_html__( 'Category description background', 'silver' ),
+	'description'     => esc_html__( 'Full-width section below the products.', 'silver' ),
+	'section'         => 'woocommerce_product_catalog',
+	'default'         => '',
+	'active_callback' => array(
+		array(
+			'setting'  => 'category_description_position',
+			'operator' => '===',
+			'value'    => 'bottom',
+		),
+	),
+) );
+
+// Padding of that section, above and under the content: printed as
+// --sv-term-description-pad (silver_custom_css()) once saved, else the
+// section spacing of the theme (--sv-space-section).
+Silver_Option::add_field( 'option', array(
+	'type'            => 'slider',
+	'settings'        => 'category_description_padding',
+	'label'           => esc_html__( 'Category description padding', 'silver' ),
+	'description'     => esc_html__( 'Top and bottom of the description and FAQs sections, from 850px (px).', 'silver' ),
+	'section'         => 'woocommerce_product_catalog',
+	'default'         => 64,
+	'choices'         => array(
+		'min'  => 0,
+		'max'  => 200,
+		'step' => 4,
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'category_description_position',
+			'operator' => '===',
+			'value'    => 'bottom',
+		),
+	),
+) );
+
+Silver_Option::add_field( 'option', array(
+	'type'            => 'slider',
+	'settings'        => 'category_description_padding_mobile',
+	'label'           => esc_html__( 'Category description padding (mobile)', 'silver' ),
+	'description'     => esc_html__( 'Top and bottom of the description and FAQs sections, below 850px (px).', 'silver' ),
+	'section'         => 'woocommerce_product_catalog',
+	'default'         => 40,
+	'choices'         => array(
+		'min'  => 0,
+		'max'  => 160,
+		'step' => 4,
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'category_description_position',
+			'operator' => '===',
+			'value'    => 'bottom',
+		),
+	),
+) );
+
+Silver_Option::add_field( 'option', array(
+	'type'        => 'checkbox',
+	'settings'    => 'category_description_toc',
+	'label'       => esc_html__( 'Table of contents in the category description', 'silver' ),
+	'description' => esc_html__( 'The headings (H2, H3) of the description are listed next to it; a bar on phones.', 'silver' ),
+	'section'     => 'woocommerce_product_catalog',
+	'default'     => 1,
+) );
+
+// [ux_readmore] around the description content (structure-wc-category-description.php).
+Silver_Option::add_field( 'option', array(
+	'type'        => 'checkbox',
+	'settings'    => 'category_description_readmore',
+	'label'       => esc_html__( 'Read more in the category description', 'silver' ),
+	'description' => esc_html__( 'A long description is cut, with a button to read it all.', 'silver' ),
+	'section'     => 'woocommerce_product_catalog',
+	'default'     => 1,
+) );
+
+Silver_Option::add_field( 'option', array(
+	'type'            => 'slider',
+	'settings'        => 'category_description_readmore_height',
+	'label'           => esc_html__( 'Collapsed height', 'silver' ),
+	'section'         => 'woocommerce_product_catalog',
+	'default'         => 480,
+	'choices'         => array(
+		'min'  => 160,
+		'max'  => 1200,
+		'step' => 20,
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'category_description_readmore',
+			'operator' => '==',
+			'value'    => true,
+		),
+	),
+) );
+
+// --ux-toc-width of the [ux_toc] of the description (its "width" attribute).
+Silver_Option::add_field( 'option', array(
+	'type'              => 'text',
+	'settings'          => 'category_description_toc_width',
+	'label'             => esc_html__( 'Table of contents width', 'silver' ),
+	'description'       => esc_html__( 'From 850px. In px or %, e.g. 40% or 420px.', 'silver' ),
+	'section'           => 'woocommerce_product_catalog',
+	'default'           => '40%',
+	'sanitize_callback' => 'silver_sanitize_css_length',
+	'active_callback'   => array(
+		array(
+			'setting'  => 'category_description_toc',
+			'operator' => '==',
+			'value'    => true,
+		),
+	),
+) );
+
+// Buttons: silver_catalog_ordering_pills(); dropdown: woocommerce_catalog_ordering().
+Silver_Option::add_field( 'option', array(
+	'type'            => 'radio-buttonset',
+	'settings'        => 'category_catalog_ordering_style',
+	'label'           => esc_html__( 'Catalog ordering style', 'silver' ),
+	'description'     => esc_html__( 'Buttons: default, price low to high and price high to low, on the left of the toolbar.', 'silver' ),
+	'section'         => 'woocommerce_product_catalog',
+	'default'         => 'pills',
+	'choices'         => array(
+		'pills'    => esc_html__( 'Buttons', 'silver' ),
+		'dropdown' => esc_html__( 'Dropdown', 'silver' ),
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'category_show_catalog_ordering',
+			'operator' => '==',
+			'value'    => true,
+		),
+	),
+) );
+
 Silver_Option::add_field( 'option', array(
 	'type'     => 'checkbox',
 	'settings' => 'category_header_transparent',
@@ -652,9 +805,10 @@ Silver_Option::add_field( 'option', array(
 
 Silver_Option::add_field( 'option', array(
 	'type'      => 'checkbox',
-	'settings'  => 'short_description_in_grid',
+	'settings'  => 'short_description_in_grid', // Same setting, saved values kept.
 	'transport' => silver_customizer_transport(),
-	'label'     => __( 'Show Short Description', 'silver' ),
+	'label'     => __( 'Show quick description', 'silver' ),
+	'description' => __( 'On product cards: the "Quick description" of each product (Edit product), not the short description.', 'silver' ),
 	'section'   => 'woocommerce_product_catalog',
 	'default'   => '0',
 ) );

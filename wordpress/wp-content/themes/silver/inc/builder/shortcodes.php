@@ -62,6 +62,8 @@ require_once __DIR__ . '/shortcodes/ux_posts.php';
 require_once __DIR__ . '/shortcodes/ux_mega_menu.php';
 require_once __DIR__ . '/shortcodes/ux_shortcode.php';
 require_once __DIR__ . '/shortcodes/ux_counter.php';
+require_once __DIR__ . '/shortcodes/ux_toc.php';
+require_once __DIR__ . '/shortcodes/ux_readmore.php';
 require_once __DIR__ . '/shortcodes/ux_terms.php';
 require_once __DIR__ . '/shortcodes/ux_stack_spacer.php';
 

@@ -368,6 +368,10 @@ html.silver-dialog-open {
 	overflow: hidden;
 }
 
+html.silver-dialog-open.silver-dialog-has-scrollbar {
+	scrollbar-gutter: stable;
+}
+
 /* Mobile: nút xếp dọc, nút chính ở trên */
 @media (max-width: 480px) {
 	.silver-dialog__box {
@@ -400,4 +404,185 @@ html.silver-dialog-open {
 	.silver-dialog__icon svg > * {
 		stroke-dashoffset: 0;
 	}
+}
+
+/* Shared gallery for product images and customer photos. */
+.product-review-viewer-popup .silver-dialog__overlay {
+	background: rgb(15 20 28 / 78%);
+}
+.product-review-viewer-popup .silver-dialog__box {
+	--silver-dialog-width: 1280px;
+	padding: 0;
+	background: #191d23;
+	color: #fff;
+	border: 1px solid rgb(255 255 255 / 14%);
+	border-radius: 18px;
+	color-scheme: dark;
+}
+.product-review-viewer-popup .silver-dialog__title {
+	margin: 0;
+	padding: 16px 68px 16px 20px;
+	color: inherit;
+	font-size: 1rem;
+	line-height: 1.4;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+.product-review-viewer-popup .silver-dialog__close {
+	top: 5px;
+	right: 8px;
+	width: 44px;
+	height: 44px;
+	background: transparent;
+	color: #fff;
+}
+.product-review-viewer__stage {
+	background: #101216;
+	height: min(80vh, calc(100vh - 180px), 900px);
+	height: min(80dvh, calc(100dvh - 180px), 900px);
+}
+.product-review-viewer__img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+.product-review-viewer__footer {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 8px 14px;
+}
+.product-review-viewer__thumbs {
+	display: flex;
+	gap: 6px;
+	min-width: 0;
+	overflow-x: auto;
+	margin-inline-end: auto;
+	padding: 4px;
+}
+.product-review-viewer button {
+	display: grid;
+	place-items: center;
+	flex: none;
+	width: 44px;
+	height: 44px;
+	min-height: 0;
+	margin: 0;
+	padding: 0;
+	border: 1px solid #545b64;
+	border-radius: 50%;
+	background: transparent;
+	color: #fff;
+}
+.product-review-viewer__thumbs button {
+	border-radius: 8px;
+	overflow: hidden;
+	opacity: .68;
+}
+.product-review-viewer__thumbs img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.product-review-viewer__thumbs [aria-current="true"] {
+	outline: 2px solid white;
+	outline-offset: 1px;
+	opacity: 1;
+}
+.product-review-viewer-popup button:focus-visible {
+	outline: 2px solid #77caff;
+	outline-offset: 2px;
+}
+.product-review-viewer button:hover {
+	background-color: #353b43;
+	opacity: 1;
+}
+.product-review-viewer__nav::before {
+	content: "";
+	width: 9px;
+	height: 9px;
+	border: solid currentColor;
+	border-width: 0 2px 2px 0;
+	transform: rotate(135deg);
+}
+.product-review-viewer__nav--next::before {
+	transform: rotate(-45deg);
+}
+.product-review-viewer p.product-review-viewer__count {
+	margin: 0;
+	white-space: nowrap;
+	font-size: .8125rem;
+	font-variant-numeric: tabular-nums;
+	color: #dae0e6;
+}
+.product-review-viewer p.product-review-viewer__caption {
+	margin: 0;
+	padding: 8px 18px;
+	color: #e1e5e9;
+}
+@media (max-width: 600px) {
+	.product-review-viewer-popup { padding: 6px; }
+	.product-review-viewer__footer { padding: 6px; gap: 4px; }
+}
+
+.silver-theme-video .silver-dialog__box {
+	--silver-dialog-width: 900px;
+}
+
+.silver-theme-video :is(iframe, video) {
+	display: block;
+	width: 100%;
+	aspect-ratio: 16 / 9;
+	border: 0;
+}
+
+.silver-theme-popup {
+	padding: 30px;
+	font: inherit;
+	color: inherit;
+}
+
+.silver-theme-popup.off-canvas {
+	padding: 0;
+}
+
+.silver-theme-popup:not(.off-canvas) {
+	overflow-y: auto;
+}
+
+.silver-theme-popup:not(.off-canvas) .silver-dialog__overlay {
+	position: fixed;
+}
+
+.silver-theme-popup .silver-dialog__message {
+	overflow-wrap: inherit;
+}
+
+.silver-theme-popup:not(.off-canvas) .silver-dialog__box {
+	/* Shortcodes and quick view define their own width, surface and padding. */
+	max-width: var(--silver-content-width, 100%);
+	max-height: none;
+	margin-block: auto;
+	overflow: visible;
+	padding: 0;
+	border-radius: 0;
+	background: transparent;
+	box-shadow: none;
+}
+
+.silver-theme-popup.off-canvas .silver-dialog__box {
+	padding: 0;
+}
+
+.silver-theme-popup.off-canvas-center .silver-dialog__box {
+	padding-top: 50px;
+}
+
+.silver-theme-popup:is(.off-canvas-left, .off-canvas-right) .silver-dialog__box {
+	max-height: 100%;
+	max-width: 100%;
+	border-radius: 0;
+	margin: 0;
 }

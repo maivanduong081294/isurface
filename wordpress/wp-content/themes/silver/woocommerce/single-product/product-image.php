@@ -88,7 +88,7 @@ if(get_theme_mod('product_lightbox','default') == 'disabled'){
 ?>
 <?php do_action('silver_before_product_images'); ?>
 
-<div class="product-images relative mb-half has-hover <?php echo esc_attr( implode( ' ', array_map( 'sanitize_html_class', $wrapper_classes ) ) ); ?>" data-columns="<?php echo esc_attr( $columns ); ?>">
+<div class="product-images product-gallery-main relative mb-half has-hover <?php echo esc_attr( implode( ' ', array_map( 'sanitize_html_class', $wrapper_classes ) ) ); ?>" data-columns="<?php echo esc_attr( $columns ); ?>">
 
   <?php do_action('silver_sale_flash'); ?>
 
@@ -128,4 +128,4 @@ if(get_theme_mod('product_lightbox','default') == 'disabled'){
 </div>
 <?php do_action('silver_after_product_images'); ?>
 
-<?php wc_get_template( 'woocommerce/single-product/product-gallery-thumbnails.php' ); ?>
+<?php wc_get_template( 'woocommerce/single-product/product-gallery-thumbnails.php', array( 'compact_thumbnails' => true ) ); ?>

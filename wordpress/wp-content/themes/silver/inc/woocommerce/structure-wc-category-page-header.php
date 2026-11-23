@@ -23,15 +23,78 @@ function silver_woocommerce_result_count() {
 add_action( 'silver_category_title_alt', 'silver_woocommerce_result_count', 20 );
 
 /**
- * Displays the WooCommerce catalog ordering.
+ * Displays the WooCommerce catalog ordering (dropdown style).
  */
 function silver_woocommerce_catalog_ordering() {
-	if ( get_theme_mod( 'category_show_catalog_ordering', 1 ) ) {
+	if ( get_theme_mod( 'category_show_catalog_ordering', 1 ) && 'pills' !== get_theme_mod( 'category_catalog_ordering_style', 'pills' ) ) {
 		woocommerce_catalog_ordering();
 	}
 }
 
 add_action( 'silver_category_title_alt', 'silver_woocommerce_catalog_ordering', 30 );
+
+/**
+ * Sort options of the "Buttons" catalog ordering: orderby value => label.
+ * "" is the default sorting of the store (no orderby in the URL).
+ *
+ * @return array
+ */
+function silver_catalog_ordering_pill_options() {
+	return apply_filters( 'silver_catalog_ordering_pill_options', array(
+		''           => __( 'Default', 'silver' ),
+		'price'      => __( 'Price: low to high', 'silver' ),
+		'price-desc' => __( 'Price: high to low', 'silver' ),
+	) );
+}
+
+/**
+ * Displays the catalog ordering as a row of buttons (links), on the left of
+ * the shop toolbar. Product Catalog > Catalog ordering style > Buttons.
+ */
+function silver_catalog_ordering_pills() {
+	if ( ! get_theme_mod( 'category_show_catalog_ordering', 1 ) || 'pills' !== get_theme_mod( 'category_catalog_ordering_style', 'pills' ) ) {
+		return;
+	}
+	if ( ! woocommerce_products_will_display() || ! $GLOBALS['wp_query']->found_posts ) {
+		return;
+	}
+
+	$options = silver_catalog_ordering_pill_options();
+	if ( empty( $options ) ) {
+		return;
+	}
+
+	// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only sorting.
+	$current = isset( $_GET['orderby'] ) ? wc_clean( wp_unslash( $_GET['orderby'] ) ) : '';
+	$default = apply_filters( 'woocommerce_default_catalog_orderby', get_option( 'woocommerce_default_catalog_orderby', 'menu_order' ) );
+	if ( $current === $default ) {
+		$current = '';
+	}
+
+	// Page 1 of the current view, with its other query args (filters).
+	$base  = remove_query_arg( array( 'orderby', 'paged', 'product-page' ), get_pagenum_link( 1, false ) );
+	$items = '';
+
+	foreach ( $options as $orderby => $label ) {
+		$active = (string) $orderby === (string) $current;
+		$url    = '' === (string) $orderby ? $base : add_query_arg( 'orderby', $orderby, $base );
+
+		$items .= sprintf(
+			'<a class="catalog-sort__item%1$s" href="%2$s" rel="nofollow"%3$s>%4$s</a>',
+			$active ? ' is-active' : '',
+			esc_url( $url ),
+			$active ? ' aria-current="true"' : '',
+			esc_html( $label )
+		);
+	}
+
+	// Visible label (hidden on phones, silver-modern.css); the nav is named by aria-label.
+	$label = '<span class="catalog-sort__label" aria-hidden="true">' . esc_html__( 'Sort by:', 'silver' ) . '</span>';
+
+	echo '<nav class="catalog-sort" aria-label="' . esc_attr__( 'Sort products', 'silver' ) . '">' . $label . $items . '</nav>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above.
+}
+
+add_action( 'silver_category_title', 'silver_catalog_ordering_pills', 5 );
 
 if ( ! function_exists( 'silver_category_header' ) ) {
 	/**

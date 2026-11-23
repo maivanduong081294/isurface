@@ -57,9 +57,9 @@ if ( $upsells ) : ?>
 
 			if ( $heading ) :
 				?>
-				<h3 class="product-section-title product-section-title-upsell pt-half pb-half uppercase">
+				<h2 class="product-section-title product-section-title-upsell pt-half pb-half uppercase">
 					<?php echo esc_html( $heading ); ?>
-				</h3>
+				</h2>
 			<?php endif; ?>
 
 			<?php get_silver_repeater_start( $repeater ); ?>

@@ -30,6 +30,36 @@ $rating_count = $product->get_rating_count();
 $review_count = $product->get_review_count();
 $average      = $product->get_average_rating();
 
+// Buy box (structure-wc-product-buy-box.php): "★★★★★ 4,8 (74 đánh giá)".
+if ( $rating_count > 0 && function_exists( 'silver_product_buy_box_enabled' ) && silver_product_buy_box_enabled() ) {
+	$average = (float) $average;
+	// Font Awesome stars in two layers: five outline stars (fa-regular), and
+	// over them five full stars cut at the average, as a % of the width
+	// (3,5 → 70%), all in the colour of the stars.
+	$percent = round( max( 0, min( 5, $average ) ) / 5 * 100, 2 );
+	$outline = str_repeat( get_silver_icon( 'icon-star-o', null, array( 'class' => 'product-rating-summary__star' ) ), 5 );
+	$solid   = str_repeat( get_silver_icon( 'icon-star', null, array( 'class' => 'product-rating-summary__star' ) ), 5 );
+	$stars   = '<span class="product-rating-summary__stars-base">' . $outline . '</span>'
+		. '<span class="product-rating-summary__stars-fill" style="width:' . esc_attr( $percent ) . '%">' . $solid . '</span>';
+	$value   = number_format_i18n( $average, 1 );
+	/* translators: %s: average rating, e.g. 4.6 */
+	$label = sprintf( __( 'Được đánh giá %s trên 5', 'silver' ), $value );
+	/* translators: %s: number of reviews */
+	$count = sprintf( _n( '%s đánh giá', '%s đánh giá', $review_count, 'silver' ), number_format_i18n( $review_count ) );
+	?>
+	<div class="woocommerce-product-rating product-rating-summary">
+		<span class="product-rating-summary__stars" role="img" aria-label="<?php echo esc_attr( $label ); ?>"><?php echo $stars; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- icons. ?></span>
+		<span class="product-rating-summary__value" aria-hidden="true"><?php echo esc_html( $value ); ?></span>
+		<?php if ( comments_open() ) : ?>
+			<a href="#reviews" class="woocommerce-review-link product-rating-summary__count" rel="nofollow">(<?php echo esc_html( $count ); ?>)</a>
+		<?php else : ?>
+			<span class="product-rating-summary__count">(<?php echo esc_html( $count ); ?>)</span>
+		<?php endif; ?>
+	</div>
+	<?php
+	return;
+}
+
 if ( $rating_count > 0 ) : ?>
 
 	<div class="woocommerce-product-rating">

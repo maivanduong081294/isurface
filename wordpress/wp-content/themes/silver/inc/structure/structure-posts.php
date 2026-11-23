@@ -85,7 +85,8 @@ add_action('silver_after_header','silver_single_page_header', 10);
 
 // Add Blog Archive title (and the archive breadcrumbs, which can show without it).
 function silver_archive_title() {
-	$show_title       = get_theme_mod( 'blog_archive_title', 1 ) && ( is_archive() || is_search() );
+	// The bar under the header may already print the title (silver_breadcrumbs_bar()).
+	$show_title       = get_theme_mod( 'blog_archive_title', 1 ) && ( is_archive() || is_search() ) && ! silver_page_header_title_printed();
 	$show_breadcrumbs = ! is_singular() && silver_blog_breadcrumbs_enabled() && ! silver_breadcrumbs_bar_printed();
 
 	if ( $show_title || $show_breadcrumbs ) {
@@ -174,15 +175,17 @@ function silver_blog_breadcrumb_fallback() {
 		$crumbs[] = array( _x( 'Home', 'breadcrumb', 'silver' ), home_url( '/' ) );
 	}
 
+	// Single posts: Home > root category > ... > main category > post, as the
+	// WooCommerce breadcrumbs (no posts page crumb).
 	$page_for_posts = (int) get_option( 'page_for_posts' );
-	if ( $page_for_posts && ! is_home() && ! is_search() ) {
+	if ( $page_for_posts && ! is_home() && ! is_search() && ! is_singular( 'post' ) ) {
 		$crumbs[] = array( get_the_title( $page_for_posts ), get_permalink( $page_for_posts ) );
 	}
 
 	if ( is_singular( 'post' ) ) {
-		$categories = get_the_category( get_queried_object_id() );
-		if ( $categories ) {
-			$crumbs = array_merge( $crumbs, silver_blog_breadcrumb_terms( $categories[0] ) );
+		$category = silver_post_main_category( get_queried_object_id() );
+		if ( $category ) {
+			$crumbs = array_merge( $crumbs, silver_blog_breadcrumb_terms( $category ) );
 		}
 		$crumbs[] = array( single_post_title( '', false ), '' );
 	} elseif ( is_category() || is_tag() || is_tax( 'post_format' ) ) {
@@ -223,15 +226,46 @@ function silver_blog_breadcrumb_fallback() {
 		if ( $i < $last && ! empty( $crumb[1] ) ) {
 			$items[] = '<a href="' . esc_url( $crumb[1] ) . '">' . esc_html( $crumb[0] ) . '</a>';
 		} elseif ( $i === $last ) {
-			$items[] = '<span aria-current="page">' . esc_html( $crumb[0] ) . '</span>';
+			$items[] = '<span class="breadcrumb-current" aria-current="page">' . esc_html( $crumb[0] ) . '</span>';
 		} else {
 			$items[] = esc_html( $crumb[0] );
 		}
 	}
 
-	return '<nav class="breadcrumbs ' . esc_attr( get_theme_mod( 'breadcrumb_case', 'uppercase' ) ) . '" aria-label="Breadcrumb">'
+	return '<nav class="breadcrumbs ' . esc_attr( get_theme_mod( 'breadcrumb_case', '' ) ) . '" aria-label="Breadcrumb">'
 		. implode( ' <span class="divider" aria-hidden="true">' . silver_breadcrumb_divider() . '</span> ', $items )
 		. '</nav>';
+}
+
+
+/**
+ * The main category of a post: the primary category set in Yoast SEO or
+ * Rank Math, else the first category.
+ *
+ * @param int $post_id Post ID.
+ *
+ * @return WP_Term|null
+ */
+function silver_post_main_category( $post_id ) {
+	$categories = get_the_category( $post_id );
+
+	if ( empty( $categories ) ) {
+		return null;
+	}
+
+	foreach ( array( '_yoast_wpseo_primary_category', 'rank_math_primary_category' ) as $meta_key ) {
+		$primary = (int) get_post_meta( $post_id, $meta_key, true );
+		if ( ! $primary ) {
+			continue;
+		}
+		foreach ( $categories as $category ) {
+			if ( (int) $category->term_id === $primary ) {
+				return $category;
+			}
+		}
+	}
+
+	return apply_filters( 'silver_post_main_category', $categories[0], $post_id );
 }
 
 

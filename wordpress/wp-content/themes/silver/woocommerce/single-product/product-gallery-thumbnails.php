@@ -26,6 +26,9 @@ if ( $attachment_ids || $render_without_attachments ) {
 	$loop          = 0;
 	$image_size    = 'thumbnail';
 	$gallery_class = array( 'product-thumbnails', 'thumbnails' );
+	if ( ! empty( $compact_thumbnails ) ) {
+		$gallery_class[] = 'product-gallery-rail';
+	}
 
 	// Check if custom gallery thumbnail size is set and use that.
 	$image_check = wc_get_image_size( 'gallery_thumbnail' );

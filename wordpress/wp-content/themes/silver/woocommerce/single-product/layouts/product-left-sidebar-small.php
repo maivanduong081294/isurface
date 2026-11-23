@@ -61,7 +61,6 @@
 	</div>
 
 	<div class="product-footer">
-		<div class="container">
 			<?php
 				/**
 				 * woocommerce_after_single_product_summary hook
@@ -70,8 +69,9 @@
 				 * @hooked woocommerce_upsell_display - 15
 				 * @hooked woocommerce_output_related_products - 20
 				 */
-				do_action( 'woocommerce_after_single_product_summary' );
+				// Each part in a section of its own, with its own container
+			// (silver_product_footer_sections(), structure-wc-product-page.php).
+			silver_product_footer_sections();
 			?>
-		</div>
 	</div>
 </div>

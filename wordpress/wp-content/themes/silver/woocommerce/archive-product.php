@@ -33,4 +33,12 @@ if (
 	wc_get_template_part( 'layouts/category', get_theme_mod( 'category_sidebar', 'left-sidebar' ) );
 }
 
+/**
+ * Hook: silver_after_category_layout.
+ * Full-width sections under the category layout (outside its row).
+ *
+ * @hooked silver_category_description - 10 (description below the products)
+ */
+do_action( 'silver_after_category_layout' );
+
 get_footer( 'shop' );

@@ -25,8 +25,8 @@ const jsTarget = [ 'chrome90', 'edge90', 'firefox88', 'safari15' ];
 
 // Element / component files merged into the main CSS and JS, in this order.
 // To add one: create it in src and list it here.
-const cssParts = [ 'silver-counter.css', 'silver-dialog.css', 'silver-mega-menu.css', 'silver-search-toggle.css' ];
-const jsParts = [ 'silver-swiper.js', 'silver-dialog.js', 'silver-counter.js', 'silver-mega-menu.js', 'silver-search-toggle.js' ];
+const cssParts = [ 'silver-counter.css', 'silver-dialog.css', 'silver-mega-menu.css', 'silver-search-toggle.css', 'silver-toc.css', 'silver-readmore.css' ];
+const jsParts = [ 'silver-swiper.js', 'silver-dialog.js', 'silver-theme-popup.js', 'silver-counter.js', 'silver-mega-menu.js', 'silver-search-toggle.js', 'silver-toc.js', 'silver-readmore.js', 'silver-variation-pills.js', 'silver-cart-toast.js', 'silver-product-reviews.js' ];
 
 // Bundles: output file => parts joined in order. A part is minified like any
 // other source and is not written as a file of its own (see `standalone`).

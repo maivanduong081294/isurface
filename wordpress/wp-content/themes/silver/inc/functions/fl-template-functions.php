@@ -112,9 +112,197 @@ function silver_breadcrumbs_bar_printed( $printed = null ) {
 }
 
 /**
+ * Whether the bar under the header printed the page title (H1) of this page.
+ * The archive title templates check it so the title never shows twice.
+ *
+ * @param bool|null $printed Set by silver_breadcrumbs_bar().
+ *
+ * @return bool
+ */
+function silver_page_header_title_printed( $printed = null ) {
+	static $done = false;
+
+	if ( null !== $printed ) {
+		$done = (bool) $printed;
+	}
+
+	return $done;
+}
+
+/**
+ * Product category chips of the bar under the header.
+ *
+ * Product category: its subcategories, or, when it has none, the categories
+ * next to it (same parent, itself included). Shop page: the top-level
+ * categories. Customizer > Breadcrumbs > Show category chips.
+ *
+ * @return WP_Term[]
+ */
+function silver_page_header_product_cats() {
+	if ( ! get_theme_mod( 'breadcrumbs_bar_subcategories', 1 ) ) {
+		return array();
+	}
+
+	$args = array(
+		'taxonomy'   => 'product_cat',
+		'hide_empty' => true,
+		'number'     => 12,
+		'orderby'    => 'menu_order',
+		'exclude'    => array( (int) get_option( 'default_product_cat' ) ),
+	);
+
+	if ( is_product_category() ) {
+		$term = get_queried_object();
+		if ( ! $term instanceof WP_Term ) {
+			return array();
+		}
+		$children = get_terms( array_merge( $args, array( 'parent' => $term->term_id ) ) );
+		if ( ! is_wp_error( $children ) && $children ) {
+			$args['parent'] = $term->term_id;
+		} else {
+			$args['parent'] = $term->parent;
+		}
+	} elseif ( is_shop() ) {
+		$args['parent'] = 0;
+	} else {
+		return array();
+	}
+
+	$terms = get_terms( apply_filters( 'silver_page_header_product_cats_args', $args ) );
+
+	return is_wp_error( $terms ) ? array() : $terms;
+}
+
+/**
+ * Title, description and category chips of the bar under the header.
+ *
+ * Shop page and product taxonomies (default category title layout only):
+ * the shop title, the number of products and the category chips. Blog page
+ * and blog archives: the archive title and description. Single products and
+ * posts get the breadcrumbs only. Customizer > Breadcrumbs > Show page title.
+ *
+ * @param string $shop Shop view, see silver_shop_breadcrumbs_view().
+ *
+ * @return array Empty, or array( 'title' => string, 'desc' => string (HTML),
+ *               'cats' => WP_Term[] ).
+ */
+function silver_page_header_title_data( $shop = '' ) {
+	$data = array();
+
+	if ( get_theme_mod( 'breadcrumbs_bar_title', 1 ) ) {
+		if ( 'category' === $shop ) {
+			// Featured category headers print their own title.
+			if ( ! get_theme_mod( 'category_title_style' ) && ! get_theme_mod( 'category_header_transparent', 0 ) ) {
+				$count = (int) $GLOBALS['wp_query']->found_posts;
+				$data  = array(
+					'title' => woocommerce_page_title( false ),
+					/* translators: %s: Number of products. */
+					'desc'  => esc_html( sprintf( _n( '%s product available', '%s products available', $count, 'silver' ), number_format_i18n( $count ) ) ),
+					'cats'  => silver_page_header_product_cats(),
+				);
+			}
+		} elseif ( ! $shop && ! is_singular() ) {
+			$page_for_posts = (int) get_option( 'page_for_posts' );
+
+			if ( is_home() && ! is_front_page() && $page_for_posts ) {
+				$data = array(
+					'title' => get_the_title( $page_for_posts ),
+					'desc'  => has_excerpt( $page_for_posts ) ? wpautop( esc_html( get_the_excerpt( $page_for_posts ) ) ) : '',
+				);
+			} elseif ( is_search() ) {
+				$data = array(
+					/* translators: %s: Search query. */
+					'title' => esc_html( sprintf( __( 'Search Results for: %s', 'silver' ), get_search_query() ) ),
+					'desc'  => '',
+				);
+			} elseif ( is_category() || is_tag() || is_tax() || is_author() || is_date() ) {
+				add_filter( 'get_the_archive_title_prefix', '__return_empty_string' );
+				$title = get_the_archive_title();
+				remove_filter( 'get_the_archive_title_prefix', '__return_empty_string' );
+
+				$data = array(
+					'title' => $title,
+					'desc'  => get_the_archive_description(),
+				);
+			}
+		}
+	}
+
+	// The short description of the term replaces the default description
+	// (inc/functions/function-short-description.php).
+	if ( $data ) {
+		$short_description = silver_queried_short_description();
+		if ( '' !== $short_description ) {
+			$data['desc'] = $short_description;
+		}
+	}
+
+	$data = apply_filters( 'silver_page_header_title_data', $data, $shop );
+
+	if ( empty( $data['title'] ) ) {
+		return array();
+	}
+
+	return wp_parse_args( $data, array(
+		'desc' => '',
+		'cats' => array(),
+	) );
+}
+
+/**
+ * Category chips of the bar under the header, as HTML.
+ *
+ * @param WP_Term[] $terms Product categories.
+ *
+ * @return string
+ */
+function silver_page_header_cats_html( $terms ) {
+	if ( empty( $terms ) ) {
+		return '';
+	}
+
+	$current = is_product_category() ? get_queried_object_id() : 0;
+	$items   = '';
+
+	foreach ( $terms as $term ) {
+		$link = get_term_link( $term );
+		if ( is_wp_error( $link ) ) {
+			continue;
+		}
+
+		$active   = (int) $term->term_id === (int) $current;
+		$image_id = (int) get_term_meta( $term->term_id, 'thumbnail_id', true );
+		$image    = $image_id ? wp_get_attachment_image( $image_id, 'thumbnail', false, array(
+			'class'   => 'page-header-cat__img',
+			'alt'     => '',
+			'loading' => 'lazy',
+		) ) : '';
+
+		$items .= sprintf(
+			'<a class="page-header-cat%1$s" href="%2$s"%3$s>%4$s<span>%5$s</span></a>',
+			$active ? ' is-active' : '',
+			esc_url( $link ),
+			$active ? ' aria-current="page"' : '',
+			$image,
+			esc_html( $term->name )
+		);
+	}
+
+	if ( '' === $items ) {
+		return '';
+	}
+
+	return '<nav class="page-header-cats" aria-label="' . esc_attr__( 'Product categories', 'silver' ) . '">' . $items . '</nav>';
+}
+
+/**
  * Outputs the breadcrumbs in a bar under the header when Breadcrumbs position
  * is "Below header", on blog, shop, product category and product pages, then
  * takes them out of their usual place.
+ *
+ * On the shop, product categories, the blog page and blog archives the bar is
+ * a page header: breadcrumbs, the page title (H1), a description and, on the
+ * shop, the category chips (silver_page_header_title_data()).
  *
  * Runs after the custom "HTML after header" (priority 1) and before the blog
  * header, the "Top" post title, the shop category header and the product
@@ -152,7 +340,41 @@ function silver_breadcrumbs_bar() {
 		remove_action( 'silver_product_title', 'silver_product_page_breadcrumbs', 20 );
 	}
 
-	echo '<div class="breadcrumbs-bar"><div class="container">' . $breadcrumbs . '</div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped by the breadcrumb source.
+	$page_header = silver_page_header_title_data( $shop );
+	$content     = $breadcrumbs;
+	$classes     = 'breadcrumbs-bar';
+
+	// Customizer > Breadcrumbs > Bar text color: light text on a dark background.
+	if ( 'dark' === get_theme_mod( 'breadcrumbs_bar_text', '' ) ) {
+		$classes .= ' dark';
+	}
+
+	if ( $page_header ) {
+		silver_page_header_title_printed( true );
+
+		if ( 'category' === $shop ) {
+			// The H1 of the shop toolbar, and its result count: the bar shows
+			// the number of products.
+			remove_action( 'silver_category_title', 'silver_category_title', 1 );
+			remove_action( 'silver_category_title_alt', 'silver_woocommerce_result_count', 20 );
+		}
+
+		// Customizer > Breadcrumbs > Use H1 for the bar title.
+		$title_tag = get_theme_mod( 'breadcrumbs_bar_title_h1', 1 ) ? 'h1' : 'div';
+		$title_tag = 'div' === apply_filters( 'silver_page_header_title_tag', $title_tag ) ? 'div' : 'h1';
+
+		$classes .= ' page-header-bar has-title';
+		// .heading-font: the heading font of the theme also for the <div>.
+		$content .= '<' . $title_tag . ' class="page-header-title heading-font">' . wp_kses_post( $page_header['title'] ) . '</' . $title_tag . '>';
+
+		if ( '' !== trim( (string) $page_header['desc'] ) ) {
+			$content .= '<div class="page-header-desc">' . wp_kses_post( $page_header['desc'] ) . '</div>';
+		}
+
+		$content .= silver_page_header_cats_html( $page_header['cats'] );
+	}
+
+	echo '<div class="' . esc_attr( $classes ) . '"><div class="container">' . $content . '</div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped by the breadcrumb source and above.
 }
 add_action( 'silver_after_header', 'silver_breadcrumbs_bar', 5 );
 

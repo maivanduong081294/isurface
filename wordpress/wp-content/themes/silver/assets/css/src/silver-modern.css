@@ -1334,6 +1334,79 @@ label:has(> input[type="radio"]) > input {
 	width: 22px;
 }
 
+/* Arrows (silver-swiper.js createArrow()): a white round button with a soft
+   shadow and a dark chevron, centered on the height, always shown (no hover
+   needed on touch screens). Not the "reveal" style (full-height bars). */
+.slider:not(.slider-nav-reveal) .swiper-prev-next-button {
+	align-items: center;
+	background-color: var(--sv-surface);
+	border-radius: 50%;
+	bottom: auto;
+	box-shadow: 0 4px 14px -4px rgba(15, 23, 42, 0.22), 0 0 0 1px rgba(15, 23, 42, 0.04);
+	color: var(--sv-heading);
+	display: flex;
+	height: 44px;
+	justify-content: center;
+	opacity: 1;
+	top: calc(50% - 22px);
+	transform: none;
+	width: 44px;
+	z-index: 3;
+}
+
+.slider:not(.slider-nav-reveal):not(.slider-nav-outside) .swiper-prev-next-button.previous {
+	left: 12px;
+}
+
+.slider:not(.slider-nav-reveal):not(.slider-nav-outside) .swiper-prev-next-button.next {
+	right: 12px;
+}
+
+/* The chevron: 16px, no circle of its own (circle style), dark also on the
+   light style (white arrows for dark slides). */
+.slider:not(.slider-nav-reveal) .swiper-prev-next-button svg {
+	background: none;
+	border: 0;
+	border-radius: 0;
+	fill: currentColor;
+	height: 16px;
+	left: auto;
+	padding: 0;
+	position: static;
+	top: auto;
+	transform: none;
+	width: 16px;
+}
+
+.slider:not(.slider-nav-reveal) .swiper-prev-next-button .arrow {
+	border: 0;
+	fill: currentColor;
+}
+
+.slider:not(.slider-nav-reveal) .swiper-prev-next-button:hover {
+	box-shadow: 0 8px 20px -6px rgba(15, 23, 42, 0.3), 0 0 0 1px rgba(15, 23, 42, 0.06);
+	color: var(--sv-primary);
+	opacity: 1;
+}
+
+.slider:not(.slider-nav-reveal) .swiper-prev-next-button:hover svg,
+.slider:not(.slider-nav-reveal) .swiper-prev-next-button:hover .arrow {
+	background: none;
+	border: 0;
+	fill: currentColor !important;
+}
+
+.slider:not(.slider-nav-reveal) .swiper-prev-next-button:focus-visible {
+	outline: 2px solid var(--sv-primary);
+	outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.slider:not(.slider-nav-reveal) .swiper-prev-next-button {
+		transition: none;
+	}
+}
+
 /* --------------------------------------------- Pagination / notices / misc */
 .page-numbers.button,
 .nav-pagination > li > a,
@@ -2556,10 +2629,2872 @@ html[dir="rtl"] {
 	color: #fff;
 }
 
-/* Bar under the header: a hairline like the other section separators. */
+/* Bar under the header (silver_breadcrumbs_bar()): a white band with a
+   hairline under it. Single posts and products: the breadcrumbs only. Shop,
+   product categories and blog archives (.has-title): breadcrumbs, the page
+   title, a description and the category chips.
+
+   Spacing, the same on every page and taken from the layout spacing of the
+   theme (silver_layout_spacing, function-custom-css.php), so the bar stays
+   lower than the header and follows the grid:
+   --sv-bar-pad   inside the bar, above the breadcrumbs and under the last
+                  line: the row gap (20px);
+   --sv-bar-gap   from the bar to the first content row (product, toolbar,
+                  posts): the layout padding (20px, 30px from tablet up),
+                  see "Content under the bar" below;
+   16px breadcrumbs > title, 8px title > description, 24px > chips. */
+:root {
+	--sv-bar-pad: var(--fs-row-gap, 20px);
+	--sv-bar-gap: var(--fs-padding, 30px);
+}
+
 .breadcrumbs-bar {
-	border-bottom-color: var(--sv-border);
-	padding: 12px 0;
+	/* Customizer > Breadcrumbs > Bar background color. */
+	background-color: var(--sv-breadcrumbs-bar-bg, var(--sv-surface));
+	border-bottom: 1px solid var(--sv-border);
+	padding: var(--sv-bar-pad) 0;
+}
+
+/* The last line ends exactly on the bottom padding. */
+.breadcrumbs-bar .container > :last-child {
+	margin-bottom: 0;
+}
+
+.breadcrumbs-bar .breadcrumbs {
+	font-size: 0.875em;
+	letter-spacing: 0;
+	line-height: 1.5;
+	margin: 0;
+	padding: 0;
+}
+
+/* The divider icon is sized in silver.css (.breadcrumbs .divider i). */
+.breadcrumbs-bar .breadcrumbs .divider {
+	color: var(--sv-text-muted);
+	margin: 0 0.6em;
+	opacity: 1;
+}
+
+.breadcrumbs-bar .breadcrumb-current {
+	color: var(--sv-heading);
+	font-weight: 600;
+}
+
+.breadcrumbs-bar .blog-breadcrumbs {
+	margin: 0;
+}
+
+.page-header-title {
+	color: var(--sv-heading);
+	font-size: clamp(2rem, 1.4rem + 2.2vw, 3rem);
+	font-weight: 800;
+	letter-spacing: -0.02em;
+	line-height: 1.15;
+	margin: 16px 0 0;
+	padding: 0;
+	text-transform: none;
+}
+
+.page-header-desc {
+	color: var(--sv-text-muted);
+	font-size: 1em;
+	line-height: 1.6;
+	margin-top: 8px;
+	max-width: 760px;
+}
+
+.page-header-desc p {
+	margin: 0;
+}
+
+.page-header-desc p + p {
+	margin-top: 0.5em;
+}
+
+.page-header-cats {
+	display: flex;
+	gap: 8px;
+	margin: 22px 0 -2px; /* 24px to the chips, the 2px focus ring room is not counted */
+	overflow-x: auto;
+	padding: 2px 0;
+	scrollbar-width: none;
+}
+
+.breadcrumbs-bar .container > .page-header-cats:last-child {
+	margin-bottom: -2px;
+}
+
+/* Shop / category pages: the sections of the product column (notices,
+   description above the products, products, pagination, bottom content)
+   are spaced by one row gap, the same gap as above the products. Empty ones
+   (the notices wrapper) take no gap. Scoped to the category layouts: the
+   single product page has its own .shop-container. */
+/* The category row starts and ends with the section gap (30px, 20px on
+   phones; silver-shop.css has a fixed 30px on top). */
+.category-page-row {
+	padding-bottom: var(--sv-bar-gap, 30px);
+	padding-top: var(--sv-bar-gap, 30px);
+}
+
+.category-page-row .shop-container {
+	display: flex;
+	flex-direction: column;
+	row-gap: var(--sv-bar-gap, 30px);
+}
+
+.category-page-row .shop-container > :empty {
+	display: none;
+}
+
+.category-page-row .shop-container > * {
+	margin-bottom: 0;
+	margin-top: 0;
+	min-width: 0;
+}
+
+/* Product category description (structure-wc-category-description.php):
+   under the products by default, laid out with the table of contents
+   ([ux_toc]). Article type: large headings, muted text. */
+/* Below the products: a full-width section after the category layout
+   (Product Catalog > Category description background). No border: the
+   background tells it apart from the products and the FAQs. */
+.term-description-section {
+	background-color: var(--sv-term-description-bg, var(--sv-surface));
+	/* Product Catalog > Category description padding, else the theme spacing;
+	   the FAQs section has the same. */
+	padding: var(--sv-term-description-pad, var(--sv-space-section, 64px)) 0;
+}
+
+.term-description h2 {
+	color: var(--sv-heading);
+	font-size: clamp(1.5rem, 1.2rem + 1vw, 1.875rem);
+	font-weight: 800;
+	letter-spacing: -0.02em;
+	line-height: 1.25;
+	margin: 1.6em 0 0.5em;
+}
+
+.term-description h3 {
+	color: var(--sv-heading);
+	font-size: 1.25em;
+	font-weight: 700;
+	line-height: 1.35;
+	margin: 1.5em 0 0.4em;
+}
+
+/* Read more around the description: the section padding ends it. */
+.term-description .ux-readmore {
+	margin-bottom: 0;
+}
+
+.term-description :is(h2, h3):first-child,
+.term-description .ux-toc-layout__content > :first-child {
+	margin-top: 0;
+}
+
+/* Not the items of the table of contents (silver-toc.css sizes them). */
+.term-description p,
+.term-description li:not(.ux-toc__item):not(.ux-toc__subitem) {
+	color: var(--sv-text-muted);
+	font-size: 1.0625em;
+	line-height: 1.7;
+}
+
+.term-description li:not(.ux-toc__item):not(.ux-toc__subitem) {
+	margin-bottom: 0.35em;
+}
+
+.term-description :is(ul, ol):not(.ux-toc__list):not(.ux-toc__sub) {
+	margin: 0 0 1.25em;
+	padding-left: 1.25em;
+}
+
+.term-description img {
+	border-radius: 12px;
+	height: auto;
+	max-width: 100%;
+}
+
+/* Captions: the editor sets the image width inline. */
+.term-description .wp-caption {
+	max-width: 100%;
+	width: auto !important;
+}
+
+.term-description .wp-caption-text {
+	background: none;
+	color: var(--sv-text-muted);
+	font-size: 0.875em;
+	font-style: normal;
+	padding: 8px 0 0;
+}
+
+/* FAQs of product categories and products (inc/woocommerce/structure-wc-faq.php):
+   an accordion (theme accordion script) of cards. */
+/* Muted, between the white description and the dark footer: the sections of
+   the category page alternate (products, description, FAQs), without
+   borders, with the padding of the description section. */
+.silver-faq-section--term {
+	background-color: var(--sv-surface-muted);
+	padding: var(--sv-term-description-pad, var(--sv-space-section, 64px)) 0;
+}
+
+.silver-faq-section--product {
+	padding: var(--sv-space-section, 64px) 0;
+}
+
+/* In the "Câu hỏi thường gặp" tab: aligned with the other tabs. */
+.silver-faq-tab .silver-faq {
+	margin: 0;
+	max-width: 860px;
+}
+
+.silver-faq {
+	margin: 0 auto;
+	max-width: 860px;
+}
+
+.silver-faq__title {
+	color: var(--sv-heading);
+	font-size: clamp(1.5rem, 1.2rem + 1vw, 1.875rem);
+	font-weight: 800;
+	letter-spacing: -0.02em;
+	line-height: 1.25;
+	margin: 0 0 24px;
+	text-align: center;
+}
+
+.silver-faq .accordion {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.silver-faq .accordion-item {
+	background: var(--sv-surface);
+	border: 1px solid var(--sv-border);
+	border-radius: var(--sv-radius);
+	overflow: hidden;
+	transition: border-color var(--sv-dur) var(--sv-ease), box-shadow var(--sv-dur) var(--sv-ease);
+}
+
+.silver-faq .accordion-item:has(> .accordion-title.active) {
+	border-color: color-mix(in srgb, var(--sv-primary) 35%, var(--sv-border));
+	box-shadow: var(--sv-shadow-sm);
+}
+
+.silver-faq .accordion-title,
+.silver-faq .accordion-title.active {
+	align-items: center;
+	background: none;
+	border: 0;
+	color: var(--sv-heading);
+	display: flex;
+	font-size: 1rem;
+	font-weight: 600;
+	gap: 16px;
+	justify-content: space-between;
+	line-height: 1.45;
+	min-height: 56px;
+	padding: 14px 20px;
+}
+
+.silver-faq .accordion-title:hover {
+	color: var(--sv-primary);
+}
+
+.silver-faq .accordion-title:focus-visible {
+	border-radius: var(--sv-radius);
+	box-shadow: inset 0 0 0 2px var(--sv-primary);
+	outline: none;
+}
+
+.silver-faq__icon {
+	align-items: center;
+	background: var(--sv-surface-muted);
+	border-radius: 50%;
+	color: var(--sv-text-muted);
+	display: inline-flex;
+	flex: none;
+	font-size: 1rem;
+	height: 28px;
+	justify-content: center;
+	transition: transform var(--sv-dur) var(--sv-ease), background-color var(--sv-dur), color var(--sv-dur);
+	width: 28px;
+}
+
+.silver-faq .accordion-title.active .silver-faq__icon {
+	background: color-mix(in srgb, var(--sv-primary) 12%, transparent);
+	color: var(--sv-primary);
+	transform: rotate(180deg);
+}
+
+.silver-faq .accordion-inner {
+	font-size: 0.9375rem;
+	line-height: 1.65;
+	padding: 0 20px 18px;
+}
+
+.silver-faq .accordion-inner > :last-child {
+	margin-bottom: 0;
+}
+
+@media (max-width: 549px) {
+	.silver-faq .accordion-title,
+	.silver-faq .accordion-title.active {
+		padding: 12px 16px;
+	}
+
+	.silver-faq .accordion-inner {
+		padding: 0 16px 16px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.silver-faq .accordion-item,
+	.silver-faq__icon {
+		transition: none;
+	}
+}
+
+/* Pagination on phones: 40px buttons (36px before), easier to tap. */
+@media (max-width: 549px) {
+	.nav-pagination > li > a,
+	.nav-pagination > li > span {
+		height: 40px;
+		min-width: 40px;
+	}
+}
+
+/* Touch screens: 44px targets for the controls of the category page. */
+@media (pointer: coarse) {
+	.catalog-sort .catalog-sort__item,
+	.page-header-cats .page-header-cat {
+		min-height: 44px;
+	}
+
+	.nav-pagination > li > a,
+	.nav-pagination > li > span {
+		height: 44px;
+		min-width: 44px;
+	}
+}
+
+/* Summary of the product page with the buy box: no padding at the top and
+   bottom, its parts (title, rating, short description, buy box, meta, share)
+   without margins or vertical padding, spaced by one row-gap. The buy box
+   keeps its inner padding (a card). */
+.product-info.summary:has(> .product-buy-box) {
+	--sv-summary-gap: 20px;
+	display: flex;
+	flex-direction: column;
+	padding-bottom: 0;
+	padding-top: 0;
+	row-gap: var(--sv-summary-gap);
+}
+
+.product-info.summary:has(> .product-buy-box) > * {
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+.product-info.summary:has(> .product-buy-box) > :not(.product-buy-box) {
+	padding-bottom: 0;
+	padding-top: 0;
+}
+
+@media (max-width: 549px) {
+	.product-info.summary:has(> .product-buy-box) {
+		--sv-summary-gap: 16px;
+	}
+}
+
+/* Product page buy box (inc/woocommerce/structure-wc-product-buy-box.php):
+   rating with five stars, short description, then a card with the price,
+   the attribute buttons and the two buttons. */
+.product-rating-summary {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	font-size: 0.9375rem;
+	gap: 6px 8px;
+	line-height: 1.4;
+	margin: 0;
+}
+
+/* Five Font Awesome stars (single-product/rating.php), side by side: the
+   outline stars, and over them the full stars cut at the average as a % of
+   the width (style="width:70%"). All in Style > Colors > Review Stars
+   (function-custom-css.php), else the primary colour. Font Awesome 7 icons
+   are fixed-width, so the % matches the stars. */
+.product-rating-summary__stars {
+	display: inline-flex;
+	flex: none;
+	font-size: 15px;
+	line-height: 1;
+	position: relative;
+}
+
+.product-rating-summary__stars-base,
+.product-rating-summary__stars-fill {
+	display: flex;
+	white-space: nowrap;
+}
+
+.product-rating-summary__stars-fill {
+	height: 100%;
+	inset-block-start: 0;
+	inset-inline-start: 0;
+	overflow: hidden;
+	position: absolute;
+}
+
+.product-rating-summary__star {
+	color: var(--sv-primary);
+	flex: none;
+}
+
+.product-rating-summary__value {
+	color: var(--sv-heading);
+	font-weight: 700;
+}
+
+.product-rating-summary__count,
+a.product-rating-summary__count {
+	color: var(--sv-text-muted);
+	text-decoration: none;
+}
+
+a.product-rating-summary__count:hover {
+	color: var(--sv-primary);
+	text-decoration: underline;
+}
+
+.product-info:has(.product-buy-box) .product-short-description {
+	color: var(--sv-text-muted);
+	font-size: 0.9375rem;
+	line-height: 1.6;
+}
+
+.product-info:has(.product-buy-box) .product-short-description > :last-child {
+	margin-bottom: 0;
+}
+
+.product-buy-box {
+	background-color: var(--sv-surface);
+	border: 1px solid var(--sv-border);
+	border-radius: var(--sv-radius-lg);
+	box-shadow: var(--sv-shadow-sm);
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	margin: 0;
+	padding: 24px;
+}
+
+.product-buy-box > *,
+.product-buy-box form.cart {
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+.product-buy-box > :empty {
+	display: none;
+}
+
+/* Price: the sale price large, the regular price struck after it, then the
+   badge. Also the price of the chosen variation (silver-variation-pills.js).
+   Colours of the product cards: Style > Colors > Sale Price (--sv-price) for
+   the price, Regular Price for the struck-out one (function-custom-css.php). */
+.product-buy-box .price-wrapper {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 14px;
+}
+
+.product-buy-box .product-page-price,
+.product-buy-box .product-page-price > .price {
+	align-items: baseline;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px 14px;
+	line-height: 1.1;
+	margin: 0;
+}
+
+.product-buy-box .product-page-price ins,
+.product-buy-box .product-page-price > .amount,
+.product-buy-box .product-page-price > .price > .amount {
+	font-size: clamp(1.75rem, 1.35rem + 1.4vw, 2.5rem);
+	font-weight: 800;
+	letter-spacing: -0.02em;
+	order: 0;
+	text-decoration: none;
+}
+
+.product-buy-box .product-page-price ins .amount,
+.product-buy-box .product-page-price > .amount,
+.product-buy-box .product-page-price > .price > .amount {
+	color: var(--sv-price, var(--sv-heading));
+}
+
+.product-buy-box .product-page-price del {
+	font-size: 1rem;
+	font-weight: 400;
+	order: 1;
+}
+
+/* Sticky add to cart bar (silver_sticky_add_to_cart_template()): the price of
+   the buy box, "Từ 15 ₫", in the colours of the product cards. */
+.sticky-add-to-cart__price {
+	font-size: 1.125rem;
+	font-weight: 800;
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	margin-inline-end: 12px;
+	white-space: nowrap;
+}
+
+.sticky-add-to-cart__price > .amount,
+.sticky-add-to-cart__price > .price > .amount,
+.sticky-add-to-cart__price ins .amount {
+	color: var(--sv-price, var(--sv-heading));
+	font-weight: 800;
+}
+
+/* Variable products, once a variation is chosen (silver-variation-pills.js):
+   quantity, "Add to cart" and "Buy now" instead of "Select options". */
+.sticky-add-to-cart__variation {
+	align-items: center;
+	display: flex;
+	gap: 8px;
+}
+
+.sticky-add-to-cart__variation[hidden],
+.sticky-add-to-cart-select-options-button[hidden] {
+	display: none !important;
+}
+
+.sticky-add-to-cart__variation .quantity,
+.sticky-add-to-cart__variation .button {
+	margin: 0;
+}
+
+.sticky-add-to-cart__variation .button {
+	white-space: nowrap;
+}
+
+/* Phones and portrait tablets: one row, the price whole (room for
+   159.990.000 ₫ and more), then a compact quantity and the buttons. Phones
+   leave out the thumbnail, the title and the struck-out price (they stay in
+   the buy box above); tablets keep them, the title on one line. With
+   "Buy now", both buttons are
+   44px icons, a cart for "Add to cart" and a lightning bolt for "Buy now"
+   (their words stay their accessible names); without it, "Add to cart" keeps
+   its words. */
+@media (max-width: 849px) {
+	.sticky-add-to-cart--active {
+		padding: 6px 12px calc(6px + env(safe-area-inset-bottom, 0px));
+	}
+
+	.sticky-add-to-cart--active .sticky-add-to-cart__product {
+		flex-wrap: nowrap;
+		gap: 8px;
+		justify-content: space-between;
+		padding: 0;
+		width: 100%;
+	}
+
+	@media (max-width: 549px) {
+		.sticky-add-to-cart--active .sticky-add-to-cart-img,
+		.sticky-add-to-cart--active .product-title-small,
+		.sticky-add-to-cart__price del {
+			display: none !important;
+		}
+	}
+
+	/* Tablets: thumbnail, then the title on one line taking the room left. */
+	.sticky-add-to-cart--active .sticky-add-to-cart-img {
+		flex: none;
+		margin: 0;
+	}
+
+	.sticky-add-to-cart--active .product-title-small {
+		flex: 1 1 auto;
+		margin: 0;
+		max-width: none;
+		min-width: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.sticky-add-to-cart--active .product-title-small:not([hidden]) ~ :is(form.cart, .sticky-add-to-cart__variation, .sticky-add-to-cart-select-options-button) {
+		flex: none;
+	}
+
+	/* Compact quantity: 26px buttons around a 34px field, 44px tall. */
+	.sticky-add-to-cart--active .sticky-add-to-cart__product .quantity {
+		align-items: stretch;
+		background-color: var(--sv-surface);
+		border: 1px solid var(--sv-border);
+		border-radius: var(--sv-radius-sm);
+		display: inline-flex;
+		flex: none;
+		height: 44px;
+		margin: 0;
+		opacity: 1;
+		overflow: hidden;
+	}
+
+	.sticky-add-to-cart--active .sticky-add-to-cart__product .quantity .button.minus,
+	.sticky-add-to-cart--active .sticky-add-to-cart__product .quantity .button.plus {
+		background: none;
+		border: 0;
+		border-radius: 0;
+		box-shadow: none;
+		color: var(--sv-heading);
+		flex: none;
+		font-size: 1rem;
+		height: auto;
+		margin: 0;
+		min-height: 0;
+		padding: 0;
+		width: 26px;
+	}
+
+	.sticky-add-to-cart--active .sticky-add-to-cart__product .quantity .qty {
+		-moz-appearance: textfield;
+		appearance: textfield;
+		background: none;
+		border: 0;
+		box-shadow: none;
+		font-size: 0.9375rem;
+		font-weight: 600;
+		height: auto;
+		margin: 0;
+		max-width: none;
+		min-height: 0;
+		padding: 0;
+		text-align: center;
+		width: 34px;
+	}
+
+	.sticky-add-to-cart--active .sticky-add-to-cart__product .quantity .qty::-webkit-inner-spin-button,
+	.sticky-add-to-cart--active .sticky-add-to-cart__product .quantity .qty::-webkit-outer-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+
+	.sticky-add-to-cart__price {
+		flex: none;
+		font-size: 1.0625rem;
+		margin: 0;
+	}
+
+	.sticky-add-to-cart--active form.cart,
+	.sticky-add-to-cart--active .sticky-add-to-cart__variation,
+	.sticky-add-to-cart--active .sticky-add-to-cart-select-options-button {
+		align-items: center;
+		display: flex;
+		flex: 1 1 auto;
+		flex-wrap: nowrap;
+		gap: 6px;
+		justify-content: flex-end;
+		margin: 0;
+		min-width: 0;
+		width: auto;
+	}
+
+	.sticky-add-to-cart--active .sticky-add-to-cart__product .button {
+		align-items: center;
+		display: inline-flex;
+		flex: 1 1 auto;
+		font-size: 0.875rem;
+		justify-content: center;
+		line-height: 1.2;
+		margin: 0;
+		min-height: 44px;
+		padding: 0 14px;
+		white-space: nowrap;
+	}
+
+	/* With "Buy now": both buttons as 44px icons. */
+	.sticky-add-to-cart--active :is(form.cart, .sticky-add-to-cart__variation):has(.ux-buy-now-button) .button:is(.single_add_to_cart_button, .ux-buy-now-button) {
+		flex: none;
+		font-size: 0;
+		padding: 0;
+		width: 44px;
+	}
+
+	.sticky-add-to-cart--active :is(form.cart, .sticky-add-to-cart__variation):has(.ux-buy-now-button) .button:is(.single_add_to_cart_button, .ux-buy-now-button)::before {
+		background-color: currentColor;
+		content: "";
+		flex: none;
+		height: 20px;
+		-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8' cy='21' r='1'/%3E%3Ccircle cx='19' cy='21' r='1'/%3E%3Cpath d='M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12'/%3E%3C/svg%3E") center / contain no-repeat;
+		mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8' cy='21' r='1'/%3E%3Ccircle cx='19' cy='21' r='1'/%3E%3Cpath d='M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12'/%3E%3C/svg%3E") center / contain no-repeat;
+		width: 20px;
+	}
+
+	/* "Buy now": the lightning bolt (stronger than the rule above). */
+	.sticky-add-to-cart--active :is(form.cart, .sticky-add-to-cart__variation):has(.ux-buy-now-button) .button.ux-buy-now-button.ux-buy-now-button::before {
+		-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z'/%3E%3C/svg%3E");
+		mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z'/%3E%3C/svg%3E");
+	}
+
+	@media (max-width: 374px) {
+		.sticky-add-to-cart__price {
+			font-size: 1rem;
+		}
+	}
+
+	.sticky-add-to-cart--active .sticky-add-to-cart__product .button:focus-visible {
+		outline: 2px solid var(--sv-primary);
+		outline-offset: 2px;
+	}
+}
+
+.sticky-add-to-cart__price del {
+	font-size: 0.8125rem;
+	font-weight: 400;
+	margin-inline-end: 6px;
+}
+
+.sticky-add-to-cart__price ins {
+	text-decoration: none;
+}
+
+.sticky-add-to-cart__price .price-from {
+	color: inherit;
+	font: inherit;
+}
+
+/* Room under the page for the bars fixed at the bottom (sticky add to cart,
+   Floating contact on phones): a transparent border on the last section of
+   the footer, over its own background, so the room has the footer colour.
+   The base CSS padded body (silver-shop.css) and Floating contact #wrapper,
+   which showed a grey or white strip under the footer. */
+body.has-sticky-product-cart {
+	--sv-bottom-bars: var(--sv-sticky-cart-h, 60px);
+	padding-bottom: 0;
+}
+
+body.has-sticky-product-cart #footer > :nth-last-child(1 of :not(.back-to-top, style, script, link)) {
+	border-bottom: var(--sv-bottom-bars) solid transparent;
+}
+
+/* Phones: always the same order, the add to cart bar at the bottom and
+   Floating contact right above it (open bar, or the small toggle when
+   hidden), lifted by the height of the add to cart bar while it shows
+   (heights: silver-floating-contact.js, --sfc-bar-h, --sv-sticky-cart-h). */
+@media (max-width: 849px) {
+	body.has-floating-contact {
+		--sv-bottom-bars: var(--sfc-bar-h, calc(58px + env(safe-area-inset-bottom, 0px)));
+	}
+
+	body.has-floating-contact.sfc-collapsed {
+		--sv-bottom-bars: 0px;
+	}
+
+	body.has-floating-contact.has-sticky-product-cart {
+		--sv-bottom-bars: calc(var(--sv-sticky-cart-h, 58px) + var(--sfc-bar-h, 58px));
+	}
+
+	/* Hidden contact bar: only the add to cart bar takes room, the toggle
+	   floats above it. */
+	body.has-floating-contact.sfc-collapsed.has-sticky-product-cart {
+		--sv-bottom-bars: var(--sv-sticky-cart-h, 58px);
+	}
+
+	.silver-fc {
+		transition: bottom 0.3s var(--sv-ease);
+	}
+
+	body.has-sticky-product-cart .silver-fc {
+		bottom: var(--sv-sticky-cart-h, 58px);
+	}
+
+	/* The bottom of the screen (iPhone home bar) is the add to cart bar's. */
+	body.has-sticky-product-cart .silver-fc__list {
+		padding-bottom: 0;
+	}
+
+	body.has-floating-contact .sticky-add-to-cart--active {
+		padding-bottom: calc(3px + env(safe-area-inset-bottom, 0px));
+	}
+
+	/* Instead of the padding of #wrapper (silver-floating-contact.css). */
+	body.has-floating-contact #wrapper#wrapper {
+		padding-bottom: 0;
+	}
+
+	body.has-floating-contact #footer > :nth-last-child(1 of :not(.back-to-top, style, script, link)) {
+		border-bottom: var(--sv-bottom-bars) solid transparent;
+	}
+
+	body.has-floating-contact.has-sticky-product-cart .back-to-top {
+		bottom: calc(var(--sv-sticky-cart-h, 58px) + var(--sfc-bar-h, 58px) + 14px);
+	}
+}
+
+@media (max-width: 849px) and (prefers-reduced-motion: reduce) {
+	.silver-fc {
+		transition: none;
+	}
+}
+
+/* "Từ" has the format of the price: inside its amount, same size, weight
+   and colour (no smaller label). */
+.product-buy-box .product-page-price .price-from {
+	color: inherit;
+	font: inherit;
+	letter-spacing: inherit;
+}
+
+/* Same colour as the sale badges of the gallery and the product cards
+   (Style > Colors > Sale badge, function-custom-css.php). */
+.product-price-badge {
+	background-color: var(--fs-color-alert, #dc2626);
+	border-radius: var(--sv-radius-pill);
+	color: #fff;
+	font-size: 0.75rem;
+	font-weight: 700;
+	line-height: 1;
+	padding: 5px 9px;
+}
+
+/* The price of the variation is the one of the card. */
+.product-buy-box .woocommerce-variation-price {
+	display: none;
+}
+
+/* Attributes: the label above, the buttons under it. */
+.product-buy-box table.variations {
+	border: 0;
+	margin: 0;
+	width: 100%;
+}
+
+.product-buy-box table.variations tbody,
+.product-buy-box table.variations tr,
+.product-buy-box table.variations th,
+.product-buy-box table.variations td {
+	border: 0;
+	display: block;
+	padding: 0;
+}
+
+.product-buy-box table.variations tr + tr {
+	margin-top: 16px;
+}
+
+.product-buy-box table.variations th.label {
+	margin-bottom: 10px;
+}
+
+.product-buy-box table.variations label {
+	color: var(--sv-heading);
+	font-size: 0.9375rem;
+	font-weight: 600;
+	letter-spacing: 0;
+	padding: 0;
+	text-transform: none;
+}
+
+/* The form of variable products stacks its parts (the theme makes form.cart
+   a wrapping flex row with a 16px gap): 20px from the attributes to the
+   buttons. */
+.product-buy-box form.variations_form {
+	display: block;
+}
+
+.product-buy-box table.variations {
+	margin-bottom: 20px;
+}
+
+/* "Xóa lựa chọn" (silver_product_reset_variations_link()): a small ghost
+   button with an icon, top right of the attributes, on the line of the first
+   label. WooCommerce shows it (visibility) once a value is chosen: being out
+   of the flow, nothing moves. Muted text at 4.7:1, 32px tall, focus ring. */
+.product-buy-box table.variations {
+	position: relative;
+}
+
+.product-buy-box .reset_variations {
+	align-items: center;
+	border-radius: var(--sv-radius-pill);
+	color: var(--sv-text-muted);
+	display: inline-flex;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	gap: 6px;
+	inset-inline-end: -10px;
+	letter-spacing: 0;
+	line-height: 1;
+	margin: 0;
+	min-height: 32px;
+	padding: 0 10px;
+	position: absolute;
+	text-decoration: none;
+	text-transform: none;
+	top: -8px;
+	transition: background-color var(--sv-dur) var(--sv-ease), color var(--sv-dur) var(--sv-ease);
+	white-space: nowrap;
+}
+
+.product-buy-box .reset_variations:hover {
+	background-color: var(--sv-surface-muted);
+	color: var(--sv-heading);
+}
+
+.product-buy-box .reset_variations:focus-visible {
+	outline: 2px solid var(--sv-primary);
+	outline-offset: 1px;
+}
+
+/* Counter-clockwise arrow (Lucide "rotate-ccw"). */
+.sv-reset-variations__icon {
+	background-color: currentColor;
+	flex: none;
+	height: 14px;
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8'/%3E%3Cpath d='M3 3v5h5'/%3E%3C/svg%3E") center / contain no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8'/%3E%3Cpath d='M3 3v5h5'/%3E%3C/svg%3E") center / contain no-repeat;
+	width: 14px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.product-buy-box .reset_variations {
+		transition: none;
+	}
+}
+
+.sv-variation-select {
+	display: none;
+}
+
+.sv-variation-pills {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.product-buy-box .sv-variation-pill {
+	background-color: var(--sv-surface);
+	border: 1px solid var(--sv-border);
+	border-radius: var(--sv-radius);
+	box-shadow: none;
+	color: var(--sv-heading);
+	cursor: pointer;
+	font-size: 0.9375rem;
+	font-weight: 600;
+	letter-spacing: 0;
+	line-height: 1.2;
+	margin: 0;
+	min-height: 44px;
+	padding: 0 18px;
+	text-transform: none;
+	transition: border-color var(--sv-dur) var(--sv-ease), background-color var(--sv-dur) var(--sv-ease), color var(--sv-dur) var(--sv-ease);
+}
+
+.product-buy-box .sv-variation-pill:hover {
+	border-color: var(--sv-heading);
+}
+
+.product-buy-box .sv-variation-pill:focus-visible {
+	outline: 2px solid var(--sv-primary);
+	outline-offset: 2px;
+}
+
+.product-buy-box .sv-variation-pill.is-selected {
+	background-color: var(--sv-heading);
+	border-color: var(--sv-heading);
+	color: var(--sv-surface);
+}
+
+.product-buy-box .sv-variation-pill.is-disabled {
+	cursor: not-allowed;
+	opacity: 0.4;
+	text-decoration: line-through;
+}
+
+.product-buy-box .single_variation_wrap .woocommerce-variation {
+	margin: 0;
+}
+
+/* Availability, description of the variation: only when they have text. */
+.product-buy-box .single_variation_wrap .woocommerce-variation > :not(:empty) {
+	margin-bottom: 16px;
+}
+
+.product-buy-box .single_variation_wrap .woocommerce-variation > :empty {
+	display: none;
+}
+
+/* Buttons: "Add to cart" and "Call now" side by side, equal widths. */
+.product-buy-box form.cart:not(.variations_form),
+.product-buy-box .woocommerce-variation-add-to-cart,
+.product-buy-box__actions {
+	align-items: stretch;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin: 0;
+}
+
+.product-buy-box form.cart,
+.product-buy-box .woocommerce-variation-add-to-cart {
+	padding-bottom: 0;
+	padding-top: 0;
+}
+
+.product-buy-box:not(.has-quantity) .quantity {
+	display: none !important;
+}
+
+/* Quantity: a stepper as tall as the buttons, before "Add to cart". */
+.product-buy-box .quantity {
+	align-items: stretch;
+	background-color: var(--sv-surface);
+	border: 1px solid var(--sv-border);
+	border-radius: var(--sv-radius);
+	display: inline-flex;
+	flex: none;
+	height: 52px;
+	margin: 0;
+	opacity: 1;
+	overflow: hidden;
+}
+
+.product-buy-box .quantity .button.minus,
+.product-buy-box .quantity .button.plus {
+	background: none;
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+	color: var(--sv-heading);
+	font-size: 1.125rem;
+	font-weight: 500;
+	height: auto;
+	line-height: 1;
+	margin: 0;
+	min-height: 0;
+	padding: 0;
+	width: 40px;
+}
+
+.product-buy-box .quantity .button.minus:hover,
+.product-buy-box .quantity .button.plus:hover {
+	background-color: var(--sv-surface-muted);
+}
+
+.product-buy-box .quantity .qty {
+	-moz-appearance: textfield;
+	appearance: textfield;
+	background: none;
+	border: 0;
+	box-shadow: none;
+	color: var(--sv-heading);
+	font-size: 1rem;
+	font-weight: 600;
+	height: auto;
+	margin: 0;
+	max-width: none;
+	min-height: 0;
+	padding: 0;
+	text-align: center;
+	width: 44px;
+}
+
+.product-buy-box .quantity .qty::-webkit-inner-spin-button,
+.product-buy-box .quantity .qty::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+.product-buy-box .quantity .qty:focus-visible {
+	outline: 2px solid var(--sv-primary);
+	outline-offset: -2px;
+}
+
+.product-buy-box .single_add_to_cart_button,
+.product-buy-box .ux-buy-now-button,
+.product-buy-box .product-call-button {
+	align-items: center;
+	border-radius: var(--sv-radius);
+	display: inline-flex;
+	flex: 1 1 160px;
+	font-size: 1rem;
+	font-weight: 700;
+	gap: 10px;
+	justify-content: center;
+	letter-spacing: 0;
+	line-height: 1.2;
+	margin: 0;
+	min-height: 52px;
+	padding: 0 20px;
+	text-transform: none;
+	width: auto;
+}
+
+/* "Buy now" (Product Page > Buy now): no margin of its own, the gap spaces it. */
+.product-buy-box .ux-buy-now-button.ml-half {
+	margin-left: 0 !important;
+}
+
+/* Cart icon of "Add to cart". */
+.product-buy-box .single_add_to_cart_button::before {
+	background-color: currentColor;
+	content: "";
+	flex: none;
+	height: 18px;
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8' cy='21' r='1'/%3E%3Ccircle cx='19' cy='21' r='1'/%3E%3Cpath d='M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12'/%3E%3C/svg%3E") center / contain no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8' cy='21' r='1'/%3E%3Ccircle cx='19' cy='21' r='1'/%3E%3Cpath d='M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12'/%3E%3C/svg%3E") center / contain no-repeat;
+	width: 18px;
+}
+
+.product-buy-box .product-call-button {
+	background-color: var(--sv-surface);
+	border: 1px solid var(--sv-border);
+	color: var(--sv-heading);
+	font-weight: 600;
+}
+
+.product-buy-box .product-call-button:hover {
+	background-color: var(--sv-surface);
+	border-color: var(--sv-heading);
+	box-shadow: none;
+	color: var(--sv-heading);
+}
+
+.product-call-button__icon {
+	flex: none;
+}
+
+@media (max-width: 549px) {
+	.product-buy-box {
+		gap: 16px;
+		padding: 16px;
+	}
+
+	/* Quantity and "Add to cart" on one row, the other buttons under them. */
+	.product-buy-box .single_add_to_cart_button {
+		flex: 1 1 0;
+	}
+
+	.product-buy-box .ux-buy-now-button,
+	.product-buy-box .product-call-button {
+		flex-basis: 100%;
+	}
+}
+
+/* "Added to cart" toast (structure-wc-cart-notices.php, silver-cart-toast.js):
+   a dark message centred at the bottom, above the bars fixed there
+   (--sv-bottom-bars: sticky add to cart, Floating contact on phones). */
+.sv-toast {
+	align-items: center;
+	background-color: #1f2023;
+	border-radius: 10px;
+	bottom: calc(var(--sv-bottom-bars, 0px) + 20px);
+	box-shadow: 0 12px 32px -8px rgba(15, 23, 42, 0.35);
+	color: #fff;
+	display: flex;
+	font-size: 0.875rem;
+	font-weight: 700;
+	gap: 10px;
+	left: 50%;
+	line-height: 1.4;
+	max-width: min(640px, calc(100vw - 32px));
+	opacity: 0;
+	padding: 12px 20px;
+	pointer-events: none;
+	position: fixed;
+	transform: translate(-50%, 12px);
+	transition: opacity 0.2s var(--sv-ease), transform 0.2s var(--sv-ease);
+	width: max-content;
+	/* Above the mini cart and its backdrop (Header > Cart > Auto reveal). */
+	z-index: 1100;
+}
+
+.sv-toast.is-visible {
+	opacity: 1;
+	transform: translate(-50%, 0);
+}
+
+.sv-toast__icon {
+	background-color: #22c55e;
+	flex: none;
+	height: 16px;
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / contain no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / contain no-repeat;
+	width: 16px;
+}
+
+.sv-toast__text:empty {
+	display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.sv-toast,
+	.sv-toast.is-visible {
+		transform: translate(-50%, 0);
+		transition: opacity 0.2s linear;
+	}
+}
+
+/* Product meta (woocommerce/single-product/meta.php) in a panel under the
+   buy box (silver_product_details_open()): rows of the same height, a label
+   column of 88px, hairlines between rows, categories and tags as chips.
+   Then the share icons on their own (silver_product_share()), as [share]
+   prints them (their own style, size and colours). */
+.product-details-panel {
+	background-color: var(--sv-surface);
+	border: 1px solid var(--sv-border);
+	border-radius: var(--sv-radius-lg);
+	padding: 0 20px;
+}
+
+.product-info .product_meta.product-meta-list {
+	border: 0;
+	display: block;
+	font-size: 0.875rem;
+	margin: 0;
+	padding: 0;
+}
+
+.product-meta-row {
+	align-items: center;
+	display: grid;
+	gap: 12px;
+	grid-template-columns: 88px minmax(0, 1fr);
+	line-height: 1.5;
+	margin: 0;
+	min-height: 56px;
+	padding: 10px 0;
+}
+
+/* Share icons on their own, under the panel, aligned with its edge. */
+.product-share {
+	align-items: center;
+	display: flex;
+	margin: 0;
+}
+
+.product-meta-row[hidden] {
+	display: none;
+}
+
+/* Hairlines between the visible rows. */
+.product-details-panel .product-meta-row:not([hidden]) ~ .product-meta-row:not([hidden]) {
+	border-top: 1px solid var(--sv-border);
+}
+
+.product-meta-row {
+	border: 0;
+}
+
+.product-meta-row__label {
+	color: var(--sv-text-muted);
+	font-size: 0.875rem;
+	font-weight: 500;
+}
+
+.product-meta-row__value {
+	color: var(--sv-heading);
+	font-weight: 600;
+	min-width: 0;
+	overflow-wrap: anywhere;
+}
+
+.product-meta-row__chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+
+.product-meta-row__chips a {
+	align-items: center;
+	background-color: var(--sv-surface-muted);
+	border: 1px solid var(--sv-border);
+	border-radius: var(--sv-radius-pill);
+	color: var(--sv-heading);
+	display: inline-flex;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	min-height: 32px;
+	padding: 0 14px;
+	text-decoration: none;
+	transition: border-color var(--sv-dur) var(--sv-ease), color var(--sv-dur) var(--sv-ease), background-color var(--sv-dur) var(--sv-ease);
+}
+
+.product-meta-row__chips a:hover {
+	background-color: var(--sv-surface);
+	border-color: var(--sv-primary);
+	color: var(--sv-primary);
+}
+
+.product-meta-row__chips a:focus-visible {
+	outline: 2px solid var(--sv-primary);
+	outline-offset: 2px;
+}
+
+.product-share > .social-icons {
+	margin: 0;
+}
+
+@media (max-width: 549px) {
+	.product-details-panel {
+		padding: 0 16px;
+	}
+
+	.product-meta-row {
+		grid-template-columns: 76px minmax(0, 1fr);
+		min-height: 52px;
+	}
+}
+
+@media (pointer: coarse) {
+	.product-meta-row__chips a {
+		min-height: 36px;
+	}
+}
+
+/* Product siblings (structure-wc-product-siblings.php): the products of the
+   group as cards, label and price, the current one with a primary border
+   and a check in its corner. 3 columns next to the gallery, 2 on phones. */
+.product-siblings__list {
+	display: grid;
+	gap: 12px;
+	grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+}
+
+.product-sibling {
+	align-items: center;
+	background-color: var(--sv-surface);
+	border: 1px solid var(--sv-border);
+	border-radius: var(--sv-radius-sm);
+	box-shadow: var(--sv-shadow-sm);
+	color: var(--sv-heading);
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	justify-content: center;
+	min-height: 88px;
+	overflow: hidden;
+	padding: 12px;
+	position: relative;
+	text-align: center;
+	text-decoration: none;
+	transition: border-color var(--sv-dur) var(--sv-ease), box-shadow var(--sv-dur) var(--sv-ease);
+}
+
+.product-sibling:hover {
+	border-color: var(--sv-primary);
+	color: var(--sv-heading);
+}
+
+.product-sibling:focus-visible {
+	outline: 2px solid var(--sv-primary);
+	outline-offset: 2px;
+}
+
+.product-sibling__label {
+	font-size: 0.875rem;
+	font-weight: 500;
+	line-height: 1.4;
+	max-width: 100%;
+	overflow-wrap: anywhere;
+}
+
+/* Stronger than .product-info .price (1.5em, silver-shop.css); a long price
+   wraps instead of leaving the card. */
+.product-siblings .product-sibling__price {
+	display: flex;
+	flex-wrap: wrap;
+	font-size: 0.9375rem;
+	font-weight: 800;
+	gap: 0 4px;
+	justify-content: center;
+	line-height: 1.3;
+	margin: 0;
+	max-width: 100%;
+}
+
+.product-sibling__price > .amount,
+.product-sibling__price ins .amount {
+	color: var(--sv-price, var(--sv-heading));
+	font-weight: 800;
+}
+
+.product-sibling__price ins {
+	text-decoration: none;
+}
+
+/* The selling price only (the struck-out one is on the product page). */
+.product-sibling__price del,
+.product-sibling__price .screen-reader-text {
+	display: none;
+}
+
+.product-sibling__price .price-from {
+	color: inherit;
+	font: inherit;
+}
+
+.product-sibling.is-current {
+	border-color: var(--sv-primary);
+	box-shadow: inset 0 0 0 1px var(--sv-primary);
+}
+
+.product-sibling.is-current .product-sibling__label {
+	font-weight: 700;
+}
+
+/* Check in a corner triangle. */
+.product-sibling__check {
+	background-color: var(--sv-primary);
+	bottom: 0;
+	clip-path: polygon(100% 0, 100% 100%, 0 100%);
+	height: 28px;
+	position: absolute;
+	right: 0;
+	width: 28px;
+}
+
+.product-sibling__check::after {
+	background-color: #fff;
+	bottom: 3px;
+	content: "";
+	height: 11px;
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / contain no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / contain no-repeat;
+	position: absolute;
+	right: 3px;
+	width: 11px;
+}
+
+.product-sibling.is-out-of-stock {
+	opacity: 0.55;
+}
+
+@media (max-width: 549px) {
+	.product-siblings__list {
+		gap: 8px;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.product-sibling {
+		min-height: 80px;
+		padding: 10px 8px;
+	}
+}
+
+/* Specification groups (structure-wc-spec-groups.php), the "Thông số kỹ
+   thuật" tab: one card per group, its label on a muted bar, then rows of a
+   muted name above a bold value, hairlines between rows. */
+.spec-groups {
+	display: grid;
+	gap: 20px;
+	max-width: 720px;
+}
+
+.spec-group {
+	background-color: var(--sv-surface);
+	border: 1px solid var(--sv-border);
+	border-radius: var(--sv-radius-lg);
+	overflow: hidden;
+}
+
+.spec-groups .spec-group__title {
+	background-color: var(--sv-surface-muted);
+	color: var(--sv-heading);
+	font-size: 0.9375rem;
+	font-weight: 700;
+	letter-spacing: 0;
+	line-height: 1.4;
+	margin: 0;
+	padding: 12px 16px;
+	text-transform: none;
+}
+
+.spec-group__list {
+	margin: 0;
+	padding: 0;
+}
+
+.spec-group__row {
+	display: grid;
+	gap: 4px;
+	padding: 12px 16px;
+}
+
+.spec-group__row + .spec-group__row {
+	border-top: 1px solid var(--sv-border);
+}
+
+.spec-groups .spec-group__label {
+	color: var(--sv-text-muted);
+	font-size: 0.875rem;
+	font-weight: 500;
+	letter-spacing: 0;
+	line-height: 1.4;
+	margin: 0;
+	text-transform: none;
+}
+
+/* Values as typed (the theme sets dd to uppercase). */
+.spec-groups .spec-group__value {
+	color: var(--sv-heading);
+	font-size: 0.9375rem;
+	font-weight: 600;
+	letter-spacing: 0;
+	line-height: 1.5;
+	margin: 0;
+	overflow-wrap: anywhere;
+	text-transform: none;
+}
+
+/* Several values of one attribute: one per line, with a small dot. */
+.spec-groups .spec-group__values {
+	display: grid;
+	gap: 4px;
+	list-style: none;
+	margin: 2px 0 0;
+	padding: 0;
+}
+
+.spec-groups .spec-group__values li {
+	margin: 0;
+	padding-inline-start: 14px;
+	position: relative;
+}
+
+.spec-groups .spec-group__values li::before {
+	background-color: var(--sv-text-muted);
+	border-radius: 50%;
+	content: "";
+	height: 5px;
+	inset-inline-start: 2px;
+	position: absolute;
+	top: calc(0.75em - 2px);
+	width: 5px;
+}
+
+@media (max-width: 549px) {
+	.spec-groups {
+		gap: 16px;
+	}
+
+	.spec-groups .spec-group__title,
+	.spec-group__row {
+		padding-left: 12px;
+		padding-right: 12px;
+	}
+}
+
+/* Product tab titles as h2 (single-product/tabs/accordian.php,
+   sections.php; tabs.php opens each panel with a hidden h2), with the look
+   the titles had: the accordion title, or the small uppercase title of the
+   sections. */
+.product-page-accordian .product-tab-title {
+	color: inherit;
+	display: inline;
+	font: inherit;
+	letter-spacing: inherit;
+	line-height: inherit;
+	margin: 0;
+	padding: 0;
+	text-transform: inherit;
+}
+
+.product-section .product-tab-title--section {
+	font-size: 1em;
+	letter-spacing: 0.05em;
+	margin: 0;
+}
+
+/* "Sections" style: the title above the content (two rows). */
+.product-page-sections .product-section {
+	padding: 32px 0;
+}
+
+/* Merged description and specifications: two columns, a title above each,
+   the description on the right with .is-description-right (large screens;
+   stacked on phones and tablets, the description first). */
+.product-section--merged .product-section__column {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+@media (min-width: 850px) {
+	.product-section--merged.is-description-right .product-section__column--description {
+		order: 2;
+	}
+}
+
+/* Title to content: the row gap only (no panel padding). */
+.product-page-sections .product-section .panel {
+	padding-top: 0;
+}
+
+.product-page-sections .product-section .panel > :last-child {
+	margin-bottom: 0;
+}
+
+/* Sections under the product (.product-footer, silver_product_footer_sections()):
+   no borders; the content of the product (tabs, or the sections of the
+   "Sections" style) on one white band, the recommendations (upsells,
+   related products) on the muted page background; one title scale and one
+   section padding for all. */
+.product-footer {
+	--sv-product-section-pad: 48px;
+}
+
+.product-footer .product-section,
+.product-footer .woocommerce-tabs {
+	border-top: 0;
+}
+
+.product-footer-section--product-data-tabs {
+	background-color: var(--sv-surface);
+}
+
+/* Tabs style: the tabs and their panels inside the white band. */
+.product-footer-section--product-data-tabs > .container > .woocommerce-tabs {
+	padding: var(--sv-product-section-pad) 0;
+}
+
+/* Sections style: each section a full width band with the same padding,
+   white and muted in turn from the first one. */
+.product-footer .product-page-sections .product-section {
+	padding: var(--sv-product-section-pad) 0;
+}
+
+.product-footer .product-page-sections .product-section:nth-child(even) {
+	background-color: var(--sv-surface-muted);
+}
+
+/* On a muted band, the boxes that are muted themselves turn white. */
+.product-footer .product-page-sections .product-section:nth-child(even) :is(.ux-toc--collapsible, .review-form-inner.has-border) {
+	background-color: var(--sv-surface);
+}
+
+/* Frequently asked questions (a narrow block): centred, title included; the
+   questions themselves stay left aligned. */
+.product-footer .product-section--silver_faq .product-tab-title--section {
+	text-align: center;
+}
+
+.product-footer .product-section--silver_faq .silver-faq {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* The sections after the tabs (upsells, related products...): bands that go
+   on with the white / muted turn of the tabs. Counted from the tabs, so a
+   missing part keeps the turn. The last band of the tabs is white (the
+   "Tabs" style, or an odd number of sections): first one after muted. */
+.product-footer-section--product-data-tabs ~ .product-footer-section {
+	padding: var(--sv-product-section-pad) 0;
+}
+
+.product-footer-section--product-data-tabs + .product-footer-section,
+.product-footer-section--product-data-tabs + * + * + .product-footer-section {
+	background-color: var(--sv-surface-muted);
+}
+
+.product-footer-section--product-data-tabs + * + .product-footer-section,
+.product-footer-section--product-data-tabs + * + * + * + .product-footer-section {
+	background-color: var(--sv-surface);
+}
+
+/* The last section of the tabs muted (an even number of them): the other way
+   round. */
+.product-footer:has(.product-page-sections > .product-section:nth-child(even):last-child) > :is(.product-footer-section--product-data-tabs + .product-footer-section, .product-footer-section--product-data-tabs + * + * + .product-footer-section) {
+	background-color: var(--sv-surface);
+}
+
+.product-footer:has(.product-page-sections > .product-section:nth-child(even):last-child) > :is(.product-footer-section--product-data-tabs + * + .product-footer-section, .product-footer-section--product-data-tabs + * + * + * + .product-footer-section) {
+	background-color: var(--sv-surface-muted);
+}
+
+/* One title scale: the titles of the sections and of the recommendations. */
+.product-footer .product-section .product-tab-title--section,
+.product-footer .product-section-title {
+	color: var(--sv-heading);
+	font-size: 1.375rem;
+	font-weight: 800;
+	letter-spacing: -0.01em;
+	line-height: 1.3;
+	margin: 0 0 20px;
+	padding: 0;
+	text-transform: none;
+}
+
+.product-footer .product-page-sections .product-section .product-tab-title--section {
+	margin-bottom: 0;
+}
+
+/* Reviews: the count as a small subtitle under the section title, the form
+   as a light card. */
+.product-footer .woocommerce-Reviews-title {
+	color: var(--sv-text-muted);
+	font-size: 1rem;
+	font-weight: 600;
+	margin: 0 0 12px;
+}
+
+.product-footer .review-form-inner.has-border {
+	background-color: var(--sv-surface-muted);
+	border: 1px solid var(--sv-border);
+	border-radius: var(--sv-radius-lg);
+	padding: 24px;
+}
+
+.product-footer .review-form-inner .comment-reply-title {
+	font-size: 1.125rem;
+	font-weight: 700;
+	margin-top: 0;
+}
+
+@media (max-width: 849px) {
+	.product-footer {
+		--sv-product-section-pad: 32px;
+	}
+
+	.product-footer .product-section .product-tab-title--section,
+	.product-footer .product-section-title {
+		font-size: 1.25rem;
+	}
+
+	.product-footer .review-form-inner.has-border {
+		padding: 16px;
+	}
+}
+
+/* Product reviews: the theme's layout (single-product/reviews-layout.php,
+   inc/woocommerce/structure-wc-product-reviews.php, silver-product-reviews.js).
+   Stars and bars in the review color (Theme Options > Colors). */
+.product-reviews {
+	--sv-review-fill: var(--sv-review-color, var(--sv-primary));
+	display: grid;
+	gap: 28px;
+}
+
+/* Overview: score | bars | "Write a review". */
+.product-reviews__overview {
+	align-items: center;
+	background-color: var(--sv-surface);
+	border: 1px solid var(--sv-border);
+	border-radius: var(--sv-radius-lg);
+	display: grid;
+	gap: 24px 40px;
+	grid-template-columns: auto minmax(0, 1fr) auto;
+	padding: 24px 28px;
+}
+
+.product-reviews__overview--no-ratings {
+	grid-template-columns: 1fr;
+}
+
+.product-reviews__score {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	min-width: 140px;
+	text-align: center;
+}
+
+.product-reviews__score p {
+	margin: 0;
+}
+
+.product-reviews__average {
+	color: var(--sv-heading);
+	line-height: 1;
+}
+
+.product-reviews__average-value {
+	font-size: 2.75rem;
+	font-weight: 800;
+	letter-spacing: -0.02em;
+}
+
+.product-reviews__average-base {
+	color: var(--sv-text-muted);
+	font-size: 1.125rem;
+	font-weight: 600;
+	margin-inline-start: 2px;
+}
+
+.product-reviews__average--none .product-reviews__average-value {
+	color: var(--sv-text-muted);
+}
+
+.product-reviews .product-reviews__stars {
+	font-size: 18px;
+	gap: 0;
+}
+
+.product-reviews__stars .product-rating-summary__star {
+	margin-inline-end: 3px;
+}
+
+.product-reviews__total {
+	color: var(--sv-text-muted);
+	font-size: 0.875rem;
+}
+
+.product-reviews__bars {
+	display: grid;
+	gap: 8px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.product-reviews__bar {
+	align-items: center;
+	display: grid;
+	gap: 12px;
+	grid-template-columns: 34px minmax(0, 1fr) 40px;
+	margin: 0;
+}
+
+.product-reviews__bar-label {
+	align-items: center;
+	color: var(--sv-heading);
+	display: inline-flex;
+	font-size: 0.875rem;
+	font-weight: 600;
+	gap: 4px;
+}
+
+.product-reviews__bar-label .product-rating-summary__star {
+	font-size: 12px;
+}
+
+.product-reviews__bar-track {
+	background-color: var(--sv-surface-muted);
+	border-radius: 999px;
+	box-shadow: inset 0 0 0 1px var(--sv-border);
+	height: 8px;
+	overflow: hidden;
+}
+
+.product-reviews__bar-fill {
+	background-color: var(--sv-review-fill);
+	border-radius: inherit;
+	display: block;
+	height: 100%;
+}
+
+.product-reviews__bar-count {
+	color: var(--sv-text-muted);
+	font-size: 0.875rem;
+	font-variant-numeric: tabular-nums;
+	text-align: end;
+}
+
+.product-reviews__cta {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	max-width: 240px;
+	text-align: center;
+}
+
+.product-reviews__overview--no-ratings .product-reviews__cta {
+	flex-direction: row;
+	justify-content: space-between;
+	max-width: none;
+	text-align: start;
+}
+
+.product-reviews__cta-text {
+	color: var(--sv-text-muted);
+	font-size: 0.9375rem;
+	margin: 0;
+}
+
+.product-reviews .product-reviews__write {
+	align-items: center;
+	display: inline-flex;
+	gap: 8px;
+	justify-content: center;
+	margin: 0;
+	min-height: 44px;
+	white-space: nowrap;
+}
+
+/* The list. */
+.product-reviews .product-reviews__items,
+.product-reviews .product-reviews__items .children {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+/* Over the theme's comment list (dashed lines, 1.3em indent, italic text). */
+.product-reviews .product-reviews__items > li {
+	border: 0;
+	border-top: 1px solid var(--sv-border);
+	margin: 0;
+	padding: 16px 0;
+}
+
+.product-reviews .product-reviews__items > li:first-child {
+	border-top: 0;
+	padding-top: 0;
+}
+
+.product-reviews .product-reviews__items .children > li {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+.product-reviews .product-reviews__items .description,
+.product-reviews .product-reviews__items .description p {
+	font-style: normal;
+}
+
+.product-reviews__items > li:focus {
+	outline: none;
+}
+
+.product-reviews__items .comment_container {
+	align-items: flex-start;
+	display: flex;
+	gap: 14px;
+}
+
+.product-reviews__items .comment_container > .flex-col:first-child {
+	flex: none;
+}
+
+.product-reviews .product-reviews__items .comment-text {
+	border: 0;
+	flex: 1 1 auto;
+	margin: 0;
+	min-width: 0;
+	padding: 0;
+}
+
+.product-review__avatar {
+	align-items: center;
+	border-radius: 50%;
+	color: #fff;
+	display: flex;
+	font-size: 1rem;
+	font-weight: 700;
+	height: 40px;
+	justify-content: center;
+	width: 40px;
+}
+
+.product-review__avatar--0 { background-color: #2563eb; }
+.product-review__avatar--1 { background-color: #0d9488; }
+.product-review__avatar--2 { background-color: #7c3aed; }
+.product-review__avatar--3 { background-color: #c2410c; }
+.product-review__avatar--4 { background-color: #be185d; }
+.product-review__avatar--5 { background-color: #15803d; }
+
+.product-review__head {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px 10px;
+}
+
+.product-review__author {
+	color: var(--sv-heading);
+	font-size: 0.9375rem;
+	font-weight: 700;
+}
+
+.product-review__badge {
+	align-items: center;
+	border-radius: 999px;
+	display: inline-flex;
+	font-size: 0.75rem;
+	font-weight: 600;
+	gap: 4px;
+	line-height: 1.5;
+	padding: 1px 8px;
+}
+
+.product-review__badge--purchased {
+	background-color: #ecfdf5;
+	color: #047857;
+}
+
+.product-review__badge--shop {
+	background-color: color-mix(in srgb, var(--sv-primary) 12%, transparent);
+	color: var(--sv-primary);
+}
+
+.product-review__badge-icon {
+	font-size: 0.6875rem;
+}
+
+.product-review__sub {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px 10px;
+	margin-top: 2px;
+}
+
+.product-review__sub .product-review__stars {
+	font-size: 13px;
+}
+
+.product-review__sub .product-rating-summary__star {
+	margin-inline-end: 2px;
+}
+
+.product-review__date {
+	color: var(--sv-text-muted);
+	font-size: 0.8125rem;
+}
+
+.product-review__pending {
+	color: var(--sv-text-muted);
+	font-size: 0.875rem;
+	margin: 6px 0 0;
+}
+
+.product-reviews__items .description {
+	margin: 8px 0 0;
+}
+
+.product-reviews__items .description > :last-child {
+	margin-bottom: 0;
+}
+
+/* Product page gallery with the thumbnail strip below the main image. */
+.product-gallery-main .product-gallery-slider {
+	border: 1px solid var(--sv-border);
+	border-radius: 14px;
+	background: var(--sv-surface-muted, #f5f6f7);
+	overflow: hidden;
+}
+
+.product-gallery-main .woocommerce-product-gallery__image > a {
+	display: block;
+}
+
+.product-gallery-main .woocommerce-product-gallery__image > a > img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.product-gallery-main .product-gallery-slider .swiper-prev-next-button,
+.product-gallery-main .image-tools .zoom-button {
+	width: 44px;
+	height: 44px;
+	min-width: 44px;
+	line-height: 42px;
+	margin: 0;
+	background: #fff;
+	color: #192331;
+	border: 1px solid rgb(17 24 39 / 14%);
+	border-radius: 50%;
+	box-shadow: 0 2px 8px rgb(17 24 39 / 12%);
+}
+
+.product-gallery-main .product-gallery-slider .swiper-prev-next-button {
+	top: calc(50% - 22px);
+	bottom: auto;
+	opacity: 1;
+	transform: none;
+}
+
+.product-gallery-rail.product-thumbnails.row {
+	margin-inline: 0;
+	max-width: 100%;
+}
+
+.product-gallery-rail.product-thumbnails.row-small .col {
+	flex: 0 0 auto;
+	width: clamp(64px, 12vw, 84px);
+	max-width: none;
+	padding-inline: 0 8px;
+}
+
+.product-gallery-rail.product-thumbnails .col a {
+	box-sizing: border-box;
+	position: relative;
+	padding: 0;
+	border: 0;
+	border-radius: 7px;
+	cursor: pointer;
+}
+
+.product-gallery-rail.product-thumbnails .col a:hover::after,
+.product-gallery-rail.product-thumbnails .is-nav-selected a::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	border: 1px solid var(--sv-border, #cdd3da);
+	pointer-events: none;
+}
+
+.product-gallery-rail.product-thumbnails .is-nav-selected a::after {
+	border: 2px solid var(--sv-primary, #2563eb);
+}
+
+.product-gallery-rail.product-thumbnails .col a img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 1;
+	object-fit: cover;
+	border-radius: inherit;
+	margin: 0;
+	opacity: 1;
+	transform: none;
+}
+
+.product-review__photos {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	list-style: none;
+	margin: 8px 0 0;
+	padding: 0;
+}
+
+.product-reviews .product-review__photos li {
+	margin: 0;
+	padding: 0;
+}
+
+.product-review__photo {
+	border: 1px solid var(--sv-border);
+	border-radius: 10px;
+	background: var(--sv-surface);
+	padding: 2px;
+	cursor: zoom-in;
+	display: block;
+	height: clamp(64px, 17vw, 84px);
+	overflow: hidden;
+	transition: border-color 0.2s;
+	width: clamp(64px, 17vw, 84px);
+}
+
+.product-review__photo:hover {
+	border-color: var(--sv-primary);
+}
+
+.product-review__photo:focus-visible {
+	outline: 2px solid var(--sv-primary);
+	outline-offset: 2px;
+}
+
+.product-review__photo img {
+	display: block;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 7px;
+	width: 100%;
+}
+
+/* Replies (the shop): under the review, indented. */
+.product-reviews__items .children {
+	border-inline-start: 2px solid var(--sv-border);
+	margin: 16px 0 0 54px;
+	padding-inline-start: 16px;
+}
+
+.product-reviews__items .children .product-review__avatar {
+	font-size: 0.875rem;
+	height: 32px;
+	width: 32px;
+}
+
+.product-reviews__more {
+	display: flex;
+	justify-content: center;
+	margin-top: 8px;
+}
+
+.product-reviews .product-reviews__more-button {
+	margin: 0;
+	min-height: 44px;
+	min-width: 200px;
+}
+
+/* The form: in a silverDialog popup (here without JavaScript). */
+.product-review-popup .silver-dialog__box {
+	--silver-dialog-width: 600px;
+}
+
+.product-review-form__product {
+	align-items: center;
+	background-color: var(--sv-surface-muted);
+	border-radius: var(--sv-radius);
+	display: flex;
+	gap: 12px;
+	margin-bottom: 18px;
+	padding: 10px 12px;
+}
+
+.product-review-form__product-img {
+	border-radius: 6px;
+	flex: none;
+	height: 48px;
+	object-fit: cover;
+	width: 48px;
+}
+
+.product-review-form__product-name {
+	color: var(--sv-heading);
+	font-size: 0.9375rem;
+	font-weight: 600;
+	line-height: 1.4;
+}
+
+.product-review-form .comment-respond {
+	margin: 0;
+	padding: 0;
+}
+
+/* The empty title and the "cancel reply" link WordPress prints anyway. */
+.product-review-form .comment-reply-title,
+.product-review-form .comment-respond > small,
+.product-review-form #cancel-comment-reply-link {
+	display: none;
+}
+
+/* "Save my name..." (WordPress): a small note, not a bold label. */
+.product-review-form .comment-form-cookies-consent {
+	align-items: flex-start;
+	display: flex;
+	gap: 8px;
+	margin: 0;
+}
+
+.product-review-form .comment-form-cookies-consent input {
+	flex: none;
+	margin: 3px 0 0;
+}
+
+.product-review-form .comment-form-cookies-consent label {
+	color: var(--sv-text-muted);
+	font-size: 0.8125rem;
+	font-weight: 400;
+	line-height: 1.5;
+	margin: 0;
+}
+
+.product-review-form__form {
+	display: grid;
+	gap: 16px;
+}
+
+.product-review-form__form > p,
+.product-review-form__field {
+	margin: 0;
+}
+
+.product-review-form label,
+.product-review-form legend,
+.product-review-form__photos-label {
+	color: var(--sv-heading);
+	display: block;
+	font-size: 0.875rem;
+	font-weight: 600;
+	margin: 0 0 6px;
+}
+
+.product-review-form .required {
+	color: var(--fs-color-alert, #b91c1c);
+}
+
+.product-review-form input[type="text"],
+.product-review-form input[type="tel"],
+.product-review-form input[type="email"],
+.product-review-form textarea {
+	border-radius: var(--sv-radius);
+	margin: 0;
+	min-height: 44px;
+	width: 100%;
+}
+
+.product-review-form textarea {
+	min-height: 120px;
+	resize: vertical;
+}
+
+.product-review-form__fields {
+	display: grid;
+	gap: 16px;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+/* Stars: radios (keyboard: arrows), stars as their labels; in a light box,
+   centred, the label of the star chosen under them. */
+.product-review-form .product-review-form__rating {
+	background-color: var(--sv-surface-muted);
+	border: 1px solid var(--sv-border);
+	border-radius: var(--sv-radius-lg);
+	box-sizing: border-box;
+	margin: 0;
+	max-width: 100%;
+	min-width: 0;
+	padding: 14px 16px 10px;
+	text-align: center;
+	width: 100%;
+}
+
+/* Over the theme's legend (uppercase, a line under it). */
+.product-review-form .product-review-form__rating legend {
+	border: 0;
+	color: var(--sv-heading);
+	float: left; /* Inside the box (a legend sits on its border). */
+	font-size: 0.9375rem;
+	font-weight: 600;
+	letter-spacing: normal;
+	margin: 0 0 6px;
+	padding: 0;
+	text-transform: none;
+	width: 100%;
+}
+
+.product-review-stars {
+	align-items: center;
+	clear: both;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+	justify-content: center;
+}
+
+/* Over the theme's radios (inline, a margin): no room taken. */
+.product-review-form .product-review-stars__input {
+	clip-path: inset(50%);
+	height: 1px;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+.product-review-form .product-review-stars__star {
+	align-items: center;
+	border-radius: 8px;
+	color: #cbd5e1;
+	cursor: pointer;
+	display: inline-flex;
+	font-size: 30px;
+	height: 44px;
+	justify-content: center;
+	margin: 0;
+	transition: color 0.15s, transform 0.15s;
+	width: 44px;
+}
+
+.product-review-form .product-review-stars__star.is-on {
+	color: var(--sv-review-fill, var(--sv-review-color, var(--sv-primary)));
+}
+
+.product-review-stars__star:hover {
+	transform: scale(1.1);
+}
+
+.product-review-stars__input:focus-visible + .product-review-stars__star {
+	outline: 2px solid var(--sv-primary);
+	outline-offset: 1px;
+}
+
+.product-review-stars__text {
+	color: var(--sv-text-muted);
+	flex: 1 0 100%;
+	font-size: 0.875rem;
+	font-weight: 600;
+	line-height: 1.4;
+	min-height: 1.4em; /* Room kept: nothing moves when a star is chosen. */
+}
+
+/* Photos: previews, then "Add photos". */
+.product-review-form__photos {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.product-review-form__photos-label {
+	flex: 1 0 100%;
+	margin-bottom: 0;
+}
+
+.product-review-form__hint {
+	color: var(--sv-text-muted);
+	font-weight: 400;
+}
+
+.product-review-photos {
+	display: contents;
+	list-style: none;
+}
+
+.product-review-photos__item {
+	border-radius: var(--sv-radius);
+	height: 72px;
+	margin: 0;
+	overflow: hidden;
+	position: relative;
+	width: 72px;
+}
+
+.product-review-photos__item img {
+	height: 100%;
+	object-fit: cover;
+	width: 100%;
+}
+
+.product-review-form .product-review-photos__remove {
+	align-items: center;
+	background-color: rgb(15 23 42 / 0.7);
+	border: 0;
+	border-radius: 50%;
+	color: #fff;
+	display: flex;
+	height: 24px;
+	inset-block-start: 4px;
+	inset-inline-end: 4px;
+	justify-content: center;
+	margin: 0;
+	min-height: 0;
+	padding: 0;
+	position: absolute;
+	width: 24px;
+}
+
+.product-review-photos__remove::before {
+	background-color: currentColor;
+	content: "";
+	height: 12px;
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M18 6 6 18M6 6l12 12'/%3E%3C/svg%3E") center / contain no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M18 6 6 18M6 6l12 12'/%3E%3C/svg%3E") center / contain no-repeat;
+	width: 12px;
+}
+
+.product-review-form .product-review-photos__add {
+	align-items: center;
+	border: 1.5px dashed var(--sv-border);
+	border-radius: var(--sv-radius);
+	color: var(--sv-text-muted);
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	font-size: 0.75rem;
+	font-weight: 600;
+	gap: 4px;
+	height: 72px;
+	justify-content: center;
+	margin: 0;
+	text-align: center;
+	transition: border-color 0.2s, color 0.2s;
+	width: 72px;
+}
+
+.product-review-form .product-review-photos__add[hidden] {
+	display: none;
+}
+
+.product-review-photos__add i {
+	font-size: 18px;
+}
+
+.product-review-photos__add:hover,
+.product-review-photos__input:focus-visible + .product-review-photos__add {
+	border-color: var(--sv-primary);
+	color: var(--sv-primary);
+}
+
+.product-review-photos__input {
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+.product-review-form__error {
+	background-color: #fef2f2;
+	border-radius: var(--sv-radius);
+	color: #b91c1c;
+	font-size: 0.875rem;
+	font-weight: 600;
+	margin: 0;
+	padding: 10px 12px;
+}
+
+.product-review-form__error[hidden] {
+	display: none;
+}
+
+.product-review-form .form-submit {
+	margin: 0;
+}
+
+.product-review-form .product-review-form__submit {
+	margin: 0;
+	min-height: 48px;
+	width: 100%;
+}
+
+.product-review-form__form.is-sending .product-review-form__submit {
+	cursor: progress;
+	opacity: 0.7;
+}
+
+@media (max-width: 849px) {
+	.product-reviews__overview {
+		grid-template-columns: auto minmax(0, 1fr);
+		padding: 20px;
+	}
+
+	.product-reviews__cta {
+		flex-direction: row;
+		grid-column: 1 / -1;
+		justify-content: space-between;
+		max-width: none;
+		text-align: start;
+	}
+}
+
+@media (max-width: 549px) {
+	.product-reviews__overview {
+		gap: 20px;
+		grid-template-columns: 1fr;
+		padding: 18px 16px;
+	}
+
+	.product-reviews__cta {
+		align-items: stretch;
+		flex-direction: column;
+		text-align: center;
+	}
+
+	.product-reviews__items .children {
+		margin-inline-start: 20px;
+	}
+
+	.product-review-popup .silver-dialog__box {
+		padding: 22px 16px 16px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.product-review-stars__star,
+	.product-review__photo {
+		transition: none;
+	}
+
+	.product-review-stars__star:hover {
+		transform: none;
+	}
+}
+
+/* Product card short description (silver_woocommerce_shop_loop_excerpt()):
+   a <div> holding the paragraphs of the description. */
+.box-excerpt > p {
+	margin: 0;
+}
+
+.box-excerpt > p + p {
+	margin-top: 0.5em;
+}
+
+/* On product cards: a two-line teaser, the full text is on the product page.
+   The paragraphs run on as one text so the clamp counts every line; cards of
+   a row keep close heights and the price stays near the title. */
+.box-card .box-excerpt {
+	-webkit-box-orient: vertical;
+	color: var(--sv-text-muted);
+	display: -webkit-box;
+	font-size: 0.8125rem;
+	-webkit-line-clamp: 2;
+	line-clamp: 2;
+	line-height: 1.55;
+	overflow: hidden;
+}
+
+.box-card .box-excerpt > p {
+	display: inline;
+}
+
+.box-card .box-excerpt > p + p::before {
+	content: " ";
+}
+
+/* Phones (two narrow columns): name, rating and price only. */
+@media (max-width: 549px) {
+	.box-card .box-excerpt {
+		display: none;
+	}
+}
+
+/* Catalog ordering as buttons (silver_catalog_ordering_pills()), on the left
+   of the shop toolbar: the active one is filled with the heading color. */
+.catalog-sort {
+	display: flex;
+	gap: 8px;
+	margin: -2px 0;
+	overflow-x: auto;
+	padding: 2px; /* room for the focus ring */
+	scrollbar-width: none;
+}
+
+.catalog-sort::-webkit-scrollbar {
+	display: none;
+}
+
+.catalog-sort .catalog-sort__item {
+	align-items: center;
+	background-color: var(--sv-surface);
+	border: 1px solid var(--sv-border);
+	border-radius: var(--sv-radius-pill);
+	color: var(--sv-heading);
+	display: inline-flex;
+	flex: 0 0 auto;
+	font-size: 0.875em;
+	font-weight: 600;
+	line-height: 1.2;
+	min-height: 40px;
+	padding: 0 16px;
+	transition: border-color var(--sv-transition), background-color var(--sv-transition), color var(--sv-transition);
+	white-space: nowrap;
+}
+
+.catalog-sort .catalog-sort__item:hover {
+	border-color: var(--sv-heading);
+	color: var(--sv-heading);
+}
+
+.catalog-sort .catalog-sort__item:focus-visible {
+	outline: 2px solid var(--sv-primary);
+	outline-offset: 2px;
+}
+
+.catalog-sort .catalog-sort__item.is-active {
+	background-color: var(--sv-heading);
+	border-color: var(--sv-heading);
+	color: var(--sv-surface);
+}
+
+/* "Sort by:" before the buttons: tells them apart from the category chips of
+   the bar above. */
+.catalog-sort__label {
+	align-self: center;
+	color: var(--sv-text-muted);
+	flex: 0 0 auto;
+	font-size: 0.875em;
+	font-weight: 500;
+	margin-inline-end: 4px;
+	white-space: nowrap;
+}
+
+/* Phones: the three buttons stay whole on one row (no clipped label), and
+   wrap instead of scrolling when the text is larger. */
+@media (max-width: 549px) {
+	.catalog-sort {
+		flex-wrap: wrap;
+		overflow: visible;
+	}
+
+	.catalog-sort__label {
+		display: none;
+	}
+
+	.catalog-sort .catalog-sort__item {
+		flex: 1 1 auto;
+		font-size: 0.8125em;
+		justify-content: center;
+		padding: 0 12px;
+	}
+}
+
+/* Narrow phones (360px): still one row. */
+@media (max-width: 399px) {
+	.catalog-sort {
+		gap: 6px;
+	}
+
+	.catalog-sort .catalog-sort__item {
+		font-size: 0.75em;
+		padding: 0 8px;
+	}
+}
+
+/* Toolbar with the buttons: they start on the left, also on tablets and
+   phones where the toolbar is centered. */
+.category-page-title .page-title-inner:has(.catalog-sort) {
+	align-items: center;
+}
+
+.category-page-title .flex-col:has(> .catalog-sort) {
+	min-width: 0;
+	text-align: left;
+}
+
+@media (max-width: 849px) {
+	.category-page-title .flex-col:has(> .catalog-sort) {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		width: 100%;
+	}
+
+	/* No 5px padding of the toolbar columns, and no empty column (the
+	   ordering dropdown gave way to the buttons): the products start one
+	   section gap under the buttons, as on larger screens. */
+	.category-page-title .page-title-inner:has(.catalog-sort) > .flex-col {
+		padding-bottom: 0;
+		padding-top: 0;
+	}
+
+	.category-page-title .page-title-inner:has(.catalog-sort) > .flex-col:not(:has(*)) {
+		display: none;
+	}
+}
+
+/* Content under the bar: the first row starts --sv-bar-gap below it on every
+   page (the templates add 20px to 40px of their own). */
+.breadcrumbs-bar ~ #main .product-main,
+.breadcrumbs-bar ~ #main .blog-wrapper {
+	padding-top: var(--sv-bar-gap);
+}
+
+/* Shop toolbar (result count, ordering) printed between the bar and #main:
+   it is the first row, the products follow it with their usual 30px. */
+.breadcrumbs-bar ~ .shop-page-title .page-title-inner {
+	padding-top: var(--sv-bar-gap);
+}
+
+.page-header-cats::-webkit-scrollbar {
+	display: none;
+}
+
+/* Two classes, so ".dark a" never wins over the chip colors. */
+.page-header-cats .page-header-cat {
+	align-items: center;
+	background-color: var(--sv-surface);
+	border: 1px solid var(--sv-border);
+	border-radius: var(--sv-radius-pill);
+	color: var(--sv-heading);
+	display: inline-flex;
+	flex: 0 0 auto;
+	font-size: 0.875em;
+	font-weight: 600;
+	gap: 10px;
+	line-height: 1.2;
+	min-height: 42px;
+	padding: 4px 18px;
+	transition: border-color var(--sv-transition), background-color var(--sv-transition), color var(--sv-transition);
+	white-space: nowrap;
+}
+
+/* The image is a circle inset 4px from the pill edge (5px with the border),
+   so it follows the rounded end of the chip. */
+.page-header-cats .page-header-cat:has(.page-header-cat__img) {
+	padding-left: 4px;
+}
+
+.page-header-cat__img {
+	background-color: var(--sv-surface-muted);
+	border-radius: 50%;
+	flex: 0 0 auto;
+	height: 32px;
+	object-fit: contain;
+	padding: 0;
+	width: 32px;
+}
+
+.page-header-cats .page-header-cat:hover,
+.page-header-cats .page-header-cat:focus-visible {
+	border-color: var(--sv-primary);
+	color: var(--sv-heading);
+}
+
+.page-header-cats .page-header-cat.is-active {
+	background-color: var(--sv-primary);
+	border-color: var(--sv-primary);
+	color: #fff;
+}
+
+.page-header-cat.is-active .page-header-cat__img {
+	background-color: #fff;
+}
+
+/* Customizer > Breadcrumbs > Bar text color > Light (.breadcrumbs-bar.dark). */
+.breadcrumbs-bar.dark {
+	border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+.breadcrumbs-bar.dark .breadcrumbs,
+.breadcrumbs-bar.dark .breadcrumbs a {
+	color: rgba(255, 255, 255, 0.75);
+}
+
+.breadcrumbs-bar.dark .breadcrumbs a:hover,
+.breadcrumbs-bar.dark .breadcrumb-current {
+	color: #fff;
+}
+
+.breadcrumbs-bar.dark .breadcrumbs .divider {
+	color: rgba(255, 255, 255, 0.5);
+}
+
+/* Chips on a dark bar: .dark turns --sv-heading white, so they get a
+   translucent fill instead of the white surface. */
+.breadcrumbs-bar.dark .page-header-cats .page-header-cat {
+	background-color: rgba(255, 255, 255, 0.1);
+	border-color: rgba(255, 255, 255, 0.25);
+	color: #fff;
+}
+
+.breadcrumbs-bar.dark .page-header-cats .page-header-cat:hover,
+.breadcrumbs-bar.dark .page-header-cats .page-header-cat:focus-visible {
+	background-color: rgba(255, 255, 255, 0.18);
+	border-color: rgba(255, 255, 255, 0.6);
+	color: #fff;
+}
+
+.breadcrumbs-bar.dark .page-header-cats .page-header-cat.is-active {
+	background-color: #fff;
+	border-color: #fff;
+	color: var(--sv-primary);
+}
+
+.dark .page-header-title {
+	color: #fff;
+}
+
+.dark .page-header-desc {
+	color: rgba(255, 255, 255, 0.75);
+}
+
+@media (max-width: 849px) {
+	.page-header-title {
+		margin-top: 12px;
+	}
+
+	.page-header-cats {
+		margin-top: 14px; /* 16px to the chips */
+	}
 }
 
 .shop_table th,

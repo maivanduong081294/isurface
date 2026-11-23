@@ -216,20 +216,18 @@ function silver_customizer_shop_product_page_options() {
 		),
 	) );
 
+	// Keep the saved enabled value selectable for sites using either older viewer.
+	$viewer = get_theme_mod( 'product_lightbox', 'default' );
+	$enabled_viewer = in_array( $viewer, array( 'flatsome', 'woocommerce' ), true ) ? $viewer : 'default';
+
 	Silver_Option::add_field( 'option', array(
 		'type'            => 'select',
 		'settings'        => 'product_lightbox',
-		'active_callback' => function() {
-			return ! get_theme_mod( 'product_gallery_woocommerce' );
-		},
 		'label'           => __( 'Product Image Lightbox', 'silver' ),
-		'description'     => __( 'Show images in a lightbox when clicking on image in gallery. You might need to save and close Customizer for this to work properly.', 'silver' ),
 		'section'         => 'product-page',
 		'default'         => 'default',
 		'choices'         => array(
-			'default'     => __( 'New WooCommerce 3.0 Lightbox', 'silver' ),
-			'flatsome'    => __( 'Silver Lightbox', 'silver' ),
-			'woocommerce' => __( 'Old WooCommerce Lightbox', 'silver' ),
+			$enabled_viewer => 'silverDialog',
 			'disabled'    => __( 'Disable Lightbox', 'silver' ),
 		),
 	) );
@@ -351,6 +349,76 @@ function silver_customizer_shop_product_page_options() {
 		),
 		'section'         => 'product-page',
 		'default'         => 1,
+	) );
+
+	// Buy box (inc/woocommerce/structure-wc-product-buy-box.php).
+	Silver_Option::add_field( 'option', array(
+		'type'            => 'checkbox',
+		'settings'        => 'product_buy_box',
+		'label'           => __( 'Buy box', 'silver' ),
+		'description'     => __( 'Price, attribute buttons, "Add to cart" and "Call now" in a card under the short description; rating with five stars; no title divider unless turned on.', 'silver' ),
+		'active_callback' => array(
+			$hide_on_custom_product,
+		),
+		'section'         => 'product-page',
+		'default'         => 1,
+	) );
+
+	if ( function_exists( 'silver_product_info_elements' ) ) {
+		$silver_info_elements = silver_product_info_elements();
+
+		Silver_Option::add_field( 'option', array(
+			'type'            => 'sortable',
+			'settings'        => 'product_info_elements',
+			'label'           => __( 'Product info elements', 'silver' ),
+			'description'     => __( 'Drag to sort the parts next to the gallery, click the eye to show or hide one. Hiding the buy box hides "Add to cart".', 'silver' ),
+			'multiple'        => 99,
+			'default'         => array_keys( $silver_info_elements ),
+			'choices'         => wp_list_pluck( $silver_info_elements, 'label' ),
+			'active_callback' => array(
+				$hide_on_custom_product,
+				array(
+					'setting'  => 'product_buy_box',
+					'operator' => '==',
+					'value'    => true,
+				),
+			),
+			'section'         => 'product-page',
+		) );
+	}
+
+	Silver_Option::add_field( 'option', array(
+		'type'            => 'checkbox',
+		'settings'        => 'product_buy_box_quantity',
+		'label'           => __( 'Buy box: show quantity', 'silver' ),
+		'active_callback' => array(
+			$hide_on_custom_product,
+			array(
+				'setting'  => 'product_buy_box',
+				'operator' => '==',
+				'value'    => true,
+			),
+		),
+		'section'         => 'product-page',
+		'default'         => 1,
+	) );
+
+	Silver_Option::add_field( 'option', array(
+		'type'            => 'text',
+		'settings'        => 'product_call_phone',
+		'label'           => __( 'Buy box: "Call now" phone', 'silver' ),
+		'description'     => __( 'E.g. 0900 000 000. Empty: no "Call now" button.', 'silver' ),
+		'active_callback' => array(
+			$hide_on_custom_product,
+			array(
+				'setting'  => 'product_buy_box',
+				'operator' => '==',
+				'value'    => true,
+			),
+		),
+		'section'         => 'product-page',
+		'default'         => '',
+		'sanitize_callback' => 'sanitize_text_field',
 	) );
 
 	Silver_Option::add_field( 'option', array(
@@ -539,6 +607,100 @@ function silver_customizer_shop_product_page_options() {
 			'sections'            => __( 'Sections', 'silver' ),
 			'accordian'           => __( 'Accordion', 'silver' ),
 			'accordian-collapsed' => __( 'Accordion - Collapsed', 'silver' ),
+		),
+	) );
+
+	if ( function_exists( 'silver_product_tabs_order_choices' ) ) {
+		Silver_Option::add_field( 'option', array(
+			'type'            => 'sortable',
+			'settings'        => 'product_tabs_order',
+			'label'           => __( 'Thứ tự tab sản phẩm', 'silver' ),
+			'description'     => __( 'Kéo để sắp xếp các tab, bấm biểu tượng con mắt để ẩn/hiện. Tab chỉ hiện khi sản phẩm có nội dung cho tab đó.', 'silver' ),
+			'multiple'        => 99,
+			'default'         => array_keys( silver_product_tabs_order_choices() ),
+			'choices'         => silver_product_tabs_order_choices(),
+			'active_callback' => array(
+				$hide_on_custom_product,
+			),
+			'section'         => 'product-page',
+		) );
+	}
+
+	// Read more in the product tabs (structure-wc-product-page.php).
+	Silver_Option::add_field( 'option', array(
+		'type'            => 'checkbox',
+		'settings'        => 'product_tabs_readmore',
+		'label'           => __( 'Xem thêm trong tab sản phẩm', 'silver' ),
+		'description'     => __( 'Nội dung tab dài hơn chiều cao bên dưới được thu gọn, kèm nút "Xem thêm".', 'silver' ),
+		'section'         => 'product-page',
+		'active_callback' => array(
+			$hide_on_custom_product,
+		),
+		'default'         => 1,
+	) );
+
+	Silver_Option::add_field( 'option', array(
+		'type'            => 'slider',
+		'settings'        => 'product_tabs_readmore_height',
+		'label'           => __( 'Chiều cao khi thu gọn (px)', 'silver' ),
+		'section'         => 'product-page',
+		'active_callback' => array(
+			$hide_on_custom_product,
+			array(
+				'setting'  => 'product_tabs_readmore',
+				'operator' => '==',
+				'value'    => true,
+			),
+		),
+		'default'         => 600,
+		'choices'         => array(
+			'min'  => 200,
+			'max'  => 1200,
+			'step' => 20,
+		),
+	) );
+
+	// Sections style: description and specifications in one section
+	// (woocommerce/single-product/tabs/sections.php).
+	Silver_Option::add_field( 'option', array(
+		'type'            => 'checkbox',
+		'settings'        => 'product_sections_merge_specs',
+		'label'           => __( 'Gộp Mô tả và Thông số kỹ thuật thành 1 section', 'silver' ),
+		'description'     => __( 'Hai cột cạnh nhau trong cùng một section; trên điện thoại xếp chồng, mô tả ở trên.', 'silver' ),
+		'section'         => 'product-page',
+		'active_callback' => array(
+			$hide_on_custom_product,
+			array(
+				'setting'  => 'product_display',
+				'operator' => '==',
+				'value'    => 'sections',
+			),
+		),
+		'default'         => 0,
+	) );
+
+	Silver_Option::add_field( 'option', array(
+		'type'            => 'radio-buttonset',
+		'settings'        => 'product_sections_merge_position',
+		'label'           => __( 'Vị trí mô tả', 'silver' ),
+		'section'         => 'product-page',
+		'active_callback' => array(
+			$hide_on_custom_product,
+			array(
+				'setting'  => 'product_display',
+				'operator' => '==',
+				'value'    => 'sections',
+			),
+			array(
+				'setting'  => 'product_sections_merge_specs',
+				'operator' => '==',
+				'value'    => true,
+			),
+		),
+		'default'         => 'left',
+		'choices'         => array(
+			'left'  => __( 'Bên trái', 'silver' ),
+			'right' => __( 'Bên phải', 'silver' ),
 		),
 	) );
 

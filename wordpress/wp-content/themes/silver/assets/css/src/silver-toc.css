@@ -1,0 +1,491 @@
+/* Table of contents element ([ux_toc]...[/ux_toc], inc/shortcodes/ux_toc.php,
+   assets/js/src/silver-toc.js). */
+
+/* ---------------------------------------------------------------- Layout */
+.ux-toc-layout {
+	margin-bottom: 1.5em;
+}
+
+.ux-toc-layout__content {
+	min-width: 0;
+}
+
+/* Linked headings stop below a sticky header without the script too. */
+.ux-toc-layout__content [id] {
+	scroll-margin-top: 110px;
+}
+
+/* From 850px: the list next to the content (left / right) or above it. */
+@media (min-width: 850px) {
+	.ux-toc-layout--left,
+	.ux-toc-layout--right {
+		align-items: stretch;
+		display: grid;
+		gap: var(--fs-column-gap, 20px); /* Column gap of the theme grid. */
+		grid-template-columns: var(--ux-toc-width, 320px) minmax(0, 1fr);
+	}
+
+	.ux-toc-layout--right {
+		grid-template-columns: minmax(0, 1fr) var(--ux-toc-width, 320px);
+	}
+
+	.ux-toc-layout--right > .ux-toc-layout__aside {
+		order: 2;
+	}
+
+	.ux-toc-layout--top > .ux-toc-layout__aside {
+		margin-bottom: 30px;
+	}
+}
+
+/* Below 850px: the bar replaces the list (mobile="bar"), or no list. */
+@media (max-width: 849px) {
+	.ux-toc-layout--mobile-bar > .ux-toc-layout__aside,
+	.ux-toc-layout--mobile-hidden > .ux-toc-layout__aside {
+		display: none;
+	}
+
+	.ux-toc-layout--mobile-box > .ux-toc-layout__aside {
+		margin-bottom: 24px;
+	}
+}
+
+/* UX Builder: the list is built on the page; the editor shows the content. */
+.ux-toc-builder__label {
+	border: 1px dashed var(--sv-border, #e5e7eb);
+	border-radius: 8px;
+	color: var(--sv-text-muted, #64748b);
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	margin-bottom: 12px;
+	padding: 6px 10px;
+	text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------------- Box */
+.ux-toc {
+	background-color: var(--sv-surface, #fff);
+	border: 1px solid var(--sv-border, #e5e7eb);
+	border-radius: 16px;
+	padding: 20px 28px 12px;
+}
+
+/* From 850px, in view while the content scrolls (--ux-toc-top: header). */
+@media (min-width: 850px) {
+	.ux-toc.is-sticky {
+		max-height: calc(100vh - var(--ux-toc-top, 0px) - 40px);
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		/* A slim scrollbar in the border color when the list is taller. */
+		scrollbar-color: var(--sv-border, #e5e7eb) transparent;
+		scrollbar-width: thin;
+		position: sticky;
+		top: calc(var(--ux-toc-top, 0px) + 20px);
+		transition: top 0.2s;
+	}
+}
+
+.ux-toc__title {
+	color: var(--sv-text-muted, #64748b);
+	font-size: 0.8125em;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	line-height: 1.4;
+	margin-bottom: 6px;
+	text-transform: uppercase;
+}
+
+.ux-toc ol {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.ux-toc li {
+	margin: 0;
+}
+
+.ux-toc .ux-toc__link {
+	color: var(--sv-heading, #0f172a);
+	display: flex;
+	text-decoration: none;
+	transition: color 0.2s;
+}
+
+/* First level: number badge + title. */
+.ux-toc__item > .ux-toc__link {
+	align-items: center;
+	font-size: 0.9375rem;
+	font-weight: 700;
+	gap: 12px;
+	line-height: 1.4;
+	padding: 12px 0;
+}
+
+.ux-toc__num {
+	align-items: center;
+	background-color: rgba(100, 116, 139, 0.12);
+	border-radius: 50%;
+	color: var(--sv-text-muted, #64748b);
+	display: inline-flex;
+	flex: 0 0 28px;
+	font-size: 0.8125rem;
+	font-variant-numeric: tabular-nums;
+	font-weight: 600;
+	height: 28px;
+	justify-content: center;
+	transition: background-color 0.2s, color 0.2s;
+	width: 28px;
+}
+
+.no-numbers .ux-toc__num {
+	display: none;
+}
+
+/* Second level: along a line through the middle of the 28px badge (13.5px
+   + 1px line = centred on 14px); the text starts where the first-level text
+   does (28px badge + 12px gap = 40px). The current one has a dot on the line. */
+.ux-toc__sub {
+	border-left: 1px solid var(--sv-border, #e5e7eb);
+	margin: -4px 0 8px 13.5px !important;
+	padding: 0 0 0 25.5px !important;
+}
+
+/* One step smaller than the first level (15px bold): 14px, regular, muted. */
+.ux-toc__subitem > .ux-toc__link {
+	color: var(--sv-text-muted, #64748b);
+	font-size: 0.875rem;
+	line-height: 1.5;
+	padding: 7px 0;
+	position: relative;
+}
+
+/* On the line, centered on the first line of text. */
+.ux-toc__subitem > .ux-toc__link::before {
+	background-color: var(--sv-primary, #2563eb);
+	border-radius: 50%;
+	content: "";
+	height: 6px;
+	left: -29px; /* Centred on the line: 25.5px padding + 0.5px + 3px. */
+	opacity: 0;
+	position: absolute;
+	top: calc(7px + 0.75em - 3px);
+	transition: opacity 0.2s;
+	width: 6px;
+}
+
+.no-numbers .ux-toc__sub {
+	margin-left: 0 !important;
+}
+
+/* Inside a collapsed Read more ([ux_readmore]): the clipped box would be the
+   sticky container (pushed down by "top"), and the box is short anyway. */
+.ux-readmore.is-collapsible:not(.is-expanded) .ux-toc.is-sticky {
+	max-height: none;
+	position: static;
+}
+
+/* Slim scrollbar for browsers without scrollbar-color. */
+.ux-toc.is-sticky::-webkit-scrollbar {
+	width: 6px;
+}
+
+.ux-toc.is-sticky::-webkit-scrollbar-thumb {
+	background-color: var(--sv-border, #e5e7eb);
+	border-radius: 999px;
+}
+
+/* subs="active": the second level shows under the section being read only,
+   so a long list stays shorter than the content (set by the script). */
+.ux-toc--subs-active.is-ready .ux-toc__item:not(.is-active) > .ux-toc__sub {
+	display: none;
+}
+
+.ux-toc .ux-toc__link:hover {
+	color: var(--sv-primary, #2563eb);
+}
+
+.ux-toc .ux-toc__link:focus-visible {
+	border-radius: 6px;
+	outline: 2px solid var(--sv-primary, #2563eb);
+	outline-offset: 2px;
+}
+
+/* Current section. */
+.ux-toc__item.is-active > .ux-toc__link,
+.ux-toc .ux-toc__link.is-active {
+	color: var(--sv-primary, #2563eb);
+}
+
+.ux-toc__item.is-active > .ux-toc__link .ux-toc__num {
+	background-color: var(--sv-primary, #2563eb);
+	color: #fff;
+}
+
+.ux-toc__subitem > .ux-toc__link.is-active {
+	font-weight: 600;
+}
+
+.ux-toc__subitem > .ux-toc__link.is-active::before {
+	opacity: 1;
+}
+
+@media (max-width: 849px) {
+	.ux-toc {
+		padding: 16px 20px 8px;
+	}
+}
+
+/* ------------------------------------------------------- Bar (< 850px) */
+.ux-toc-bar {
+	background-color: var(--sv-surface, #fff);
+	border: 1px solid var(--sv-border, #e5e7eb);
+	border-radius: 12px;
+	box-shadow: 0 10px 30px -12px rgba(15, 23, 42, 0.25);
+	left: 12px;
+	opacity: 0;
+	overflow: hidden;
+	position: fixed;
+	right: 12px;
+	top: 8px;
+	transform: translateY(-8px);
+	transition: opacity 0.2s, transform 0.2s, visibility 0s 0.2s;
+	visibility: hidden;
+	z-index: 1000; /* Under the header (1001) and the lightboxes. */
+}
+
+.ux-toc-bar.is-visible {
+	opacity: 1;
+	transform: none;
+	transition: opacity 0.2s, transform 0.2s, visibility 0s;
+	visibility: visible;
+}
+
+@media (min-width: 850px) {
+	.ux-toc-bar {
+		display: none;
+	}
+}
+
+.ux-toc-bar .ux-toc-bar__toggle {
+	align-items: center;
+	background: none;
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+	color: var(--sv-heading, #0f172a);
+	cursor: pointer;
+	display: flex;
+	gap: 12px;
+	letter-spacing: 0;
+	line-height: 1.3;
+	margin: 0;
+	min-height: 48px;
+	padding: 8px 14px 8px 16px;
+	text-align: left;
+	text-transform: none;
+	width: 100%;
+}
+
+.ux-toc-bar__label {
+	color: var(--sv-text-muted, #64748b);
+	flex: 0 0 auto;
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.ux-toc-bar__current {
+	color: var(--sv-primary, #2563eb);
+	flex: 1 1 auto;
+	font-size: 0.9375rem;
+	font-weight: 600;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.ux-toc-bar__icon {
+	color: var(--sv-text-muted, #64748b);
+	flex: 0 0 auto;
+	transition: transform 0.2s;
+}
+
+.ux-toc-bar.is-open .ux-toc-bar__icon {
+	transform: rotate(180deg);
+}
+
+.ux-toc-bar__toggle:focus-visible {
+	outline: 2px solid var(--sv-primary, #2563eb);
+	outline-offset: -2px;
+}
+
+/* The list, under the button. */
+.ux-toc-bar__panel {
+	border-top: 1px solid var(--sv-border, #e5e7eb);
+	max-height: min(60vh, 440px);
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	padding: 4px 16px 8px;
+}
+
+.ux-toc-bar__panel ol {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.ux-toc-bar__panel li {
+	margin: 0;
+}
+
+.ux-toc-bar .ux-toc__link {
+	color: var(--sv-heading, #0f172a);
+	display: flex;
+	text-decoration: none;
+}
+
+.ux-toc-bar .ux-toc__item > .ux-toc__link {
+	align-items: center;
+	font-size: 0.9375rem;
+	font-weight: 700;
+	gap: 12px;
+	min-height: 44px;
+	padding: 8px 0;
+}
+
+.ux-toc-bar .ux-toc__subitem > .ux-toc__link {
+	color: var(--sv-text-muted, #64748b);
+	font-size: 0.875rem;
+	min-height: 40px;
+	align-items: center;
+	padding: 6px 0;
+	position: relative;
+}
+
+.ux-toc-bar .ux-toc__subitem > .ux-toc__link::before {
+	top: calc(50% - 3px);
+}
+
+.ux-toc-bar .ux-toc__sub {
+	margin: -2px 0 6px 13.5px !important;
+}
+
+.ux-toc-bar.no-numbers .ux-toc__num {
+	display: none;
+}
+
+.ux-toc-bar .ux-toc__link.is-active,
+.ux-toc-bar .ux-toc__item.is-active > .ux-toc__link {
+	color: var(--sv-primary, #2563eb);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ux-toc.is-sticky,
+	.ux-toc .ux-toc__link,
+	.ux-toc__num,
+	.ux-toc-bar,
+	.ux-toc-bar.is-visible,
+	.ux-toc-bar__icon {
+		transition: none;
+	}
+}
+
+/* ------------------------------------------------------------ Collapsible */
+/* collapse="closed" / "open": the list in a <details>, its title as the
+   button (a list icon, the title, a chevron). */
+.ux-toc.ux-toc--collapsible {
+	background-color: var(--sv-surface-muted, #f8fafc);
+	max-width: var(--ux-toc-collapse-width, 400px);
+	padding: 0;
+}
+
+.ux-toc__details {
+	margin: 0;
+}
+
+.ux-toc__summary {
+	align-items: center;
+	border-radius: 15px;
+	color: var(--sv-heading, #0f172a);
+	cursor: pointer;
+	display: flex;
+	font-size: 0.9375rem;
+	font-weight: 700;
+	gap: 10px;
+	line-height: 1.4;
+	list-style: none;
+	min-height: 52px;
+	padding: 12px 18px;
+	user-select: none;
+}
+
+.ux-toc__summary::-webkit-details-marker {
+	display: none;
+}
+
+.ux-toc__summary:focus-visible {
+	outline: 2px solid var(--sv-primary, #2563eb);
+	outline-offset: 2px;
+}
+
+.ux-toc__summary-text {
+	flex: 1 1 auto;
+}
+
+.ux-toc__summary-icon,
+.ux-toc__summary-chevron {
+	background-color: currentColor;
+	flex: none;
+	height: 18px;
+	width: 18px;
+}
+
+.ux-toc__summary-icon {
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round'%3E%3Cpath d='M3 6h11M3 12h18M3 18h14'/%3E%3C/svg%3E") center / contain no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round'%3E%3Cpath d='M3 6h11M3 12h18M3 18h14'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.ux-toc__summary-chevron {
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") center / contain no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") center / contain no-repeat;
+	transition: transform 0.2s;
+}
+
+.ux-toc__details[open] > .ux-toc__summary {
+	border-bottom: 1px solid var(--sv-border, #e5e7eb);
+	border-radius: 15px 15px 0 0;
+}
+
+.ux-toc__details[open] > .ux-toc__summary .ux-toc__summary-chevron {
+	transform: rotate(180deg);
+}
+
+.ux-toc--collapsible .ux-toc__details > ol {
+	padding: 4px 18px 10px;
+}
+
+.ux-toc-layout--top > .ux-toc-layout__aside:has(.ux-toc--collapsible) {
+	margin-bottom: 20px;
+}
+
+@media (max-width: 849px) {
+	.ux-toc.ux-toc--collapsible {
+		max-width: none;
+	}
+
+	/* A collapsible box is small: it stays on phones next to the bar. */
+	.ux-toc-layout--mobile-bar > .ux-toc-layout__aside:has(.ux-toc--collapsible) {
+		display: block;
+		margin-bottom: 20px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ux-toc__summary-chevron {
+		transition: none;
+	}
+}

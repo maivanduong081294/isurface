@@ -22,9 +22,12 @@ function silver_floating_contact_scripts() {
 
 	$uri     = get_template_directory_uri() . '/inc/extensions/silver-floating-contact';
 	$version = wp_get_theme( get_template() )->get( 'Version' );
+	// Version of each file: its last change, so browsers load a new copy.
+	$css_ver = file_exists( __DIR__ . '/silver-floating-contact.css' ) ? $version . '.' . filemtime( __DIR__ . '/silver-floating-contact.css' ) : $version;
+	$js_ver  = file_exists( __DIR__ . '/silver-floating-contact.js' ) ? $version . '.' . filemtime( __DIR__ . '/silver-floating-contact.js' ) : $version;
 
-	wp_enqueue_style( 'silver-floating-contact', $uri . '/silver-floating-contact.css', array(), $version );
-	wp_enqueue_script( 'silver-floating-contact', $uri . '/silver-floating-contact.js', array(), $version, true );
+	wp_enqueue_style( 'silver-floating-contact', $uri . '/silver-floating-contact.css', array(), $css_ver );
+	wp_enqueue_script( 'silver-floating-contact', $uri . '/silver-floating-contact.js', array(), $js_ver, true );
 }
 
 add_action( 'wp_enqueue_scripts', 'silver_floating_contact_scripts', 20 );

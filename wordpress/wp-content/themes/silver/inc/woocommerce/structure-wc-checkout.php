@@ -173,7 +173,7 @@ function silver_terms_and_conditions_lightbox() {
 		$text = __( 'I have read and agree', 'silver' );
 
 		$shortcode .= '<div class="terms-and-conditions-lightbox__buttons text-center">';
-		$shortcode .= sprintf( '<button id="terms-and-conditions-accept" class="button primary is-underline" aria-label="%s" onClick="document.getElementById(\'terms\').checked = true; jQuery.magnificPopup.close();">%s</button>',
+		$shortcode .= sprintf( '<button id="terms-and-conditions-accept" class="button primary is-underline" aria-label="%s" onClick="document.getElementById(\'terms\').checked = true; Silver.themePopup.close();">%s</button>',
 			esc_attr( $text ),
 			esc_html( $text )
 		);

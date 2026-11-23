@@ -289,16 +289,23 @@ add_filter( 'woocommerce_loop_add_to_cart_link', 'silver_woocommerce_loop_add_to
 
 if ( ! function_exists( 'silver_woocommerce_shop_loop_excerpt' ) ) {
 	/**
-	 * Add Product Short description
+	 * Product card text: the quick description of the product (plain text,
+	 * structure-wc-quick-description.php), not the WooCommerce short
+	 * description, which stays for the product page.
+	 *
+	 * Product Catalog > Show quick description (setting short_description_in_grid).
 	 */
 	function silver_woocommerce_shop_loop_excerpt() {
-		if ( ! get_theme_mod( 'short_description_in_grid', 0 ) ) {
+		if ( ! get_theme_mod( 'short_description_in_grid', 0 ) || ! function_exists( 'silver_get_product_quick_description' ) ) {
+			return;
+		}
+
+		$text = silver_get_product_quick_description();
+		if ( '' === $text ) {
 			return;
 		}
 		?>
-		<p class="box-excerpt is-small">
-			<?php echo get_the_excerpt(); ?>
-		</p>
+		<div class="box-excerpt box-quick-description is-small"><p><?php echo esc_html( $text ); ?></p></div>
 		<?php
 	}
 }

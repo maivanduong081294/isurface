@@ -3,6 +3,24 @@
 	var root = document.querySelector('[data-silver-fc]');
 	if (!root) return;
 
+	/* Heights of the bottom bar (style 1, phones) and of the sticky add to
+	   cart bar of the product page: on phones this bar sits right above the
+	   add to cart bar while it shows (silver-modern.css, --sfc-bar-h,
+	   --sv-sticky-cart-h). */
+	if ('ResizeObserver' in window) {
+		var setHeight = function (name, el) {
+			if (el.offsetHeight > 0) document.body.style.setProperty(name, el.offsetHeight + 'px');
+		};
+		var bar = root.querySelector('.silver-fc__list');
+		var cart = document.querySelector('.sticky-add-to-cart');
+		var heights = new ResizeObserver(function () {
+			if (bar) setHeight('--sfc-bar-h', bar);
+			if (cart) setHeight('--sv-sticky-cart-h', cart);
+		});
+		if (bar) heights.observe(bar);
+		if (cart) heights.observe(cart);
+	}
+
 	/* Style 2: corner button opens a stack of buttons */
 	var launcher = root.querySelector('.silver-fc__launcher');
 	if (launcher) {

@@ -24,6 +24,12 @@ if ( ! comments_open() ) {
 	return;
 }
 
+// The theme's layout (Theme Options > WooCommerce > Product Reviews).
+if ( function_exists( 'silver_product_reviews_enabled' ) && silver_product_reviews_enabled() ) {
+	wc_get_template( 'single-product/reviews-layout.php' );
+	return;
+}
+
 $tab_style = get_theme_mod( 'product_display' );
 ?>
 <div id="reviews" class="woocommerce-Reviews row">

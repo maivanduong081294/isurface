@@ -40,25 +40,8 @@ function ux_lightbox( $atts, $content = null ) {
 				// Run lightbox if no cookie is set
 				if (Silver.Cookies.get(cookieId) !== cookieValue) {
 
-					// Ensure closing off canvas
 					setTimeout(function () {
-						if (jQuery.fn.magnificPopup) jQuery.magnificPopup.close()
-					}, timer - 350)
-
-					// Open lightbox
-					setTimeout(function () {
-						$.loadMagnificPopup().then(function() {
-							$.magnificPopup.open({
-								midClick: true,
-								removalDelay: 300,
-								// closeBtnInside: silverVars.lightbox.close_btn_inside,
-								// closeMarkup: silverVars.lightbox.close_markup,
-								items: {
-									src: '#<?php echo esc_js( $id ); ?>',
-									type: 'inline'
-								}
-							})
-						})
+						Silver.themePopup.open({ items: { src: document.getElementById(<?php echo wp_json_encode( $id ); ?>), type: 'inline' } })
 					}, timer)
 
 					Silver.Cookies.set(cookieId, cookieValue, { expires: 365 })

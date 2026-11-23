@@ -297,6 +297,9 @@ function silver_scripts() {
 		'scrollPaddingTop'   => 0,
 		'assets_url'         => $uri . '/assets/',
 		'lightbox'           => array(
+			'photo'            => __( 'Photo', 'silver' ),
+			'prev'             => __( 'Previous photo', 'silver' ),
+			'next'             => __( 'Next photo', 'silver' ),
 			'close_markup'     => $lightbox_close_markup,
 			'close_btn_inside' => apply_filters( 'silver_lightbox_close_btn_inside', false ),
 		),

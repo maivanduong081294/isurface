@@ -134,7 +134,7 @@ class WP_Seo {
 			$classes   = is_array( $class ) ? $class : array_map( 'trim', explode( ' ', $class ) );
 			$classes[] = 'yoast-breadcrumb';
 			$classes[] = 'breadcrumbs';
-			$classes[] = get_theme_mod( 'breadcrumb_case', 'uppercase' );
+			$classes[] = get_theme_mod( 'breadcrumb_case', '' );
 			$classes   = array_unique( array_filter( $classes ) );
 			$classes   = implode( ' ', $classes );
 

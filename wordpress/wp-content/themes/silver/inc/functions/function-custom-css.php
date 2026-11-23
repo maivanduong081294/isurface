@@ -11,6 +11,27 @@ function silver_css_var_value( $value ) {
 	return trim( preg_replace( '/[;{}<>]/', '', (string) $value ) );
 }
 
+/**
+ * A CSS length typed in a theme option: "40%", "420px", "30rem"... A bare
+ * number is read as px. Anything else is dropped.
+ *
+ * @param string $value Option value.
+ *
+ * @return string
+ */
+function silver_sanitize_css_length( $value ) {
+	$value = strtolower( trim( (string) $value ) );
+
+	if ( '' === $value ) {
+		return '';
+	}
+	if ( is_numeric( $value ) ) {
+		return ( (float) $value ) . 'px';
+	}
+
+	return preg_match( '/^\d+(\.\d+)?(px|%|rem|em|vw|ch)$/', $value ) ? $value : '';
+}
+
 /* CUSTOM CSS */
 function silver_custom_css() {
 if ( ! function_exists( 'fs_color_channels' ) ) {
@@ -419,6 +440,28 @@ if ( ! get_theme_mod( 'disable_fonts', 0 ) ) :
 	<?php } ?>
 <?php endif;
 
+// Customizer > Breadcrumbs > Bar background color (silver_breadcrumbs_bar()).
+$fs_breadcrumbs_bar_bg = silver_css_var_value( get_theme_mod( 'breadcrumbs_bar_bg', '' ) );
+if ( '' !== $fs_breadcrumbs_bar_bg ) {
+	echo ':root{--sv-breadcrumbs-bar-bg:' . esc_html( $fs_breadcrumbs_bar_bg ) . ';}';
+}
+
+// Shop > Product Catalog > Category description background
+// (structure-wc-category-description.php).
+$fs_term_description_bg = silver_css_var_value( get_theme_mod( 'category_description_bg', '' ) );
+if ( '' !== $fs_term_description_bg ) {
+	echo ':root{--sv-term-description-bg:' . esc_html( $fs_term_description_bg ) . ';}';
+}
+// Its padding, once saved (else the section spacing of the theme).
+$fs_term_description_pad = get_theme_mod( 'category_description_padding' );
+if ( false !== $fs_term_description_pad && '' !== $fs_term_description_pad ) {
+	echo '@media (min-width:850px){:root{--sv-term-description-pad:' . absint( $fs_term_description_pad ) . 'px;}}';
+}
+$fs_term_description_pad_mobile = get_theme_mod( 'category_description_padding_mobile' );
+if ( false !== $fs_term_description_pad_mobile && '' !== $fs_term_description_pad_mobile ) {
+	echo '@media (max-width:849px){:root{--sv-term-description-pad:' . absint( $fs_term_description_pad_mobile ) . 'px;}}';
+}
+
 // Text Transforms
 if(get_theme_mod('text_transform_breadcrumbs')){
 	echo '.breadcrumbs{text-transform: '.get_theme_mod('text_transform_breadcrumbs').';}';
@@ -538,7 +581,10 @@ background-color: <?php echo get_theme_mod('header_shop_bg_color') ?>;}
 <?php } ?>
 
 <?php if(get_theme_mod('color_sale')) { ?>
-  .badge-inner.on-sale{background-color: <?php echo get_theme_mod('color_sale'); ?>}
+  .badge-inner.on-sale, .product-price-badge{background-color: <?php echo get_theme_mod('color_sale'); ?>}
+<?php } ?>
+<?php if ( get_theme_mod( 'color_price_badge' ) ) { // Style > Colors > Discount label (product page buy box). ?>
+  .product-price-badge{background-color: <?php echo esc_attr( get_theme_mod( 'color_price_badge' ) ); ?>}
 <?php } ?>
 
 <?php if ( get_theme_mod( 'color_new_bubble_auto' ) ) { ?>
@@ -550,7 +596,8 @@ background-color: <?php echo get_theme_mod('header_shop_bg_color') ?>;}
 <?php } ?>
 
 <?php if(get_theme_mod('color_review')) { ?>
-	.star-rating span:before,.star-rating:before, .woocommerce-page .star-rating:before, .stars a:hover:after, .stars a.active:after, .star-rating-compact__icon{color: <?php echo get_theme_mod('color_review'); ?>}
+	.star-rating span:before,.star-rating:before, .woocommerce-page .star-rating:before, .stars a:hover:after, .stars a.active:after, .star-rating-compact__icon, .product-rating-summary__star{color: <?php echo get_theme_mod('color_review'); ?>}
+	:root{--sv-review-color: <?php echo get_theme_mod('color_review'); ?>}
 <?php } ?>
 
 <?php
