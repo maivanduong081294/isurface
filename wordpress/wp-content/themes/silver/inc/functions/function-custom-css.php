@@ -611,6 +611,49 @@ if ( '' !== $fs_product_image_ratio ) {
 <?php } ?>
 
 <?php
+$blog_card_hover = get_theme_mod( 'blog_card_hover', 'none' );
+if ( in_array( $blog_card_hover, array( 'lift', 'shadow', 'lift-shadow' ), true ) ) : ?>
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .box-blog-post { transition: transform .2s ease, box-shadow .2s ease; }
+  .box-blog-post:hover, .box-blog-post:focus-within {
+    <?php if ( 'shadow' !== $blog_card_hover ) : ?>transform: translateY(-3px);<?php endif; ?>
+    <?php if ( 'lift' !== $blog_card_hover ) : ?>box-shadow: 0 8px 20px rgb(17 24 39 / 14%);<?php endif; ?>
+  }
+}
+<?php endif; ?>
+<?php if ( 'thumbnail' === get_theme_mod( 'product_video_style', 'overlay' ) ) : ?>
+.gallery-video-rail { display: flex; align-items: flex-start; gap: 8px; }
+.gallery-video-rail > .product-thumbnails { flex: 1; min-width: 0; }
+.gallery-video-thumb { display: inline-block; width: clamp(56px, 11vw, 76px); max-width: 100%; flex: none; }
+.gallery-video-thumb a {
+  position: relative; display: grid; place-items: center; overflow: hidden; aspect-ratio: 1;
+  background: #192331; color: #fff; border-radius: 7px;
+}
+.gallery-video-thumb i { color: #fff; font-size: 22px; line-height: 1; transform: translateX(1px); }
+.gallery-video-thumb a[aria-expanded=true] { outline: 2px solid currentColor; outline-color: var(--primary-color); }
+.gallery-video-playing > .woocommerce-product-gallery__wrapper,
+.gallery-video-playing > .flex-viewport,
+.gallery-video-playing > .woocommerce-product-gallery__trigger { display: none; }
+.woocommerce-product-gallery.gallery-video-playing .image-tools,
+.woocommerce-product-gallery.gallery-video-playing .badge-container,
+.product-gallery-default:has(> .gallery-video-playing) > :is(.badge-container, .image-tools) { display: none; }
+.gallery-video-player { position: relative; width: 100%; aspect-ratio: 1; background: #111; }
+.gallery-video-player iframe, .gallery-video-player video { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; margin: 0; border: 0; }
+.woocommerce-product-gallery .gallery-video-player > button {
+  position: absolute; top: 6px; inset-inline-end: 6px; display: grid; place-items: center;
+  box-sizing: border-box; width: 44px; height: 44px; min-width: 0; min-height: 0;
+  margin: 0; padding: 0; border: 5px solid transparent; border-radius: 50%;
+  background: rgb(255 255 255 / 95%) padding-box; color: #192331; box-shadow: none;
+  font-size: 0; line-height: 1; cursor: pointer;
+}
+.gallery-video-player > button::before, .gallery-video-player > button::after {
+  content: ""; position: absolute; top: 50%; left: 50%; width: 14px; height: 2px; border-radius: 2px;
+  background: currentColor; transform: translate(-50%, -50%) rotate(45deg);
+}
+.gallery-video-player > button::after { transform: translate(-50%, -50%) rotate(-45deg); }
+.gallery-video-player > button:focus-visible { outline: 2px solid #fff; outline-offset: 1px; }
+<?php endif; ?>
+<?php
 // Product page gallery ratio (silver_product_gallery_ratio()): every image of
 // the gallery (all its layouts) and the thumbnails in a box of the same
 // ratio, CSS only. The slider no longer changes height from one image to the

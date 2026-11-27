@@ -1,11 +1,8 @@
 <?php
 /**
- * UX Blocks before and after the content of post categories and product
- * categories: two fields on the Add / Edit category screens (term meta), each
- * a UX Block printed full width with [block].
+ * Full-width UX Blocks on post categories, product categories and the shop.
  *
- * - Before content: under the page header (bar under the header, shop title),
- *   before the posts / products (silver_after_header).
+ * - Before content: after the blog header or before the product sorting toolbar.
  * - After content: at the end of the page, after the posts and the related
  *   products (silver_after_blog) or after the products, the category
  *   description and the FAQs (silver_after_category_layout).
@@ -41,16 +38,17 @@ function silver_term_blocks_taxonomies() {
  * @return string
  */
 function silver_term_block_html( $key ) {
-	if ( ! is_category() && ! is_tax( 'product_cat' ) ) {
+	if ( function_exists( 'is_shop' ) && is_shop() && ! is_search() ) {
+		$block_id = (int) get_post_meta( wc_get_page_id( 'shop' ), $key, true );
+	} elseif ( is_category() || is_tax( 'product_cat' ) ) {
+		$term = get_queried_object();
+		if ( ! $term instanceof WP_Term || ! in_array( $term->taxonomy, silver_term_blocks_taxonomies(), true ) ) {
+			return '';
+		}
+		$block_id = (int) get_term_meta( $term->term_id, $key, true );
+	} else {
 		return '';
 	}
-
-	$term = get_queried_object();
-	if ( ! $term instanceof WP_Term || ! in_array( $term->taxonomy, silver_term_blocks_taxonomies(), true ) ) {
-		return '';
-	}
-
-	$block_id = (int) get_term_meta( $term->term_id, $key, true );
 	if ( ! $block_id || 'publish' !== get_post_status( $block_id ) || 'blocks' !== get_post_type( $block_id ) ) {
 		return '';
 	}
@@ -69,7 +67,16 @@ function silver_term_block_html( $key ) {
 function silver_term_block_before() {
 	echo silver_term_block_html( SILVER_TERM_BLOCK_BEFORE ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- UX Block output.
 }
-add_action( 'silver_after_header', 'silver_term_block_before', 50 );
+
+/** Register once the queried category is known. The shop toolbar runs at 10. */
+function silver_term_block_register_before() {
+	if ( is_tax( 'product_cat' ) || ( function_exists( 'is_shop' ) && is_shop() && ! is_search() ) ) {
+		add_action( 'silver_after_header', 'silver_term_block_before', 9 );
+	} elseif ( is_category() ) {
+		add_action( 'silver_after_header', 'silver_term_block_before', 50 );
+	}
+}
+add_action( 'wp', 'silver_term_block_register_before' );
 
 /** After content: the end of the page (after the related products / the description and FAQs). */
 function silver_term_block_after() {
@@ -83,9 +90,9 @@ add_action( 'silver_after_category_layout', 'silver_term_block_after', 30 );
 /**
  * The two selects.
  *
- * @param WP_Term|null $term Category being edited, null on the Add screen.
+ * @param WP_Term|WP_Post|null $object Category or shop page being edited, null on the Add screen.
  */
-function silver_term_blocks_fields( $term = null ) {
+function silver_term_blocks_fields( $object = null ) {
 	$fields = array(
 		SILVER_TERM_BLOCK_BEFORE => array(
 			'label' => __( 'Before content (UX Block)', 'silver' ),
@@ -97,11 +104,18 @@ function silver_term_blocks_fields( $term = null ) {
 		),
 	);
 
-	if ( ! $term ) {
+	$is_term = $object instanceof WP_Term;
+	if ( ! $is_term ) {
 		wp_nonce_field( 'silver_term_blocks', 'silver_term_blocks_nonce' );
 	}
 
 	foreach ( $fields as $key => $field ) {
+		$selected = 0;
+		if ( $is_term ) {
+			$selected = get_term_meta( $object->term_id, $key, true );
+		} elseif ( $object instanceof WP_Post ) {
+			$selected = get_post_meta( $object->ID, $key, true );
+		}
 		$select = wp_dropdown_pages( array(
 			'post_type'         => 'blocks',
 			'name'              => $key,
@@ -110,14 +124,14 @@ function silver_term_blocks_fields( $term = null ) {
 			'show_option_none'  => __( '— None —', 'silver' ),
 			// Empty value: the placeholder / clear button of select2.
 			'option_none_value' => '',
-			'selected'          => $term ? (int) get_term_meta( $term->term_id, $key, true ) : 0,
+			'selected'          => (int) $selected,
 			'echo'              => 0,
 		) );
 		if ( '' === $select ) {
 			$select = '<em>' . esc_html__( 'No UX Block yet (UX Blocks > Add New).', 'silver' ) . '</em>';
 		}
 
-		if ( $term ) {
+		if ( $is_term ) {
 			echo '<tr class="form-field"><th scope="row"><label for="' . esc_attr( str_replace( '_', '-', $key ) ) . '">' . esc_html( $field['label'] ) . '</label></th><td>';
 			if ( SILVER_TERM_BLOCK_BEFORE === $key ) {
 				wp_nonce_field( 'silver_term_blocks', 'silver_term_blocks_nonce' );
@@ -149,20 +163,45 @@ function silver_term_blocks_edit_fields( $term ) {
  * @param int $term_id Term ID.
  */
 function silver_term_blocks_save( $term_id ) {
-	if ( ! isset( $_POST['silver_term_blocks_nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['silver_term_blocks_nonce'] ) ), 'silver_term_blocks' ) ) {
-		return;
+	if ( current_user_can( 'edit_term', $term_id ) ) {
+		silver_save_content_blocks( 'term', $term_id );
 	}
-	if ( ! current_user_can( 'edit_term', $term_id ) ) {
+}
+
+function silver_shop_blocks_meta_box( $post ) {
+	if ( function_exists( 'wc_get_page_id' ) && $post->ID === wc_get_page_id( 'shop' ) ) {
+		add_meta_box( 'silver-shop-content-blocks', __( 'UX Blocks', 'silver' ), 'silver_term_blocks_fields', 'page', 'normal', 'default' );
+	}
+}
+add_action( 'add_meta_boxes_page', 'silver_shop_blocks_meta_box' );
+
+function silver_shop_blocks_save( $post_id ) {
+	if ( function_exists( 'wc_get_page_id' ) && $post_id === wc_get_page_id( 'shop' )
+		&& ! ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) && current_user_can( 'edit_post', $post_id ) ) {
+		silver_save_content_blocks( 'post', $post_id );
+	}
+}
+add_action( 'save_post_page', 'silver_shop_blocks_save' );
+
+function silver_save_content_blocks( $meta_type, $object_id ) {
+	if ( ! isset( $_POST['silver_term_blocks_nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['silver_term_blocks_nonce'] ) ), 'silver_term_blocks' ) ) {
 		return;
 	}
 
 	foreach ( array( SILVER_TERM_BLOCK_BEFORE, SILVER_TERM_BLOCK_AFTER ) as $key ) {
-		$block_id = isset( $_POST[ $key ] ) ? absint( $_POST[ $key ] ) : 0;
+		if ( ! isset( $_POST[ $key ] ) ) {
+			continue;
+		}
+		$block_id = absint( $_POST[ $key ] );
 
 		if ( $block_id && 'blocks' === get_post_type( $block_id ) ) {
-			update_term_meta( $term_id, $key, $block_id );
+			if ( 'term' === $meta_type ) {
+				update_term_meta( $object_id, $key, $block_id );
+			} else {
+				update_post_meta( $object_id, $key, $block_id );
+			}
 		} else {
-			delete_term_meta( $term_id, $key );
+			delete_metadata( $meta_type, $object_id, $key );
 		}
 	}
 }
@@ -173,7 +212,12 @@ function silver_term_blocks_save( $term_id ) {
  */
 function silver_term_blocks_admin_scripts() {
 	$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
-	if ( ! $screen || ! in_array( $screen->base, array( 'edit-tags', 'term' ), true ) || ! in_array( $screen->taxonomy, silver_term_blocks_taxonomies(), true ) ) {
+	if ( ! $screen ) {
+		return;
+	}
+	$is_term = in_array( $screen->base, array( 'edit-tags', 'term' ), true ) && in_array( $screen->taxonomy, silver_term_blocks_taxonomies(), true );
+	$is_shop = 'post' === $screen->base && 'page' === $screen->post_type && function_exists( 'wc_get_page_id' ) && get_the_ID() === wc_get_page_id( 'shop' );
+	if ( ! $is_term && ! $is_shop ) {
 		return;
 	}
 	if ( ! wp_script_is( 'selectWoo', 'registered' ) ) {

@@ -14,14 +14,19 @@ $thumb_count    = count( $attachment_ids );
 
 if ( $post_thumbnail ) $thumb_count++;
 $render_without_attachments = apply_filters( 'silver_single_product_thumbnails_render_without_attachments', false, $product, array( 'thumb_count' => $thumb_count ) );
+$video_thumbnail = silver_product_video_thumbnail();
 
 // Disable thumbnails if there is only one extra image.
 if ( $post_thumbnail && $thumb_count == 1 && ! $render_without_attachments ) {
+	echo $video_thumbnail;
 	return;
 }
 
 $thumb_cell_align = is_rtl() ? 'right' : 'left';
 
+if ( $video_thumbnail ) {
+	echo '<div class="gallery-video-rail">' . $video_thumbnail;
+}
 if ( $attachment_ids || $render_without_attachments ) {
 	$loop          = 0;
 	$image_size    = 'thumbnail';
@@ -93,4 +98,7 @@ if ( $attachment_ids || $render_without_attachments ) {
 		?>
 	</div>
 	<?php
+}
+if ( $video_thumbnail ) {
+	echo '</div>';
 }

@@ -102,7 +102,8 @@ if(get_theme_mod('product_zoom', 0)){
   $thumb_count = count($attachment_ids)+1;
   $render_without_attachments = apply_filters( 'silver_single_product_thumbnails_render_without_attachments', false, $product, array( 'thumb_count' => $thumb_count ) );
 
-  if ( $attachment_ids || $render_without_attachments ) {
+  $video_thumbnail = silver_product_video_thumbnail();
+  if ( $attachment_ids || $render_without_attachments || $video_thumbnail ) {
 	  $loop              = 0;
 	  $image_size        = 'gallery_thumbnail';
 	  $gallery_class     = array( 'product-thumbnails', 'thumbnails' );
@@ -117,6 +118,7 @@ if(get_theme_mod('product_zoom', 0)){
 
     ?>
     <div class="col xlarge-2 xlarge-col-first vertical-thumbnails pb-0">
+    <?php echo $video_thumbnail; ?>
 
     <div class="<?php echo implode(' ', $gallery_class); ?>"<?php
       echo silver_slider_options_attr( array(

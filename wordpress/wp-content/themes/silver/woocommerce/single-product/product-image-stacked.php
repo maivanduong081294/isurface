@@ -102,3 +102,6 @@ if(get_theme_mod('product_lightbox','default') == 'disabled'){
 <div class="show-for-medium product-gallery-stacked-thumbnails">
   <?php wc_get_template( 'woocommerce/single-product/product-gallery-thumbnails.php' ); ?>
 </div>
+<?php if ( $video_thumbnail = silver_product_video_thumbnail() ) : ?>
+<div class="hide-for-medium"><?php echo $video_thumbnail; ?></div>
+<?php endif; ?>

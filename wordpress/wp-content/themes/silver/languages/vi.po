@@ -3275,3 +3275,43 @@ msgstr "Cách hiển thị ảnh gallery"
 #: inc/admin/options/global/options-breadcrumbs.php
 msgid "Whole image (recommended for the product page): no crop, empty space around. Fill: the image covers the box (edges cut)."
 msgstr "Trọn ảnh (nên dùng cho trang sản phẩm): không cắt, có khoảng trống xung quanh. Lấp đầy: ảnh phủ kín khung (có thể bị cắt viền)."
+
+#: inc/admin/options/shop/options-shop-product-page.php
+msgid "Product video button"
+msgstr "Nút video sản phẩm"
+
+#: inc/admin/options/shop/options-shop-product-page.php
+msgid "On the product image"
+msgstr "Trên ảnh sản phẩm"
+
+#: inc/admin/options/shop/options-shop-product-page.php
+msgid "In the gallery thumbnails"
+msgstr "Trong dải ảnh thu nhỏ"
+
+#: inc/admin/options/shop/options-shop-product-page.php
+msgid "Thumbnail video playback"
+msgstr "Cách mở video từ ảnh thu nhỏ"
+
+#: inc/admin/options/shop/options-shop-product-page.php
+msgid "Open in popup"
+msgstr "Mở trong cửa sổ bật lên"
+
+#: inc/admin/options/shop/options-shop-product-page.php
+msgid "Play in the gallery"
+msgstr "Phát trong khung ảnh sản phẩm"
+
+#: inc/admin/options/blog/options-blog-layout.php
+msgid "Blog card hover animation"
+msgstr "Hiệu ứng khi rê chuột lên thẻ bài viết"
+
+#: inc/admin/options/blog/options-blog-layout.php
+msgid "Lift card"
+msgstr "Nâng nhẹ thẻ"
+
+#: inc/admin/options/blog/options-blog-layout.php
+msgid "Card shadow"
+msgstr "Đổ bóng thẻ"
+
+#: inc/admin/options/blog/options-blog-layout.php
+msgid "Lift card with shadow"
+msgstr "Nâng nhẹ và đổ bóng"

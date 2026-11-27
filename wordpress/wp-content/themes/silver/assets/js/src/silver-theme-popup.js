@@ -121,7 +121,7 @@
 		});
 	}
 
-	function video(link) {
+	function videoPlayer(link) {
 		const url = new URL(link.href);
 		if (!['http:', 'https:'].includes(url.protocol)) return false;
 		let media;
@@ -144,6 +144,12 @@
 			media.title = link.title || link.textContent.trim() || 'Video';
 		}
 		media.src = url.href;
+		return media;
+	}
+
+	function video(link) {
+		const media = videoPlayer(link);
+		if (!media) return false;
 		$('.slider .is-selected .video').trigger('pause');
 		silverDialog.popup(media, {
 			className: 'silver-theme-video',
@@ -156,6 +162,63 @@
 		return true;
 	}
 
+	function galleryFor(control) {
+		let scope = control.parentElement;
+		while (scope && !scope.matches('body')) {
+			if (scope.matches('.woocommerce-product-gallery')) return scope;
+			const gallery = scope.querySelector('.woocommerce-product-gallery');
+			if (gallery) return gallery;
+			scope = scope.parentElement;
+		}
+	}
+
+	function playInGallery(link) {
+		const gallery = galleryFor(link);
+		if (!gallery) return false;
+		const existing = gallery.querySelector('.gallery-video-player');
+		if (existing) {
+			existing.querySelector('button').click();
+			return true;
+		}
+		const media = videoPlayer(link);
+		if (!media) return false;
+		const panel = document.createElement('div');
+		panel.className = 'gallery-video-player';
+		const preview = gallery.querySelector('.flex-viewport, .woocommerce-product-gallery__wrapper');
+		if (preview) {
+			const {width, height} = preview.getBoundingClientRect();
+			if (width && height) panel.style.aspectRatio = width + ' / ' + height;
+			panel.style.marginBlockEnd = getComputedStyle(preview).marginBlockEnd;
+		}
+		const close = document.createElement('button');
+		close.type = 'button';
+		close.textContent = '×';
+		close.setAttribute('aria-label', link.dataset.closeLabel);
+		const dismiss = (restoreFocus) => {
+			if (media.pause) media.pause();
+			panel.remove();
+			gallery.classList.remove('gallery-video-playing');
+			link.setAttribute('aria-expanded', 'false');
+			if (restoreFocus) link.focus();
+		};
+		panel.addEventListener('gallery-video-dismiss', () => dismiss(false));
+		close.onclick = () => dismiss(true);
+		panel.onkeydown = (event) => {
+			if (event.key === 'Escape') close.click();
+		};
+		panel.append(media, close);
+		gallery.prepend(panel);
+		gallery.classList.add('gallery-video-playing');
+		link.setAttribute('aria-expanded', 'true');
+		close.focus({preventScroll:true});
+		return true;
+	}
+
+	document.addEventListener('click', (event) => {
+		const thumb = event.target.closest('.product-thumbnails, .flex-control-thumbs');
+		if (thumb) galleryFor(thumb)?.querySelector('.gallery-video-player')?.dispatchEvent(new Event('gallery-video-dismiss'));
+	}, true);
+
 	const productImage = '.woocommerce-product-gallery__image:not(.clone) > a[href]';
 	const imageFile = /\.(jpe?g|png|gif|webp|avif)$/i;
 	document.addEventListener('click', (event) => {
@@ -165,7 +228,10 @@
 		let selected = link;
 		let links;
 		const gallery = link.closest('.woocommerce-product-gallery');
-		if (link.matches('.zoom-button') || (gallery && link.matches(productImage))) {
+		if (link.hasAttribute('data-gallery-video')) {
+			if (playInGallery(link)) event.preventDefault();
+			return;
+		} else if (link.matches('.zoom-button') || (gallery && link.matches(productImage))) {
 			if (!document.body.classList.contains('has-lightbox')) {
 				event.preventDefault();
 				return;

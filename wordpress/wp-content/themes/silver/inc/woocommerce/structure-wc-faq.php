@@ -207,6 +207,8 @@ function silver_faq_items_from_meta( $meta ) {
 function silver_faq_own_rank_math_items( $object ) {
 	if ( $object instanceof WP_Term ) {
 		$meta = get_term_meta( $object->term_id );
+	} elseif ( $object instanceof WP_Post ) {
+		$meta = get_post_meta( $object->ID );
 	} elseif ( $object instanceof WC_Product ) {
 		$meta = get_post_meta( $object->get_id() );
 	} else {
@@ -236,7 +238,7 @@ function silver_faq_rank_math_prints_own( $object ) {
 			// phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores -- Rank Math hook.
 			&& true !== apply_filters( 'rank_math/snippet/remove_taxonomy_data', \RankMath\Helper::get_settings( 'titles.remove_' . $taxonomy . '_snippet_data' ), $taxonomy );
 	} else {
-		$prints = $object instanceof WC_Product;
+		$prints = $object instanceof WC_Product || ( $object instanceof WP_Post && is_singular() );
 	}
 
 	return (bool) apply_filters( 'silver_faq_rank_math_prints_own', $prints, $object );
@@ -357,7 +359,7 @@ function silver_get_product_faq( $product = null ) {
  * The field: source radios, the template select, the question rows.
  *
  * @param array  $faq     Clean value.
- * @param string $context "term" or "product".
+ * @param string $context "term", "product" or "shop".
  */
 function silver_faq_fields_html( $faq, $context = 'term' ) {
 	$sources   = array(
@@ -367,6 +369,11 @@ function silver_faq_fields_html( $faq, $context = 'term' ) {
 	);
 	$templates = silver_faq_rank_math_templates();
 	$items     = $faq['items'];
+	$schema_labels = array(
+		'product' => __( 'FAQ in the Schema tab of this product', 'silver' ),
+		'term'    => __( 'FAQ in the Schema tab of this category', 'silver' ),
+		'shop'    => __( 'FAQ in the Schema tab of the shop page', 'silver' ),
+	);
 	?>
 	<div class="silver-faq-fields">
 		<fieldset class="silver-faq-sources">
@@ -378,7 +385,7 @@ function silver_faq_fields_html( $faq, $context = 'term' ) {
 
 		<div class="silver-faq-panel" data-faq-panel="rank_math"<?php echo 'rank_math' === $faq['source'] ? '' : ' hidden'; ?>>
 			<select name="silver_faq[schema]" aria-label="<?php esc_attr_e( 'Rank Math FAQ schema', 'silver' ); ?>">
-				<option value=""><?php echo esc_html( 'product' === $context ? __( 'FAQ in the Schema tab of this product', 'silver' ) : __( 'FAQ in the Schema tab of this category', 'silver' ) ); ?></option>
+				<option value=""><?php echo esc_html( $schema_labels[ $context ] ); ?></option>
 				<?php if ( $templates ) : ?>
 					<optgroup label="<?php esc_attr_e( 'Schema Templates', 'silver' ); ?>">
 						<?php foreach ( $templates as $id => $title ) : ?>
@@ -515,6 +522,36 @@ function silver_faq_meta_box() {
 }
 add_action( 'add_meta_boxes', 'silver_faq_meta_box', 41 );
 
+function silver_faq_shop_meta_box( $post ) {
+	if ( $post->ID === wc_get_page_id( 'shop' ) ) {
+		add_meta_box( 'silver-faq', __( 'FAQs', 'silver' ), 'silver_faq_shop_fields', 'page', 'normal', 'default' );
+	}
+}
+add_action( 'add_meta_boxes_page', 'silver_faq_shop_meta_box' );
+
+/** Existing shops use their own Rank Math schema until a source is saved. */
+function silver_faq_shop_value( $post_id ) {
+	$value = get_post_meta( $post_id, SILVER_FAQ_META, true );
+	return silver_faq_value( is_array( $value ) ? $value : array( 'source' => 'rank_math' ) );
+}
+
+function silver_faq_shop_fields( $post ) {
+	wp_nonce_field( 'silver_save_shop_faq', 'silver_shop_faq_nonce' );
+	silver_faq_fields_html( silver_faq_shop_value( $post->ID ), 'shop' );
+}
+
+function silver_faq_save_shop( $post_id ) {
+	if ( $post_id !== wc_get_page_id( 'shop' ) || ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+		|| ! isset( $_POST['silver_shop_faq_nonce'], $_POST['silver_faq']['source'] )
+		|| ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['silver_shop_faq_nonce'] ) ), 'silver_save_shop_faq' )
+		|| ! current_user_can( 'edit_post', $post_id ) ) {
+		return;
+	}
+	$faq = silver_faq_sanitize( wp_unslash( $_POST['silver_faq'] ) );
+	update_post_meta( $post_id, SILVER_FAQ_META, wp_slash( $faq ) );
+}
+add_action( 'save_post_page', 'silver_faq_save_shop' );
+
 /**
  * Box content. Saved with the product (silver_faq_save_product()), so the
  * WooCommerce nonce and capability checks apply.
@@ -566,7 +603,8 @@ function silver_faq_admin_enqueue( $hook ) {
 	$is_term    = in_array( $hook, array( 'edit-tags.php', 'term.php' ), true ) && in_array( $screen->taxonomy, silver_faq_taxonomies(), true );
 	$is_product = in_array( $hook, array( 'post.php', 'post-new.php' ), true ) && 'product' === $screen->post_type;
 
-	if ( ! $is_term && ! $is_product ) {
+	$is_shop = 'post.php' === $hook && 'page' === $screen->post_type && get_the_ID() === wc_get_page_id( 'shop' );
+	if ( ! $is_term && ! $is_product && ! $is_shop ) {
 		return;
 	}
 
@@ -653,17 +691,26 @@ function silver_faq_add_schema( $item ) {
 
 /** Product category: a section of its own, under the description. */
 function silver_faq_term_section() {
-	if ( ! function_exists( 'is_product_taxonomy' ) || ! is_product_taxonomy() || 0 !== absint( get_query_var( 'paged' ) ) ) {
+	if ( ! function_exists( 'is_product_taxonomy' ) || is_paged() ) {
 		return;
 	}
 
-	$term = get_queried_object();
-	if ( ! $term instanceof WP_Term || ! in_array( $term->taxonomy, silver_faq_taxonomies(), true ) ) {
+	$object = get_queried_object();
+	if ( is_shop() && ! is_search() ) {
+		$object = get_post( wc_get_page_id( 'shop' ) );
+		if ( ! $object ) {
+			return;
+		}
+		$faq   = silver_faq_shop_value( $object->ID );
+		$items = silver_faq_items( $faq, $object );
+	} elseif ( is_product_taxonomy() && $object instanceof WP_Term && in_array( $object->taxonomy, silver_faq_taxonomies(), true ) ) {
+		$faq   = silver_faq_value( get_term_meta( $object->term_id, SILVER_FAQ_META, true ) );
+		$items = silver_get_term_faq( $object );
+	} else {
 		return;
 	}
 
-	$faq  = silver_faq_value( get_term_meta( $term->term_id, SILVER_FAQ_META, true ) );
-	$html = silver_faq_html( silver_get_term_faq( $term ), 'term', silver_faq_prints_schema( $faq, $term ) );
+	$html = silver_faq_html( $items, 'term', silver_faq_prints_schema( $faq, $object ) );
 	if ( '' === $html ) {
 		return;
 	}

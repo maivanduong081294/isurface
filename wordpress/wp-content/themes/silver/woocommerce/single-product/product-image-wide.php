@@ -92,3 +92,4 @@ $slider_classes = array( 'product-gallery-slider', 'slider', 'slider-nav-circle'
 
 </div>
 <?php do_action( 'silver_after_product_images' ); ?>
+<?php echo silver_product_video_thumbnail(); ?>

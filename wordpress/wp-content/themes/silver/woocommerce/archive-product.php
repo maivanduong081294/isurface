@@ -28,6 +28,9 @@ if (
 	&& ! $wp_query->is_search()
 	&& $wp_query->query_vars['paged'] < 1
 ) {
+	if ( 'top' === silver_category_description_position() ) {
+		silver_category_description();
+	}
 	echo do_shortcode( '<div class="shop-page-content">' . get_theme_mod( 'html_shop_page_content' ) . '</div>' );
 } else {
 	wc_get_template_part( 'layouts/category', get_theme_mod( 'category_sidebar', 'left-sidebar' ) );

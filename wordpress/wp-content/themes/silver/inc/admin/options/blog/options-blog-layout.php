@@ -299,6 +299,21 @@ foreach ( $blog_item_options as $attribute => $field ) {
 unset( $blog_item_options, $attribute, $field );
 
 Silver_Option::add_field( 'option', array(
+	'type'      => 'select',
+	'settings'  => 'blog_card_hover',
+	'label'     => __( 'Blog card hover animation', 'silver' ),
+	'section'   => 'blog-layout',
+	'default'   => 'none',
+	'transport' => 'refresh',
+	'choices'   => array(
+		'none'        => __( 'None', 'silver' ),
+		'lift'        => __( 'Lift card', 'silver' ),
+		'shadow'      => __( 'Card shadow', 'silver' ),
+		'lift-shadow' => __( 'Lift card with shadow', 'silver' ),
+	),
+) );
+
+Silver_Option::add_field( 'option', array(
 	'type'            => 'radio-buttonset',
 	'settings'        => 'blog_style_type',
 	'label'           => __( 'Posts Layout Type', 'silver' ),

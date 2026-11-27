@@ -111,6 +111,9 @@ add_action( 'widgets_init', 'silver_shop_widgets_init' );
  */
 function silver_woocommerce_breadcrumbs() {
 	$home = ( get_theme_mod( 'breadcrumb_home', 1 ) ) ? _x( 'Home', 'breadcrumb', 'woocommerce' ) : false;
+	if ( 'Home' === $home ) {
+		$home = _x( 'Home', 'breadcrumb', 'silver' );
+	}
 
 	return array(
 		'delimiter'   => silver_breadcrumb_divider(), // Customizer > Breadcrumbs > Divider icon.
@@ -123,6 +126,25 @@ function silver_woocommerce_breadcrumbs() {
 }
 
 add_filter( 'woocommerce_breadcrumb_defaults', 'silver_woocommerce_breadcrumbs' );
+
+/** Localize default labels while preserving custom shop names and translated trails. */
+function silver_localize_catalog_breadcrumbs( $crumbs ) {
+	if ( ! is_woocommerce() && ! is_search() ) {
+		return $crumbs;
+	}
+
+	$shop_url = wc_get_page_permalink( 'shop' );
+	$query    = is_search() ? get_search_query() : '';
+	foreach ( $crumbs as $index => $crumb ) {
+		if ( 'Shop' === $crumb[0] && $shop_url === $crumb[1] ) {
+			$crumbs[ $index ][0] = __( 'Shop', 'silver' );
+		} elseif ( is_search() && sprintf( 'Search results for &ldquo;%s&rdquo;', $query ) === $crumb[0] ) {
+			$crumbs[ $index ][0] = sprintf( __( 'Search Results for: %s', 'silver' ), $query );
+		}
+	}
+	return $crumbs;
+}
+add_filter( 'woocommerce_get_breadcrumb', 'silver_localize_catalog_breadcrumbs' );
 
 /**
  * Add default breadcrumbs.

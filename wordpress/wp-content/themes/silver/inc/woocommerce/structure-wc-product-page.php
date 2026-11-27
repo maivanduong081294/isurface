@@ -86,6 +86,10 @@ if ( ! function_exists( 'silver_product_video_button' ) ) {
 	function silver_product_video_button() {
 		global $wc_cpdf;
 
+		if ( 'thumbnail' === get_theme_mod( 'product_video_style', 'overlay' ) ) {
+			return;
+		}
+
 		if ( $wc_cpdf->get_value( get_the_ID(), '_product_video' ) ) {
 			// Round icon button, the same as the zoom button next to it
 			// (silver-modern.css, gallery image tools). open-video and
@@ -126,6 +130,23 @@ if ( ! function_exists( 'silver_product_video_button' ) ) {
 }
 
 add_action( 'silver_product_image_tools_bottom', 'silver_product_video_button', 1 );
+
+/** Video control alongside the image thumbnails, outside the image slider's index. */
+function silver_product_video_thumbnail() {
+	global $product, $wc_cpdf;
+	if ( 'thumbnail' !== get_theme_mod( 'product_video_style', 'overlay' ) || ! $product ) {
+		return '';
+	}
+	$url = esc_url( trim( (string) $wc_cpdf->get_value( $product->get_id(), '_product_video' ) ), array( 'http', 'https' ) );
+	if ( '' === $url ) {
+		return '';
+	}
+	$inline = 'gallery' === get_theme_mod( 'product_video_playback', 'popup' );
+	$label  = $inline ? __( 'Play in the gallery', 'silver' ) : __( 'Open video in lightbox', 'silver' );
+	$attrs  = $inline ? 'data-gallery-video aria-expanded="false"' : 'class="open-video product-video-popup"';
+	return '<span class="gallery-video-thumb"><a href="' . $url . '" ' . $attrs . ' title="' . esc_attr( $label ) . '" aria-label="' . esc_attr( $label ) . '" data-close-label="' . esc_attr__( 'Close', 'default' ) . '">'
+		. get_silver_icon( 'icon-play' ) . '</a></span>';
+}
 
 /**
  * Product image lightbox button.

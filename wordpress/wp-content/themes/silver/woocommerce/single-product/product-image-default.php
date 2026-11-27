@@ -67,4 +67,5 @@ $wrapper_classes   = apply_filters(
 		?>
 	</div>
 </div>
+<?php echo silver_product_video_thumbnail(); ?>
 </div>

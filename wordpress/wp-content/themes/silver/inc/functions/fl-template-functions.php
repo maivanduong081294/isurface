@@ -344,10 +344,13 @@ function silver_page_header_title_data( $shop = '' ) {
 			if ( ! get_theme_mod( 'category_title_style' ) && ! get_theme_mod( 'category_header_transparent', 0 ) ) {
 				$count = (int) $GLOBALS['wp_query']->found_posts;
 				$data  = array(
-					'title' => woocommerce_page_title( false ),
+					'title' => is_search() ? sprintf( __( 'Search Results for: %s', 'silver' ), get_search_query() ) : woocommerce_page_title( false ),
 					/* translators: %s: Number of products. */
-					'desc'  => esc_html( sprintf( _n( '%s product available', '%s products available', $count, 'silver' ), number_format_i18n( $count ) ) ),
-				) + silver_page_header_term_chips( 'product_cat' );
+					'desc'  => get_theme_mod( 'category_show_result_count', 1 ) ? esc_html( sprintf( _n( '%s product available', '%s products available', $count, 'silver' ), number_format_i18n( $count ) ) ) : '',
+				);
+				if ( ! is_search() ) {
+					$data += silver_page_header_term_chips( 'product_cat' );
+				}
 			}
 		} elseif ( ! $shop && ! is_singular() ) {
 			$page_for_posts = (int) get_option( 'page_for_posts' );
@@ -499,8 +502,8 @@ function silver_breadcrumbs_bar() {
 		return;
 	}
 
-	$blog = function_exists( 'silver_blog_breadcrumbs_enabled' ) && silver_blog_breadcrumbs_enabled();
-	$shop = $blog ? '' : silver_shop_breadcrumbs_view();
+	$shop = silver_shop_breadcrumbs_view();
+	$blog = ! $shop && function_exists( 'silver_blog_breadcrumbs_enabled' ) && silver_blog_breadcrumbs_enabled();
 
 	ob_start();
 	if ( $blog ) {
@@ -516,10 +519,10 @@ function silver_breadcrumbs_bar() {
 
 	silver_breadcrumbs_bar_printed( true );
 
-	if ( 'category' === $shop ) {
-		// Shop toolbar (loop/breadcrumbs.php): title, result count and ordering stay.
-		remove_action( 'silver_category_title', 'silver_shop_loop_tools_breadcrumbs', 10 );
-	} elseif ( 'product' === $shop ) {
+	// The bar already contains the breadcrumb trail.
+	remove_action( 'silver_category_title', 'silver_shop_loop_tools_breadcrumbs', 10 );
+
+	if ( 'product' === $shop ) {
 		// Above the product title, and in the featured product header.
 		// The "Gallery wide" layout checks silver_breadcrumbs_bar_printed().
 		remove_action( 'woocommerce_single_product_summary', 'silver_woocommerce_product_breadcrumb', 0 );

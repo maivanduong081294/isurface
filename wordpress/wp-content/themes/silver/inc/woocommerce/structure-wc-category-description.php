@@ -32,22 +32,31 @@ function silver_category_description_position() {
  * Prints the description of the product taxonomy being shown.
  */
 function silver_category_description() {
-	if ( ! is_product_taxonomy() || 0 !== absint( get_query_var( 'paged' ) ) ) {
+	if ( is_paged() ) {
 		return;
 	}
 
-	$term = get_queried_object();
-	if ( ! $term instanceof WP_Term ) {
+	$object = get_queried_object();
+	if ( is_shop() && ! is_search() ) {
+		$object = get_post( wc_get_page_id( 'shop' ) );
+		if ( ! $object ) {
+			return;
+		}
+		// Keep WooCommerce's formatting and allowed HTML for product blocks.
+		ob_start();
+		woocommerce_product_archive_description();
+		$html = ob_get_clean();
+	} elseif ( is_product_taxonomy() && $object instanceof WP_Term ) {
+		/** This filter is documented in woocommerce/includes/wc-template-functions.php */
+		$description = apply_filters( 'woocommerce_taxonomy_archive_description_raw', $object->description, $object );
+		$html        = empty( $description ) ? '' : wc_format_content( wp_kses_post( $description ) );
+	} else {
+		return;
+	}
+	if ( '' === trim( $html ) ) {
 		return;
 	}
 
-	/** This filter is documented in woocommerce/includes/wc-template-functions.php */
-	$description = apply_filters( 'woocommerce_taxonomy_archive_description_raw', $term->description, $term );
-	if ( empty( $description ) ) {
-		return;
-	}
-
-	$html     = wc_format_content( wp_kses_post( $description ) );
 	$position = silver_category_description_position();
 
 	if ( get_theme_mod( 'category_description_toc', 1 ) && function_exists( 'silver_toc_shortcode' ) ) {
@@ -58,7 +67,7 @@ function silver_category_description() {
 			// Product Catalog > Table of contents width (--ux-toc-width).
 			'width'    => silver_sanitize_css_length( get_theme_mod( 'category_description_toc_width', '40%' ) ),
 			'mobile'   => 'bar',
-		), $term );
+		), $object );
 
 		$html = silver_toc_shortcode( $atts, $html, 'ux_toc' );
 	}
@@ -70,7 +79,7 @@ function silver_category_description() {
 		$readmore = apply_filters( 'silver_category_description_readmore_atts', array(
 			'_id'    => 'term-description-readmore',
 			'height' => absint( get_theme_mod( 'category_description_readmore_height', 480 ) ),
-		), $term );
+		), $object );
 
 		$html = silver_readmore_shortcode( $readmore, $html, 'ux_readmore' );
 	}
@@ -90,11 +99,12 @@ function silver_category_description() {
  * Takes the place of the WooCommerce description, above or under the products.
  */
 function silver_category_description_setup() {
-	if ( ! function_exists( 'is_product_taxonomy' ) || ! is_product_taxonomy() ) {
+	if ( ! function_exists( 'is_product_taxonomy' ) || ( ! is_product_taxonomy() && ( ! is_shop() || is_search() ) ) ) {
 		return;
 	}
 
 	remove_action( 'woocommerce_archive_description', 'woocommerce_taxonomy_archive_description', 10 );
+	remove_action( 'woocommerce_archive_description', 'woocommerce_product_archive_description', 10 );
 
 	if ( 'top' === silver_category_description_position() ) {
 		add_action( 'woocommerce_archive_description', 'silver_category_description', 10 );

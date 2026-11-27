@@ -139,6 +139,33 @@ function silver_customizer_shop_product_page_options() {
 	) );
 
 	Silver_Option::add_field( 'option', array(
+		'type'     => 'select',
+		'settings' => 'product_video_style',
+		'label'    => __( 'Product video button', 'silver' ),
+		'section'  => 'product-page',
+		'default'  => 'overlay',
+		'choices'  => array(
+			'overlay'   => __( 'On the product image', 'silver' ),
+			'thumbnail' => __( 'In the gallery thumbnails', 'silver' ),
+		),
+	) );
+
+	Silver_Option::add_field( 'option', array(
+		'type'            => 'select',
+		'settings'        => 'product_video_playback',
+		'label'           => __( 'Thumbnail video playback', 'silver' ),
+		'section'         => 'product-page',
+		'default'         => 'popup',
+		'choices'         => array(
+			'popup'   => __( 'Open in popup', 'silver' ),
+			'gallery' => __( 'Play in the gallery', 'silver' ),
+		),
+		'active_callback' => array(
+			array( 'setting' => 'product_video_style', 'operator' => '==', 'value' => 'thumbnail' ),
+		),
+	) );
+
+	Silver_Option::add_field( 'option', array(
 		'type'            => 'select',
 		'settings'        => 'product_image_width',
 		'label'           => __( 'Product Image Width', 'silver' ),
