@@ -574,10 +574,99 @@ background-color: <?php echo get_theme_mod('header_shop_bg_color') ?>;}
   	.current .breadcrumb-step, [data-icon-label]:after, .button#place_order,.button.checkout,.checkout-button,.single_add_to_cart_button.button, .sticky-add-to-cart-select-options-button{background-color: <?php echo get_theme_mod('color_checkout'); ?>!important }
 <?php } ?>
 
-<?php if(get_theme_mod('category_force_image_height')) { ?>
+<?php
+// Product image ratio (silver_product_image_ratio()): the image box of every
+// product card the same height, the image fills it (or fits in it), CSS only.
+// The cards with the image beside the text (.box-vertical) keep theirs: their
+// padding % would be of the whole card.
+$fs_product_image_ratio = function_exists( 'silver_product_image_ratio' ) ? silver_product_image_ratio() : '';
+if ( '' !== $fs_product_image_ratio ) {
+	$fs_product_image_fit = 'contain' === get_theme_mod( 'product_image_fit', 'cover' ) ? 'contain' : 'cover';
+	?>
+  .product-small.box:not(.box-vertical) > .box-image,
   .has-equal-box-heights .box-image {
-    padding-top: <?php echo get_theme_mod('category_image_height', 100) ;?>%;
+    padding-top: <?php echo esc_html( $fs_product_image_ratio ); ?>;
+    width: 100%;
   }
+  .product-small.box:not(.box-vertical) > .box-image img {
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    object-fit: <?php echo esc_html( $fs_product_image_fit ); ?>;
+    object-position: 50% 50%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+  }
+	<?php if ( 'contain' === $fs_product_image_fit ) { ?>
+  .product-small.box:not(.box-vertical) > .box-image,
+  .has-equal-box-heights .box-image {
+    background-color: var(--sv-surface, #fff);
+  }
+  .has-equal-box-heights .box-image img {
+    object-fit: contain;
+  }
+	<?php } ?>
+<?php } ?>
+
+<?php
+// Product page gallery ratio (silver_product_gallery_ratio()): every image of
+// the gallery (all its layouts) and the thumbnails in a box of the same
+// ratio, CSS only. The slider no longer changes height from one image to the
+// next. aspect-ratio = width / height, from the height in %.
+$fs_gallery_ratio = function_exists( 'silver_product_gallery_ratio' ) ? silver_product_gallery_ratio() : '';
+if ( '' !== $fs_gallery_ratio ) {
+	$fs_gallery_aspect = '100 / ' . (float) $fs_gallery_ratio;
+	$fs_gallery_fit    = 'cover' === get_theme_mod( 'product_gallery_fit', 'contain' ) ? 'cover' : 'contain';
+	?>
+  .woocommerce-product-gallery .woocommerce-product-gallery__image > a {
+    aspect-ratio: <?php echo esc_html( $fs_gallery_aspect ); ?>;
+    box-sizing: border-box;
+    display: block;
+    overflow: hidden;
+  }
+  .woocommerce-product-gallery .woocommerce-product-gallery__image > a > img {
+    height: 100%;
+    object-fit: <?php echo esc_html( $fs_gallery_fit ); ?>;
+    width: 100%;
+  }
+  /* Thumbnails: small tiles that fill (cover), whatever the fit of the main
+     images: even, clean tiles; the whole image is in the main view. */
+  .product-thumbnails .col a img,
+  .product-gallery-rail.product-thumbnails .col a img {
+    aspect-ratio: <?php echo esc_html( $fs_gallery_aspect ); ?>;
+    height: auto;
+    object-fit: cover;
+    width: 100%;
+  }
+	<?php if ( 'contain' === $fs_gallery_fit ) { ?>
+  /* Whole image: the image is not cut; the empty sides of the box show the
+     same image blurred (--sv-gallery-backdrop: the small gallery thumbnail,
+     silver_wc_get_gallery_image_html()), so the box is always full and its
+     colours match the image. */
+  .woocommerce-product-gallery .woocommerce-product-gallery__image > a {
+    background-color: var(--sv-surface-muted, #f8fafc);
+    isolation: isolate;
+    position: relative;
+  }
+  .woocommerce-product-gallery .woocommerce-product-gallery__image > a::before {
+    background: var(--sv-gallery-backdrop, none) center / cover no-repeat;
+    content: "";
+    filter: blur(32px) saturate(1.15);
+    inset: -48px;
+    opacity: 0.85;
+    pointer-events: none;
+    position: absolute;
+    transform: translateZ(0);
+    z-index: 0;
+  }
+  .woocommerce-product-gallery .woocommerce-product-gallery__image > a > img {
+    filter: drop-shadow(0 4px 14px rgb(15 23 42 / 10%));
+    position: relative;
+    z-index: 1;
+  }
+	<?php } ?>
 <?php } ?>
 
 <?php if(get_theme_mod('color_sale')) { ?>

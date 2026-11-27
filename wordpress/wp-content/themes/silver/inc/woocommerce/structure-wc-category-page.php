@@ -63,7 +63,7 @@ function silver_product_row_classes($cols = null){
     if($shadow_hover) $classes[] = 'row-box-shadow-'.$shadow_hover.'-hover';
 
     // Custom heights
-    if(get_theme_mod('category_force_image_height')) {
+    if('' !== silver_product_image_ratio()) {
       $classes[] = 'has-equal-box-heights';
     }
 

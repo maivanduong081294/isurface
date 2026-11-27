@@ -129,15 +129,22 @@ Silver_Option::add_field( 'option', array(
 	),
 ) );
 
-// Tag of the bar title (silver_breadcrumbs_bar()): H1, or a <div> when the
-// page has its own H1 (in the description, a custom header...).
+// Tag of the bar title on the shop pages (silver_page_header_has_own_h1()):
+// H1, or a <div> when the page has its own H1. The blog has its own setting
+// (Blog > Blog Layout > Page title tag). Replaces the "Use H1 for the bar
+// title" checkbox (breadcrumbs_bar_title_h1), which applied to every page.
 Silver_Option::add_field( 'option', array(
-	'type'            => 'checkbox',
-	'settings'        => 'breadcrumbs_bar_title_h1',
-	'label'           => __( 'Use H1 for the bar title', 'silver' ),
-	'description'     => __( 'Off: the title is a plain div tag with the same look. Turn it off only when the page has another H1.', 'silver' ),
+	'type'            => 'radio-buttonset',
+	'settings'        => 'breadcrumbs_bar_title_tag',
+	'label'           => __( 'Bar title tag (shop)', 'silver' ),
+	'description'     => __( 'Shop page and product categories. Auto: H1, or a div with the same look when the page prints an H1 of its own (in the category description, first page only, or in the shop page content). Blog: Blog > Blog Layout.', 'silver' ),
 	'section'         => 'breadcrumbs',
-	'default'         => 1,
+	'default'         => 'auto',
+	'choices'         => array(
+		'auto' => __( 'Auto', 'silver' ),
+		'h1'   => 'H1',
+		'div'  => 'Div',
+	),
 	'active_callback' => array(
 		array(
 			'setting'  => 'breadcrumbs_position',
@@ -152,24 +159,77 @@ Silver_Option::add_field( 'option', array(
 	),
 ) );
 
-// Category chips of the bar under the header (silver_page_header_product_cats()).
+// Product category chips of the bar under the header
+// (silver_page_header_term_chips()). The blog has its own settings:
+// Blog > Blog Layout > Category list.
+$silver_breadcrumbs_bar_title_on = array(
+	array(
+		'setting'  => 'breadcrumbs_position',
+		'operator' => '===',
+		'value'    => 'header',
+	),
+	array(
+		'setting'  => 'breadcrumbs_bar_title',
+		'operator' => '==',
+		'value'    => true,
+	),
+);
+
 Silver_Option::add_field( 'option', array(
 	'type'            => 'checkbox',
 	'settings'        => 'breadcrumbs_bar_subcategories',
 	'label'           => __( 'Show category chips on shop pages', 'silver' ),
-	'description'     => __( 'Subcategories of the current category, or the categories next to it when it has none.', 'silver' ),
+	'description'     => __( 'Shop page and product categories.', 'silver' ),
 	'section'         => 'breadcrumbs',
 	'default'         => 1,
-	'active_callback' => array(
-		array(
-			'setting'  => 'breadcrumbs_position',
-			'operator' => '===',
-			'value'    => 'header',
-		),
-		array(
-			'setting'  => 'breadcrumbs_bar_title',
-			'operator' => '==',
-			'value'    => true,
-		),
+	'active_callback' => $silver_breadcrumbs_bar_title_on,
+) );
+
+$silver_breadcrumbs_bar_chips_on = array_merge( $silver_breadcrumbs_bar_title_on, array(
+	array(
+		'setting'  => 'breadcrumbs_bar_subcategories',
+		'operator' => '==',
+		'value'    => true,
 	),
 ) );
+
+Silver_Option::add_field( 'option', array(
+	'type'            => 'select',
+	'settings'        => 'breadcrumbs_bar_cats_level',
+	'label'           => __( 'Category chips: level', 'silver' ),
+	'description'     => __( 'Shop page: always the top-level categories.', 'silver' ),
+	'section'         => 'breadcrumbs',
+	'default'         => 'context',
+	'choices'         => array(
+		'context' => __( 'Subcategories of the current category (its siblings when it has none)', 'silver' ),
+		'top'     => __( 'Top-level categories only (the parent of the current one is active)', 'silver' ),
+	),
+	'active_callback' => $silver_breadcrumbs_bar_chips_on,
+) );
+
+Silver_Option::add_field( 'option', array(
+	'type'            => 'checkbox',
+	'settings'        => 'breadcrumbs_bar_cats_all',
+	'label'           => __( 'Category chips: show "All" chip', 'silver' ),
+	'description'     => __( 'First chip. Links to the category whose subcategories are shown, else to the shop page.', 'silver' ),
+	'section'         => 'breadcrumbs',
+	'default'         => 1,
+	'active_callback' => $silver_breadcrumbs_bar_chips_on,
+) );
+
+Silver_Option::add_field( 'option', array(
+	'type'            => 'slider',
+	'settings'        => 'breadcrumbs_bar_cats_number',
+	'label'           => __( 'Category chips: maximum number', 'silver' ),
+	'description'     => __( '0 = no limit.', 'silver' ),
+	'section'         => 'breadcrumbs',
+	'default'         => 12,
+	'choices'         => array(
+		'min'  => 0,
+		'max'  => 50,
+		'step' => 1,
+	),
+	'active_callback' => $silver_breadcrumbs_bar_chips_on,
+) );
+
+unset( $silver_breadcrumbs_bar_title_on, $silver_breadcrumbs_bar_chips_on );

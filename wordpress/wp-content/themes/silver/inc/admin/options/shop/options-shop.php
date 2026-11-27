@@ -123,7 +123,7 @@ function silver_refresh_shop_partials( WP_Customize_Manager $wp_customize ) {
 	$wp_customize->selective_refresh->add_partial( 'refresh_css_shop', array(
 	    'selector' => 'head > style#custom-css',
 	    'container_inclusive' => true,
-	    'settings' => array('category_image_height','color_new_bubble','color_new_bubble_auto','color_checkout','color_sale','color_review','color_regular_price','color_sale_price','color_price_badge'),
+	    'settings' => array('product_image_ratio','product_image_height','product_image_fit','product_gallery_ratio','product_gallery_height','product_gallery_fit','color_new_bubble','color_new_bubble_auto','color_checkout','color_sale','color_review','color_regular_price','color_sale_price','color_price_badge'),
 	    'render_callback' => function() {
 	        silver_custom_css();
 	    },

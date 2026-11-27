@@ -602,7 +602,16 @@ if ( ! function_exists( 'silver_wc_get_gallery_image_html' ) ) {
 
 		$image_wrapper_class = $main_image ? 'slide first' : 'slide';
 
-		return '<div data-thumb="' . esc_url( $thumbnail_src[0] ) . '" data-thumb-alt="' . esc_attr( $alt_text ) . '" data-thumb-srcset="' . esc_attr( $thumbnail_srcset ) . '"  data-thumb-sizes="' . esc_attr( $thumbnail_sizes ) . '" class="woocommerce-product-gallery__image ' . $image_wrapper_class . '"><a href="' . esc_url( $full_src[0] ) . '">' . $image . '</a></div>';
+		// Gallery image fit "Whole image" (Product Images > Gallery image
+		// ratio / fit): the empty sides of the box show the same image blurred
+		// (function-custom-css.php), from the small gallery thumbnail the strip
+		// of thumbnails loads anyway.
+		$link_style = '';
+		if ( function_exists( 'silver_product_gallery_ratio' ) && '' !== silver_product_gallery_ratio() && 'cover' !== get_theme_mod( 'product_gallery_fit', 'contain' ) && ! empty( $thumbnail_src[0] ) ) {
+			$link_style = ' style="' . esc_attr( '--sv-gallery-backdrop:url("' . esc_url( $thumbnail_src[0] ) . '")' ) . '"';
+		}
+
+		return '<div data-thumb="' . esc_url( $thumbnail_src[0] ) . '" data-thumb-alt="' . esc_attr( $alt_text ) . '" data-thumb-srcset="' . esc_attr( $thumbnail_srcset ) . '"  data-thumb-sizes="' . esc_attr( $thumbnail_sizes ) . '" class="woocommerce-product-gallery__image ' . $image_wrapper_class . '"><a href="' . esc_url( $full_src[0] ) . '"' . $link_style . '>' . $image . '</a></div>';
 	}
 }
 

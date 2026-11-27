@@ -45,6 +45,19 @@ $options =  array(
                     'uppercase' => array( 'title' => 'ABC'),
                 )
         ),
+            'title_tag' => array(
+                'type' => 'select',
+                'heading' => __( 'Title tag', 'silver' ),
+                'description' => __( 'SEO: H2 when the posts are the main list of the page, H3 under a section H2. The look does not change.', 'silver' ),
+                'default' => 'div',
+                'options' => array(
+                    'h2'  => 'H2',
+                    'h3'  => 'H3',
+                    'h4'  => 'H4',
+                    'p'   => 'Paragraph',
+                    'div' => 'Div',
+                ),
+            ),
     )
 ),
 'read_more_button' => array(

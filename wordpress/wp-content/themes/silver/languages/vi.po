@@ -2815,3 +2815,463 @@ msgstr "Bắt buộc chọn sao, chỉ cho khách đã mua đánh giá và nhãn
 #: inc/admin/options/shop/options-shop-product-reviews.php
 msgid "WooCommerce > Settings > Products"
 msgstr "WooCommerce > Cài đặt > Sản phẩm"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Shop page and product categories."
+msgstr "Trang cửa hàng và danh mục sản phẩm."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Category chips: level"
+msgstr "Chip danh mục: cấp hiển thị"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Shop page: always the top-level categories."
+msgstr "Trang cửa hàng: luôn là các danh mục cấp 1."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Subcategories of the current category (its siblings when it has none)"
+msgstr "Danh mục con của danh mục hiện tại (cùng cấp khi không có con)"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Top-level categories only (the parent of the current one is active)"
+msgstr "Chỉ danh mục cấp 1 (danh mục cha của trang hiện tại được đánh dấu)"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Category chips: show \"All\" chip"
+msgstr "Chip danh mục: hiện chip \"Tất cả\""
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "First chip. Links to the category whose subcategories are shown, else to the shop page."
+msgstr "Chip đầu tiên. Dẫn tới danh mục cha của các chip đang hiện, nếu không thì tới trang cửa hàng."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Category chips: maximum number"
+msgstr "Chip danh mục: số lượng tối đa"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "0 = no limit."
+msgstr "0 = không giới hạn."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Category list"
+msgstr "Danh sách danh mục"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Category chips on the blog page and post category pages. \"In the bar under the header\" needs Breadcrumbs > Breadcrumbs position = Below header and the page title in the bar, else the list shows above the posts."
+msgstr "Chip danh mục trên trang blog và trang danh mục bài viết. \"Trong thanh dưới header\" cần Breadcrumbs > Breadcrumbs position = Below header và bật tiêu đề trang trong thanh, nếu không danh sách sẽ hiện trên danh sách bài viết."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Hidden"
+msgstr "Ẩn"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Above the posts"
+msgstr "Trên danh sách bài viết"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "In the bar under the header"
+msgstr "Trong thanh dưới header"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Category list: level"
+msgstr "Danh sách danh mục: cấp hiển thị"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Blog page: always the top-level categories."
+msgstr "Trang blog: luôn là các danh mục cấp 1."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Category list: show \"All\" chip"
+msgstr "Danh sách danh mục: hiện chip \"Tất cả\""
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "First chip. Links to the category whose subcategories are shown, else to the blog page."
+msgstr "Chip đầu tiên. Dẫn tới danh mục cha của các chip đang hiện, nếu không thì tới trang blog."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Category list: maximum number"
+msgstr "Danh sách danh mục: số lượng tối đa"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Bar title tag (shop)"
+msgstr "Thẻ tiêu đề trong thanh (cửa hàng)"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Shop page and product categories. Auto: H1, or a div with the same look when the page prints an H1 of its own (in the category description, first page only, or in the shop page content). Blog: Blog > Blog Layout."
+msgstr "Trang cửa hàng và danh mục sản phẩm. Tự động: dùng H1, hoặc thẻ div (giao diện như cũ) khi trang đã có H1 riêng (trong mô tả danh mục, chỉ trang 1, hoặc trong nội dung trang cửa hàng). Blog: Blog > Blog Layout."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Page title tag"
+msgstr "Thẻ tiêu đề trang"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Blog page and blog archives. Auto: H1, or a div with the same look when the category description has an H1 of its own. One H1 per page."
+msgstr "Trang blog và trang lưu trữ blog. Tự động: dùng H1, hoặc thẻ div (giao diện như cũ) khi mô tả danh mục đã có H1 riêng. Mỗi trang một H1."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Auto"
+msgstr "Tự động"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Title tag"
+msgstr "Thẻ tiêu đề"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "SEO: H2 when the posts are the main list of the page, H3 under a section H2. The look does not change."
+msgstr "SEO: H2 khi danh sách bài là nội dung chính của trang, H3 khi nằm dưới một tiêu đề H2 của section. Giao diện không đổi."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Posts list title"
+msgstr "Tiêu đề danh sách bài viết"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "H2 above the posts. %s = the name of the category, tag, author, blog page or search. E.g. \"Danh sách %s\". Empty: no title."
+msgstr "Thẻ H2 phía trên danh sách bài viết. %s = tên danh mục, thẻ, tác giả, trang blog hoặc từ khoá tìm kiếm. VD: \"Danh sách %s\". Để trống: không hiện."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Posts list title display"
+msgstr "Hiển thị tiêu đề danh sách"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Screen readers only: the H2 stays in the page for accessibility but is hidden on screen. It does not help SEO: keep it short and natural, no keyword stuffing."
+msgstr "Chỉ cho trình đọc màn hình: thẻ H2 vẫn có trong trang để hỗ trợ truy cập nhưng không hiện trên màn hình. Không giúp SEO: giữ tiêu đề ngắn, tự nhiên, không nhồi từ khoá."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Visible"
+msgstr "Hiện"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Screen readers only"
+msgstr "Chỉ cho trình đọc màn hình"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Products for you"
+msgstr "Sản phẩm dành cho bạn"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "View all"
+msgstr "Xem tất cả"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Empty: inherits from \"%1$s\" (%2$s)."
+msgstr "Để trống: kế thừa từ \"%1$s\" (%2$s)."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Empty: uses the setting of Customizer > Blog > Blog Layout."
+msgstr "Để trống: dùng cấu hình trong Customizer > Blog > Blog Layout."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Promotion heading"
+msgstr "Tiêu đề khối khuyến mãi"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "H2 of the product section under the posts. %s = the name of the category."
+msgstr "Thẻ H2 của khối sản phẩm dưới danh sách bài viết. %s = tên danh mục."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Promoted product category"
+msgstr "Danh mục sản phẩm khuyến mãi"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "— Inherit —"
+msgstr "— Kế thừa —"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "On sale products first, then best sellers. \"View all\" links to this category."
+msgstr "Ưu tiên sản phẩm đang giảm giá, sau đó đến sản phẩm bán chạy. Nút \"Xem tất cả\" dẫn tới danh mục này."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Promoted products"
+msgstr "Sản phẩm khuyến mãi (chọn tay)"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Shown first, in this order."
+msgstr "Hiện đầu tiên, theo đúng thứ tự này."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "%d product"
+msgstr "%d sản phẩm"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Search for a product…"
+msgstr "Tìm sản phẩm…"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Product promotion section"
+msgstr "Khối sản phẩm khuyến mãi"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "A section of products under the posts of the blog page and post categories. Products chosen on the category, then its product category (on sale, best sellers), then the fallback below."
+msgstr "Một section sản phẩm liên quan nằm dưới danh sách bài viết của trang blog và danh mục bài viết. Lấy sản phẩm chọn tay trong danh mục, rồi đến danh mục sản phẩm được gán (giảm giá, bán chạy), cuối cùng là nguồn dự phòng bên dưới."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "H2 of the section, %s = the name of the category. Each category can set its own."
+msgstr "Thẻ H2 của section, %s = tên danh mục. Mỗi danh mục có thể đặt tiêu đề riêng."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Promotion heading style"
+msgstr "Kiểu tiêu đề khối khuyến mãi"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Promotion: number of products"
+msgstr "Khuyến mãi: số sản phẩm"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "0 = one row (Products per row of the shop)."
+msgstr "0 = một hàng (theo số sản phẩm mỗi hàng của shop)."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Promotion layout"
+msgstr "Khuyến mãi: kiểu hiển thị"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Row"
+msgstr "Hàng"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Slider"
+msgstr "Slider"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Promotion: fallback products"
+msgstr "Khuyến mãi: sản phẩm dự phòng"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "When the category does not set enough products."
+msgstr "Dùng khi danh mục không đủ sản phẩm."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Featured products"
+msgstr "Sản phẩm nổi bật"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "On sale products"
+msgstr "Sản phẩm đang giảm giá"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Best sellers"
+msgstr "Sản phẩm bán chạy"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Promotion: first page only"
+msgstr "Khuyến mãi: chỉ hiện ở trang 1"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Blog Product Promotion"
+msgstr "Blog: Sản phẩm khuyến mãi"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Latest products (all categories)"
+msgstr "Sản phẩm mới nhất (mọi danh mục)"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Empty: uses the setting of Customizer > Blog > Blog Product Promotion."
+msgstr "Để trống: dùng cấu hình trong Customizer > Blog > Blog: Sản phẩm khuyến mãi."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Blog Related Products"
+msgstr "Blog: Sản phẩm liên quan"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Related products section"
+msgstr "Khối sản phẩm liên quan"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Related products heading"
+msgstr "Tiêu đề khối sản phẩm liên quan"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Related products heading style"
+msgstr "Kiểu tiêu đề sản phẩm liên quan"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Related products: number"
+msgstr "Sản phẩm liên quan: số lượng"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Related products layout"
+msgstr "Sản phẩm liên quan: kiểu hiển thị"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Related products: fallback"
+msgstr "Sản phẩm liên quan: nguồn dự phòng"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Related products: first page only"
+msgstr "Sản phẩm liên quan: chỉ hiện ở trang 1"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Related product category"
+msgstr "Danh mục sản phẩm liên quan"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Related products (hand-picked)"
+msgstr "Sản phẩm liên quan (chọn tay)"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "H2 of the related products section under the posts. %s = the name of the category."
+msgstr "Thẻ H2 của khối sản phẩm liên quan dưới danh sách bài viết. %s = tên danh mục."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Empty: uses the setting of Customizer > Blog > Blog Related Products."
+msgstr "Để trống: dùng cấu hình trong Customizer > Blog > Blog: Sản phẩm liên quan."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Related products"
+msgstr "Sản phẩm liên quan"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "0 = one row (Products per row - Desktop below)."
+msgstr "0 = một hàng (theo số sản phẩm mỗi hàng - Desktop bên dưới)."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "0 = as the shop (Shop > Product Catalog > Products per row)."
+msgstr "0 = giống shop (Shop > Product Catalog > Products per row)."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Products per row - Desktop"
+msgstr "Số sản phẩm mỗi hàng - Desktop"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Products per row - Tablet landscape"
+msgstr "Số sản phẩm mỗi hàng - Tablet ngang"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Products per row - Tablet portrait"
+msgstr "Số sản phẩm mỗi hàng - Tablet dọc"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Products per row - Mobile"
+msgstr "Số sản phẩm mỗi hàng - Mobile"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Related products: background color"
+msgstr "Sản phẩm liên quan: màu nền"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Empty: white."
+msgstr "Để trống: màu trắng."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Related products: text color"
+msgstr "Sản phẩm liên quan: màu chữ"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "The heading and \"View all\". The product cards keep their own colors."
+msgstr "Áp dụng cho tiêu đề và nút \"Xem tất cả\". Thẻ sản phẩm giữ màu riêng."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Medium large size"
+msgstr "Cỡ trung bình lớn"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Used for responsive images (srcset) and the blog post cards. Max Height 0 = no limit. Applies to new uploads; regenerate the thumbnails for the existing images."
+msgstr "Dùng cho ảnh responsive (srcset) và ảnh thẻ bài viết blog. Cao tối đa 0 = không giới hạn. Áp dụng cho ảnh tải lên sau khi đổi; ảnh cũ cần tạo lại thumbnail."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Before content (UX Block)"
+msgstr "Trước nội dung (UX Block)"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "After content (UX Block)"
+msgstr "Sau nội dung (UX Block)"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Full width, under the page header and before the list."
+msgstr "Toàn chiều rộng, dưới phần tiêu đề trang và trước danh sách."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Full width, at the end of the page, before the footer."
+msgstr "Toàn chiều rộng, cuối trang, trước footer."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "— None —"
+msgstr "— Không chọn —"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "No UX Block yet (UX Blocks > Add New)."
+msgstr "Chưa có UX Block nào (UX Blocks > Thêm mới)."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Related products: image ratio"
+msgstr "Sản phẩm liên quan: tỉ lệ ảnh"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Same image box for every card, with CSS (no new image size). As the shop: Equal image heights of Product Catalog, else the ratio of each image."
+msgstr "Khung ảnh giống nhau cho mọi thẻ, làm bằng CSS (không tạo thêm kích thước ảnh). Theo shop: dùng \"Equal image heights\" của Product Catalog, nếu không bật thì giữ tỉ lệ từng ảnh."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "As the shop"
+msgstr "Theo shop"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Original (each image its own)"
+msgstr "Ảnh gốc (mỗi ảnh một tỉ lệ)"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Custom"
+msgstr "Tuỳ chỉnh"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Related products: image height (%)"
+msgstr "Sản phẩm liên quan: chiều cao ảnh (%)"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Height as a % of the width: 100 = 1:1, 75 = 4:3, 133 = 3:4."
+msgstr "Chiều cao theo % chiều rộng: 100 = 1:1, 75 = 4:3, 133 = 3:4."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Related products: image fit"
+msgstr "Sản phẩm liên quan: cách hiển thị ảnh"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Fill: the image covers the box (edges cut). Whole image: no crop, empty space around."
+msgstr "Lấp đầy: ảnh phủ kín khung (có thể bị cắt viền). Trọn ảnh: không cắt, có khoảng trống xung quanh."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Fill"
+msgstr "Lấp đầy"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Whole image"
+msgstr "Trọn ảnh"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Product image ratio"
+msgstr "Tỉ lệ ảnh sản phẩm"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "The same image box for every product card of the site (shop, categories, related products, upsells, product sliders, blog). CSS only: no new image size."
+msgstr "Khung ảnh giống nhau cho mọi thẻ sản phẩm trên site (shop, danh mục, sản phẩm liên quan, upsell, slider sản phẩm, blog). Chỉ dùng CSS: không tạo thêm kích thước ảnh."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Product image height (%)"
+msgstr "Chiều cao ảnh sản phẩm (%)"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Product image fit"
+msgstr "Cách hiển thị ảnh sản phẩm"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Display box of every product card of the site (shop, categories, related products, upsells, product sliders, blog), with CSS: the image files stay as they are, nothing is regenerated. Thumbnail cropping above crops the files themselves; keep it Uncropped to change the ratio here only."
+msgstr "Khung hiển thị ảnh của mọi thẻ sản phẩm trên site (shop, danh mục, sản phẩm liên quan, upsell, slider sản phẩm, blog), làm bằng CSS: file ảnh giữ nguyên, không tạo lại. \"Thumbnail cropping\" ở trên thì cắt chính file ảnh; để Uncropped nếu chỉ muốn đổi tỉ lệ ở đây."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Gallery image ratio"
+msgstr "Tỉ lệ ảnh gallery"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Product page: the main images and the thumbnails in a box of the same ratio, with CSS (the image files stay as they are). The gallery no longer changes height from one image to the next."
+msgstr "Trang chi tiết sản phẩm: ảnh chính và thumbnail trong khung cùng tỉ lệ, làm bằng CSS (file ảnh giữ nguyên). Gallery không còn đổi chiều cao khi chuyển ảnh."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Gallery image height (%)"
+msgstr "Chiều cao ảnh gallery (%)"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Gallery image fit"
+msgstr "Cách hiển thị ảnh gallery"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Whole image (recommended for the product page): no crop, empty space around. Fill: the image covers the box (edges cut)."
+msgstr "Trọn ảnh (nên dùng cho trang sản phẩm): không cắt, có khoảng trống xung quanh. Lấp đầy: ảnh phủ kín khung (có thể bị cắt viền)."

@@ -28,6 +28,31 @@ function silver_enqueue_customizer_stylesheet() {
 add_action( 'customize_controls_print_styles', 'silver_enqueue_customizer_stylesheet' );
 
 /**
+ * Kirki selects (selectWoo) sit inside a <label> with the hidden native
+ * <select>: a click on the selectWoo box or on the title is passed on to that
+ * <select>, and Chrome then opens its native list over the selectWoo list
+ * (two lists). The click keeps its default action off, so only selectWoo
+ * opens; a click on the title opens it too.
+ */
+function silver_customizer_select_label_fix() {
+	wp_add_inline_script(
+		'customize-controls',
+		'jQuery( document ).on( "click", "#customize-theme-controls label", function ( event ) {
+			var $select = jQuery( this ).find( "select.select2-hidden-accessible" ).first();
+			if ( ! $select.length || jQuery( event.target ).is( "input, textarea" ) ) {
+				return;
+			}
+			event.preventDefault();
+			if ( ! jQuery( event.target ).closest( ".select2" ).length && $select.data( "select2" ) ) {
+				$select.selectWoo( "open" );
+			}
+		} );'
+	);
+}
+
+add_action( 'customize_controls_enqueue_scripts', 'silver_customizer_select_label_fix' );
+
+/**
  * Customizer preview devices: Desktop, Tablet landscape, Tablet portrait and
  * Mobile, the four screens of UX Builder and of the theme CSS.
  *

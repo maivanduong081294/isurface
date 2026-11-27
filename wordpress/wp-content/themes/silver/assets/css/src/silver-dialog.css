@@ -527,8 +527,28 @@ html.silver-dialog-open.silver-dialog-has-scrollbar {
 	.product-review-viewer__footer { padding: 6px; gap: 4px; }
 }
 
+/* Video lightbox (product video, video buttons): a cinema view. A deep
+   overlay, the video alone in a 16:9 frame with rounded corners (no white
+   box around it), as large as the screen allows (1100px at most, never
+   taller than the screen), the close button above it, outside the video. */
+.silver-theme-video {
+	--silver-dialog-overlay: rgba(2, 6, 23, 0.86);
+	padding: 64px clamp(12px, 4vw, 48px) 32px;
+}
+
+.silver-theme-video .silver-dialog__overlay {
+	-webkit-backdrop-filter: blur(8px);
+	backdrop-filter: blur(8px);
+}
+
 .silver-theme-video .silver-dialog__box {
-	--silver-dialog-width: 900px;
+	--silver-dialog-width: min(1100px, calc((100vh - 120px) * 16 / 9));
+	max-height: none;
+	overflow: visible;
+	padding: 0;
+	border-radius: 14px;
+	background: #000;
+	box-shadow: 0 32px 80px -16px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.06);
 }
 
 .silver-theme-video :is(iframe, video) {
@@ -536,6 +556,30 @@ html.silver-dialog-open.silver-dialog-has-scrollbar {
 	width: 100%;
 	aspect-ratio: 16 / 9;
 	border: 0;
+	border-radius: inherit;
+	background: #000;
+}
+
+.silver-theme-video .silver-dialog__close {
+	inset-block-start: -52px;
+	inset-inline-end: 0;
+	width: 40px;
+	height: 40px;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	background: rgba(255, 255, 255, 0.12);
+	color: #fff;
+	-webkit-backdrop-filter: blur(6px);
+	backdrop-filter: blur(6px);
+}
+
+.silver-theme-video .silver-dialog__close:hover {
+	background: rgba(255, 255, 255, 0.24);
+	color: #fff;
+}
+
+.silver-theme-video .silver-dialog__close:focus-visible {
+	outline: 2px solid #fff;
+	outline-offset: 2px;
 }
 
 .silver-theme-popup {

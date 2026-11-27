@@ -83,6 +83,7 @@ if ( is_woocommerce_activated() ) { require get_template_directory() . '/inc/hel
   require get_template_directory() . '/inc/structure/structure-header.php';
   require get_template_directory() . '/inc/structure/structure-pages.php';
   require get_template_directory() . '/inc/structure/structure-posts.php';
+  require get_template_directory() . '/inc/structure/structure-term-blocks.php';
   require get_template_directory() . '/inc/structure/structure-sidebars.php';
 
   if(is_portfolio_activated()){
@@ -95,6 +96,7 @@ if(is_admin()){
   require get_template_directory() . '/inc/structure/structure-admin.php';
   require get_template_directory() . '/inc/admin/gutenberg/class-gutenberg.php';
   require get_template_directory() . '/inc/admin/backend/term-thumbnail.php';
+  require get_template_directory() . '/inc/admin/backend/media-medium-large.php';
 }
 
 /**
@@ -208,6 +210,7 @@ if ( is_woocommerce_activated() ) {
   require get_template_directory() . '/inc/woocommerce/structure-wc-category-page.php';
   require get_template_directory() . '/inc/woocommerce/structure-wc-category-page-header.php';
   require get_template_directory() . '/inc/woocommerce/structure-wc-category-description.php';
+  require get_template_directory() . '/inc/woocommerce/structure-wc-blog-promo.php';
   require get_template_directory() . '/inc/woocommerce/structure-wc-product-box.php';
   require get_template_directory() . '/inc/woocommerce/structure-wc-quick-description.php';
   require get_template_directory() . '/inc/woocommerce/structure-wc-faq.php';

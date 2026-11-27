@@ -6,6 +6,72 @@
  * @package Silver/WooCommerce
  */
 
+/**
+ * Image box of the product cards (.product-small, every list: shop,
+ * categories, related products, upsells, [ux_products], the blog related
+ * products...): one ratio for all, CSS only (silver_custom_css(), the image
+ * sizes stay the same). Customizer > WooCommerce > Product Catalog > Product
+ * image ratio.
+ *
+ * Until it is saved: the former "Equal image heights" (custom ratio of its
+ * height), else the ratio of each image.
+ *
+ * @return string Height in % of the width ("100%"...), '' = each image keeps
+ *                its own ratio.
+ */
+function silver_product_image_ratio() {
+	$legacy = get_theme_mod( 'category_force_image_height' ) ? 'custom' : 'original';
+
+	return silver_image_ratio_height(
+		(string) get_theme_mod( 'product_image_ratio', $legacy ),
+		get_theme_mod( 'product_image_height', get_theme_mod( 'category_image_height', 100 ) )
+	);
+}
+
+/**
+ * Image box of the product page gallery (main images and thumbnails, every
+ * gallery layout): one ratio for all the images, CSS only (silver_custom_css()).
+ * Customizer > WooCommerce > Product Images > Gallery image ratio.
+ *
+ * @return string Height in % of the width, '' = each image keeps its own.
+ */
+function silver_product_gallery_ratio() {
+	return silver_image_ratio_height(
+		(string) get_theme_mod( 'product_gallery_ratio', 'original' ),
+		get_theme_mod( 'product_gallery_height', 100 )
+	);
+}
+
+/**
+ * A ratio choice of the theme options as a height in % of the width.
+ *
+ * @param string    $ratio  original, 1-1, 4-3, 3-4, 4-5, 16-9 or custom.
+ * @param int|float $custom Height (%) of the "custom" choice.
+ *
+ * @return string "100%", "133.33%"..., or '' (original).
+ */
+function silver_image_ratio_height( $ratio, $custom ) {
+	$ratios = array(
+		'1-1'  => 100,
+		'4-3'  => 75,
+		'3-4'  => 133.33,
+		'4-5'  => 125,
+		'16-9' => 56.25,
+	);
+
+	if ( isset( $ratios[ $ratio ] ) ) {
+		$height = $ratios[ $ratio ];
+	} elseif ( 'custom' === $ratio ) {
+		$height = (float) $custom;
+	} else {
+		return '';
+	}
+
+	$height = max( 20, min( 250, $height ) );
+
+	return rtrim( rtrim( number_format( $height, 2, '.', '' ), '0' ), '.' ) . '%';
+}
+
 if ( ! function_exists( 'silver_sale_flash' ) ) {
 	/**
 	 * Add Extra Sale Flash Bubbles

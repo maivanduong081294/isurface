@@ -74,6 +74,120 @@ Silver_Option::add_field( 'option', array(
 	),
 ) );
 
+// Tag of the title of the blog page and blog archives
+// (silver_page_header_has_own_h1()): in the bar under the header and in the
+// default archive title.
+Silver_Option::add_field( 'option', array(
+	'type'        => 'radio-buttonset',
+	'settings'    => 'blog_title_tag',
+	'label'       => __( 'Page title tag', 'silver' ),
+	'description' => __( 'Blog page and blog archives. Auto: H1, or a div with the same look when the category description has an H1 of its own. One H1 per page.', 'silver' ),
+	'section'     => 'blog-layout',
+	'default'     => 'auto',
+	'choices'     => array(
+		'auto' => __( 'Auto', 'silver' ),
+		'h1'   => 'H1',
+		'div'  => 'Div',
+	),
+) );
+
+// H2 above the posts of the blog page, archives and search results
+// (silver_blog_list_title()).
+Silver_Option::add_field( 'option', array(
+	'type'              => 'text',
+	'settings'          => 'blog_list_title',
+	'label'             => __( 'Posts list title', 'silver' ),
+	'description'       => __( 'H2 above the posts. %s = the name of the category, tag, author, blog page or search. E.g. "Danh sách %s". Empty: no title.', 'silver' ),
+	'section'           => 'blog-layout',
+	'default'           => '',
+	'sanitize_callback' => 'sanitize_text_field',
+) );
+
+Silver_Option::add_field( 'option', array(
+	'type'            => 'radio-buttonset',
+	'settings'        => 'blog_list_title_display',
+	'label'           => __( 'Posts list title display', 'silver' ),
+	'description'     => __( 'Screen readers only: the H2 stays in the page for accessibility but is hidden on screen. It does not help SEO: keep it short and natural, no keyword stuffing.', 'silver' ),
+	'section'         => 'blog-layout',
+	'default'         => 'visible',
+	'choices'         => array(
+		'visible' => __( 'Visible', 'silver' ),
+		'sr'      => __( 'Screen readers only', 'silver' ),
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'blog_list_title',
+			'operator' => '!==',
+			'value'    => '',
+		),
+	),
+) );
+
+// Category list of the blog page and post categories
+// (silver_blog_category_list(), silver_page_header_term_chips()).
+Silver_Option::add_field( 'option', array(
+	'type'        => 'select',
+	'settings'    => 'blog_category_list',
+	'label'       => __( 'Category list', 'silver' ),
+	'description' => __( 'Category chips on the blog page and post category pages. "In the bar under the header" needs Breadcrumbs > Breadcrumbs position = Below header and the page title in the bar, else the list shows above the posts.', 'silver' ),
+	'section'     => 'blog-layout',
+	'default'     => 'content',
+	'choices'     => array(
+		''        => __( 'Hidden', 'silver' ),
+		'content' => __( 'Above the posts', 'silver' ),
+		'bar'     => __( 'In the bar under the header', 'silver' ),
+	),
+) );
+
+$silver_blog_category_list_on = array(
+	array(
+		'setting'  => 'blog_category_list',
+		'operator' => '!==',
+		'value'    => '',
+	),
+);
+
+Silver_Option::add_field( 'option', array(
+	'type'            => 'select',
+	'settings'        => 'blog_category_list_level',
+	'label'           => __( 'Category list: level', 'silver' ),
+	'description'     => __( 'Blog page: always the top-level categories.', 'silver' ),
+	'section'         => 'blog-layout',
+	'default'         => 'context',
+	'choices'         => array(
+		'context' => __( 'Subcategories of the current category (its siblings when it has none)', 'silver' ),
+		'top'     => __( 'Top-level categories only (the parent of the current one is active)', 'silver' ),
+	),
+	'active_callback' => $silver_blog_category_list_on,
+) );
+
+Silver_Option::add_field( 'option', array(
+	'type'            => 'checkbox',
+	'settings'        => 'blog_category_list_all',
+	'label'           => __( 'Category list: show "All" chip', 'silver' ),
+	'description'     => __( 'First chip. Links to the category whose subcategories are shown, else to the blog page.', 'silver' ),
+	'section'         => 'blog-layout',
+	'default'         => 1,
+	'active_callback' => $silver_blog_category_list_on,
+) );
+
+Silver_Option::add_field( 'option', array(
+	'type'            => 'slider',
+	'settings'        => 'blog_category_list_number',
+	'label'           => __( 'Category list: maximum number', 'silver' ),
+	'description'     => __( '0 = no limit.', 'silver' ),
+	'section'         => 'blog-layout',
+	'default'         => 12,
+	'choices'         => array(
+		'min'  => 0,
+		'max'  => 50,
+		'step' => 1,
+	),
+	'active_callback' => $silver_blog_category_list_on,
+) );
+
+unset( $silver_blog_category_list_on );
+
 Silver_Option::add_field( 'option',  array(
 	'type'        => 'radio-image',
 	'settings'     => 'blog_style',

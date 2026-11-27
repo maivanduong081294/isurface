@@ -130,47 +130,194 @@ function silver_page_header_title_printed( $printed = null ) {
 }
 
 /**
- * Product category chips of the bar under the header.
+ * Whether the page prints an H1 of its own, so the title of the bar under the
+ * header is a <div> (one H1 per page). "h1" always, "div" never, "auto"
+ * (default) when the content shown on this page has an H1:
+ * - product category / tag: its description, first page only (where
+ *   silver_category_description() prints it);
+ * - post category / tag / taxonomy: its description (printed in the bar);
+ * - shop page: its page content, first page only (WooCommerce prints it).
  *
- * Product category: its subcategories, or, when it has none, the categories
- * next to it (same parent, itself included). Shop page: the top-level
- * categories. Customizer > Breadcrumbs > Show category chips.
+ * Setting: Customizer > Breadcrumbs > Bar title tag for the shop pages,
+ * Customizer > Blog > Blog Layout > Page title tag for the blog pages.
  *
- * @return WP_Term[]
+ * @return bool
  */
-function silver_page_header_product_cats() {
-	if ( ! get_theme_mod( 'breadcrumbs_bar_subcategories', 1 ) ) {
+function silver_page_header_has_own_h1() {
+	$is_product = function_exists( 'is_product_taxonomy' ) && is_product_taxonomy();
+	$is_shop    = $is_product || ( function_exists( 'is_shop' ) && is_shop() );
+	$mode       = $is_shop ? get_theme_mod( 'breadcrumbs_bar_title_tag', 'auto' ) : get_theme_mod( 'blog_title_tag', 'auto' );
+
+	if ( 'h1' === $mode || 'div' === $mode ) {
+		return 'div' === $mode;
+	}
+
+	$content    = '';
+	$first_page = 0 === absint( get_query_var( 'paged' ) );
+
+	if ( is_category() || is_tag() || is_tax() ) {
+		$term = get_queried_object();
+		if ( $term instanceof WP_Term && ( ! $is_product || $first_page ) ) {
+			if ( $is_product ) {
+				$content = apply_filters( 'woocommerce_taxonomy_archive_description_raw', $term->description, $term );
+			} elseif ( ! function_exists( 'silver_queried_short_description' ) || '' === silver_queried_short_description() ) {
+				// The short description, when set, takes its place in the bar.
+				$content = $term->description;
+			}
+		}
+	} elseif ( $first_page && function_exists( 'is_shop' ) && is_shop() ) {
+		$shop_page = get_post( wc_get_page_id( 'shop' ) );
+		$content   = $shop_page ? $shop_page->post_content : '';
+	}
+
+	$has_h1 = '' !== (string) $content && (bool) preg_match( '/<h1[\s>]/i', (string) $content );
+
+	return (bool) apply_filters( 'silver_page_header_has_own_h1', $has_h1, $content );
+}
+
+/**
+ * Where the category list of the blog page and post categories goes.
+ * Customizer > Blog > Blog Layout > Category list.
+ *
+ * @return string '' (hidden), 'content' (above the posts) or 'bar' (bar
+ *                under the header, falls back to 'content' when the bar does
+ *                not print the page title).
+ */
+function silver_blog_category_list_position() {
+	$position = get_theme_mod( 'blog_category_list', 'content' );
+
+	return in_array( $position, array( 'content', 'bar' ), true ) ? $position : '';
+}
+
+/**
+ * Category chips, for product categories (shop page, product category) or
+ * post categories (blog page, category).
+ *
+ * Settings: Customizer > Breadcrumbs for the shop (chips in the bar under the
+ * header), Customizer > Blog > Blog Layout for the blog:
+ * - Level: "context" = the subcategories of the current category, or, when
+ *   it has none, the categories next to it (same parent, itself included);
+ *   "top" = always the top-level categories (the one holding the current
+ *   category is active).
+ * - "All" chip: first chip, links to the category whose subcategories are
+ *   shown, else to the shop / blog page.
+ * - Maximum number of chips (0 = no limit).
+ *
+ * @param string $taxonomy product_cat or category.
+ *
+ * @return array Empty, or array( 'cats' => WP_Term[], 'cats_all' => array( 'url' => string, 'active' => bool ) ).
+ */
+function silver_page_header_term_chips( $taxonomy ) {
+	$is_product = 'product_cat' === $taxonomy;
+
+	if ( $is_product ) {
+		$enabled = get_theme_mod( 'breadcrumbs_bar_subcategories', 1 );
+		$mods    = array(
+			'level'  => 'breadcrumbs_bar_cats_level',
+			'all'    => 'breadcrumbs_bar_cats_all',
+			'number' => 'breadcrumbs_bar_cats_number',
+		);
+	} else {
+		$enabled = '' !== silver_blog_category_list_position();
+		$mods    = array(
+			'level'  => 'blog_category_list_level',
+			'all'    => 'blog_category_list_all',
+			'number' => 'blog_category_list_number',
+		);
+	}
+
+	if ( ! $enabled || ! taxonomy_exists( $taxonomy ) ) {
+		return array();
+	}
+
+	if ( $is_product ) {
+		$on_term = is_product_category();
+		$on_root = function_exists( 'is_shop' ) && is_shop();
+	} else {
+		$on_term = is_category();
+		$on_root = is_home();
+	}
+
+	if ( ! $on_term && ! $on_root ) {
 		return array();
 	}
 
 	$args = array(
-		'taxonomy'   => 'product_cat',
+		'taxonomy'   => $taxonomy,
 		'hide_empty' => true,
-		'number'     => 12,
-		'orderby'    => 'menu_order',
-		'exclude'    => array( (int) get_option( 'default_product_cat' ) ),
+		'number'     => absint( get_theme_mod( $mods['number'], 12 ) ),
+		'orderby'    => $is_product ? 'menu_order' : 'name',
+		'exclude'    => array( (int) get_option( $is_product ? 'default_product_cat' : 'default_category' ) ),
+		'parent'     => 0,
 	);
 
-	if ( is_product_category() ) {
-		$term = get_queried_object();
-		if ( ! $term instanceof WP_Term ) {
-			return array();
-		}
-		$children = get_terms( array_merge( $args, array( 'parent' => $term->term_id ) ) );
-		if ( ! is_wp_error( $children ) && $children ) {
-			$args['parent'] = $term->term_id;
-		} else {
-			$args['parent'] = $term->parent;
-		}
-	} elseif ( is_shop() ) {
-		$args['parent'] = 0;
-	} else {
+	$term = $on_term ? get_queried_object() : null;
+	if ( $on_term && ! $term instanceof WP_Term ) {
 		return array();
 	}
 
-	$terms = get_terms( apply_filters( 'silver_page_header_product_cats_args', $args ) );
+	if ( $term && 'top' !== get_theme_mod( $mods['level'], 'context' ) ) {
+		$children       = get_terms( array_merge( $args, array(
+			'parent' => $term->term_id,
+			'number' => 1,
+			'fields' => 'ids',
+		) ) );
+		$args['parent'] = ! is_wp_error( $children ) && $children ? $term->term_id : $term->parent;
+	}
 
-	return is_wp_error( $terms ) ? array() : $terms;
+	$filter = $is_product ? 'silver_page_header_product_cats_args' : 'silver_page_header_post_cats_args';
+	$terms  = get_terms( apply_filters( $filter, $args, $term ) );
+
+	if ( is_wp_error( $terms ) || ! $terms ) {
+		return array();
+	}
+
+	// "All": the category whose subcategories are shown, else the shop / blog page.
+	$all = array();
+	if ( get_theme_mod( $mods['all'], 1 ) ) {
+		$parent = (int) $args['parent'];
+
+		if ( $parent ) {
+			$url = get_term_link( $parent, $taxonomy );
+			$all = array(
+				'url'    => is_wp_error( $url ) ? '' : $url,
+				'active' => $term && (int) $term->term_id === $parent,
+			);
+		} else {
+			if ( $is_product ) {
+				$url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : '';
+			} else {
+				$page_for_posts = (int) get_option( 'page_for_posts' );
+				$url            = $page_for_posts ? get_permalink( $page_for_posts ) : ( 'posts' === get_option( 'show_on_front' ) ? home_url( '/' ) : '' );
+			}
+			$all = array(
+				'url'    => (string) $url,
+				'active' => $on_root,
+			);
+		}
+
+		if ( '' === $all['url'] ) {
+			$all = array();
+		}
+	}
+
+	return array(
+		'cats'     => $terms,
+		'cats_all' => $all,
+	);
+}
+
+/**
+ * Product category chips of the bar under the header.
+ *
+ * @see silver_page_header_term_chips()
+ *
+ * @return WP_Term[]
+ */
+function silver_page_header_product_cats() {
+	$chips = silver_page_header_term_chips( 'product_cat' );
+
+	return $chips ? $chips['cats'] : array();
 }
 
 /**
@@ -178,13 +325,15 @@ function silver_page_header_product_cats() {
  *
  * Shop page and product taxonomies (default category title layout only):
  * the shop title, the number of products and the category chips. Blog page
- * and blog archives: the archive title and description. Single products and
- * posts get the breadcrumbs only. Customizer > Breadcrumbs > Show page title.
+ * and blog archives: the archive title and description, plus the category
+ * chips on the blog page and post categories. Single products and posts get
+ * the breadcrumbs only. Customizer > Breadcrumbs > Show page title.
  *
  * @param string $shop Shop view, see silver_shop_breadcrumbs_view().
  *
  * @return array Empty, or array( 'title' => string, 'desc' => string (HTML),
- *               'cats' => WP_Term[] ).
+ *               'cats' => WP_Term[], 'cats_all' => array, see
+ *               silver_page_header_term_chips() ).
  */
 function silver_page_header_title_data( $shop = '' ) {
 	$data = array();
@@ -198,17 +347,22 @@ function silver_page_header_title_data( $shop = '' ) {
 					'title' => woocommerce_page_title( false ),
 					/* translators: %s: Number of products. */
 					'desc'  => esc_html( sprintf( _n( '%s product available', '%s products available', $count, 'silver' ), number_format_i18n( $count ) ) ),
-					'cats'  => silver_page_header_product_cats(),
-				);
+				) + silver_page_header_term_chips( 'product_cat' );
 			}
 		} elseif ( ! $shop && ! is_singular() ) {
 			$page_for_posts = (int) get_option( 'page_for_posts' );
+			// Blog > Blog Layout > Category list = In the bar under the header.
+			$blog_chips     = 'bar' === silver_blog_category_list_position();
 
 			if ( is_home() && ! is_front_page() && $page_for_posts ) {
 				$data = array(
 					'title' => get_the_title( $page_for_posts ),
 					'desc'  => has_excerpt( $page_for_posts ) ? wpautop( esc_html( get_the_excerpt( $page_for_posts ) ) ) : '',
 				);
+
+				if ( $blog_chips ) {
+					$data += silver_page_header_term_chips( 'category' );
+				}
 			} elseif ( is_search() ) {
 				$data = array(
 					/* translators: %s: Search query. */
@@ -224,6 +378,10 @@ function silver_page_header_title_data( $shop = '' ) {
 					'title' => $title,
 					'desc'  => get_the_archive_description(),
 				);
+
+				if ( $blog_chips && is_category() ) {
+					$data += silver_page_header_term_chips( 'category' );
+				}
 			}
 		}
 	}
@@ -244,25 +402,49 @@ function silver_page_header_title_data( $shop = '' ) {
 	}
 
 	return wp_parse_args( $data, array(
-		'desc' => '',
-		'cats' => array(),
+		'desc'     => '',
+		'cats'     => array(),
+		'cats_all' => array(),
 	) );
 }
 
 /**
  * Category chips of the bar under the header, as HTML.
  *
- * @param WP_Term[] $terms Product categories.
+ * The chip of the current category, or of the category holding it (chip
+ * level "Top level"), is active.
+ *
+ * @param WP_Term[] $terms Product or post categories.
+ * @param array     $all   "All" chip: array( 'url' => string, 'active' => bool ), or empty.
  *
  * @return string
  */
-function silver_page_header_cats_html( $terms ) {
+function silver_page_header_cats_html( $terms, $all = array() ) {
 	if ( empty( $terms ) ) {
 		return '';
 	}
 
-	$current = is_product_category() ? get_queried_object_id() : 0;
-	$items   = '';
+	$taxonomy = reset( $terms )->taxonomy;
+	$queried  = get_queried_object();
+	$current  = array();
+
+	if ( $queried instanceof WP_Term && $queried->taxonomy === $taxonomy ) {
+		$current   = array_map( 'intval', get_ancestors( $queried->term_id, $taxonomy, 'taxonomy' ) );
+		$current[] = (int) $queried->term_id;
+	}
+
+	$items = '';
+
+	if ( ! empty( $all['url'] ) ) {
+		$active = ! empty( $all['active'] );
+		$items .= sprintf(
+			'<a class="page-header-cat page-header-cat--all%1$s" href="%2$s"%3$s><span>%4$s</span></a>',
+			$active ? ' is-active' : '',
+			esc_url( $all['url'] ),
+			$active ? ' aria-current="page"' : '',
+			esc_html( apply_filters( 'silver_page_header_cats_all_label', __( 'All', 'silver' ), $taxonomy ) )
+		);
+	}
 
 	foreach ( $terms as $term ) {
 		$link = get_term_link( $term );
@@ -270,7 +452,7 @@ function silver_page_header_cats_html( $terms ) {
 			continue;
 		}
 
-		$active   = (int) $term->term_id === (int) $current;
+		$active   = in_array( (int) $term->term_id, $current, true );
 		$image_id = (int) get_term_meta( $term->term_id, 'thumbnail_id', true );
 		$image    = $image_id ? wp_get_attachment_image( $image_id, 'thumbnail', false, array(
 			'class'   => 'page-header-cat__img',
@@ -282,7 +464,8 @@ function silver_page_header_cats_html( $terms ) {
 			'<a class="page-header-cat%1$s" href="%2$s"%3$s>%4$s<span>%5$s</span></a>',
 			$active ? ' is-active' : '',
 			esc_url( $link ),
-			$active ? ' aria-current="page"' : '',
+			// Only the current page itself, not the category holding it.
+			$active && (int) $term->term_id === (int) end( $current ) ? ' aria-current="page"' : '',
 			$image,
 			esc_html( $term->name )
 		);
@@ -292,7 +475,9 @@ function silver_page_header_cats_html( $terms ) {
 		return '';
 	}
 
-	return '<nav class="page-header-cats" aria-label="' . esc_attr__( 'Product categories', 'silver' ) . '">' . $items . '</nav>';
+	$label = 'product_cat' === $taxonomy ? __( 'Product categories', 'silver' ) : __( 'Categories', 'silver' );
+
+	return '<nav class="page-header-cats" aria-label="' . esc_attr( $label ) . '">' . $items . '</nav>';
 }
 
 /**
@@ -302,7 +487,8 @@ function silver_page_header_cats_html( $terms ) {
  *
  * On the shop, product categories, the blog page and blog archives the bar is
  * a page header: breadcrumbs, the page title (H1), a description and, on the
- * shop, the category chips (silver_page_header_title_data()).
+ * shop, product categories, the blog page and post categories, the category
+ * chips (silver_page_header_title_data()).
  *
  * Runs after the custom "HTML after header" (priority 1) and before the blog
  * header, the "Top" post title, the shop category header and the product
@@ -359,8 +545,8 @@ function silver_breadcrumbs_bar() {
 			remove_action( 'silver_category_title_alt', 'silver_woocommerce_result_count', 20 );
 		}
 
-		// Customizer > Breadcrumbs > Use H1 for the bar title.
-		$title_tag = get_theme_mod( 'breadcrumbs_bar_title_h1', 1 ) ? 'h1' : 'div';
+		// Customizer > Breadcrumbs > Bar title tag.
+		$title_tag = silver_page_header_has_own_h1() ? 'div' : 'h1';
 		$title_tag = 'div' === apply_filters( 'silver_page_header_title_tag', $title_tag ) ? 'div' : 'h1';
 
 		$classes .= ' page-header-bar has-title';
@@ -371,7 +557,7 @@ function silver_breadcrumbs_bar() {
 			$content .= '<div class="page-header-desc">' . wp_kses_post( $page_header['desc'] ) . '</div>';
 		}
 
-		$content .= silver_page_header_cats_html( $page_header['cats'] );
+		$content .= silver_page_header_cats_html( $page_header['cats'], $page_header['cats_all'] );
 	}
 
 	echo '<div class="' . esc_attr( $classes ) . '"><div class="container">' . $content . '</div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped by the breadcrumb source and above.

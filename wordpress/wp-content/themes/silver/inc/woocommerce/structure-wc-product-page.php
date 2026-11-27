@@ -87,11 +87,14 @@ if ( ! function_exists( 'silver_product_video_button' ) ) {
 		global $wc_cpdf;
 
 		if ( $wc_cpdf->get_value( get_the_ID(), '_product_video' ) ) {
+			// Round icon button, the same as the zoom button next to it
+			// (silver-modern.css, gallery image tools). open-video and
+			// product-video-popup open the lightbox.
 			printf('<a %s>%s</a>',
 				silver_html_atts( [
 					'role'       => 'button',
 					'href'       => esc_url( trim( $wc_cpdf->get_value( get_the_ID(), '_product_video' ) ) ),
-					'class'      => 'button open-video is-outline circle icon button product-video-popup tip-top',
+					'class'      => 'button open-video product-video-popup product-video-button circle icon tip-top',
 					'title'      => esc_attr__( 'Video', 'silver' ),
 					'aria-label' => esc_attr__( 'Open video in lightbox', 'silver' ),
 				] ),

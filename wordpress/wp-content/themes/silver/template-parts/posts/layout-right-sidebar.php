@@ -6,6 +6,11 @@
  * @silver-version 3.19.9
  */
 
+// Blog page and archives: the category list, the featured posts and the
+// posts (with the sidebar) in one section, which holds the top and bottom
+// padding (silver-modern.css, .blog-section).
+if ( ! is_single() ) echo '<section class="blog-section">';
+
 do_action('silver_before_blog');
 ?>
 
@@ -33,6 +38,7 @@ do_action('silver_before_blog');
 		<?php silver_sticky_column_close( 'blog_sticky_sidebar' ); ?>
 	</div>
 </div>
+<?php if ( ! is_single() ) echo '</section>'; ?>
 
 <?php
 	do_action('silver_after_blog');

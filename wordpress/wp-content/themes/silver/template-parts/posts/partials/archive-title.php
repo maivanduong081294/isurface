@@ -10,6 +10,8 @@
  */
 
 $show_title = isset( $args['show_title'] ) ? $args['show_title'] : true;
+// Blog > Blog Layout > Page title tag: a div when the description has its own H1.
+$title_tag  = function_exists( 'silver_page_header_has_own_h1' ) && silver_page_header_has_own_h1() ? 'div' : 'h1';
 
 ?>
 <header class="archive-page-header">
@@ -17,7 +19,7 @@ $show_title = isset( $args['show_title'] ) ? $args['show_title'] : true;
 	<div class="xlarge-12 text-center col">
 	<?php silver_blog_breadcrumbs(); ?>
 	<?php if ( $show_title ) : ?>
-	<h1 class="page-title is-large uppercase">
+	<<?php echo $title_tag; // phpcs:ignore WordPress.Security.EscapeOutput -- h1 or div. ?> class="page-title is-large uppercase heading-font">
 		<?php
 
 			if ( is_category() ) :
@@ -70,7 +72,7 @@ $show_title = isset( $args['show_title'] ) ? $args['show_title'] : true;
 
 			endif;
 		?>
-	</h1>
+	</<?php echo $title_tag; // phpcs:ignore WordPress.Security.EscapeOutput ?>>
 	<?php
 		if ( is_category() ) :
 			// show an optional category description

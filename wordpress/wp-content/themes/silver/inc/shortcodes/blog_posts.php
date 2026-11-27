@@ -3,6 +3,16 @@
 function shortcode_latest_from_blog($atts, $content = null, $tag = '')
 {
 
+	// PHP callers only (silver_apply_shortcode()): 'query' => a WP_Query that
+	// already holds the posts to show, e.g. the main query of the blog page
+	// and archives (template-parts/posts/archive-*.php). Its posts are shown
+	// as they are, without a second query.
+	$main_query = null;
+	if (is_array($atts) && isset($atts['query'])) {
+		$main_query = $atts['query'] instanceof WP_Query ? $atts['query'] : null;
+		unset($atts['query']);
+	}
+
 	$defined_atts = $atts;
 	$normal_layout = in_array(isset($atts['style']) ? $atts['style'] : '', array('', 'normal'), true)
 		&& (! isset($atts['type']) || 'grid' !== $atts['type']);
@@ -73,6 +83,7 @@ function shortcode_latest_from_blog($atts, $content = null, $tag = '')
 		//Title
 		'title_size' => 'large',
 		'title_style' => '',
+		'title_tag' => 'div', // h2 / h3 / h4 / p / div. Blog page and archives: h2 (archive-items.php).
 
 		// Box styles
 		'animate' => '',
@@ -162,6 +173,10 @@ function shortcode_latest_from_blog($atts, $content = null, $tag = '')
 		$animate = 'data-animate="' . esc_attr($animate) . '"';
 	}
 
+	// Tag of the post titles: a heading (h2 on the blog page and archives)
+	// gives the list its outline; the look stays the same (silver-modern.css).
+	$title_tag = in_array($title_tag, array('h2', 'h3', 'h4', 'h5', 'h6', 'p', 'div'), true) ? $title_tag : 'div';
+
 	$classes_text = implode(' ', $classes_text);
 	$classes_image = implode(' ', $classes_image);
 	$classes_box = implode(' ', $classes_box);
@@ -244,7 +259,12 @@ function shortcode_latest_from_blog($atts, $content = null, $tag = '')
 		}
 	}
 
-	$recentPosts = new WP_Query($args);
+	if ($main_query) {
+		$recentPosts = $main_query;
+		$recentPosts->rewind_posts();
+	} else {
+		$recentPosts = new WP_Query($args);
+	}
 
 	if (isset($found_posts_filter_callback)) {
 		remove_filter('found_posts', $found_posts_filter_callback, 1);
@@ -284,7 +304,8 @@ function shortcode_latest_from_blog($atts, $content = null, $tag = '')
 
 	?><div class="col <?php echo esc_attr(implode(' ', $col_class)); ?>" <?php echo $animate; ?>>
 			<div class="col-inner">
-				<div class="box <?php echo esc_attr($classes_box); ?> box-blog-post has-hover">
+				<?php // Each post is an <article> (the .col stays a div: the cell of the row / grid / slider). ?>
+				<article class="box <?php echo esc_attr($classes_box); ?> box-blog-post has-hover">
 					<?php if (has_post_thumbnail() || $normal_layout) { ?>
 						<div class="box-image" <?php echo get_shortcode_inline_css($css_args_img); ?>>
 							<div class="<?php echo esc_attr($classes_image); ?>" <?php echo get_shortcode_inline_css($css_image_height); ?>>
@@ -327,9 +348,9 @@ function shortcode_latest_from_blog($atts, $content = null, $tag = '')
 							<?php if ($normal_layout && $show_date !== 'false' && ($show_date !== 'badge' || !has_post_thumbnail())) { ?>
 								<div class="post-meta is-small op-8"><time datetime="<?php echo esc_attr(get_the_date('Y-m-d')); ?>"><?php echo esc_html(get_the_date('d/m/Y')); ?></time></div>
 							<?php } ?>
-							<div class="post-title <?php if (isset($defined_atts['title_size']) && $defined_atts['title_size'] !== '') echo 'has-custom-title-size '; ?>is-<?php echo esc_attr($title_size); ?> <?php echo esc_attr($title_style); ?>">
+							<<?php echo $title_tag; // phpcs:ignore WordPress.Security.EscapeOutput -- whitelisted above. ?> class="post-title <?php if (isset($defined_atts['title_size']) && $defined_atts['title_size'] !== '') echo 'has-custom-title-size '; ?>is-<?php echo esc_attr($title_size); ?> <?php echo esc_attr($title_style); ?>">
 								<a href="<?php the_permalink() ?>" class="plain"><?php the_title(); ?></a>
-							</div>
+							</<?php echo $title_tag; // phpcs:ignore WordPress.Security.EscapeOutput ?>>
 							<?php if (!$normal_layout && ((!has_post_thumbnail() && $show_date !== 'false') || $show_date == 'text')) { ?><div class="post-meta is-small op-8"><?php echo esc_html(get_the_date('d/m/Y')); ?></div><?php } ?>
 							<?php if (!$normal_layout) { ?><div class="is-divider"></div><?php } ?>
 							<?php if ($show_excerpt !== 'false') { ?>
@@ -371,7 +392,7 @@ function shortcode_latest_from_blog($atts, $content = null, $tag = '')
 							</div>
 						</div>
 					<?php } ?>
-				</div>
+				</article>
 			</div>
 		</div><?php endwhile;
 			wp_reset_query();

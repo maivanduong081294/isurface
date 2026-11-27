@@ -9,6 +9,7 @@ include_once(dirname( __FILE__ ).'/options-blog-layout.php');
 include_once(dirname( __FILE__ ).'/options-blog-archive.php');
 include_once(dirname( __FILE__ ).'/options-blog-single.php');
 include_once(dirname( __FILE__ ).'/options-blog-featured.php');
+include_once( dirname( __FILE__ ) . '/options-blog-promo.php' );
 
 
 function silver_refresh_blog_partials( WP_Customize_Manager $wp_customize ) {

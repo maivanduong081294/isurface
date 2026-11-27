@@ -116,34 +116,133 @@ Silver_Option::add_field( 'option', array(
 	),
 ) );
 
+// Product image ratio (silver_product_image_ratio()): the image box of every
+// product card of the site, CSS only. Replaces "Equal image heights"
+// (category_force_image_height / category_image_height): until it is saved,
+// a site that used it keeps its height as a custom ratio.
 Silver_Option::add_field( 'option', array(
-	'type'        => 'checkbox',
-	'settings'    => 'category_force_image_height',
-	'label'       => __( 'EQUAL IMAGE HEIGHTS', 'silver' ),
-	'description' => 'Force all images to have the same height',
-	'section'     => 'woocommerce_product_catalog',
-	'default'     => false,
+	'type'        => 'select',
+	'settings'    => 'product_image_ratio',
+	'label'       => __( 'Product image ratio', 'silver' ),
+	'description' => __( 'Display box of every product card of the site (shop, categories, related products, upsells, product sliders, blog), with CSS: the image files stay as they are, nothing is regenerated. Thumbnail cropping above crops the files themselves; keep it Uncropped to change the ratio here only.', 'silver' ),
+	'section'     => 'woocommerce_product_images',
+	'priority'        => 100,
+	'default'     => get_theme_mod( 'category_force_image_height' ) ? 'custom' : 'original',
+	'choices'     => array(
+		'original' => __( 'Original (each image its own)', 'silver' ),
+		'1-1'      => '1:1',
+		'4-3'      => '4:3',
+		'3-4'      => '3:4',
+		'4-5'      => '4:5',
+		'16-9'     => '16:9',
+		'custom'   => __( 'Custom', 'silver' ),
+	),
 ) );
 
 Silver_Option::add_field( 'option', array(
 	'type'            => 'slider',
-	'settings'        => 'category_image_height',
-	'label'           => __( 'Equal Image height', 'silver' ),
-	'description'     => 'Change the image height in %. (100% = 1:1)',
-	'section'         => 'woocommerce_product_catalog',
+	'settings'        => 'product_image_height',
+	'label'           => __( 'Product image height (%)', 'silver' ),
+	'description'     => __( 'Height as a % of the width: 100 = 1:1, 75 = 4:3, 133 = 3:4.', 'silver' ),
+	'section'         => 'woocommerce_product_images',
+	'priority'        => 101,
+	'default'         => (int) get_theme_mod( 'category_image_height', 100 ),
+	'choices'         => array(
+		'min'  => 20,
+		'max'  => 250,
+		'step' => 1,
+	),
 	'active_callback' => array(
 		array(
-			'setting'  => 'category_force_image_height',
-			'operator' => '==',
-			'value'    => true,
+			'setting'  => 'product_image_ratio',
+			'operator' => '===',
+			'value'    => 'custom',
 		),
 	),
-	'transport'       => silver_customizer_transport(),
+) );
+
+Silver_Option::add_field( 'option', array(
+	'type'            => 'radio-buttonset',
+	'settings'        => 'product_image_fit',
+	'label'           => __( 'Product image fit', 'silver' ),
+	'description'     => __( 'Fill: the image covers the box (edges cut). Whole image: no crop, empty space around.', 'silver' ),
+	'section'         => 'woocommerce_product_images',
+	'priority'        => 102,
+	'default'         => 'cover',
+	'choices'         => array(
+		'cover'   => __( 'Fill', 'silver' ),
+		'contain' => __( 'Whole image', 'silver' ),
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'product_image_ratio',
+			'operator' => '!==',
+			'value'    => 'original',
+		),
+	),
+) );
+
+// Product page gallery ratio (silver_product_gallery_ratio()): the main
+// images and the thumbnails of every gallery layout, CSS only.
+Silver_Option::add_field( 'option', array(
+	'type'        => 'select',
+	'settings'    => 'product_gallery_ratio',
+	'label'       => __( 'Gallery image ratio', 'silver' ),
+	'description' => __( 'Product page: the main images and the thumbnails in a box of the same ratio, with CSS (the image files stay as they are). The gallery no longer changes height from one image to the next.', 'silver' ),
+	'section'     => 'woocommerce_product_images',
+	'priority'    => 110,
+	'default'     => 'original',
+	'choices'     => array(
+		'original' => __( 'Original (each image its own)', 'silver' ),
+		'1-1'      => '1:1',
+		'4-3'      => '4:3',
+		'3-4'      => '3:4',
+		'4-5'      => '4:5',
+		'16-9'     => '16:9',
+		'custom'   => __( 'Custom', 'silver' ),
+	),
+) );
+
+Silver_Option::add_field( 'option', array(
+	'type'            => 'slider',
+	'settings'        => 'product_gallery_height',
+	'label'           => __( 'Gallery image height (%)', 'silver' ),
+	'description'     => __( 'Height as a % of the width: 100 = 1:1, 75 = 4:3, 133 = 3:4.', 'silver' ),
+	'section'         => 'woocommerce_product_images',
+	'priority'        => 111,
 	'default'         => 100,
 	'choices'         => array(
-		'min'  => 50,
-		'max'  => 200,
+		'min'  => 20,
+		'max'  => 250,
 		'step' => 1,
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'product_gallery_ratio',
+			'operator' => '===',
+			'value'    => 'custom',
+		),
+	),
+) );
+
+Silver_Option::add_field( 'option', array(
+	'type'            => 'radio-buttonset',
+	'settings'        => 'product_gallery_fit',
+	'label'           => __( 'Gallery image fit', 'silver' ),
+	'description'     => __( 'Whole image (recommended for the product page): no crop, empty space around. Fill: the image covers the box (edges cut).', 'silver' ),
+	'section'         => 'woocommerce_product_images',
+	'priority'        => 112,
+	'default'         => 'contain',
+	'choices'         => array(
+		'contain' => __( 'Whole image', 'silver' ),
+		'cover'   => __( 'Fill', 'silver' ),
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'product_gallery_ratio',
+			'operator' => '!==',
+			'value'    => 'original',
+		),
 	),
 ) );
 

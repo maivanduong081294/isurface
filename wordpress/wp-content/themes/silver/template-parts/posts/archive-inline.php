@@ -15,6 +15,7 @@ if ( in_array( $item_style, array( 'none', 'default', 'normal', 'overlay', 'shad
 
 if ( have_posts() ) : ?>
 <div id="post-list">
+	<?php echo silver_blog_list_title_html(); // Blog Layout > Posts list title (H2). ?>
 
 <?php /* Start the Loop */ ?>
 <?php while ( have_posts() ) : the_post(); ?>

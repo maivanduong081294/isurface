@@ -32,7 +32,7 @@ if ( $upsells ) : ?>
 			$type = 'row';
 		}
 
-		if ( get_theme_mod('category_force_image_height' ) ) $repeater_classes[] = 'has-equal-box-heights';
+		if ( '' !== silver_product_image_ratio() ) $repeater_classes[] = 'has-equal-box-heights';
 		if ( get_theme_mod( 'equalize_product_box', 1 ) ) $repeater_classes[]        = 'equalize-box';
 
 		$repeater['type']         = $type;

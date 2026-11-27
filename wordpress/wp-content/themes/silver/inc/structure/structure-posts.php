@@ -95,6 +95,86 @@ function silver_archive_title() {
 }
 add_action( 'silver_before_blog', 'silver_archive_title', 15 );
 
+/**
+ * Category list above the posts of the blog page and post categories.
+ *
+ * Customizer > Blog > Blog Layout > Category list: "Above the posts", or
+ * "In the bar under the header" when the bar does not print the page title
+ * (Breadcrumbs position = Default, transparent header...).
+ */
+function silver_blog_category_list() {
+	if ( is_singular() || ! ( is_home() || is_category() ) ) {
+		return;
+	}
+
+	$position = silver_blog_category_list_position();
+	if ( 'content' !== $position && ! ( 'bar' === $position && ! silver_page_header_title_printed() ) ) {
+		return;
+	}
+
+	$chips = silver_page_header_term_chips( 'category' );
+	$html  = $chips ? silver_page_header_cats_html( $chips['cats'], $chips['cats_all'] ) : '';
+
+	if ( '' !== $html ) {
+		echo '<div class="row blog-category-list"><div class="col xlarge-12">' . $html . '</div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in silver_page_header_cats_html().
+	}
+}
+add_action( 'silver_before_blog', 'silver_blog_category_list', 20 );
+
+/**
+ * Heading of the list of posts on the blog page, archives and search results.
+ * Customizer > Blog > Blog Layout > Posts list title, %s = the name of the
+ * page (category, tag, author, blog page, search query). Empty: no heading.
+ *
+ * @return string Plain text, or ''.
+ */
+function silver_blog_list_title() {
+	if ( is_singular() ) {
+		return '';
+	}
+
+	$format = trim( (string) get_theme_mod( 'blog_list_title', '' ) );
+	if ( '' === $format ) {
+		return '';
+	}
+
+	if ( is_category() || is_tag() || is_tax() ) {
+		$name = single_term_title( '', false );
+	} elseif ( is_search() ) {
+		$name = get_search_query();
+	} elseif ( is_home() && ! is_front_page() && get_option( 'page_for_posts' ) ) {
+		$name = get_the_title( (int) get_option( 'page_for_posts' ) );
+	} else {
+		add_filter( 'get_the_archive_title_prefix', '__return_empty_string' );
+		$name = wp_strip_all_tags( get_the_archive_title() );
+		remove_filter( 'get_the_archive_title_prefix', '__return_empty_string' );
+	}
+
+	$title = false !== strpos( $format, '%s' ) ? str_replace( '%s', (string) $name, $format ) : $format;
+
+	return trim( (string) apply_filters( 'silver_blog_list_title', $title, $format, $name ) );
+}
+
+/**
+ * The list heading as HTML (an H2 above the posts), or ''.
+ *
+ * Blog Layout > Posts list title display: "visible", or "sr" (screen
+ * readers only: in the page outline, hidden on screen with the
+ * .screen-reader-text class, no space in the layout).
+ *
+ * @return string
+ */
+function silver_blog_list_title_html() {
+	$title = silver_blog_list_title();
+	if ( '' === $title ) {
+		return '';
+	}
+
+	$class = 'sr' === get_theme_mod( 'blog_list_title_display', 'visible' ) ? 'blog-list-title screen-reader-text' : 'blog-list-title';
+
+	return '<h2 class="' . esc_attr( $class ) . '">' . esc_html( $title ) . '</h2>';
+}
+
 
 /**
  * Whether blog breadcrumbs are on for the current view.
