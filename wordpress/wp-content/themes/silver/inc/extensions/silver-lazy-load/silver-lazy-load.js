@@ -81,6 +81,14 @@
         }
       })
 
+      jQuery('.has-packery img[loading="lazy"]', context).each(function (i, el) {
+        if (el.complete) return
+        jQuery(el).off('load.silverPackery').one('load.silverPackery', function () {
+          var grid = jQuery(el).closest('.has-packery')
+          if (grid.data('packery')) grid.packery('layout')
+        })
+      })
+
       jQuery('.has-packery .lazy-load', context).each(function (i, el) {
         observer.observe(el)
       })

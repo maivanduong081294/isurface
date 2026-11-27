@@ -199,10 +199,24 @@ if ( ! function_exists( 'of_options' ) ) {
 		$of_options[] = array(
 			'name' => 'Lazy Load Images',
 			'id'   => 'lazy_load_images',
-			'desc' => 'Enable lazy loading for images. It will generate an inline blank Base64 image with the same aspect ratio as the original image.',
+			'desc' => 'Use native lazy loading for later images. The first images and high-priority images can load immediately. Responsive image URLs stay in the HTML.',
 			'std'  => 0,
 			'type' => 'checkbox',
 		);
+
+		foreach ( array(
+			'iframes' => array( 'Lazy Load Iframes', 'Load embedded frames when they approach the viewport.' ),
+			'video'   => array( 'Lazy Load Video', 'Defer video loading and request no media preload. Autoplay videos keep their existing behavior.' ),
+			'audio'   => array( 'Lazy Load Audio', 'Defer audio with visible controls and request no media preload. Autoplay and custom players keep their existing behavior.' ),
+		) as $type => $option ) {
+			$of_options[] = array(
+				'name' => $option[0],
+				'id'   => 'lazy_load_' . $type,
+				'desc' => $option[1],
+				'std'  => 0,
+				'type' => 'checkbox',
+			);
+		}
 
 		$of_options[] = array(
 			'name' => 'Disable theme style.css',

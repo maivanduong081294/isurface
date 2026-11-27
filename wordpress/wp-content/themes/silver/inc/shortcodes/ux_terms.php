@@ -95,16 +95,30 @@ function silver_terms_thumbnail($term, $meta_key, $size)
 {
   $value = $meta_key ? get_term_meta($term->term_id, $meta_key, true) : '';
 
-  if (is_numeric($value) && (int) $value > 0) {
-    $image = wp_get_attachment_image((int) $value, $size, false, array('loading' => 'lazy', 'alt' => $term->name));
-    if ($image) return $image;
-  } elseif (is_string($value) && filter_var($value, FILTER_VALIDATE_URL)) {
-    return '<img src="' . esc_url($value) . '" alt="' . esc_attr($term->name) . '" loading="lazy" />';
+  $url = is_string($value) && filter_var($value, FILTER_VALIDATE_URL) ? $value : '';
+  $attachment_id = is_numeric($value) ? (int) $value : 0;
+  if ($url) {
+    $attachment_id = attachment_url_to_postid($url);
   }
+  $attributes = array('loading' => 'lazy', 'alt' => $term->name);
 
-  // WooCommerce placeholder for product terms, a blank block otherwise.
-  if (function_exists('wc_placeholder_img_src') && in_array($term->taxonomy, get_object_taxonomies('product'), true)) {
-    return '<img src="' . esc_url(wc_placeholder_img_src($size)) . '" alt="' . esc_attr($term->name) . '" loading="lazy" />';
+  $limit_width = static function ($maximum, $dimensions) {
+    return $maximum ? min($maximum, $dimensions[0]) : $dimensions[0];
+  };
+  add_filter('max_srcset_image_width', $limit_width, 10, 2);
+  try {
+    if ($attachment_id > 0) {
+      $image = wp_get_attachment_image($attachment_id, $size, false, $attributes);
+      if ($image) return $image;
+    }
+    if ($url) {
+      return '<img src="' . esc_url($url) . '" alt="' . esc_attr($term->name) . '" loading="lazy" />';
+    }
+    if (function_exists('wc_placeholder_img') && in_array($term->taxonomy, get_object_taxonomies('product'), true)) {
+      return wc_placeholder_img($size, $attributes);
+    }
+  } finally {
+    remove_filter('max_srcset_image_width', $limit_width);
   }
 
   return '<span class="ux-terms-placeholder" aria-hidden="true"></span>';

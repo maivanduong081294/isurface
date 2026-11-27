@@ -1,160 +1,99 @@
 <?php
-
-if ( ! class_exists( 'FL_LazyLoad_Images' ) ) :
-
-class FL_LazyLoad_Images {
-
-  protected static $enabled = true;
-
-  static function init() {
-    if ( is_admin() ) return; // Disable for admin
-
-    add_action( 'wp_enqueue_scripts', array( __CLASS__, 'add_scripts' ), 99 );
-    add_action( 'wp_head', array( __CLASS__, 'setup_filters' ), 99 );
-  }
-
-  static function setup_filters() {
-    add_filter( 'the_content', array( __CLASS__, 'add_image_placeholders' ), 9999 );
-    add_filter( 'post_thumbnail_html', array( __CLASS__, 'add_image_placeholders' ), 11 );
-    add_filter( 'get_avatar', array( __CLASS__, 'add_image_placeholders' ), 11 );
-    add_filter( 'silver_woocommerce_get_alt_product_thumbnail', array( __CLASS__, 'add_image_placeholders' ), 11 );
-    add_filter( 'silver_lazy_load_images', array( __CLASS__, 'add_image_placeholders' ), 9999 );
-    add_filter( 'silver_woocommerce_single_product_extra_images', array( __CLASS__, 'add_image_placeholders' ), 9999 );
-    add_filter( 'woocommerce_single_product_image_thumbnail_html', array( __CLASS__, 'add_image_placeholders' ), 9999 );
-    add_filter( 'woocommerce_product_get_image', array( __CLASS__, 'add_image_placeholders' ), 9999 );
-  }
-
-  static function add_scripts() {
-    global $extensions_uri;
-
-    $theme   = wp_get_theme( get_template() );
-    $version = $theme->get( 'Version' );
-
-    wp_enqueue_script(
-      'silver-lazy',
-      $extensions_uri . '/silver-lazy-load/silver-lazy-load.js',
-      array( 'silver-js' ),
-      $version,
-      true
-    );
-  }
-
-  static function add_image_placeholders( $content ) {
-    if ( ! self::is_enabled() )
-      return $content;
-
-    // Don't lazyload for feeds, previews, mobile
-    if ( is_feed() || is_preview() )
-      return $content;
-
-    $matches = array();
-    preg_match_all( '/<img[\s\r\n]+.*?>/is', $content, $matches );
-
-    $search = array();
-    $replace = array();
-
-    $i = 0;
-
-    foreach ( $matches[0] as $imgHTML ) {
-      if ( in_array( $imgHTML, $search, true ) ) {
-        continue; // already has a replacement
-      }
-
-	    if ( strpos( $imgHTML, 'fetchpriority="high"' ) !== false ) {
-		    continue; // don't lazy-load images with fetchpriority="high"
-	    }
-
-	    // Skip images with 'ux-skip-lazy' class.
-	    if ( preg_match( '/class=["\'].*?ux-skip-lazy.*?["\']/', $imgHTML ) ) {
-		    continue;
-	    }
-
-      // don't do the replacement if the image is a data-uri
-      if ( ! preg_match( "/src=['\"]data:image/is", $imgHTML ) ) {
-        $i++;
-
-        // generate a base64 image string
-        $src = self::create_base64_string( $imgHTML );
-
-        // replace the src and add the data-src attribute
-        $replaceHTML = '';
-
-        if ( false === strpos( $imgHTML, 'data-src' ) ) {
-          $replaceHTML = preg_replace( '/<img(.*?)src=/is', '<img$1src="' . $src . '" data-src=', $imgHTML );
-        } else {
-          $replaceHTML = preg_replace( '/<img(.*?)src=(["\'](.*?)["\'])/is', '<img$1src="' . $src . '"', $imgHTML );
-        }
-
-        $replaceHTML = preg_replace( '/<img(.*?)srcset=/is', '<img$1srcset="" data-srcset=', $replaceHTML );
-
-        // add the lazy class to the img element
-        $classes = 'lazy-load';
-
-        if ( preg_match( '/class=["\']/i', $replaceHTML ) ) {
-          $replaceHTML = preg_replace( '/class=(["\'])(.*?)["\']/is', 'class=$1' . $classes . ' $2$1', $replaceHTML );
-        } else {
-          $replaceHTML = preg_replace( '/<img/is', '<img class="' . $classes . '"', $replaceHTML );
-        }
-
-		// Remove native lazy loading to minimize conflicts.
-	    $replaceHTML = preg_replace( '/(\s+)loading=["\']lazy["\']/is', '', $replaceHTML );
-
-        array_push( $search, $imgHTML );
-        array_push( $replace, $replaceHTML );
-      }
-    }
-
-    $content = str_replace( $search, $replace, $content );
-
-    return $content;
-  }
-
-  static function is_enabled() {
-    return self::$enabled;
-  }
-
-  static function get_image_size( $html ) {
-    preg_match_all( '/(height|width)=["\'](.*?)["\']/is', $html, $matches, PREG_PATTERN_ORDER );
-    $size = array( 100, 100 );
-
-    foreach ( $matches[1] as $key => $attr ) {
-      $value = intval( $matches[2][ $key ] );
-
-      if ( $attr === 'width' ) $size[0] = $value;
-      if ( $attr === 'height' ) $size[1] = $value;
-    }
-
-    return $size;
-  }
-
-  static function create_base64_string( $imgHTML ) {
-    list( $width, $height ) = self::get_image_size( $imgHTML );
-
-    $svg = '<svg';
-    $svg .= ' viewBox="0 0 ' . $width . ' ' . $height . '"';
-    $svg .= ' xmlns="http://www.w3.org/2000/svg"';
-    $svg .= '></svg>';
-
-    // For base64 string:
-    // return 'data:image/svg+xml;base64,' . base64_encode( $svg );
-
-    return 'data:image/svg+xml,' . rawurlencode( $svg );
-  }
-}
-
-add_action( 'init', array( 'FL_LazyLoad_Images', 'init' ) );
-
 /**
- * WooCommerce category thumbnails don't have a filter.
- * Remove the original action and add a custom.
+ * Apply loading hints to the rendered storefront in document order.
  */
-function silver_woocommerce_subcategory_thumbnail( $category ) {
-  ob_start();
-  woocommerce_subcategory_thumbnail( $category );
-  $thumbnail = ob_get_clean();
-  echo FL_LazyLoad_Images::add_image_placeholders( $thumbnail );
-}
-remove_action( 'woocommerce_before_subcategory_title', 'woocommerce_subcategory_thumbnail', 10 );
-add_action( 'woocommerce_before_subcategory_title', 'silver_woocommerce_subcategory_thumbnail', 10 );
+function silver_lazy_load_media( $output ) {
+	$html = new WP_HTML_Tag_Processor( $output );
+	if ( ! $html->next_tag( 'BODY' ) ) {
+		return $output;
+	}
 
-endif;
+	$enabled = array(
+		'IMG'    => silver_perf( 'lazy_load_images' ),
+		'IFRAME' => silver_perf( 'lazy_load_iframes' ),
+		'VIDEO'  => silver_perf( 'lazy_load_video' ),
+		'AUDIO'  => silver_perf( 'lazy_load_audio' ),
+	);
+	$early_images = wp_omit_loading_attr_threshold();
+	$first_main_image = false;
+	$template_depth = 0;
+
+	while ( $html->next_tag( array( 'tag_closers' => 'visit' ) ) ) {
+		$tag = $html->get_tag();
+		if ( 'TEMPLATE' === $tag ) {
+			$template_depth += $html->is_tag_closer() ? -1 : 1;
+			$template_depth = max( 0, $template_depth );
+			continue;
+		}
+		if ( $template_depth ) {
+			continue;
+		}
+		if ( 'MAIN' === $tag ) {
+			$first_main_image = ! $html->is_tag_closer();
+			continue;
+		}
+		if ( empty( $enabled[ $tag ] ) || $html->is_tag_closer() ) {
+			continue;
+		}
+
+		$eager = 'eager' === strtolower( (string) $html->get_attribute( 'loading' ) );
+		$skip = $html->has_class( 'ux-skip-lazy' ) || 'high' === strtolower( (string) $html->get_attribute( 'fetchpriority' ) );
+		if ( 'IMG' === $tag ) {
+			$src = $html->get_attribute( 'src' );
+			if ( ! is_string( $src ) || 0 === stripos( $src, 'data:' ) ) {
+				continue;
+			}
+			$skip = $skip || $early_images > 0 || $first_main_image;
+			--$early_images;
+			$first_main_image = false;
+		}
+		if ( $skip ) {
+			if ( 'lazy' === strtolower( (string) $html->get_attribute( 'loading' ) ) ) {
+				$html->remove_attribute( 'loading' );
+				if ( 'IMG' === $tag ) {
+					$sizes = $html->get_attribute( 'sizes' );
+					if ( is_string( $sizes ) && preg_match( '/^auto\s*,\s*/i', $sizes, $prefix ) ) {
+						$html->set_attribute( 'sizes', substr( $sizes, strlen( $prefix[0] ) ) );
+					}
+				}
+			}
+			continue;
+		}
+		if ( $eager ) {
+			continue;
+		}
+		if ( 'VIDEO' === $tag || 'AUDIO' === $tag ) {
+			if ( null !== $html->get_attribute( 'autoplay' ) || ( 'AUDIO' === $tag && null === $html->get_attribute( 'controls' ) ) ) {
+				continue;
+			}
+			$html->set_attribute( 'preload', 'none' );
+		}
+		$html->set_attribute( 'loading', 'lazy' );
+	}
+	return $html->get_updated_html();
+}
+
+function silver_setup_lazy_load_media() {
+	if ( is_feed() || is_preview() || is_customize_preview() || is_embed() || is_trackback() || wp_is_json_request() || ( function_exists( 'ux_builder_is_iframe' ) && ux_builder_is_iframe() ) ) {
+		return;
+	}
+
+	if ( function_exists( 'wp_should_output_buffer_template_for_enhancement' ) ) {
+		add_filter( 'wp_template_enhancement_output_buffer', 'silver_lazy_load_media' );
+	} else {
+		// WordPress 6.4–6.8 has no template enhancement filter.
+		add_filter( 'template_include', static function ( $template ) {
+			ob_start( 'silver_lazy_load_media' );
+			return $template;
+		}, PHP_INT_MAX );
+	}
+
+	if ( silver_perf( 'lazy_load_images' ) ) {
+		// Existing slider, masonry and third-party lazy-load markup use this behavior.
+		add_action( 'wp_enqueue_scripts', static function () {
+			global $extensions_uri;
+			wp_enqueue_script( 'silver-lazy', $extensions_uri . '/silver-lazy-load/silver-lazy-load.js', array( 'silver-js' ), wp_get_theme( get_template() )->get( 'Version' ), true );
+		}, 99 );
+	}
+}
+add_action( 'wp', 'silver_setup_lazy_load_media' );

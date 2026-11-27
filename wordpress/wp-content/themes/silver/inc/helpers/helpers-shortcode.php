@@ -493,31 +493,42 @@ function silver_sanitize_inline_svg( $svg ) {
 
 function silver_get_image( $id, $size = 'large', $alt = 'bg_image', $inline = false, $image_title = false ) {
 
-    if(!$id) return '<img src="'.get_template_directory_uri().'/assets/img/missing.jpg'.'" />';
-
-	$attr       = array();
-	$title_html = '';
-
-	if ( $image_title ) {
-		$the_title     = get_the_title( $id );
-		$attr['title'] = $the_title;
-		$title_html    = ' title="' . esc_attr( $the_title ) . '" ';
+	if ( ! $id ) {
+		return '<img src="' . get_template_directory_uri() . '/assets/img/missing.jpg" />';
 	}
 
-    if (!is_numeric($id)) {
-        return '<img src="' . esc_url( $id ) . '" alt="' . esc_attr( $alt ) . '"' . $title_html . '/>';
-    } else {
-        $meta = get_post_mime_type($id);
+	$url           = is_numeric( $id ) ? '' : $id;
+	$attachment_id = $url ? attachment_url_to_postid( $url ) : (int) $id;
+	$attr          = $url ? array( 'alt' => $alt ) : array();
+	$title_html    = '';
+	if ( $image_title ) {
+		$attr['title'] = get_the_title( $attachment_id ?: $id );
+		$title_html    = ' title="' . esc_attr( $attr['title'] ) . '"';
+	}
 
-        if ( $meta == 'image/svg+xml' && $inline ){
-          $file = get_attached_file( $id );
-          if ( $file && file_exists( $file ) ) {
-            return silver_sanitize_inline_svg( file_get_contents( $file ) );
-          }
-        }
+	if ( $attachment_id ) {
+		if ( ! $url && $inline && 'image/svg+xml' === get_post_mime_type( $attachment_id ) ) {
+			$file = get_attached_file( $attachment_id );
+			if ( $file && file_exists( $file ) ) {
+				return silver_sanitize_inline_svg( file_get_contents( $file ) );
+			}
+		}
 
-        return wp_get_attachment_image( $id, $size, false, $attr );
-    }
+		$limit_width = static function ( $maximum, $dimensions ) {
+			return $maximum ? min( $maximum, $dimensions[0] ) : $dimensions[0];
+		};
+		add_filter( 'max_srcset_image_width', $limit_width, PHP_INT_MAX, 2 );
+		try {
+			$image = wp_get_attachment_image( $attachment_id, $size ?: 'full', false, $attr );
+		} finally {
+			remove_filter( 'max_srcset_image_width', $limit_width, PHP_INT_MAX );
+		}
+		if ( $image || ! $url ) {
+			return $image;
+		}
+	}
+
+	return '<img src="' . esc_url( $url ) . '" alt="' . esc_attr( $alt ) . '"' . $title_html . '/>';
 }
 
 function silver_string_limit_words($string, $word_limit) {
