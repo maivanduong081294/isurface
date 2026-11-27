@@ -92,8 +92,9 @@ function silver_mega_menu_shortcode($atts, $content = null, $tag = 'ux_mega_menu
     $classes[] = 'ux-mega-menu-drawer-' . ('accordion' === $atts['drawer_layout'] ? 'accordion' : 'expanded');
     foreach ($drawer_screens as $screen) $classes[] = 'ux-mega-menu-icon-' . sanitize_html_class($screen);
   }
-  // Always open while editing in UX Builder.
-  if ($builder) $classes[] = 'is-open ux-mega-menu-builder';
+  // UX Builder: closed like on the site, opened by a click on the button /
+  // icon; silver-mega-menu.js keeps it open (and its item) between renders.
+  if ($builder) $classes[] = 'ux-mega-menu-builder';
   if ($atts['class']) $classes[] = $atts['class'];
   if ($atts['visibility']) $classes[] = $atts['visibility'];
 
@@ -104,7 +105,7 @@ function silver_mega_menu_shortcode($atts, $content = null, $tag = 'ux_mega_menu
   ob_start();
 ?>
   <div id="<?php echo esc_attr($id); ?>" class="<?php echo esc_attr(implode(' ', $classes)); ?>" data-trigger="<?php echo esc_attr($trigger); ?>"<?php if ($mobile_icon) echo ' data-drawer="' . esc_attr(implode(' ', $drawer_screens)) . '"'; ?>>
-    <button type="button" class="ux-mega-menu-trigger" aria-expanded="<?php echo $builder ? 'true' : 'false'; ?>" aria-controls="<?php echo esc_attr($id); ?>-panel">
+    <button type="button" class="ux-mega-menu-trigger" aria-expanded="false" aria-controls="<?php echo esc_attr($id); ?>-panel">
       <?php if ($icon) echo get_silver_icon($icon); // phpcs:ignore WordPress.Security.EscapeOutput ?>
       <span class="ux-mega-menu-trigger-text"><?php echo esc_html($atts['text']); ?></span>
     </button>
@@ -206,7 +207,12 @@ function silver_mega_menu_item_shortcode($atts, $content = null, $tag = 'ux_mega
   $title    = wp_strip_all_tags($atts['title']);
   $link     = trim((string) $atts['link']);
   $classes  = array('ux-mega-menu-item');
-  if (0 === $index) $classes[] = 'is-active';
+  // UX Builder renders every item on its own (the counter starts again at 0
+  // for each one): there silver-mega-menu.js picks the open item.
+  $builder  = function_exists('ux_builder_is_active') && ux_builder_is_active()
+    && function_exists('ux_builder_is_doing_shortcode') && ux_builder_is_doing_shortcode();
+  $active   = 0 === $index && ! $builder;
+  if ($active) $classes[] = 'is-active';
   if ($atts['class']) $classes[] = $atts['class'];
   if ($atts['visibility']) $classes[] = $atts['visibility'];
 
@@ -265,7 +271,7 @@ function silver_mega_menu_item_shortcode($atts, $content = null, $tag = 'ux_mega
   ob_start();
 ?>
   <div id="<?php echo esc_attr($id); ?>" class="<?php echo esc_attr(implode(' ', $classes)); ?>">
-    <button type="button" class="ux-mega-menu-tab" aria-expanded="<?php echo 0 === $index ? 'true' : 'false'; ?>" aria-controls="<?php echo esc_attr($id); ?>-pane"<?php echo $link ? ' data-href="' . esc_url($link) . '"' : ''; ?>>
+    <button type="button" class="ux-mega-menu-tab" aria-expanded="<?php echo $active ? 'true' : 'false'; ?>" aria-controls="<?php echo esc_attr($id); ?>-pane"<?php echo $link ? ' data-href="' . esc_url($link) . '"' : ''; ?>>
       <?php if ($media) : ?><span class="ux-mega-menu-tab-media"><?php echo $media; // phpcs:ignore WordPress.Security.EscapeOutput ?></span><?php endif; ?>
       <span class="ux-mega-menu-tab-text"><?php echo esc_html($title); ?></span>
       <?php echo get_silver_icon('fa-solid fa-chevron-right', null, array('class' => 'ux-mega-menu-tab-arrow')); // phpcs:ignore WordPress.Security.EscapeOutput ?>

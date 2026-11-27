@@ -9,13 +9,17 @@ class PostSaver {
 
   public function save() {
     define( 'UX_BUILDER_SAVING', true );
-    $data = json_decode( stripslashes( $_POST['data'] ), true );
-    $can_edit = current_user_can( 'edit_post', $data['id'] );
-    $can_publish = current_user_can( 'publish_post', $data['id'] );
-    $can_save = apply_filters( 'ux_builder_can_save', '__return_true', $data );
+    $data    = json_decode( stripslashes( isset( $_POST['data'] ) ? (string) $_POST['data'] : '' ), true );
+    $data    = is_array( $data ) ? $data : array();
+    $post_id = isset( $data['id'] ) ? (int) $data['id'] : 0;
 
     // Return an error if nonce is invalid.
-    check_ajax_referer( 'ux-builder-' . $data['id'], 'security' );
+    check_ajax_referer( 'ux-builder-' . $post_id, 'security' );
+
+    $post        = $post_id ? get_post( $post_id ) : null;
+    $can_edit    = $post && current_user_can( 'edit_post', $post_id );
+    $can_publish = $post && current_user_can( 'publish_post', $post_id );
+    $can_save    = apply_filters( 'ux_builder_can_save', '__return_true', $data );
 
     // Stop here if user is not allowed to edit post.
     if ( ! $can_edit or ! $can_save ) {
@@ -24,8 +28,7 @@ class PostSaver {
 
     $post_content = '';
 
-    if( array_key_exists( 'children', $data['content'] ) ) {
-      $post = get_post( $data['id'] );
+    if ( isset( $data['content'] ) && is_array( $data['content'] ) && array_key_exists( 'children', $data['content'] ) ) {
       $elements = ux_builder( 'elements' );
       $use_blocks = function_exists( 'use_block_editor_for_post' )
         ? use_block_editor_for_post( $post )
@@ -36,20 +39,37 @@ class PostSaver {
       $post_content = $stringify->transform( $data['content']['children'] );
     }
 
-    // Publish post if user has permission to do it.
-    if ( $can_publish && $data['status'] == 'publish' ) {
-      $post_status = $data['status'];
+    // Status: publishing (or scheduling, private) needs the right to publish;
+    // without it the post goes to review, as in the WordPress editor.
+    $post_status = isset( $data['status'] ) ? sanitize_key( $data['status'] ) : 'draft';
+    if ( ! in_array( $post_status, array( 'publish', 'future', 'private', 'pending', 'draft' ), true ) ) {
+      $post_status = 'draft';
+    }
+    if ( ! $can_publish && in_array( $post_status, array( 'publish', 'future', 'private' ), true ) ) {
+      $post_status = 'pending';
+    }
+
+    if ( $can_publish && $post_status == 'publish' ) {
       $save_button = __( 'Update', 'wordpress' );
     } else {
-      $post_status = $data['status'];
       $save_button = $post_status == 'pending'
         ? __( 'Submit for Review', 'wordpress' )
         : __( 'Publish', 'wordpress' );
     }
 
-    $post = apply_filters( 'ux_builder_save_post', array_merge( $data['attributes'], array(
-      'ID' => $data['id'],
-      'meta_input' => $data['meta'],
+    // Only the fields the builder shows for this post (title, excerpt,
+    // parent, its meta options), never other columns (author, type...) or
+    // other meta keys.
+    $attribute_keys = array_keys( (array) apply_filters( 'ux_builder_post_options', array(), $post ) );
+    $meta_keys      = array_keys( (array) apply_filters( 'ux_builder_meta_options', array(), $post ) );
+    $attributes     = isset( $data['attributes'] ) && is_array( $data['attributes'] ) ? $data['attributes'] : array();
+    $meta           = isset( $data['meta'] ) && is_array( $data['meta'] ) ? $data['meta'] : array();
+    $attributes     = array_intersect_key( $attributes, array_flip( $attribute_keys ) );
+    $meta           = array_intersect_key( $meta, array_flip( $meta_keys ) );
+
+    $post = apply_filters( 'ux_builder_save_post', array_merge( $attributes, array(
+      'ID' => $post_id,
+      'meta_input' => $meta,
       'post_content' => trim( $post_content ),
       'post_status' => $post_status,
     ) ) );

@@ -332,6 +332,20 @@ $wp_admin_bar->add_menu( array(
 		'href'   => $optionUrl_section . 'notifications',
 	) );
 
+	$wp_admin_bar->add_menu( array(
+		'parent' => 'theme_options',
+		'id'     => 'options_floating_contact',
+		'title'  => '<span class="dashicons dashicons-phone" style="' . $icon_style . '"></span> Floating Contact',
+		'href'   => $optionUrl_section . 'floating_contact',
+	) );
+
+	$wp_admin_bar->add_menu( array(
+		'parent' => 'theme_options',
+		'id'     => 'options_breadcrumbs',
+		'title'  => '<span class="dashicons dashicons-networking" style="' . $icon_style . '"></span> Breadcrumbs',
+		'href'   => $optionUrl_section . 'breadcrumbs',
+	) );
+
 
 $wp_admin_bar->add_menu( array(
  'parent' => 'theme_options',

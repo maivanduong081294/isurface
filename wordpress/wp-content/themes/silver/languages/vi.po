@@ -2602,6 +2602,10 @@ msgid "Please enter a valid phone number."
 msgstr "Số điện thoại không hợp lệ."
 
 #: inc/woocommerce/structure-wc-product-reviews.php
+msgid "Too many photos sent. Please try again later."
+msgstr "Bạn đã gửi quá nhiều ảnh. Vui lòng thử lại sau."
+
+#: inc/woocommerce/structure-wc-product-reviews.php
 msgid "Please enter your email address."
 msgstr "Vui lòng nhập email."
 

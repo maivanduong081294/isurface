@@ -138,6 +138,57 @@ if ( ! function_exists( 'of_options' ) ) {
 		);
 
 		$of_options[] = array(
+			'name' => 'Enable performance optimizations',
+			'id'   => 'perf_enabled',
+			'desc' => 'Main switch. Off = ALL the options below are ignored (their values are kept: turning it on again applies them as they were). Use it to check quickly whether an optimization breaks a page.',
+			'std'  => 1,
+			'type' => 'checkbox',
+		);
+
+		// Live status: only on this options page (a request to the server).
+		$perf_page   = is_admin() && isset( $_GET['page'] ) && 'optionsframework' === $_GET['page']; // phpcs:ignore WordPress.Security.NonceVerification
+		$perf_status = static function ( $html ) use ( $perf_page ) {
+			return $perf_page ? $html : '';
+		};
+
+		// Page cache.
+		$of_options[] = array(
+			'name' => '',
+			'type' => 'info',
+			'desc' => '<h2 style="font-size:1rem; margin-top: 40px;">Page cache</h2><p style="font-size:14px">The biggest gain on the server response time (TTFB).</p>',
+		);
+
+		$of_options[] = array(
+			'name'    => 'Page cache',
+			'id'      => 'perf_page_cache',
+			'std'     => '',
+			'type'    => 'select',
+			'options' => array(
+				''      => 'Disabled',
+				'3600'  => '1 hour',
+				'21600' => '6 hours',
+				'43200' => '12 hours (recommended)',
+			),
+			'desc'    => 'Saves the HTML of the pages for visitors who are not logged in and sends it back without building the page again (any server: Apache, Nginx, LiteSpeed). Emptied automatically when a post, page, block, product (stock), menu, widget, comment, category, the Customizer or these options change; "Clear page cache" button in the admin bar. Not cached: logged-in users, a cart that is not empty, search, 404, cart / checkout / account, URLs with parameters other than the WordPress ones (?p=, ?page_id=...; utm_*, fbclid... are ignored). 12 hours at most: the security codes (nonces) of the forms stay valid.'
+				. $perf_status( function_exists( 'silver_page_cache_count' ) ? '<br><span style="color:#008a20">' . ( silver_page_cache_lifetime() ? 'On, ' . silver_page_cache_count() . ' page(s) cached. Check in a private window: response header X-Silver-Cache: MISS (first visit), then HIT.' : '' ) . '</span>' : '' ),
+		);
+
+		$of_options[] = array(
+			'name' => 'Do not cache these URLs',
+			'type' => 'text',
+			'id'   => 'perf_page_cache_exclude',
+			'std'  => '',
+			'desc' => 'Paths (without the domain), comma separated, * allowed, e.g. <code>/lien-he/, /tai-khoan/*</code>. For pages with content for each visitor.',
+		);
+
+		// Optimizations.
+		$of_options[] = array(
+			'name' => '',
+			'type' => 'info',
+			'desc' => '<h2 style="font-size:1rem; margin-top: 40px;">Optimizations</h2>',
+		);
+
+		$of_options[] = array(
 			'name' => 'Preload pages',
 			'id'   => 'perf_instant_page',
 			'desc' => 'Preload pages right before a user clicks on it for blazing fast browsing between pages.',
@@ -170,6 +221,19 @@ if ( ! function_exists( 'of_options' ) ) {
 		);
 
 		$of_options[] = array(
+			'name'    => 'Icon font display',
+			'id'      => 'perf_icon_font_display',
+			'std'     => '',
+			'type'    => 'select',
+			'options' => array(
+				''         => 'Default (block: icons hidden until the font is loaded)',
+				'swap'     => 'Swap (recommended)',
+				'fallback' => 'Fallback',
+			),
+			'desc'    => 'font-display of the Font Awesome icons (PageSpeed: "Font display"). Swap: the page shows at once, each icon appears when its font is loaded (a short empty space, or a small box on some systems, before). Fallback: waits 100 ms for the font first. The Font Awesome file is not changed: a copy with this setting is made in wp-content/cache/silver-assets/ and loaded instead (the original is loaded if the copy can not be written).',
+		);
+
+		$of_options[] = array(
 			'name' => 'Disable Block library css',
 			'type' => 'checkbox',
 			'id'   => 'disable_blockcss',
@@ -191,6 +255,175 @@ if ( ! function_exists( 'of_options' ) ) {
 			'id'   => 'jquery_migrate',
 			'std'  => 0,
 			'desc' => 'Remove jQuery Migrate. Most up-to-date front-end code and plugins don’t require jquery-migrate.min.js. More often than not, keeping this - simply adds unnecessary load to your site.',
+		);
+
+		$of_options[] = array(
+			'name' => 'Disable Dashicons for visitors',
+			'type' => 'checkbox',
+			'id'   => 'perf_disable_dashicons',
+			'std'  => 0,
+			'desc' => 'Remove the Dashicons font CSS for visitors who are not logged in (only the admin bar uses it). A stylesheet that depends on it still loads it.',
+		);
+
+		$of_options[] = array(
+			'name' => 'Disable global styles',
+			'type' => 'checkbox',
+			'id'   => 'perf_disable_global_styles',
+			'std'  => 0,
+			'desc' => 'Remove the global styles of the block editor (global-styles inline CSS, classic-theme-styles). The theme does not use them, but colors, font sizes and spacing chosen in the block editor for posts need them: check your posts after enabling.',
+		);
+
+		$of_options[] = array(
+			'name' => 'Disable embeds',
+			'type' => 'checkbox',
+			'id'   => 'perf_disable_embeds',
+			'std'  => 0,
+			'desc' => 'Remove the oEmbed discovery links and the wp-embed script, used when other sites embed your posts. Embedding YouTube or other sites in your posts still works.',
+		);
+
+		$of_options[] = array(
+			'name' => 'Clean up &lt;head&gt;',
+			'type' => 'checkbox',
+			'id'   => 'perf_clean_head',
+			'std'  => 0,
+			'desc' => 'Remove tags nobody needs from every page: RSD link (old XML-RPC clients), generator (WordPress / WooCommerce versions), shortlink, previous / next post links (saves 2 queries on posts).',
+		);
+
+		// JavaScript & CSS.
+		$of_options[] = array(
+			'name' => '',
+			'type' => 'info',
+			'desc' => '<h2 style="font-size:1rem; margin-top: 40px;">JavaScript &amp; CSS</h2><p style="font-size:14px">Fewer files that block the display of the page. Check the browser console and the pages with forms, sliders and the cart after enabling.</p>',
+		);
+
+		$of_options[] = array(
+			'name' => 'Defer JavaScript',
+			'type' => 'checkbox',
+			'id'   => 'perf_defer_js',
+			'std'  => 0,
+			'desc' => 'Load the scripts with "defer" (WordPress loading strategy): they no longer block the display. WordPress keeps a script blocking when deferring it is not safe (a blocking script depends on it, an inline script runs right after it). Async scripts stay async.',
+		);
+
+		$of_options[] = array(
+			'name' => 'Do not defer these scripts',
+			'type' => 'text',
+			'id'   => 'perf_defer_js_exclude',
+			'std'  => 'jquery-core',
+			'desc' => 'Script handles, comma separated, * allowed (handle = id of the script tag without "-js"). Keep jquery-core if pages have jQuery code written directly in them (otherwise "jQuery is not defined" in the console).',
+		);
+
+		// Critical CSS status (options page only).
+		$perf_critical = '';
+		if ( $perf_page ) {
+			$crit_dir      = get_template_directory() . '/assets/css/critical/';
+			$crit_manifest = is_file( $crit_dir . 'manifest.json' ) ? json_decode( (string) file_get_contents( $crit_dir . 'manifest.json' ), true ) : null; // phpcs:ignore WordPress.WP.AlternativeFunctions
+			if ( empty( $crit_manifest['sheets'] ) ) {
+				$perf_critical = '<br><span style="color:#b32d2e">No critical CSS generated yet: run <code>npm run critical</code> in the theme build folder.</span>';
+			} else {
+				$crit_parts = array();
+				foreach ( $crit_manifest['sheets'] as $crit_handle => $crit_info ) {
+					$crit_file  = $crit_dir . basename( $crit_info['file'] );
+					$crit_orig  = get_template_directory() . '/assets/css/' . basename( $crit_info['file'] );
+					$crit_fresh = is_file( $crit_orig ) && function_exists( 'silver_perf_file_md5' ) && silver_perf_file_md5( $crit_orig ) === $crit_info['source_md5'];
+					$crit_parts[] = esc_html( $crit_info['file'] ) . ' ' . ( is_file( $crit_file ) ? size_format( filesize( $crit_file ), 1 ) : '-' )
+						. ( $crit_fresh ? '' : ' <strong style="color:#b32d2e">(CSS changed since: loads as usual until generated again)</strong>' );
+				}
+				$perf_critical = '<br><span style="color:#008a20">Generated ' . esc_html( mysql2date( 'd/m/Y H:i', get_date_from_gmt( gmdate( 'Y-m-d H:i:s', strtotime( (string) $crit_manifest['generated'] ) ) ) ) ) . ' from ' . count( (array) $crit_manifest['urls'] ) . ' page(s): ' . implode( ', ', $crit_parts ) . '.</span>';
+			}
+		}
+
+		$of_options[] = array(
+			'name' => 'Critical CSS',
+			'id'   => 'perf_critical_css',
+			'std'  => 0,
+			'type' => 'checkbox',
+			'desc' => 'Prints in the page the theme CSS of the first screen (header, layout, buttons, text: about 13 KB compressed) and loads the full theme stylesheets (silver, silver-modern, silver-shop) without blocking the display: the page shows at once. The full files are not cut, so once loaded the page looks exactly as before. Made from real pages by <code>npm run critical</code> (theme build folder, pages in build/critical.config.json): run it again after changing the theme CSS or the design of the first screen; a stylesheet changed since loads as usual.'
+				. $perf_critical,
+		);
+
+		$of_options[] = array(
+			'name'    => 'Inline small CSS',
+			'id'      => 'perf_inline_css',
+			'std'     => '',
+			'type'    => 'select',
+			'options' => array(
+				''      => 'Disabled',
+				'4096'  => 'Files up to 4 KB',
+				'8192'  => 'Files up to 8 KB',
+				'16384' => 'Files up to 16 KB',
+				'32768' => 'Files up to 32 KB',
+			),
+			'desc'    => 'Prints the small CSS files of this site in the page (&lt;style&gt;) instead of a link: one request that blocks the display less for each. The HTML gets heavier and that CSS is no longer cached on its own between pages: keep it to small files. Size of the file on disk, files with @import are left out.',
+		);
+
+		$of_options[] = array(
+			'name' => 'Non-blocking CSS',
+			'type' => 'text',
+			'id'   => 'perf_async_css',
+			'std'  => '',
+			'desc' => 'Stylesheet handles loaded without blocking the display (media="print" until loaded), comma separated, * allowed (handle = id of the link tag without "-css"). Only for CSS of what is below the first screen: the header / hero CSS loaded late makes the page jump (CLS). Empty = off.',
+		);
+
+		// Resource hints.
+		$of_options[] = array(
+			'name' => '',
+			'type' => 'info',
+			'desc' => '<h2 style="font-size:1rem; margin-top: 40px;">Resource hints</h2><p style="font-size:14px">Tell the browser early what the page will need.</p>',
+		);
+
+		$of_options[] = array(
+			'name' => 'Preconnect to domains',
+			'type' => 'textarea',
+			'id'   => 'perf_preconnect',
+			'std'  => '',
+			'desc' => 'One domain per line, connected early (DNS, TLS) when the page starts: external fonts, analytics, CDN... Add " crossorigin" after a font domain, e.g. <code>https://fonts.gstatic.com crossorigin</code>. Only domains every page uses (2–4 at most).',
+		);
+
+		$of_options[] = array(
+			'name' => 'Preload files (all pages)',
+			'type' => 'textarea',
+			'id'   => 'perf_preload',
+			'std'  => '',
+			'desc' => 'One URL per line, downloaded first on every page: a font of the text above the fold (.woff2), a critical CSS file. The type comes from the extension (woff2, woff, ttf, css, js, jpg, png, webp, avif, svg).',
+		);
+
+		$of_options[] = array(
+			'name' => 'Preload files (homepage)',
+			'type' => 'textarea',
+			'id'   => 'perf_preload_home',
+			'std'  => '',
+			'desc' => 'One URL per line, homepage only: the largest image of the first screen (hero / banner, the LCP of PageSpeed) gets high priority. Use the exact URL the page loads (same size).',
+		);
+
+		// Server: browser cache, compression.
+		$of_options[] = array(
+			'name' => '',
+			'type' => 'info',
+			'desc' => '<h2 style="font-size:1rem; margin-top: 40px;">Server</h2><p style="font-size:14px">CSS, JS, images and fonts are sent by the web server without WordPress. Apache / LiteSpeed: the rules are written in .htaccess (block "Silver Performance") when you save. Nginx: the lines to add to its configuration are shown below.</p>',
+		);
+
+		$of_options[] = array(
+			'name'    => 'Browser cache',
+			'id'      => 'perf_browser_cache',
+			'std'     => '',
+			'type'    => 'select',
+			'options' => array(
+				''         => 'Disabled',
+				'604800'   => '1 week',
+				'2592000'  => '1 month',
+				'31536000' => '1 year (recommended)',
+			),
+			'desc'    => 'How long browsers keep images, fonts, CSS and JS. CSS / JS of WordPress and the theme have ?ver= and are downloaded again when they change; an image uploaded again with the same name stays old for visitors: give it a new name.'
+				. $perf_status( function_exists( 'silver_server_rules_status' ) ? silver_server_rules_status( 'browser_cache' ) : '' ),
+		);
+
+		$of_options[] = array(
+			'name' => 'Gzip / Brotli compression',
+			'id'   => 'perf_gzip',
+			'std'  => 0,
+			'type' => 'checkbox',
+			'desc' => 'Compress HTML, CSS, JS, SVG and fonts (TTF / OTF) when sent: 60–80% smaller. webp / jpg / png and woff2 fonts are already compressed. Brotli when the server has it, else Gzip.'
+				. $perf_status( function_exists( 'silver_server_rules_status' ) ? silver_server_rules_status( 'gzip' ) : '' ),
 		);
 
 		// Content delivery.

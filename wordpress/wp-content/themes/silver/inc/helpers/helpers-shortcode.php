@@ -425,6 +425,72 @@ function silver_get_image_url($id, $size = 'large'){
     }
 }
 
+/**
+ * An SVG file made safe to print inline: no scripts, no event handlers
+ * (onload...), no javascript: links, no embedded HTML (foreignObject).
+ *
+ * @param string $svg SVG markup.
+ * @return string
+ */
+function silver_sanitize_inline_svg( $svg ) {
+	$svg = (string) $svg;
+	if ( '' === trim( $svg ) ) {
+		return '';
+	}
+
+	$remove_tags = array( 'script', 'foreignobject', 'iframe', 'embed', 'object', 'handler', 'listener' );
+	$dom         = null;
+	$loaded      = false;
+
+	if ( class_exists( 'DOMDocument' ) ) {
+		$previous = libxml_use_internal_errors( true );
+		$dom      = new DOMDocument();
+		// No DTD, no entities, no network (XXE).
+		$loaded = $dom->loadXML( $svg, LIBXML_NONET | LIBXML_NOBLANKS );
+		libxml_clear_errors();
+		libxml_use_internal_errors( $previous );
+
+		if ( $loaded && ( ! $dom->documentElement || 'svg' !== strtolower( $dom->documentElement->localName ) ) ) {
+			return ''; // Not an SVG.
+		}
+	}
+
+	if ( $loaded && $dom instanceof DOMDocument ) {
+		$xpath = new DOMXPath( $dom );
+		foreach ( iterator_to_array( $xpath->query( '//*' ) ) as $node ) {
+			if ( ! $node instanceof DOMElement ) {
+				continue;
+			}
+			if ( in_array( strtolower( $node->localName ), $remove_tags, true ) ) {
+				$node->parentNode->removeChild( $node );
+				continue;
+			}
+			/** @var DOMAttr $attr */
+			foreach ( iterator_to_array( $node->attributes ) as $attr ) {
+				$name  = strtolower( $attr->localName );
+				$value = strtolower( preg_replace( '/[\s\x00-\x1f]+/', '', (string) $attr->value ) );
+				if (
+					0 === strpos( $name, 'on' )
+					|| ( in_array( $name, array( 'href', 'src', 'action', 'formaction' ), true ) && preg_match( '/^(javascript|vbscript|data:(?!image\/(png|jpe?g|gif|webp)))/', $value ) )
+					|| ( in_array( $name, array( 'values', 'to', 'from', 'by' ), true ) && false !== strpos( $value, 'javascript' ) )
+				) {
+					$node->removeAttributeNode( $attr );
+				}
+			}
+		}
+
+		return (string) $dom->saveXML( $dom->documentElement );
+	}
+
+	// No DOM extension, or not well-formed XML: strip what can run code.
+	$svg = preg_replace( '#<(script|foreignObject|iframe|embed|object)\b.*?</\1\s*>#is', '', $svg );
+	$svg = preg_replace( '#<(script|foreignObject|iframe|embed|object)\b[^>]*/?>#is', '', $svg );
+	$svg = preg_replace( '#\s+on[a-z]+\s*=\s*("[^"]*"|\'[^\']*\'|[^\s>]+)#i', '', $svg );
+	$svg = preg_replace( '#(href|src)\s*=\s*(["\'])\s*(javascript|vbscript):[^"\']*\2#i', '$1=$2#$2', $svg );
+
+	return $svg;
+}
+
 function silver_get_image( $id, $size = 'large', $alt = 'bg_image', $inline = false, $image_title = false ) {
 
     if(!$id) return '<img src="'.get_template_directory_uri().'/assets/img/missing.jpg'.'" />';
@@ -446,11 +512,7 @@ function silver_get_image( $id, $size = 'large', $alt = 'bg_image', $inline = fa
         if ( $meta == 'image/svg+xml' && $inline ){
           $file = get_attached_file( $id );
           if ( $file && file_exists( $file ) ) {
-            return preg_replace(
-              '#<script(.*?)>(.*?)</script>#is',
-              '',
-              file_get_contents( $file )
-            );
+            return silver_sanitize_inline_svg( file_get_contents( $file ) );
           }
         }
 

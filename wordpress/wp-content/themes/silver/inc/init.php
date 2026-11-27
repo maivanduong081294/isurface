@@ -46,6 +46,7 @@ require get_template_directory() . '/inc/functions/function-ajax.php';
 require get_template_directory() . '/inc/functions/function-register.php';
 require get_template_directory() . '/inc/functions/function-upgrade.php';
 require get_template_directory() . '/inc/functions/function-update.php';
+require get_template_directory() . '/inc/functions/function-performance.php';
 require get_template_directory() . '/inc/functions/function-setup.php';
 require get_template_directory() . '/inc/functions/function-theme-mods.php';
 require get_template_directory() . '/inc/functions/function-plugins.php';

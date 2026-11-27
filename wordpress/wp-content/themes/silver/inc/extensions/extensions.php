@@ -9,9 +9,9 @@ $extensions_uri = get_template_directory_uri() . '/inc/extensions';
 if(is_admin()){ require $extensions_url.'/silver-shortcode-insert/tinymce.php'; }
 
 // Lazy load
-if((!is_admin() && !is_customize_preview() ) && get_theme_mod('lazy_load_images')){ require $extensions_url.'/silver-lazy-load/silver-lazy-load.php'; }
+if((!is_admin() && !is_customize_preview() ) && silver_perf('lazy_load_images')){ require $extensions_url.'/silver-lazy-load/silver-lazy-load.php'; }
 
-if ( get_theme_mod( 'perf_instant_page', 0 ) ) {
+if ( silver_perf( 'perf_instant_page' ) ) {
   require $extensions_url.'/silver-instant-page/silver-instant-page.php';
 }
 

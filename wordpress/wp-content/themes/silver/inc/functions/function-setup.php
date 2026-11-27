@@ -236,7 +236,7 @@ function silver_scripts() {
 	}
 
 	// Load current theme styles.css file.
-	if ( ! get_theme_mod( 'flatsome_disable_style_css', 0 ) ) {
+	if ( ! silver_perf( 'flatsome_disable_style_css' ) ) {
 		wp_enqueue_style( 'silver-style', get_stylesheet_uri(), array(), wp_get_theme()->get( 'Version' ), 'all' );
 	}
 
@@ -474,7 +474,7 @@ add_action( 'ux_builder_enqueue_scripts', 'silver_ux_builder_scripts', 10 );
  * Remove MediaElement.js scripts and styles.
  */
 function silver_deregister_mejs() {
-	if ( get_theme_mod( 'disable_mejs' ) ) {
+	if ( silver_perf( 'disable_mejs' ) ) {
 		wp_deregister_script( 'wp-mediaelement' );
 		wp_deregister_style( 'wp-mediaelement' );
 	}
@@ -488,7 +488,7 @@ add_action( 'wp_enqueue_scripts', 'silver_deregister_mejs', PHP_INT_MAX );
  * @param WP_Scripts $scripts WP_Scripts object.
  */
 function silver_remove_jquery_migrate( $scripts ) {
-	if ( ! get_theme_mod( 'jquery_migrate' ) ) return;
+	if ( ! silver_perf( 'jquery_migrate' ) ) return;
 	if ( ! is_admin() && isset( $scripts->registered['jquery'] ) ) {
 		$script = $scripts->registered['jquery'];
 
@@ -502,14 +502,10 @@ function silver_remove_jquery_migrate( $scripts ) {
 
 add_action( 'wp_default_scripts', 'silver_remove_jquery_migrate' );
 
-// Disable emoji scripts
-if ( ! is_admin() && get_theme_mod( 'disable_emoji', 0 ) ) {
-	remove_action('wp_head', 'print_emoji_detection_script', 7);
-	remove_action('wp_print_styles', 'print_emoji_styles');
-}
+// Disable emoji scripts: inc/functions/function-performance.php.
 
 function silver_deregister_block_styles() {
-	if ( ! is_admin() && get_theme_mod( 'disable_blockcss', 0 ) ) {
+	if ( ! is_admin() && silver_perf( 'disable_blockcss' ) ) {
     wp_dequeue_style( 'wp-block-library' );
   }
 }

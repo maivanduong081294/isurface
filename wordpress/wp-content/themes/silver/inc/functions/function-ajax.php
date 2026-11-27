@@ -32,6 +32,23 @@ function silver_ajax_apply_shortcode() {
 		) );
 	}
 
+	// Public endpoint (the relay: "Load more", pages): one page of the element
+	// at most. Never a custom ID list: all of it at once, products hidden from
+	// the catalog included (the relay is off for those elements anyway, they
+	// have a single page).
+	unset( $atts['ids'] );
+	foreach ( array( 'products', 'posts' ) as $key ) {
+		if ( isset( $atts[ $key ] ) ) {
+			$atts[ $key ] = (string) max( 1, min( 100, (int) $atts[ $key ] ) );
+		}
+	}
+	if ( isset( $atts['page_number'] ) ) {
+		$atts['page_number'] = (string) max( 1, min( 1000, (int) $atts['page_number'] ) );
+	}
+	if ( isset( $atts['offset'] ) ) {
+		$atts['offset'] = (string) min( 10000, absint( $atts['offset'] ) );
+	}
+
 	$markup = silver_apply_shortcode( $tag, $atts );
 
 	wp_send_json_success( trim( $markup ) );

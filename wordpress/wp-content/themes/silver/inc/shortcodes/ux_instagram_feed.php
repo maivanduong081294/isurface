@@ -201,7 +201,11 @@ function silver_instagram_get_feed( $username, $hashtag, $hashtag_media ) {
 	$instagram = get_transient( $transient_name );
 
 	if ( ! empty( $instagram ) ) {
-		return unserialize( base64_decode( $instagram ) );
+		// The cache holds arrays of plain values: never build objects from it.
+		$cached = is_string( $instagram ) ? @unserialize( base64_decode( $instagram ), array( 'allowed_classes' => false ) ) : false; // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+		if ( is_array( $cached ) ) {
+			return $cached;
+		}
 	}
 
 	if ( $account ) {

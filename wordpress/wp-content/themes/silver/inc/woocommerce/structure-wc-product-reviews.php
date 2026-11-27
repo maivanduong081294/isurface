@@ -310,6 +310,38 @@ function silver_product_review_phone_normalize( $phone ) {
 }
 
 /**
+ * Whether a completed order with this phone has this product (the
+ * "Purchased" badge). Any completed order with the phone is not enough: a
+ * visitor could type the phone of a customer and get the badge on any product.
+ *
+ * @param string $phone      Phone (normalized).
+ * @param int    $product_id Product ID.
+ * @return bool
+ */
+function silver_product_review_phone_bought( $phone, $product_id ) {
+	$orders = wc_get_orders( array(
+		'limit'         => 20,
+		'status'        => 'completed',
+		'billing_phone' => $phone,
+		'orderby'       => 'date',
+		'order'         => 'DESC',
+	) );
+
+	foreach ( (array) $orders as $order ) {
+		if ( ! $order instanceof WC_Order ) {
+			continue;
+		}
+		foreach ( $order->get_items() as $item ) {
+			if ( $item instanceof WC_Order_Item_Product && (int) $item->get_product_id() === (int) $product_id ) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+/**
  * Uploaded photos ($_FILES['images']), empty slots left out.
  *
  * @return array
@@ -389,6 +421,42 @@ function silver_product_review_validate_images() {
 }
 
 /**
+ * Photos sent from one IP address in the last hour (the photos are saved
+ * before the review is approved: a limit against filling the disk).
+ *
+ * @param int $add Photos to add to the count (0: read only).
+ * @return int Count, $add included.
+ */
+function silver_product_review_images_sent( $add = 0 ) {
+	$ip  = isset( $_SERVER['REMOTE_ADDR'] ) ? preg_replace( '/[^0-9a-fA-F:.]/', '', (string) $_SERVER['REMOTE_ADDR'] ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput -- cleaned here.
+	$key = 'silver_review_images_' . md5( $ip );
+	$log = get_transient( $key );
+	$log = is_array( $log ) ? $log : array();
+	$now = time();
+
+	// Times of the photos of the last hour.
+	$log = array_values( array_filter( array_map( 'intval', $log ), static function ( $time ) use ( $now ) {
+		return $time > $now - HOUR_IN_SECONDS;
+	} ) );
+
+	if ( $add > 0 ) {
+		$log = array_merge( $log, array_fill( 0, (int) $add, $now ) );
+		set_transient( $key, $log, HOUR_IN_SECONDS );
+	}
+
+	return count( $log );
+}
+
+/**
+ * Most photos one IP address may send in an hour.
+ *
+ * @return int
+ */
+function silver_product_review_images_hourly_limit() {
+	return max( 1, (int) apply_filters( 'silver_product_review_images_hourly_limit', 20 ) );
+}
+
+/**
  * Saves the photos in uploads/comments/{comment ID}/ (attachments, a thumbnail
  * size only).
  *
@@ -454,6 +522,10 @@ function silver_product_review_save_images( $comment_id ) {
 	remove_filter( 'upload_dir', $dir_cb );
 	remove_filter( 'intermediate_image_sizes_advanced', $sizes_cb );
 
+	if ( $ids ) {
+		silver_product_review_images_sent( count( $ids ) );
+	}
+
 	return $ids;
 }
 
@@ -494,13 +566,7 @@ function silver_product_review_saved( $comment_id, $approved ) {
 	$buyed = 0;
 	if ( $phone && silver_product_review_phone_valid( $phone ) ) {
 		add_comment_meta( $comment_id, 'phone', $phone, true );
-		$orders = wc_get_orders( array(
-			'limit'         => 1,
-			'status'        => 'completed',
-			'billing_phone' => $phone,
-			'return'        => 'ids',
-		) );
-		$buyed  = $orders ? 1 : 0;
+		$buyed = silver_product_review_phone_bought( $phone, (int) $comment->comment_post_ID ) ? 1 : 0;
 	}
 	update_comment_meta( $comment_id, 'buyed', $buyed );
 
@@ -640,6 +706,9 @@ function silver_product_review_submit() {
 		$images = silver_product_review_validate_images();
 		if ( is_wp_error( $images ) ) {
 			silver_product_review_error( $images->get_error_message(), 'images[]' );
+		}
+		if ( $images && ! current_user_can( 'moderate_comments' ) && silver_product_review_images_sent() + count( $images ) > silver_product_review_images_hourly_limit() ) {
+			silver_product_review_error( __( 'Too many photos sent. Please try again later.', 'silver' ), 'images[]' );
 		}
 	}
 

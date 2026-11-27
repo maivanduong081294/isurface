@@ -53,6 +53,7 @@ function silver_quickview() {
 	if (
 		! is_a( $product, 'WC_Product' )
 		|| ! $product->is_visible()
+		|| post_password_required( $prod_id ) // Its price and details are behind the password.
 	) {
 		wp_die( 'Product not found or unavailable.', 'Not Found', [ 'response' => 404 ] );
 	}

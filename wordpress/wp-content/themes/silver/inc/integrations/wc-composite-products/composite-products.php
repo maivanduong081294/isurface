@@ -15,7 +15,7 @@ function silver_wc_composite_products_integration() {
 
 	$deps = array( 'jquery', 'silver-js', 'silver-theme-woocommerce-js' );
 
-	if ( get_theme_mod( 'lazy_load_images' ) ) {
+	if ( silver_perf( 'lazy_load_images' ) ) {
 		$deps[] = 'silver-lazy';
 	}
 

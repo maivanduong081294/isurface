@@ -44,6 +44,11 @@ class Terms {
   }
 
   public function search_terms() {
+    // Builder only (all terms, the empty ones included).
+    if ( ! current_user_can( 'edit_posts' ) ) {
+      wp_send_json_error( array( 'message' => 'Sorry, you are not allowed to do that.' ), 403 );
+    }
+
     $query = array_key_exists( 'query', $_GET ) ? sanitize_text_field( $_GET['query'] ) : array();
     $option = array_key_exists( 'option', $_GET ) ? silver_clean( $_GET['option'] ) : array();
 

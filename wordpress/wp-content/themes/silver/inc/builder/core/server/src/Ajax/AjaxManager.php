@@ -41,15 +41,48 @@ class AjaxManager {
     add_action( 'template_redirect', array( $this->do_shortcode, 'do_shortcode' ), 0 );
   }
 
+  /**
+   * Stops the request unless the user may use the builder (edit posts).
+   *
+   * @param int $post_id Post being edited in the builder, if any.
+   */
+  protected function require_builder_user( $post_id = 0 ) {
+    $allowed = $post_id
+      ? current_user_can( 'edit_post', (int) $post_id )
+      : current_user_can( 'edit_posts' );
+
+    if ( ! $allowed ) {
+      wp_send_json_error( array( 'message' => 'Sorry, you are not allowed to do that.' ), 403 );
+    }
+  }
+
   public function save_custom_template () {
-    $data = $_POST['data'];
+    $data    = isset( $_POST['data'] ) && is_array( $_POST['data'] ) ? $_POST['data'] : array();
+    $post_id = isset( $data['post_id'] ) ? (int) $data['post_id'] : 0;
 
     // Return an error if nonce is invalid.
-    check_ajax_referer( 'ux-builder-' . $data['post_id'], 'security' );
+    check_ajax_referer( 'ux-builder-' . $post_id, 'security' );
+    $this->require_builder_user( $post_id );
+
+    // Updating: a UX template the user may edit only (never another post).
+    if ( array_key_exists( 'id', $data ) ) {
+      $template_id = (int) $data['id'];
+      if ( 'ux_template' !== get_post_type( $template_id ) || ! current_user_can( 'edit_post', $template_id ) ) {
+        return wp_send_json_error( array(
+          'message' => 'Cannot update this template.',
+        ) );
+      }
+    }
 
     $transformer = ux_builder( 'to-string' );
-    $content     = json_decode( stripslashes( $data['content'] ), true );
-    $tag         = wp_unslash( $_POST['data']['tag'] );
+    $content     = json_decode( stripslashes( isset( $data['content'] ) ? (string) $data['content'] : '' ), true );
+    $tag         = sanitize_text_field( wp_unslash( isset( $data['tag'] ) ? (string) $data['tag'] : '' ) );
+
+    if ( ! is_array( $content ) ) {
+      return wp_send_json_error( array(
+        'message' => 'Template must have content.',
+      ) );
+    }
 
     if ( empty( $tag ) ) {
       return wp_send_json_error( array(
@@ -63,7 +96,7 @@ class AjaxManager {
       $content = array( $content );
     }
 
-    $post_title   = sanitize_text_field( $data['title'] );
+    $post_title   = sanitize_text_field( isset( $data['title'] ) ? (string) $data['title'] : '' );
     $post_content = $transformer->transform( $content );
 
     if ( empty( $post_content ) ) {
@@ -101,7 +134,7 @@ class AjaxManager {
     update_post_meta( $post_id, '_ux_tag', $tag, true );
 
     if ( $tag === '_root' ) {
-      update_post_meta( $post_id, '_ux_page_template', $data['template'], true );
+      update_post_meta( $post_id, '_ux_page_template', sanitize_text_field( isset( $data['template'] ) ? (string) $data['template'] : '' ), true );
     }
 
     $presets = array();
@@ -118,15 +151,21 @@ class AjaxManager {
   }
 
   public function delete_custom_template () {
-    check_ajax_referer( 'ux-builder-' . $_POST['post_id'], 'security' );
+    check_ajax_referer( 'ux-builder-' . ( isset( $_POST['post_id'] ) ? (int) $_POST['post_id'] : 0 ), 'security' );
 
-    $post_id   = intval( $_POST['id'] );
+    $post_id   = isset( $_POST['id'] ) ? intval( $_POST['id'] ) : 0;
     $post_type = get_post_type( $post_id );
     $tag       = get_post_meta( $post_id, '_ux_tag', true );
 
     if ( 'ux_template' !== $post_type ) {
       return wp_send_json_error( array(
-        'message' => "Cannot remove post with type {$post_type}.",
+        'message' => 'Cannot remove this post.',
+      ) );
+    }
+
+    if ( ! current_user_can( 'delete_post', $post_id ) ) {
+      return wp_send_json_error( array(
+        'message' => 'Sorry, you are not allowed to delete this template.',
       ) );
     }
 
@@ -149,6 +188,9 @@ class AjaxManager {
    * Used by the import function and template selector.
    */
   public function to_array () {
+    // Builder only (the editor sends no nonce for this request).
+    $this->require_builder_user();
+
     $content = '';
 
     if ( array_key_exists( 'content', $_POST ) ) {
@@ -197,8 +239,16 @@ class AjaxManager {
    * Importa external meda files.
    */
   public function import_media () {
-    $id  = intval( $_POST['id'] );
-    $url = $_POST['url'];
+    // Adds files to the Media Library: builder users who may upload only.
+    $this->require_builder_user();
+    if ( ! current_user_can( 'upload_files' ) ) {
+      return wp_send_json_error( array(
+        'message' => 'Sorry, you are not allowed to upload files.',
+      ) );
+    }
+
+    $id  = isset( $_POST['id'] ) ? intval( $_POST['id'] ) : 0;
+    $url = isset( $_POST['url'] ) ? esc_url_raw( wp_unslash( (string) $_POST['url'] ) ) : '';
 
     if ( ! flatsome_envato()->is_registered() ) {
       return wp_send_json_error( array(
@@ -253,7 +303,10 @@ class AjaxManager {
    * Parse presets for a shortcode.
    */
   public function parse_presets () {
-    $tag     = wp_unslash( $_GET['tag'] );
+    // Builder only: the custom templates of the site are in the answer.
+    $this->require_builder_user();
+
+    $tag     = isset( $_GET['tag'] ) ? sanitize_text_field( wp_unslash( (string) $_GET['tag'] ) ) : '';
     $presets = array();
 
     try {
