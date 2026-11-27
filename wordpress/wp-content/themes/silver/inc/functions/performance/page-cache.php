@@ -338,9 +338,21 @@ add_action( 'transition_post_status', 'silver_page_cache_transition', 10, 3 );
 // Before: the post type is still known.
 add_action( 'before_delete_post', 'silver_page_cache_clear_post' );
 
+/**
+ * Theme Options (Advanced) saved by the user: Save, Reset, Import, Restore
+ * (the of_ajax_post_action request). The options framework also saves on
+ * its own when an admin page loads; that is not a change of the site.
+ */
+function silver_page_cache_clear_options_saved() {
+	if ( doing_action( 'wp_ajax_of_ajax_post_action' ) ) {
+		silver_page_cache_clear();
+	}
+}
+add_action( 'of_save_options_after', 'silver_page_cache_clear_options_saved' );
+
 // Everything else that shows on many pages: empties the whole cache.
 foreach ( array(
-	'wp_update_nav_menu', 'customize_save_after', 'of_save_options_after', 'switch_theme',
+	'wp_update_nav_menu', 'customize_save_after', 'switch_theme',
 	'update_option_sidebars_widgets', 'created_term', 'edited_term', 'delete_term',
 	'wp_set_comment_status', 'edit_comment', 'deleted_comment',
 	'woocommerce_product_set_stock', 'woocommerce_variation_set_stock', 'woocommerce_product_set_stock_status',

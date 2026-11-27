@@ -772,3 +772,57 @@ if ( ! function_exists( 'silver_variable_price_from' ) ) {
 }
 add_filter( 'woocommerce_variable_price_html', 'silver_variable_price_from', 10, 2 );
 
+
+/**
+ * WooCommerce "Coming soon" mode (store not live): it adds its own Inter and
+ * Cardo fonts to theme.json for its coming soon page. In a classic theme they
+ * are printed on every page, and its Inter (a 319 KB variable font with every
+ * alphabet) replaces the Inter of the theme (downloaded by the Customizer,
+ * only the alphabets needed, ~70 KB): it delays the first display (PageSpeed
+ * "Network dependency tree").
+ *
+ * Their @font-face rules are left out, except on the coming soon page itself
+ * (WooCommerce renders it inside the template_include filter). Nothing
+ * changes once the store is live (WooCommerce adds no font then).
+ */
+function silver_wc_coming_soon_font_faces() {
+	if ( is_admin() || ! function_exists( 'WC' ) || ! class_exists( 'WP_Font_Face_Resolver' ) ) {
+		return;
+	}
+
+	$fonts = WP_Font_Face_Resolver::get_fonts_from_theme_json();
+
+	if ( ! doing_filter( 'template_include' ) ) {
+		$wc_fonts = trailingslashit( WC()->plugin_url() ) . 'assets/fonts/';
+		foreach ( $fonts as $family => $faces ) {
+			$fonts[ $family ] = array_values( array_filter( (array) $faces, static function ( $face ) use ( $wc_fonts ) {
+				foreach ( (array) ( isset( $face['src'] ) ? $face['src'] : array() ) as $src ) {
+					if ( 0 === strpos( (string) $src, $wc_fonts ) ) {
+						return false;
+					}
+				}
+				return true;
+			} ) );
+			if ( ! $fonts[ $family ] ) {
+				unset( $fonts[ $family ] );
+			}
+		}
+	}
+
+	// wp_print_font_faces() reads theme.json again when given nothing.
+	if ( $fonts ) {
+		wp_print_font_faces( $fonts );
+	}
+}
+
+/**
+ * Prints the theme.json fonts through silver_wc_coming_soon_font_faces()
+ * instead of WordPress (same place: wp_head, 50).
+ */
+function silver_wc_coming_soon_fonts_setup() {
+	if ( has_action( 'wp_head', 'wp_print_font_faces' ) ) {
+		remove_action( 'wp_head', 'wp_print_font_faces', 50 );
+		add_action( 'wp_head', 'silver_wc_coming_soon_font_faces', 50 );
+	}
+}
+add_action( 'wp', 'silver_wc_coming_soon_fonts_setup' );

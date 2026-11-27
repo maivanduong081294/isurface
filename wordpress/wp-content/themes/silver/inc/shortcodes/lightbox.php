@@ -24,8 +24,8 @@ function ux_lightbox( $atts, $content = null ) {
 	</div>
 	<?php if ( $auto_open ) : ?>
 		<script>
-			// Auto open lightboxes
-			jQuery(document).ready(function ($) {
+			// Auto open lightboxes (jQuery may load later, Defer JavaScript: wait for it).
+			(function (run) { if (window.jQuery) { jQuery(run); } else { document.addEventListener('DOMContentLoaded', function () { jQuery(run); }); } })(function ($) {
 				/* global silverVars */
 				'use strict'
 				var cookieId = '<?php echo 'lightbox_' . esc_js( $id ); ?>'

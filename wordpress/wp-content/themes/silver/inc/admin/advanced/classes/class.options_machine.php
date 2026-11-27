@@ -117,6 +117,9 @@ class Options_Machine {
 					$smof_data[$value['id']] = $value['std'];
 					if ($value['type'] == "checkbox" && $value['std'] == 0) {
 						$smof_data[$value['id']] = 0;
+					} elseif ( in_array( $value['type'], array( 'backup', 'transfer', 'info', 'heading', 'subheading' ), true ) ) {
+						// Interface only, nothing saved: never "missing". Else the
+						// options were saved again on every admin request.
 					} else {
 						$update_data = true;
 					}

@@ -100,7 +100,8 @@ function ux_block_frontend() {
 	if ( isset( $_GET["block"] ) ) {
 		?>
 		<script>
-          jQuery(document).ready(function ($) {
+          // jQuery may load later (Defer JavaScript): wait for it.
+          (function (run) { if (window.jQuery) { jQuery(run); } else { document.addEventListener('DOMContentLoaded', function () { jQuery(run); }); } })(function ($) {
             $.scrollTo('#<?php echo esc_attr( $_GET["block"] );?>')
           })
 		</script>

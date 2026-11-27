@@ -50,7 +50,8 @@ function silver_shortcode_map( $atts, $content = null, $tag = '' ) {
 	?>
 
 	<script type="text/javascript">
-  jQuery( document ).ready(function() {
+  // jQuery may load later (Defer JavaScript): wait for it.
+  (function (run) { if (window.jQuery) { jQuery(run); } else { document.addEventListener('DOMContentLoaded', function () { jQuery(run); }); } })(function() {
     function initialize() {
         var styles = {
             'silver':  [{

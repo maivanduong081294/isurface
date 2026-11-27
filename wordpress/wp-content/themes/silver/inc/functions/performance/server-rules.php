@@ -136,6 +136,12 @@ function silver_server_rules_write() {
  * Theme Options saved: rules follow the options.
  */
 function silver_server_rules_on_save() {
+	// Only a save by the user (not the framework saving on its own when an
+	// admin page loads).
+	if ( ! doing_action( 'wp_ajax_of_ajax_post_action' ) ) {
+		return;
+	}
+
 	$result = silver_server_rules_write();
 	if ( false === $result ) {
 		set_transient( 'silver_server_rules_error', 1, MINUTE_IN_SECONDS * 10 );
