@@ -404,11 +404,68 @@ function silver_perf_preload_tag( $url ) {
 		return '<link rel="preload" href="' . $url . '" as="script">' . "\n";
 	}
 	if ( in_array( $ext, $images, true ) ) {
-		// The image that is the largest on the first screen (LCP).
-		return '<link rel="preload" href="' . $url . '" as="image" fetchpriority="high">' . "\n";
+		// The image that is the largest on the first screen (LCP). An image of
+		// the Media Library gets the srcset / sizes the <img> uses: without
+		// them the browser downloads the href file (often the full size) and
+		// then, for the <img>, the srcset file: twice.
+		$responsive = silver_perf_preload_image_srcset( html_entity_decode( $url ) );
+		$extra      = $responsive
+			? ' imagesrcset="' . esc_attr( $responsive['srcset'] ) . '" imagesizes="' . esc_attr( $responsive['sizes'] ) . '"'
+			: '';
+
+		return '<link rel="preload" href="' . $url . '" as="image"' . $extra . ' fetchpriority="high">' . "\n";
 	}
 
 	return '';
+}
+
+/**
+ * srcset / sizes of a Media Library image URL (full size or one of its sizes,
+ * e.g. photo-768x432.jpg), as wp_get_attachment_image() prints them for that
+ * size. Cached a day per URL.
+ *
+ * @param string $url Image URL.
+ * @return array|null srcset, sizes; null when not a Media Library image or
+ *                    when it has a single file.
+ */
+function silver_perf_preload_image_srcset( $url ) {
+	$key    = 'silver_preload_img_' . md5( $url );
+	$cached = get_transient( $key );
+	if ( false !== $cached ) {
+		return $cached ? $cached : null;
+	}
+
+	$result = '';
+	$id     = attachment_url_to_postid( $url );
+	if ( ! $id ) {
+		// A size of the image (-768x432 before the extension): the original file.
+		$id = attachment_url_to_postid( preg_replace( '/-\d+x\d+(?=(\.[a-z0-9]+)+$)/i', '', $url ) );
+	}
+
+	$meta = $id ? wp_get_attachment_metadata( $id ) : false;
+	if ( $meta && ! empty( $meta['width'] ) ) {
+		// Width / height of the file of this URL (a size or the original).
+		$file   = wp_basename( (string) wp_parse_url( $url, PHP_URL_PATH ) );
+		$width  = (int) $meta['width'];
+		$height = (int) $meta['height'];
+		foreach ( isset( $meta['sizes'] ) ? (array) $meta['sizes'] : array() as $size ) {
+			if ( isset( $size['file'] ) && $size['file'] === $file ) {
+				$width  = (int) $size['width'];
+				$height = (int) $size['height'];
+				break;
+			}
+		}
+
+		$srcset = wp_calculate_image_srcset( array( $width, $height ), $url, $meta, $id );
+		$sizes  = wp_calculate_image_sizes( array( $width, $height ), $url, $meta, $id );
+		if ( $srcset && $sizes ) {
+			$result = array( 'srcset' => $srcset, 'sizes' => $sizes );
+		}
+	}
+
+	set_transient( $key, $result, DAY_IN_SECONDS );
+
+	return $result ? $result : null;
 }
 
 /**
@@ -510,3 +567,5 @@ add_action( 'wp_footer', 'silver_perf_dequeue_footer_global_styles', 2 );
 // Page cache (served as soon as this file loads) and server rules.
 require __DIR__ . '/performance/server-rules.php';
 require __DIR__ . '/performance/page-cache.php';
+
+require __DIR__ . '/performance/critical-css.php';

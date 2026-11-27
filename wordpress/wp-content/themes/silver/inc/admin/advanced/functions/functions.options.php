@@ -327,6 +327,22 @@ if ( ! function_exists( 'of_options' ) ) {
 		);
 
 		$of_options[] = array(
+			'name' => 'Critical CSS',
+			'id'   => 'perf_critical_css',
+			'std'  => 0,
+			'type' => 'checkbox',
+			'desc' => 'Prints in the page the theme CSS of the first screen (header, layout, buttons, text) and loads the full theme stylesheets (silver, silver-modern, silver-shop) without blocking the display: the page shows at once and looks as before (the full files are not cut). Click "Generate critical CSS" below first, and again after changing the design of the first screen. A theme update that changes the CSS: the stylesheets load as usual until generated again (warning in wp-admin).',
+		);
+
+		$of_options[] = array(
+			'name' => '',
+			'type' => 'info',
+			'desc' => '<p><button type="button" class="button button-secondary" id="silver-critical-generate">Generate critical CSS</button></p>'
+				. '<p id="silver-critical-status" style="font-size:13px">' . ( $perf_page && function_exists( 'silver_critical_status_html' ) ? silver_critical_status_html() : '' ) . '</p>'
+				. '<p style="font-size:12px;color:#646970">Your browser opens the homepage, a post, a page, a category, the shop, a product and a product category of this site at 3 screen sizes (about 1 minute; keep this page open). Nothing is installed on the server.</p>',
+		);
+
+		$of_options[] = array(
 			'name'    => 'Inline small CSS',
 			'id'      => 'perf_inline_css',
 			'std'     => '',
@@ -377,7 +393,7 @@ if ( ! function_exists( 'of_options' ) ) {
 			'type' => 'textarea',
 			'id'   => 'perf_preload_home',
 			'std'  => '',
-			'desc' => 'One URL per line, homepage only: the largest image of the first screen (hero / banner, the LCP of PageSpeed) gets high priority. Use the exact URL the page loads (same size).',
+			'desc' => 'One URL per line, homepage only: the largest image of the first screen (hero / banner, the LCP of PageSpeed) gets high priority. Only for an image the browser finds late (CSS background, image added by JavaScript): an &lt;img&gt; already in the page with fetchpriority="high" needs nothing. Use the URL of the size the element uses (the src): a Media Library image gets the same srcset / sizes as its &lt;img&gt;, so it is not downloaded twice.',
 		);
 
 		// Server: browser cache, compression.
