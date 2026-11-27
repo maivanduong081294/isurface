@@ -653,3 +653,20 @@ function experimental_silver_pjax_config( $args ) {
 }
 
 add_filter( 'experimental_silver_pjax', 'experimental_silver_pjax_config' );
+
+/**
+ * srcset never lists a file wider than the image size that was chosen
+ * (medium: 300w at most, large: 1024w...): the chosen size is the largest
+ * file a visitor may download. Smaller files stay for smaller screens.
+ * WordPress drops srcset when one file is left (the chosen one).
+ *
+ * @param int   $max_width  Largest width in srcset.
+ * @param array $size_array Width and height of the chosen size.
+ * @return int
+ */
+function silver_srcset_max_chosen_size( $max_width, $size_array ) {
+	return isset( $size_array[0] ) && (int) $size_array[0] > 0
+		? min( (int) $max_width, (int) $size_array[0] )
+		: $max_width;
+}
+add_filter( 'max_srcset_image_width', 'silver_srcset_max_chosen_size', 10, 2 );

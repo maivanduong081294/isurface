@@ -16,6 +16,8 @@ function silver_lazy_load_media( $output ) {
 	);
 	$early_images = wp_omit_loading_attr_threshold();
 	$first_main_image = false;
+	// After </main> (footer...): never the first screen, always lazy.
+	$after_main = false;
 	$template_depth = 0;
 
 	while ( $html->next_tag( array( 'tag_closers' => 'visit' ) ) ) {
@@ -30,6 +32,7 @@ function silver_lazy_load_media( $output ) {
 		}
 		if ( 'MAIN' === $tag ) {
 			$first_main_image = ! $html->is_tag_closer();
+			$after_main       = $html->is_tag_closer();
 			continue;
 		}
 		if ( empty( $enabled[ $tag ] ) || $html->is_tag_closer() ) {
@@ -43,34 +46,74 @@ function silver_lazy_load_media( $output ) {
 			if ( ! is_string( $src ) || 0 === stripos( $src, 'data:' ) ) {
 				continue;
 			}
-			$skip = $skip || $early_images > 0 || $first_main_image;
-			--$early_images;
-			$first_main_image = false;
-		}
-		if ( $skip ) {
-			if ( 'lazy' === strtolower( (string) $html->get_attribute( 'loading' ) ) ) {
-				$html->remove_attribute( 'loading' );
-				if ( 'IMG' === $tag ) {
-					$sizes = $html->get_attribute( 'sizes' );
-					if ( is_string( $sizes ) && preg_match( '/^auto\s*,\s*/i', $sizes, $prefix ) ) {
-						$html->set_attribute( 'sizes', substr( $sizes, strlen( $prefix[0] ) ) );
-					}
-				}
+			if ( ! $after_main ) {
+				$skip = $skip || $early_images > 0 || $first_main_image;
+				--$early_images;
+				$first_main_image = false;
 			}
-			continue;
 		}
-		if ( $eager ) {
+		if ( $skip || $eager ) {
+			if ( $skip && 'lazy' === strtolower( (string) $html->get_attribute( 'loading' ) ) ) {
+				$html->remove_attribute( 'loading' );
+			}
+			if ( 'IMG' === $tag ) {
+				silver_lazy_load_sizes( $html, false );
+			}
 			continue;
 		}
 		if ( 'VIDEO' === $tag || 'AUDIO' === $tag ) {
 			if ( null !== $html->get_attribute( 'autoplay' ) || ( 'AUDIO' === $tag && null === $html->get_attribute( 'controls' ) ) ) {
 				continue;
 			}
+			// `loading` does nothing on video / audio: no preload is what defers them.
 			$html->set_attribute( 'preload', 'none' );
+			continue;
 		}
 		$html->set_attribute( 'loading', 'lazy' );
+		if ( 'IMG' === $tag ) {
+			silver_lazy_load_sizes( $html, true );
+		}
 	}
-	return $html->get_updated_html();
+
+	$output = $html->get_updated_html();
+
+	// silver-lazy-load.js only resizes sliders and masonry grids once their
+	// images load: left out of pages that have neither.
+	if ( ! preg_match( '/class=(["\'])[^"\']*(?<![\w-])(slider|has-packery)(?![\w-])/', $output ) ) {
+		$output = preg_replace( '#<script\b[^>]*\bid=(["\'])silver-lazy-js\1[^>]*>\s*</script>\s*#i', '', $output );
+	}
+
+	return $output;
+}
+
+/**
+ * sizes of an image with srcset (HTML standard):
+ * - lazy: "auto, <list>": the browser picks the srcset file from the width
+ *   the image really has on the page (grid column, content width...), the
+ *   list stays for browsers without sizes=auto;
+ * - not lazy: no "auto" (only valid with loading="lazy").
+ *
+ * @param WP_HTML_Tag_Processor $html Processor on an IMG tag.
+ * @param bool                  $lazy Whether the image is lazy.
+ */
+function silver_lazy_load_sizes( $html, $lazy ) {
+	if ( ! $html->get_attribute( 'srcset' ) ) {
+		return;
+	}
+
+	$sizes = trim( (string) $html->get_attribute( 'sizes' ) );
+	$auto  = (bool) preg_match( '/^auto\s*(,\s*|$)/i', $sizes, $prefix );
+
+	if ( $lazy && ! $auto ) {
+		$html->set_attribute( 'sizes', '' === $sizes ? 'auto' : 'auto, ' . $sizes );
+	} elseif ( ! $lazy && $auto ) {
+		$rest = trim( substr( $sizes, strlen( $prefix[0] ) ) );
+		if ( '' === $rest ) {
+			$html->remove_attribute( 'sizes' );
+		} else {
+			$html->set_attribute( 'sizes', $rest );
+		}
+	}
 }
 
 function silver_setup_lazy_load_media() {
