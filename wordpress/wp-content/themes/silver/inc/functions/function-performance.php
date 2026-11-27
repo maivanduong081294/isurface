@@ -152,12 +152,11 @@ add_filter( 'style_loader_tag', 'silver_perf_async_style', 20, 4 );
  * A stylesheet link that does not block the display: media="print" until
  * loaded, then the original media; <noscript> fallback.
  *
- * @param string $html   Link tag.
- * @param string $media  Media attribute.
- * @param string $onload JavaScript run once loaded.
+ * @param string $html  Link tag.
+ * @param string $media Media attribute.
  * @return string
  */
-function silver_perf_async_link( $html, $media, $onload = '' ) {
+function silver_perf_async_link( $html, $media ) {
 	$media = $media ? $media : 'all';
 	if ( 'print' === $media ) {
 		return $html;
@@ -166,110 +165,13 @@ function silver_perf_async_link( $html, $media, $onload = '' ) {
 	$async = preg_replace( '/\smedia=([\'"])[^\'"]*\1/', '', $html );
 	$async = preg_replace(
 		'/<link\s/',
-		'<link media="print" onload="this.onload=null;this.media=\'' . esc_attr( $media ) . '\';' . esc_attr( $onload ) . '" ',
+		'<link media="print" onload="this.onload=null;this.media=\'' . esc_attr( $media ) . '\'" ',
 		$async,
 		1
 	);
 
 	return $async . '<noscript>' . trim( $html ) . "</noscript>\n";
 }
-
-/*
- * Critical CSS --------------------------------------------------------------
- *
- * build/critical.mjs keeps the rules of the theme stylesheets that style the
- * first screen of real pages (assets/css/critical/). They are printed in the
- * page where the stylesheet was, and the full stylesheet loads without
- * blocking the display. The full file is not cut: once loaded it applies
- * again, in its own order, so nothing changes from the normal display.
- */
-
-/**
- * Critical files usable now: handle => file. A file made from an older
- * version of its stylesheet (CSS rebuilt, `npm run critical` not run) is
- * left out: that stylesheet loads as usual.
- *
- * @return array
- */
-function silver_perf_critical_sheets() {
-	static $sheets = null;
-
-	if ( null !== $sheets ) {
-		return $sheets;
-	}
-	$sheets = array();
-
-	if ( ! silver_perf( 'perf_critical_css' ) || ! silver_perf_is_frontend() || is_rtl() ) {
-		return $sheets;
-	}
-
-	$dir      = get_template_directory() . '/assets/css/critical/';
-	$manifest = is_file( $dir . 'manifest.json' ) ? json_decode( (string) file_get_contents( $dir . 'manifest.json' ), true ) : null; // phpcs:ignore WordPress.WP.AlternativeFunctions
-
-	foreach ( isset( $manifest['sheets'] ) ? (array) $manifest['sheets'] : array() as $handle => $info ) {
-		$file     = $dir . basename( (string) $info['file'] );
-		$original = get_template_directory() . '/assets/css/' . basename( (string) $info['file'] );
-		if ( is_file( $file ) && is_file( $original ) && silver_perf_file_md5( $original ) === $info['source_md5'] ) {
-			$sheets[ (string) $handle ] = $file;
-		}
-	}
-
-	return $sheets;
-}
-
-/**
- * md5 of a file, computed again only when the file changes.
- *
- * @param string $file File.
- * @return string
- */
-function silver_perf_file_md5( $file ) {
-	$key = 'silver_md5_' . md5( $file . '|' . filemtime( $file ) . '|' . filesize( $file ) );
-	$md5 = get_transient( $key );
-	if ( false === $md5 ) {
-		$md5 = (string) md5_file( $file );
-		set_transient( $key, $md5, MONTH_IN_SECONDS );
-	}
-	return $md5;
-}
-
-/**
- * Critical rules in the page, the full stylesheet without blocking.
- *
- * @param string $html   Link tag.
- * @param string $handle Style handle.
- * @param string $href   Stylesheet URL.
- * @param string $media  Media attribute.
- * @return string
- */
-function silver_perf_critical_style( $html, $handle, $href, $media ) {
-	$sheets = silver_perf_critical_sheets();
-	if ( ! isset( $sheets[ $handle ] ) || false !== strpos( $html, 'onload=' ) ) {
-		return $html;
-	}
-
-	$css = (string) file_get_contents( $sheets[ $handle ] ); // phpcs:ignore WordPress.WP.AlternativeFunctions
-	if ( '' === trim( $css ) || false !== stripos( $css, '</style' ) ) {
-		return $html;
-	}
-
-	// url() are relative to the full stylesheet.
-	$dir = trailingslashit( dirname( strtok( html_entity_decode( $href ), '?' ) ) );
-	$css = preg_replace_callback(
-		'/url\(\s*([\'"]?)(?!data:|https?:|\/\/|\/|#|about:)([^\'")]+)\1\s*\)/i',
-		static function ( $match ) use ( $dir ) {
-			return 'url(' . $match[1] . $dir . $match[2] . $match[1] . ')';
-		},
-		$css
-	);
-
-	// Once the full stylesheet is there, scripts that measured the page
-	// (sliders, sticky header) measure it again.
-	return '<style id="' . esc_attr( $handle ) . '-critical-css">' . $css . "</style>\n"
-		. silver_perf_async_link( $html, $media, "window.dispatchEvent(new Event('resize'))" );
-}
-// Before the non-blocking (20) and inline (30) filters.
-add_filter( 'style_loader_tag', 'silver_perf_critical_style', 10, 4 );
 
 /*
  * Inline small CSS ---------------------------------------------------------

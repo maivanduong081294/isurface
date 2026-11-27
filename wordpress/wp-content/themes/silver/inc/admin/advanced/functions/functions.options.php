@@ -312,35 +312,6 @@ if ( ! function_exists( 'of_options' ) ) {
 			'desc' => 'Script handles, comma separated, * allowed (handle = id of the script tag without "-js"). Keep jquery-core if pages have jQuery code written directly in them (otherwise "jQuery is not defined" in the console).',
 		);
 
-		// Critical CSS status (options page only).
-		$perf_critical = '';
-		if ( $perf_page ) {
-			$crit_dir      = get_template_directory() . '/assets/css/critical/';
-			$crit_manifest = is_file( $crit_dir . 'manifest.json' ) ? json_decode( (string) file_get_contents( $crit_dir . 'manifest.json' ), true ) : null; // phpcs:ignore WordPress.WP.AlternativeFunctions
-			if ( empty( $crit_manifest['sheets'] ) ) {
-				$perf_critical = '<br><span style="color:#b32d2e">No critical CSS generated yet: run <code>npm run critical</code> in the theme build folder.</span>';
-			} else {
-				$crit_parts = array();
-				foreach ( $crit_manifest['sheets'] as $crit_handle => $crit_info ) {
-					$crit_file  = $crit_dir . basename( $crit_info['file'] );
-					$crit_orig  = get_template_directory() . '/assets/css/' . basename( $crit_info['file'] );
-					$crit_fresh = is_file( $crit_orig ) && function_exists( 'silver_perf_file_md5' ) && silver_perf_file_md5( $crit_orig ) === $crit_info['source_md5'];
-					$crit_parts[] = esc_html( $crit_info['file'] ) . ' ' . ( is_file( $crit_file ) ? size_format( filesize( $crit_file ), 1 ) : '-' )
-						. ( $crit_fresh ? '' : ' <strong style="color:#b32d2e">(CSS changed since: loads as usual until generated again)</strong>' );
-				}
-				$perf_critical = '<br><span style="color:#008a20">Generated ' . esc_html( mysql2date( 'd/m/Y H:i', get_date_from_gmt( gmdate( 'Y-m-d H:i:s', strtotime( (string) $crit_manifest['generated'] ) ) ) ) ) . ' from ' . count( (array) $crit_manifest['urls'] ) . ' page(s): ' . implode( ', ', $crit_parts ) . '.</span>';
-			}
-		}
-
-		$of_options[] = array(
-			'name' => 'Critical CSS',
-			'id'   => 'perf_critical_css',
-			'std'  => 0,
-			'type' => 'checkbox',
-			'desc' => 'Prints in the page the theme CSS of the first screen (header, layout, buttons, text: about 13 KB compressed) and loads the full theme stylesheets (silver, silver-modern, silver-shop) without blocking the display: the page shows at once. The full files are not cut, so once loaded the page looks exactly as before. Made from real pages by <code>npm run critical</code> (theme build folder, pages in build/critical.config.json): run it again after changing the theme CSS or the design of the first screen; a stylesheet changed since loads as usual.'
-				. $perf_critical,
-		);
-
 		$of_options[] = array(
 			'name'    => 'Inline small CSS',
 			'id'      => 'perf_inline_css',
