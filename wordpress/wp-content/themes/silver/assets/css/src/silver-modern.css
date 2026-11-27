@@ -1354,6 +1354,13 @@ label:has(> input[type="radio"]) > input {
 	z-index: 3;
 }
 
+/* Product sliders (.slider-nav-push): on the middle of the images
+   (silver-swiper.js placeArrows() sets --slider-nav-top), not 10% up. */
+.slider-nav-push:not(.slider-nav-reveal) .swiper-prev-next-button {
+	margin-top: 0;
+	top: calc(var(--slider-nav-top, 50%) - 22px);
+}
+
 .slider:not(.slider-nav-reveal):not(.slider-nav-outside) .swiper-prev-next-button.previous {
 	left: 12px;
 }
@@ -4231,6 +4238,30 @@ body.has-sticky-product-cart #footer > :nth-last-child(1 of :not(.back-to-top, s
 @media (min-width: 850px) {
 	.product-section--merged.is-description-right .product-section__column--description {
 		order: 2;
+	}
+
+	/* Width of the description (Product Page options; the specifications take
+	   the rest): Tablet landscape, falling back to Desktop. */
+	.product-section--merged .product-section__column--description {
+		flex-basis: var(--silver-merge-width-landscape, var(--silver-merge-width, 58.3333%));
+		max-width: var(--silver-merge-width-landscape, var(--silver-merge-width, 58.3333%));
+	}
+
+	.product-section--merged .product-section__column--specs {
+		flex-basis: calc(100% - var(--silver-merge-width-landscape, var(--silver-merge-width, 58.3333%)));
+		max-width: calc(100% - var(--silver-merge-width-landscape, var(--silver-merge-width, 58.3333%)));
+	}
+}
+
+@media (min-width: 1200px) {
+	.product-section--merged .product-section__column--description {
+		flex-basis: var(--silver-merge-width, 58.3333%);
+		max-width: var(--silver-merge-width, 58.3333%);
+	}
+
+	.product-section--merged .product-section__column--specs {
+		flex-basis: calc(100% - var(--silver-merge-width, 58.3333%));
+		max-width: calc(100% - var(--silver-merge-width, 58.3333%));
 	}
 }
 

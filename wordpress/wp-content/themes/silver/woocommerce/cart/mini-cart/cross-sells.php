@@ -12,7 +12,7 @@
 
 <?php if ( $cross_sells ) : ?>
 	<div class="ux-mini-cart-cross-sells ux-mini-cart-widget">
-		<p class="ux-mini-cart-cross-sells__title text-center"><?php esc_html_e( 'You may be interested in&hellip;', 'woocommerce' ); ?></p>
+		<p class="ux-mini-cart-cross-sells__title text-center"><?php echo esc_html( apply_filters( 'woocommerce_product_cross_sells_products_heading', __( 'You may be interested in&hellip;', 'woocommerce' ) ) ); ?></p>
 		<ul class="ux-mini-cart-cross-sells__list product_list_widget">
 			<?php
 			$original_post = $GLOBALS['post'];

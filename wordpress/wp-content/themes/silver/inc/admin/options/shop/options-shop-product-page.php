@@ -704,6 +704,43 @@ function silver_customizer_shop_product_page_options() {
 		),
 	) );
 
+	// Width of the description column (the specifications take the rest):
+	// Desktop >= 1200px, Tablet landscape 850-1199px (0: as Desktop). Below
+	// 850px the two columns are stacked.
+	$silver_merge_width = array(
+		'product_sections_merge_width'                  => array( __( 'Độ rộng mô tả - Desktop (%)', 'silver' ), '', 58, 30 ),
+		'product_sections_merge_width_tablet_landscape' => array( __( 'Độ rộng mô tả - Tablet landscape (%)', 'silver' ), __( 'Màn hình 850 - 1199px. 0 = giống Desktop. Thông số kỹ thuật chiếm phần còn lại.', 'silver' ), 0, 0 ),
+	);
+
+	foreach ( $silver_merge_width as $silver_setting => $silver_args ) {
+		Silver_Option::add_field( 'option', array(
+			'type'            => 'slider',
+			'settings'        => $silver_setting,
+			'label'           => $silver_args[0],
+			'description'     => $silver_args[1],
+			'section'         => 'product-page',
+			'active_callback' => array(
+				$hide_on_custom_product,
+				array(
+					'setting'  => 'product_display',
+					'operator' => '==',
+					'value'    => 'sections',
+				),
+				array(
+					'setting'  => 'product_sections_merge_specs',
+					'operator' => '==',
+					'value'    => true,
+				),
+			),
+			'default'         => $silver_args[2],
+			'choices'         => array(
+				'min'  => $silver_args[3],
+				'max'  => 80,
+				'step' => 1,
+			),
+		) );
+	}
+
 	Silver_Option::add_field( 'option', array(
 		'type'            => 'radio-buttonset',
 		'settings'        => 'product_tabs_align',

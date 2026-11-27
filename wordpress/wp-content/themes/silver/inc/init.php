@@ -215,6 +215,8 @@ if ( is_woocommerce_activated() ) {
   require get_template_directory() . '/inc/woocommerce/structure-wc-product-siblings.php';
   require get_template_directory() . '/inc/woocommerce/structure-wc-spec-groups.php';
   require get_template_directory() . '/inc/woocommerce/structure-wc-quick-attributes.php';
+  require get_template_directory() . '/inc/woocommerce/structure-wc-variation-sync.php';
+  require get_template_directory() . '/inc/woocommerce/structure-wc-linked-sync.php';
   require get_template_directory() . '/inc/woocommerce/structure-wc-cart-notices.php';
   require get_template_directory() . '/inc/woocommerce/structure-wc-product-reviews.php';
   require get_template_directory() . '/inc/woocommerce/structure-wc-helpers.php';

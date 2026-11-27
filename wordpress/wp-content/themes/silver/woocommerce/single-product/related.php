@@ -38,7 +38,9 @@ $repeater['columns__md']  = get_theme_mod( 'related_products_pr_row_tablet', 3 )
 $repeater['columns__ml']  = (int) get_theme_mod( 'related_products_pr_row_tablet_landscape', 0 ) ?: '';
 $repeater['columns__lg']  = get_theme_mod( 'related_products_pr_row', 4 );
 $repeater['class']        = implode( ' ', $repeater_classes );
-$repeater['slider_style'] = 'reveal';
+// Round arrows, as the product gallery (silver-modern.css), not the
+// full-height "reveal" bars.
+$repeater['slider_style'] = 'circle';
 $repeater['row_spacing']  = 'small';
 
 

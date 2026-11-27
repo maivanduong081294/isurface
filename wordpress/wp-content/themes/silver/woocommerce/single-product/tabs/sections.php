@@ -31,6 +31,17 @@ $silver_section_container = did_action( 'silver_product_footer_sections' ) > 0;
 $silver_merge = get_theme_mod( 'product_sections_merge_specs', 0 ) && isset( $product_tabs['description'], $product_tabs['additional_information'] );
 $silver_merge_right = 'right' === get_theme_mod( 'product_sections_merge_position', 'left' );
 
+// Width of the description column, in %: Desktop and Tablet landscape (0: as
+// Desktop); the specifications take the rest (silver-modern.css).
+$silver_merge_width = static function ( $setting, $default ) {
+	$width = (int) get_theme_mod( $setting, $default );
+	return $width > 0 ? min( 80, max( 30, $width ) ) : 0;
+};
+$silver_merge_desktop   = $silver_merge_width( 'product_sections_merge_width', 58 );
+$silver_merge_landscape = $silver_merge_width( 'product_sections_merge_width_tablet_landscape', 0 );
+$silver_merge_style     = '--silver-merge-width:' . ( $silver_merge_desktop ? $silver_merge_desktop : 58 ) . '%'
+	. ( $silver_merge_landscape ? ';--silver-merge-width-landscape:' . $silver_merge_landscape . '%' : '' );
+
 /**
  * One column of the merged section: the title and the content of a tab.
  *
@@ -60,7 +71,7 @@ if ( ! empty( $product_tabs ) ) : ?>
 
 	if ( $silver_merge && 'description' === $key ) :
 		?>
-		<div class="product-section product-section--description product-section--merged<?php echo $silver_merge_right ? ' is-description-right' : ''; ?>">
+		<div class="product-section product-section--description product-section--merged<?php echo $silver_merge_right ? ' is-description-right' : ''; ?>" style="<?php echo esc_attr( $silver_merge_style ); ?>">
 		<?php if ( $silver_section_container ) : ?><div class="container"><?php endif; ?>
 		<div class="row product-section__columns">
 			<div class="col medium-12 large-7 pb-0 mb-0 product-section__column product-section__column--description">

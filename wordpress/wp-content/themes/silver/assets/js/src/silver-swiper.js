@@ -390,6 +390,7 @@
 				this.emit('change', [this.selectedIndex]);
 			});
 			swiper.on('transitionEnd', () => this.emit('settle', [this.selectedIndex]));
+			swiper.on('resize', () => this.placeArrows());
 			swiper.on('touchStart', () => this.viewport.classList.add('is-pointer-down'));
 			swiper.on('sliderFirstMove', (instance, event) => {
 				this.isDragging = true;
@@ -413,6 +414,7 @@
 
 			this.isReady = true;
 			this.syncSelected();
+			this.placeArrows();
 
 			const queue = this.queue;
 			this.queue = [];
@@ -480,6 +482,23 @@
 				const slide = slides[swiper.activeIndex + i];
 				if (slide) slide.classList.add('is-selected');
 			}
+		}
+
+		// Product sliders (.slider-nav-push): the arrows on the middle of the
+		// images, not of the whole slides (title and price below). The CSS reads
+		// --slider-nav-top (silver-modern.css); without images: the middle.
+		placeArrows() {
+			const element = this.element;
+			if (!this.prevButton || !element.classList.contains('slider-nav-push')) return;
+
+			const image = element.querySelector('.swiper-slide .box-image');
+			if (!image || !image.offsetHeight) {
+				element.style.removeProperty('--slider-nav-top');
+				return;
+			}
+
+			const top = image.getBoundingClientRect().top - element.getBoundingClientRect().top + image.offsetHeight / 2;
+			element.style.setProperty('--slider-nav-top', Math.round(top) + 'px');
 		}
 
 		scheduleResize() {
@@ -610,6 +629,7 @@
 				this.swiper.update();
 				if (this.swiper.params.autoHeight) this.swiper.updateAutoHeight(0);
 				this.syncSelected();
+				this.placeArrows();
 			});
 			return this;
 		}
