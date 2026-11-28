@@ -36,6 +36,8 @@ add_action( 'init', function () {
 		include_once(dirname( __FILE__ ).'/customizer/customizer-config.php');
 		include_once(dirname( __FILE__ ).'/customizer/customizer-reset.php');
 		include_once(dirname( __FILE__ ).'/customizer/customizer-icon-control.php');
+		// Panels, order and split sections of the Customizer.
+		include_once(dirname( __FILE__ ).'/customizer/customizer-layout.php');
 
 		// Include Options Helpers.
 		include_once(dirname( __FILE__ ).'/options/helpers/options-helpers.php');

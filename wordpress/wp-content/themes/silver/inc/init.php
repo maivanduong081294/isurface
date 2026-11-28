@@ -84,6 +84,8 @@ if ( is_woocommerce_activated() ) { require get_template_directory() . '/inc/hel
   require get_template_directory() . '/inc/structure/structure-pages.php';
   require get_template_directory() . '/inc/structure/structure-posts.php';
   require get_template_directory() . '/inc/structure/structure-term-blocks.php';
+  require get_template_directory() . '/inc/structure/structure-search-types.php';
+  require get_template_directory() . '/inc/structure/structure-breadcrumbs-visibility.php';
   require get_template_directory() . '/inc/structure/structure-sidebars.php';
 
   if(is_portfolio_activated()){

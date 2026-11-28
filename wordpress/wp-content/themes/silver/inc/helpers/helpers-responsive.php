@@ -351,9 +351,18 @@ function silver_responsive_box_rules($scope = '', $self = false)
 	return array_merge(
 		array(
 			'image_height' => array(
-				'selector'       => $scope . '.box-image .image-cover',
+				'selector'       => $scope . '.box-image .image-cover:not(.image-cover--ratio)',
 				'property'       => 'padding-top',
 				'only_overrides' => true,
+			),
+			// Aspect-ratio frames (blog posts): the custom property instead.
+			'image_height_ratio' => array(
+				'option'         => 'image_height',
+				'selector'       => $scope . '.box-image .image-cover--ratio',
+				'only_overrides' => true,
+				'callback'       => function ($value) {
+					return silver_ratio_height_css($value, '--sv-image-h');
+				},
 			),
 			// Number = %, or a typed unit (300px, 20rem, calc(...)).
 			'image_width'  => array(

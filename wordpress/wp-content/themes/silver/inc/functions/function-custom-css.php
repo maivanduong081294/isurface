@@ -614,16 +614,33 @@ background-color: <?php echo get_theme_mod('header_shop_bg_color') ?>;}
 <?php
 // Product image ratio (silver_product_image_ratio()): the image box of every
 // product card the same height, the image fills it (or fits in it), CSS only.
-// The cards with the image beside the text (.box-vertical) keep theirs: their
-// padding % would be of the whole card.
+// The box gets its height from aspect-ratio (no padding-top: the box keeps
+// its padding free and its height does not depend on the parent's width).
+// The images stay absolute: the hover image (.back-image) lies over the main
+// one. Padding-top only for browsers without aspect-ratio (Safari < 15).
+// Not the cards with the image beside the text (.box-vertical): their image
+// box is a table cell, which ignores aspect-ratio.
+// A Products element with its own "Image height" (.image-cover with an
+// inline padding-top) keeps that height instead of adding it to this one.
 $fs_product_image_ratio = function_exists( 'silver_product_image_ratio' ) ? silver_product_image_ratio() : '';
 if ( '' !== $fs_product_image_ratio ) {
 	$fs_product_image_fit = 'contain' === get_theme_mod( 'product_image_fit', 'cover' ) ? 'contain' : 'cover';
+	$fs_product_ratio_h   = (float) $fs_product_image_ratio; // "133.33%" -> 133.33
 	?>
   .product-small.box:not(.box-vertical) > .box-image,
   .has-equal-box-heights .box-image {
-    padding-top: <?php echo esc_html( $fs_product_image_ratio ); ?>;
+    aspect-ratio: 100 / <?php echo esc_html( $fs_product_ratio_h > 0 ? $fs_product_ratio_h : 100 ); ?>;
+    padding-top: 0;
     width: 100%;
+  }
+  .product-small.box:not(.box-vertical) > .box-image:has(> .image-cover) {
+    aspect-ratio: auto;
+  }
+  @supports not (aspect-ratio: 1) {
+    .product-small.box:not(.box-vertical) > .box-image,
+    .has-equal-box-heights .box-image {
+      padding-top: <?php echo esc_html( $fs_product_image_ratio ); ?>;
+    }
   }
   .product-small.box:not(.box-vertical) > .box-image img {
     bottom: 0;
@@ -682,6 +699,11 @@ if ( in_array( $blog_card_hover, array( 'lift', 'shadow', 'lift-shadow' ), true 
     <?php if ( 'shadow' !== $blog_card_hover ) : ?>transform: translateY(-3px);<?php endif; ?>
     <?php if ( 'lift' !== $blog_card_hover ) : ?>box-shadow: 0 8px 20px rgb(17 24 39 / 14%);<?php endif; ?>
   }
+}
+<?php elseif ( 'zoom' === $blog_card_hover ) : // The image grows inside its frame (.box-image clips it). ?>
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .box-blog-post .box-image img { transition: transform .5s cubic-bezier(.2, .7, .2, 1); }
+  .box-blog-post:hover .box-image img, .box-blog-post:focus-within .box-image img { transform: scale(1.06); }
 }
 <?php endif; ?>
 <?php if ( 'thumbnail' === get_theme_mod( 'product_video_style', 'overlay' ) ) : ?>

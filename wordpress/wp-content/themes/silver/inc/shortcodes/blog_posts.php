@@ -146,7 +146,11 @@ function shortcode_latest_from_blog($atts, $content = null, $tag = '')
 
 	if ($image_hover)  $classes_image[] = 'image-' . $image_hover;
 	if ($image_hover_alt)  $classes_image[] = 'image-' . $image_hover_alt;
-	if ($image_height) $classes_image[] = 'image-cover';
+	// Image height: aspect-ratio frame (.image-cover--ratio, silver.css).
+	if ($image_height) {
+		$classes_image[] = 'image-cover';
+		$classes_image[] = 'image-cover--ratio';
+	}
 
 	// Text classes
 	if ($text_hover) $classes_text[] = 'show-on-hover hover-' . $text_hover;
@@ -159,9 +163,7 @@ function shortcode_latest_from_blog($atts, $content = null, $tag = '')
 		array('attribute' => 'width', 'value' => $image_width, 'unit' => '%'),
 	);
 
-	$css_image_height = array(
-		array('attribute' => 'padding-top', 'value' => $image_height),
-	);
+	$image_height_css = silver_ratio_height_css($image_height, '--sv-image-h');
 
 	$css_args = array(
 		array('attribute' => 'background-color', 'value' => $text_bg),
@@ -308,7 +310,7 @@ function shortcode_latest_from_blog($atts, $content = null, $tag = '')
 				<article class="box <?php echo esc_attr($classes_box); ?> box-blog-post has-hover">
 					<?php if (has_post_thumbnail() || $normal_layout) { ?>
 						<div class="box-image" <?php echo get_shortcode_inline_css($css_args_img); ?>>
-							<div class="<?php echo esc_attr($classes_image); ?>" <?php echo get_shortcode_inline_css($css_image_height); ?>>
+							<div class="<?php echo esc_attr($classes_image); ?>" <?php if ($image_height_css) echo 'style="' . esc_attr($image_height_css) . '"'; ?>>
 								<a href="<?php the_permalink(); ?>" class="plain" aria-label="<?php echo esc_attr(get_the_title()); ?>">
 									<?php if (has_post_thumbnail()) the_post_thumbnail($image_size); ?>
 								</a>

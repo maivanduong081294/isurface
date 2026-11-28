@@ -388,6 +388,31 @@ function silver_sanitize_whitespace_chars( $html ) {
 	return trim( $html );
 }
 
+/**
+ * CSS of a "Height" option of a media frame drawn with aspect-ratio
+ * (.video-fit, .image-cover--ratio, .mfp-iframe-scaler in silver.css).
+ * A % of the width (56.25%, or a bare number) goes to the frame's custom
+ * property, which the stylesheet turns into an aspect-ratio (padding-top in
+ * browsers without it). Any other length (400px, 50vh, calc()) is a fixed
+ * height: the property set to "initial" drops the ratio.
+ *
+ * @param string $value    Option value.
+ * @param string $property Custom property of the frame (--sv-image-h...).
+ * @return string Declarations ("a: b; c: d"), '' when empty or invalid.
+ */
+function silver_ratio_height_css( $value, $property ) {
+	$value = trim( str_replace( array( '{', '}', '<', '>', ';', '"' ), '', (string) $value ) );
+	if ( '' === $value ) return '';
+
+	if ( preg_match( '/^(\d*\.?\d+)\s*%?$/', $value, $match ) ) {
+		$height = (float) $match[1];
+		if ( $height <= 0 ) return '';
+		return $property . ': ' . $height . '; height: auto';
+	}
+
+	return $property . ': initial; height: ' . $value;
+}
+
 // Get Shortcode Inline CSS
 function get_shortcode_inline_css($args){
     $style = '';

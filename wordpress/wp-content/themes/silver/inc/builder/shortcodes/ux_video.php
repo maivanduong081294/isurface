@@ -30,7 +30,9 @@ add_ux_builder_shortcode( 'ux_video', array(
               'helpers' => require( __DIR__ . '/helpers/image-heights.php' ),
                'on_change' => array(
                     'selector' => '.video',
-                    'style' => 'padding-top: {{ value }}'
+                    // Live preview only: the saved element sets --sv-video-h
+                    // (silver_video_height_css()); padding-top while editing.
+                    'style' => '--sv-video-h: initial; height: auto; padding-top: {{ value }}'
                 )
         ),
 

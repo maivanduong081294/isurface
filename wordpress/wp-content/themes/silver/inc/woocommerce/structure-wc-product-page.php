@@ -110,18 +110,21 @@ if ( ! function_exists( 'silver_product_video_button' ) ) {
 			// Set product video height.
 			$height       = '900px';
 			$width        = '900px';
-			$iframe_scale = '100%';
+			$iframe_scale = 100; // Frame height in % of its width.
 			$custom_size  = $wc_cpdf->get_value( get_the_ID(), '_product_video_size' );
 			if ( $custom_size ) {
 				$split = explode( 'x', $custom_size );
 
 				$height = $split[0];
-				$width  = $split[1];
+				$width  = isset( $split[1] ) ? $split[1] : $split[0];
 
-				$iframe_scale = ( $width / $height * 100 ) . '%';
+				if ( (float) $height > 0 ) {
+					$iframe_scale = round( (float) $width / (float) $height * 100, 4 );
+				}
 			}
 			echo '.has-product-video .mfp-iframe-holder .mfp-content{max-width: ' . $width . ';}';
-			echo '.has-product-video .mfp-iframe-scaler{padding-top: ' . $iframe_scale . ';}';
+			// --sv-iframe-h: aspect-ratio of .mfp-iframe-scaler (silver.css).
+			echo '.has-product-video .mfp-iframe-scaler{--sv-iframe-h: ' . $iframe_scale . ';}';
 			?>
 			</style>
 			<?php

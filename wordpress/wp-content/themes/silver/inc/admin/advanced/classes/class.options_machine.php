@@ -422,9 +422,11 @@ class Options_Machine {
 					if(isset($value['icon'])){
 						$icon = ' style="background-image: url('. $value['icon'] .');"';
 					}
-					$header_class = str_replace(' ','',strtolower($value['name']));
+					// A fixed slug (functions.options-layout.php): the link of the tab
+					// does not change with the language of its title.
+					$header_class = ! empty( $value['slug'] ) ? $value['slug'] : str_replace(' ','',strtolower($value['name']));
 					$jquery_click_hook = str_replace(' ', '', strtolower($value['name']) );
-					$jquery_click_hook = "of-option-" . trim(preg_replace('/ +/', '', preg_replace('/[^A-Za-z0-9 ]/', '', urldecode(html_entity_decode(strip_tags($jquery_click_hook))))));
+					$jquery_click_hook = ! empty( $value['slug'] ) ? 'of-option-' . $value['slug'] : "of-option-" . trim(preg_replace('/ +/', '', preg_replace('/[^A-Za-z0-9 ]/', '', urldecode(html_entity_decode(strip_tags($jquery_click_hook))))));
 
 					$menu .= '<li class="'. $header_class .'"><a title="'.  $value['name'] .'" href="#'.  $jquery_click_hook  .'"'. $icon .'>'.  $value['name'] .'</a></li>';
 					$output .= '<div class="group" id="'. $jquery_click_hook  .'"><h2>'.$value['name'].'</h2>'."\n";

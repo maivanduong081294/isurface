@@ -2897,8 +2897,8 @@ msgid "Bar title tag (shop)"
 msgstr "Thẻ tiêu đề trong thanh (cửa hàng)"
 
 #: inc/admin/options/global/options-breadcrumbs.php
-msgid "Shop page and product categories. Auto: H1, or a div with the same look when the page prints an H1 of its own (in the category description, first page only, or in the shop page content). Blog: Blog > Blog Layout."
-msgstr "Trang cửa hàng và danh mục sản phẩm. Tự động: dùng H1, hoặc thẻ div (giao diện như cũ) khi trang đã có H1 riêng (trong mô tả danh mục, chỉ trang 1, hoặc trong nội dung trang cửa hàng). Blog: Blog > Blog Layout."
+msgid "Shop page and product categories. Auto: H1, or a div with the same look when the page prints an H1 of its own (in the category description, first page only, or in the shop page content). Blog: Blog > Blog page."
+msgstr "Trang cửa hàng và danh mục sản phẩm. Tự động: dùng H1, hoặc thẻ div (giao diện như cũ) khi trang đã có H1 riêng (trong mô tả danh mục, chỉ trang 1, hoặc trong nội dung trang cửa hàng). Blog: Blog > Trang blog."
 
 #: inc/admin/options/global/options-breadcrumbs.php
 msgid "Page title tag"
@@ -3113,8 +3113,8 @@ msgid "H2 of the related products section under the posts. %s = the name of the 
 msgstr "Thẻ H2 của khối sản phẩm liên quan dưới danh sách bài viết. %s = tên danh mục."
 
 #: inc/admin/options/global/options-breadcrumbs.php
-msgid "Empty: uses the setting of Customizer > Blog > Blog Related Products."
-msgstr "Để trống: dùng cấu hình trong Customizer > Blog > Blog: Sản phẩm liên quan."
+msgid "Empty: uses the setting of Customizer > Blog > Related products."
+msgstr "Để trống: dùng cấu hình trong Customizer > Blog > Sản phẩm liên quan."
 
 #: inc/admin/options/global/options-breadcrumbs.php
 msgid "Related products"
@@ -3125,8 +3125,8 @@ msgid "0 = one row (Products per row - Desktop below)."
 msgstr "0 = một hàng (theo số sản phẩm mỗi hàng - Desktop bên dưới)."
 
 #: inc/admin/options/global/options-breadcrumbs.php
-msgid "0 = as the shop (Shop > Product Catalog > Products per row)."
-msgstr "0 = giống shop (Shop > Product Catalog > Products per row)."
+msgid "0 = as the shop (WooCommerce > Shop layout > Products per row)."
+msgstr "0 = giống cửa hàng (WooCommerce > Bố cục cửa hàng > Số sản phẩm mỗi hàng)."
 
 #: inc/admin/options/global/options-breadcrumbs.php
 msgid "Products per row - Desktop"
@@ -3316,6 +3316,10 @@ msgstr "Đổ bóng thẻ"
 msgid "Lift card with shadow"
 msgstr "Nâng nhẹ và đổ bóng"
 
+#: inc/admin/options/blog/options-blog-layout.php
+msgid "Zoom image"
+msgstr "Phóng to ảnh"
+
 #: inc/structure/structure-posts.php
 msgid "Previous post"
 msgstr "Bài trước"
@@ -3405,16 +3409,16 @@ msgid "Hide on this post"
 msgstr "Ẩn ở bài viết này"
 
 #: inc/woocommerce/structure-wc-blog-promo.php
-msgid "Turned off for every post in Customizer > Blog > Blog Related Products."
-msgstr "Đang tắt cho mọi bài viết trong Customizer > Blog > Blog Related Products."
+msgid "Turned off for every post in Customizer > Blog > Related products."
+msgstr "Đang tắt cho mọi bài viết trong Customizer > Blog > Sản phẩm liên quan."
 
 #: inc/woocommerce/structure-wc-blog-promo.php
 msgid "Empty fields: from the category \"%s\"."
 msgstr "Ô để trống: lấy theo chuyên mục \"%s\"."
 
 #: inc/woocommerce/structure-wc-blog-promo.php
-msgid "Empty fields: from Customizer > Blog > Blog Related Products."
-msgstr "Ô để trống: lấy theo Customizer > Blog > Blog Related Products."
+msgid "Empty fields: from Customizer > Blog > Related products."
+msgstr "Ô để trống: lấy theo Customizer > Blog > Sản phẩm liên quan."
 
 #: inc/woocommerce/structure-wc-blog-promo.php
 msgid "%s = the name of the category."
@@ -3427,3 +3431,838 @@ msgstr "— Kế thừa (%s) —"
 #: inc/woocommerce/structure-wc-blog-promo.php
 msgid "Shown first, in this order. Empty: the %d product of the category."
 msgstr "Hiện đầu tiên, theo đúng thứ tự này. Để trống: dùng %d sản phẩm của chuyên mục."
+
+#: woocommerce/cart/mini-cart.php
+msgid "Your cart"
+msgstr "Giỏ hàng của bạn"
+
+#. translators: %d: number of items in the cart.
+#: woocommerce/cart/mini-cart.php
+msgid "%d item"
+msgid_plural "%d items"
+msgstr[0] "%d sản phẩm"
+
+#: inc/structure/structure-term-blocks.php
+msgid "— Default —"
+msgstr "— Mặc định —"
+
+#: inc/structure/structure-term-blocks.php
+msgid "— Hide —"
+msgstr "— Ẩn —"
+
+#: inc/structure/structure-term-blocks.php
+msgid "Default: the theme options."
+msgstr "Mặc định: theo Theme Options."
+
+#: inc/structure/structure-term-blocks.php
+msgid "Used by the products of this category (and of its subcategories) that keep \"Default\". Default: the theme options."
+msgstr "Áp dụng cho các sản phẩm thuộc danh mục này (và các danh mục con) đang để \"Mặc định\". Mặc định: theo Theme Options."
+
+#: inc/structure/structure-term-blocks.php
+msgid "Used by the posts of this category (and of its subcategories) that keep \"Default\". Default: the theme options."
+msgstr "Áp dụng cho các bài viết thuộc danh mục này (và các danh mục con) đang để \"Mặc định\". Mặc định: theo Theme Options."
+
+#: inc/structure/structure-term-blocks.php
+msgid "Before content of its products (UX Block)"
+msgstr "Trước nội dung các sản phẩm trong danh mục (UX Block)"
+
+#: inc/structure/structure-term-blocks.php
+msgid "Before content of its posts (UX Block)"
+msgstr "Trước nội dung các bài viết trong danh mục (UX Block)"
+
+#: inc/structure/structure-term-blocks.php
+msgid "After content of its products (UX Block)"
+msgstr "Sau nội dung các sản phẩm trong danh mục (UX Block)"
+
+#: inc/structure/structure-term-blocks.php
+msgid "After content of its posts (UX Block)"
+msgstr "Sau nội dung các bài viết trong danh mục (UX Block)"
+
+#: inc/structure/structure-term-blocks.php
+msgid "Default: the block of its category, else the theme options (Product Page)."
+msgstr "Mặc định: theo block của danh mục, nếu không có thì theo Theme Options (Product Page)."
+
+#: inc/structure/structure-term-blocks.php
+msgid "Default: the block of its category, else the theme options (Blog Single Post)."
+msgstr "Mặc định: theo block của danh mục, nếu không có thì theo Theme Options (Blog Single Post)."
+
+#: inc/admin/options/blog/options-blog.php
+msgid "Blog categories: full width, under the page header. Each category can choose its own block."
+msgstr "Danh mục blog: toàn chiều rộng, dưới phần tiêu đề trang. Mỗi danh mục có thể chọn block riêng."
+
+#: inc/admin/options/blog/options-blog.php
+msgid "Blog categories: full width, at the end of the page, before the footer. Each category can choose its own block."
+msgstr "Danh mục blog: toàn chiều rộng, cuối trang, trước footer. Mỗi danh mục có thể chọn block riêng."
+
+#: inc/admin/options/blog/options-blog.php
+msgid "Blog posts: full width, under the page header, above the post and the sidebar. A post, or its category, can choose its own block."
+msgstr "Bài viết: toàn chiều rộng, dưới phần tiêu đề trang, phía trên bài viết và sidebar. Bài viết hoặc danh mục của nó có thể chọn block riêng."
+
+#: inc/admin/options/blog/options-blog.php
+msgid "Blog posts: full width, at the end of the page, before the footer. A post, or its category, can choose its own block."
+msgstr "Bài viết: toàn chiều rộng, cuối trang, trước footer. Bài viết hoặc danh mục của nó có thể chọn block riêng."
+
+#: inc/admin/options/shop/options-shop.php
+msgid "Shop and product categories: full width, before the products. The shop page and each category can choose their own block."
+msgstr "Trang shop và danh mục sản phẩm: toàn chiều rộng, phía trên danh sách sản phẩm. Trang shop và từng danh mục có thể chọn block riêng."
+
+#: inc/admin/options/shop/options-shop.php
+msgid "Shop and product categories: full width, at the end of the page, before the footer. The shop page and each category can choose their own block."
+msgstr "Trang shop và danh mục sản phẩm: toàn chiều rộng, cuối trang, trước footer. Trang shop và từng danh mục có thể chọn block riêng."
+
+#: inc/admin/options/shop/options-shop.php
+msgid "Products: full width, above the gallery and the summary. A product, or its category, can choose its own block."
+msgstr "Sản phẩm: toàn chiều rộng, phía trên ảnh và thông tin sản phẩm. Sản phẩm hoặc danh mục của nó có thể chọn block riêng."
+
+#: inc/admin/options/shop/options-shop.php
+msgid "Products: full width, after the tabs and the related products, before the footer. A product, or its category, can choose its own block."
+msgstr "Sản phẩm: toàn chiều rộng, sau các tab và sản phẩm liên quan, trước footer. Sản phẩm hoặc danh mục của nó có thể chọn block riêng."
+
+#: inc/structure/structure-search-types.php
+msgid "Products"
+msgstr "Sản phẩm"
+
+#: inc/structure/structure-search-types.php
+msgid "Search results by type"
+msgstr "Kết quả tìm kiếm theo loại"
+
+#. translators: %s: Number of results.
+#: inc/structure/structure-search-types.php
+msgid "%s post found"
+msgid_plural "%s posts found"
+msgstr[0] "%s bài viết được tìm thấy"
+
+#. translators: %s: Number of results.
+#: inc/structure/structure-search-types.php
+msgid "%s page found"
+msgid_plural "%s pages found"
+msgstr[0] "%s trang được tìm thấy"
+
+#: inc/structure/structure-breadcrumbs-visibility.php
+msgid "Hide"
+msgstr "Ẩn"
+
+#: inc/structure/structure-breadcrumbs-visibility.php
+msgid "Show"
+msgstr "Hiển thị"
+
+#: inc/structure/structure-breadcrumbs-visibility.php
+msgid "Breadcrumbs"
+msgstr "Breadcrumbs"
+
+#: inc/structure/structure-breadcrumbs-visibility.php
+msgid "Default: Blog > Single post > Breadcrumbs."
+msgstr "Mặc định: theo Blog > Bài viết chi tiết > Breadcrumbs."
+
+#: inc/structure/structure-breadcrumbs-visibility.php
+msgid "Default: Blog > Archives > Breadcrumbs."
+msgstr "Mặc định: theo Blog > Trang lưu trữ > Breadcrumbs."
+
+#: inc/structure/structure-breadcrumbs-visibility.php
+msgid "Default: Breadcrumbs > Show breadcrumbs on pages. The shop page: shown."
+msgstr "Mặc định: theo Breadcrumbs > Show breadcrumbs on pages. Trang Shop: luôn hiển thị."
+
+#: inc/structure/structure-breadcrumbs-visibility.php
+msgid "Default: shown."
+msgstr "Mặc định: hiển thị."
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Show breadcrumbs on pages"
+msgstr "Hiển thị breadcrumbs trên trang (Page)"
+
+#: inc/admin/options/global/options-breadcrumbs.php
+msgid "Above the page content, or in the bar under the header (Breadcrumbs position). Not on the front page. Each page, post, product and category can Hide or Show its breadcrumbs (Breadcrumbs field)."
+msgstr "Phía trên nội dung trang, hoặc trong thanh dưới header (theo Breadcrumbs position). Không áp dụng cho trang chủ. Mỗi trang, bài viết, sản phẩm và danh mục có thể Ẩn hoặc Hiển thị breadcrumbs riêng (field Breadcrumbs)."
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "General"
+msgstr "Chung"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Custom code"
+msgstr "Mã tùy chỉnh"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Performance"
+msgstr "Hiệu suất"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Page loading"
+msgstr "Tải trang"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Search"
+msgstr "Tìm kiếm"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Maintenance mode"
+msgstr "Chế độ bảo trì"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "System"
+msgstr "Hệ thống"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "404 page"
+msgstr "Trang 404"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "APIs"
+msgstr "API"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Scripts"
+msgstr "Scripts"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Tracking codes, chat widgets... printed on every page."
+msgstr "Mã theo dõi, widget chat... chèn vào mọi trang."
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Custom CSS"
+msgstr "CSS tùy chỉnh"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Site loader"
+msgstr "Hiệu ứng tải trang"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Search field"
+msgstr "Ô tìm kiếm"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Results"
+msgstr "Kết quả"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Product features"
+msgstr "Tính năng sản phẩm"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Catalog mode"
+msgstr "Chế độ catalog"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Turns the shop into a catalog: no cart, no checkout."
+msgstr "Biến cửa hàng thành catalog: không giỏ hàng, không thanh toán."
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Extra content"
+msgstr "Nội dung chèn thêm"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "HTML or shortcodes added to every product / shop page."
+msgstr "HTML hoặc shortcode chèn vào mọi trang sản phẩm / cửa hàng."
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Access"
+msgstr "Quyền truy cập"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Integrations"
+msgstr "Tích hợp"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Updates"
+msgstr "Cập nhật"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Backup and import"
+msgstr "Sao lưu và nhập"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Page cache"
+msgstr "Cache trang"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Optimizations"
+msgstr "Tối ưu"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "JavaScript & CSS"
+msgstr "JavaScript & CSS"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Generate critical CSS"
+msgstr "Tạo critical CSS"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Resource hints"
+msgstr "Gợi ý tài nguyên"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Server"
+msgstr "Máy chủ"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "AJAX loading"
+msgstr "Tải bằng AJAX"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Infinite scroll"
+msgstr "Cuộn vô hạn"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Accounts"
+msgstr "Tài khoản"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Cache"
+msgstr "Cache"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Business account"
+msgstr "Tài khoản doanh nghiệp"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Parallax on mobile"
+msgstr "Parallax trên mobile"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Silver 2.0 content support"
+msgstr "Hỗ trợ nội dung Silver 2.0"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "404 page block"
+msgstr "Block trang 404"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Google Maps API key"
+msgstr "Khóa API Google Maps"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Header scripts"
+msgstr "Scripts trong header"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Body scripts: top"
+msgstr "Scripts đầu body"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Body scripts: bottom"
+msgstr "Scripts cuối body"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Footer scripts"
+msgstr "Scripts trong footer"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "All screens"
+msgstr "Mọi màn hình"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Tablets and smaller"
+msgstr "Tablet trở xuống"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Tablet landscape only"
+msgstr "Chỉ tablet ngang"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Tablet portrait only"
+msgstr "Chỉ tablet dọc"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Mobile only"
+msgstr "Chỉ mobile"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Performance optimizations"
+msgstr "Tối ưu hiệu suất"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Do not cache these URLs"
+msgstr "Không cache các URL này"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Preload pages"
+msgstr "Tải trước trang"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Lazy load images"
+msgstr "Lazy load ảnh"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Lazy load iframes"
+msgstr "Lazy load iframe"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Lazy load videos"
+msgstr "Lazy load video"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Lazy load audio"
+msgstr "Lazy load audio"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Disable theme style.css"
+msgstr "Tắt style.css của theme"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Disable emoji script"
+msgstr "Tắt script emoji"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Icon font display"
+msgstr "Hiển thị font icon"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Disable block library CSS"
+msgstr "Tắt CSS block library"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Disable MediaElement script and CSS"
+msgstr "Tắt script và CSS MediaElement"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Disable jQuery Migrate"
+msgstr "Tắt jQuery Migrate"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Disable Dashicons for visitors"
+msgstr "Tắt Dashicons cho khách"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Disable global styles"
+msgstr "Tắt global styles"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Disable embeds"
+msgstr "Tắt embeds"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Clean up <head>"
+msgstr "Dọn dẹp <head>"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Defer JavaScript"
+msgstr "Trì hoãn JavaScript"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Do not defer these scripts"
+msgstr "Không trì hoãn các script này"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Critical CSS"
+msgstr "Critical CSS"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Inline small CSS"
+msgstr "Nhúng CSS nhỏ"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Non-blocking CSS"
+msgstr "CSS không chặn hiển thị"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Preconnect to domains"
+msgstr "Kết nối trước tới tên miền"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Preload files (all pages)"
+msgstr "Tải trước file (mọi trang)"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Preload files (homepage)"
+msgstr "Tải trước file (trang chủ)"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Browser cache"
+msgstr "Cache trình duyệt"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Gzip / Brotli compression"
+msgstr "Nén Gzip / Brotli"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Loader color"
+msgstr "Màu hiệu ứng tải"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Loader background color"
+msgstr "Màu nền hiệu ứng tải"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Blog pagination"
+msgstr "Phân trang blog"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Shop pagination"
+msgstr "Phân trang cửa hàng"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "AJAX shop filters"
+msgstr "Bộ lọc cửa hàng bằng AJAX"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Scroll to top after loading"
+msgstr "Cuộn lên đầu sau khi tải"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Loader type"
+msgstr "Kiểu tải"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Custom loader image"
+msgstr "Ảnh tải tùy chỉnh"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Live search"
+msgstr "Tìm kiếm nhanh"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Search placeholder"
+msgstr "Chữ gợi ý ô tìm kiếm"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Results delay"
+msgstr "Độ trễ kết quả"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Blog posts in results"
+msgstr "Bài viết trong kết quả"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Pages in results"
+msgstr "Trang trong kết quả"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Posts and pages list style"
+msgstr "Kiểu danh sách bài viết và trang"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Order products by"
+msgstr "Sắp xếp sản phẩm theo"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Products order"
+msgstr "Thứ tự sản phẩm"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Search by product SKU"
+msgstr "Tìm theo mã SKU"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Search by product tag"
+msgstr "Tìm theo thẻ sản phẩm"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Variation swatches"
+msgstr "Swatches biến thể"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Additional variation images"
+msgstr "Ảnh bổ sung cho biến thể"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "WooCommerce product gallery"
+msgstr "Gallery sản phẩm của WooCommerce"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "AJAX add to cart (product page)"
+msgstr "Thêm vào giỏ bằng AJAX (trang sản phẩm)"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Disable reviews"
+msgstr "Tắt đánh giá"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Hide prices"
+msgstr "Ẩn giá"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Hide sale badge"
+msgstr "Ẩn nhãn giảm giá"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Header: cart / account replacement"
+msgstr "Header: thay thế giỏ hàng / tài khoản"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Product page: add to cart replacement"
+msgstr "Trang sản phẩm: thay thế nút thêm vào giỏ"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Quick view: add to cart replacement"
+msgstr "Xem nhanh: thay thế nút thêm vào giỏ"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Shop header"
+msgstr "Đầu trang cửa hàng"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Global product tab: title"
+msgstr "Tab sản phẩm chung: tiêu đề"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Global product tab: content"
+msgstr "Tab sản phẩm chung: nội dung"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Before the add to cart button"
+msgstr "Trước nút thêm vào giỏ"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "After the add to cart button"
+msgstr "Sau nút thêm vào giỏ"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Thank you page content / scripts"
+msgstr "Nội dung / scripts trang cảm ơn"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Lazy load feeds"
+msgstr "Lazy load feed"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Admin notice"
+msgstr "Thông báo trong admin"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Maintenance page"
+msgstr "Trang bảo trì"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Maintenance text"
+msgstr "Nội dung thông báo bảo trì"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Roles with access"
+msgstr "Vai trò được truy cập"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Bypass key"
+msgstr "Khóa bỏ qua"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Rank Math primary category"
+msgstr "Danh mục chính của Rank Math"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Rank Math product layout priority"
+msgstr "Ưu tiên bố cục sản phẩm Rank Math"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Rank Math breadcrumbs"
+msgstr "Breadcrumbs của Rank Math"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Backup and restore"
+msgstr "Sao lưu và khôi phục"
+
+#: inc/admin/advanced/functions/functions.options-layout.php
+msgid "Transfer options"
+msgstr "Chuyển dữ liệu tùy chọn"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Layout & pages"
+msgstr "Bố cục & trang"
+
+#: inc/admin/customizer/customizer-layout.php
+msgctxt "Customizer panel"
+msgid "Style"
+msgstr "Giao diện"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Contact & social"
+msgstr "Liên hệ & mạng xã hội"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Reset options"
+msgstr "Khôi phục mặc định"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Site layout"
+msgstr "Bố cục trang web"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Pages"
+msgstr "Trang"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Cookie notice"
+msgstr "Thông báo cookie"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Presets"
+msgstr "Mẫu có sẵn"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Elements"
+msgstr "Thành phần"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Logo & site identity"
+msgstr "Logo & nhận diện"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Top bar"
+msgstr "Thanh trên cùng"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Main bar"
+msgstr "Thanh chính"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Bottom bar"
+msgstr "Thanh dưới"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Sticky header"
+msgstr "Header cố định"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Mobile menu"
+msgstr "Menu mobile"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Dropdowns"
+msgstr "Menu thả xuống"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Vertical menu"
+msgstr "Menu dọc"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Account"
+msgstr "Tài khoản"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Cart"
+msgstr "Giỏ hàng"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Follow icons"
+msgstr "Biểu tượng theo dõi"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Colors"
+msgstr "Màu sắc"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Typography"
+msgstr "Kiểu chữ"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Global styles"
+msgstr "Kiểu chung"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Drawer & lightbox"
+msgstr "Drawer & lightbox"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Blog page"
+msgstr "Trang blog"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Posts layout"
+msgstr "Bố cục danh sách bài viết"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Post card"
+msgstr "Thẻ bài viết"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Archives"
+msgstr "Trang lưu trữ"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Single post"
+msgstr "Bài viết chi tiết"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Featured posts"
+msgstr "Bài viết nổi bật"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Shop page"
+msgstr "Trang cửa hàng"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Shop layout"
+msgstr "Bố cục cửa hàng"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Category header"
+msgstr "Tiêu đề danh mục"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Product card"
+msgstr "Thẻ sản phẩm"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Sale & new badges"
+msgstr "Nhãn giảm giá & mới"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Product gallery"
+msgstr "Ảnh sản phẩm"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Product info & buy box"
+msgstr "Thông tin & khung mua hàng"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Product tabs"
+msgstr "Tab sản phẩm"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Reviews"
+msgstr "Đánh giá"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "My account"
+msgstr "Tài khoản của tôi"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Payment icons"
+msgstr "Biểu tượng thanh toán"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Floating contact"
+msgstr "Liên hệ nổi"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Floating contact: main button"
+msgstr "Liên hệ nổi: nút chính"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Floating contact: chat apps"
+msgstr "Liên hệ nổi: ứng dụng nhắn tin"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Floating contact: social networks"
+msgstr "Liên hệ nổi: mạng xã hội"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Floating contact: marketplaces"
+msgstr "Liên hệ nổi: sàn TMĐT"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Floating contact: call, email & map"
+msgstr "Liên hệ nổi: gọi, email & bản đồ"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Channels"
+msgstr "Kênh"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Turn the channels on and order them in Floating contact > Channels."
+msgstr "Bật và sắp xếp các kênh trong Liên hệ nổi > Kênh."
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Shop breadcrumbs size"
+msgstr "Cỡ breadcrumbs cửa hàng"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Product image sizes"
+msgstr "Kích thước ảnh sản phẩm"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Checkout"
+msgstr "Thanh toán"
+
+#: inc/admin/customizer/customizer-layout.php
+msgid "Store notice"
+msgstr "Thông báo cửa hàng"

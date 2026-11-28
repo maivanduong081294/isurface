@@ -9,6 +9,30 @@
 	</div>
 	
 	<span style="display: none;" id="hooks"><?php echo json_encode(of_get_header_classes_array()); ?></span>
+	<?php // Old tab links (?tab=of-option-sitesearch...) and a remembered tab that no longer exists: open the tab that holds those options now (functions.options-layout.php). ?>
+	<script>
+	( function () {
+		var hooks = <?php echo wp_json_encode( of_get_header_classes_array() ); ?>;
+		var moved = <?php echo wp_json_encode( silver_of_options_tab_redirects() ); ?>;
+		var fix = function ( hook ) {
+			hook = String( hook || '' ).replace( /^#?of-option-/, '' );
+			if ( -1 !== hooks.indexOf( hook ) ) { return hook; }
+			return moved[ hook ] || '';
+		};
+		var url = new URL( window.location.href );
+		var tab = url.searchParams.get( 'tab' );
+		if ( tab ) {
+			var fixed = fix( tab );
+			if ( fixed ) { url.searchParams.set( 'tab', 'of-option-' + fixed ); } else { url.searchParams.delete( 'tab' ); }
+			window.history.replaceState( null, '', url.toString() );
+		}
+		var match = document.cookie.match( /(?:^|; )of_current_opt=([^;]*)/ );
+		if ( match ) {
+			var saved = fix( decodeURIComponent( match[1] ) );
+			document.cookie = saved ? 'of_current_opt=' + encodeURIComponent( '#of-option-' + saved ) + '; path=/; max-age=604800' : 'of_current_opt=; path=/; max-age=0';
+		}
+	} )();
+	</script>
 	<input type="hidden" id="security" name="security" value="<?php echo wp_create_nonce('of_ajax_nonce'); ?>" />
 
 	<form id="of_form" method="post" action="<?php echo esc_attr( $_SERVER['REQUEST_URI'] ) ?>" enctype="multipart/form-data" >

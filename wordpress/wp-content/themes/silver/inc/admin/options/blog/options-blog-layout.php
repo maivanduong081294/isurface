@@ -333,6 +333,7 @@ Silver_Option::add_field( 'option', array(
 		'lift'        => __( 'Lift card', 'silver' ),
 		'shadow'      => __( 'Card shadow', 'silver' ),
 		'lift-shadow' => __( 'Lift card with shadow', 'silver' ),
+		'zoom'        => __( 'Zoom image', 'silver' ),
 	),
 ) );
 

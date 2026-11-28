@@ -46,3 +46,31 @@ function silver_refresh_blog_partials( WP_Customize_Manager $wp_customize ) {
 
 }
 add_action( 'customize_register', 'silver_refresh_blog_partials' );
+
+// UX Blocks before / after the content (inc/structure/structure-term-blocks.php):
+// the default of the categories and of the posts, which can choose their own.
+foreach ( array(
+	'blog_archive' => array(
+		'section' => 'blog-archive',
+		'before'  => __( 'Blog categories: full width, under the page header. Each category can choose its own block.', 'silver' ),
+		'after'   => __( 'Blog categories: full width, at the end of the page, before the footer. Each category can choose its own block.', 'silver' ),
+	),
+	'blog_single'  => array(
+		'section' => 'blog-single',
+		'before'  => __( 'Blog posts: full width, under the page header, above the post and the sidebar. A post, or its category, can choose its own block.', 'silver' ),
+		'after'   => __( 'Blog posts: full width, at the end of the page, before the footer. A post, or its category, can choose its own block.', 'silver' ),
+	),
+) as $silver_page => $silver_field ) {
+	foreach ( array( 'before', 'after' ) as $silver_position ) {
+		Silver_Option::add_field( 'option', array(
+			'type'        => 'select',
+			'settings'    => $silver_page . '_' . $silver_position . '_block',
+			'label'       => 'before' === $silver_position ? __( 'Before content (UX Block)', 'silver' ) : __( 'After content (UX Block)', 'silver' ),
+			'description' => $silver_field[ $silver_position ],
+			'section'     => $silver_field['section'],
+			'default'     => 0,
+			'choices'     => silver_get_block_list_by_id( array( 'option_none' => '-- None --' ) ),
+		) );
+	}
+}
+unset( $silver_page, $silver_field, $silver_position );

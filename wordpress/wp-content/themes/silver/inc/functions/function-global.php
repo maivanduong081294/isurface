@@ -224,6 +224,24 @@ function silver_get_block_id( $post_id ) {
 }
 
 /**
+ * Whether blog posts / pages are shown in the search results (live search and
+ * the search page) next to the products. Advanced > Site Search; without
+ * WooCommerce there are no products, so both are always shown.
+ * The default is the former single option "search_result" (posts and pages).
+ *
+ * @param string $type post or page.
+ * @return bool
+ */
+function silver_search_shows( $type ) {
+	if ( ! function_exists( 'is_woocommerce_activated' ) || ! is_woocommerce_activated() ) {
+		return true;
+	}
+	$key = 'page' === $type ? 'search_result_pages' : 'search_result_posts';
+
+	return (bool) get_theme_mod( $key, get_theme_mod( 'search_result', 1 ) );
+}
+
+/**
  * Retrieve a list of blocks.
  *
  * @param array|string $args Optional. Array or string of arguments.

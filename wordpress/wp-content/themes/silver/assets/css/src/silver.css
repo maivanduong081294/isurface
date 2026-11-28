@@ -4309,8 +4309,19 @@ img {
   padding-top: 100%;
   position: relative;
 }
+/* Video frame: height in % of the width in --sv-video-h ([ux_video] Height,
+   silver_video_height_css()). aspect-ratio where supported, padding-top
+   otherwise. A fixed height (400px) sets --sv-video-h: initial, which makes
+   both declarations invalid (aspect-ratio: auto, padding-top: 0). */
 .video-fit {
-  padding-top: 56.5%;
+  --sv-video-h: 56.5;
+  padding-top: calc(var(--sv-video-h) * 1%);
+}
+@supports (aspect-ratio: 1) {
+  .video-fit {
+    aspect-ratio: 100 / var(--sv-video-h);
+    padding-top: 0;
+  }
 }
 .has-equal-box-heights .box-image img,
 .has-format img,
@@ -4666,11 +4677,39 @@ img.back-image {
 .mfp-iframe-holder .mfp-close {
   top: -40px;
 }
+/* Image frame with aspect-ratio (blog posts: blog_posts.php), like
+   .video-fit: height in % of the width in --sv-image-h. The grid layouts
+   size the frame to their cell instead. */
+.image-cover--ratio {
+  --sv-image-h: 100;
+  padding-top: calc(var(--sv-image-h) * 1%);
+}
+@supports (aspect-ratio: 1) {
+  .image-cover--ratio {
+    aspect-ratio: 100 / var(--sv-image-h);
+    padding-top: 0;
+  }
+}
+.row-grid .box .image-cover--ratio,
+.grid-col .image-cover--ratio {
+  aspect-ratio: auto !important;
+  height: 100% !important;
+}
+/* Lightbox video frame: height in % of the width in --sv-iframe-h (product
+   video size: structure-wc-product-page.php), like .video-fit. */
 .mfp-iframe-scaler {
+  --sv-iframe-h: 56.25;
   height: 0;
   overflow: hidden;
-  padding-top: 56.25%;
+  padding-top: calc(var(--sv-iframe-h) * 1%);
   width: 100%;
+}
+@supports (aspect-ratio: 1) {
+  .mfp-iframe-scaler {
+    aspect-ratio: 100 / var(--sv-iframe-h);
+    height: auto;
+    padding-top: 0;
+  }
 }
 .mfp-iframe-scaler iframe {
   display: block;

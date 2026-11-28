@@ -482,7 +482,7 @@ function silver_blog_promo_term_fields( $term = null ) {
 		return $owner
 			/* translators: 1: Parent category, 2: Value. */
 			? sprintf( __( 'Empty: inherits from "%1$s" (%2$s).', 'silver' ), $owner, $value )
-			: __( 'Empty: uses the setting of Customizer > Blog > Blog Related Products.', 'silver' );
+			: __( 'Empty: uses the setting of Customizer > Blog > Related products.', 'silver' );
 	};
 
 	$parent_cat_term = $parent_cat ? get_term( (int) $parent_cat, 'product_cat' ) : null;
@@ -625,7 +625,7 @@ function silver_blog_promo_meta_box( $post ) {
 	$from     = $term
 		/* translators: %s: Post category. */
 		? sprintf( __( 'Empty fields: from the category "%s".', 'silver' ), $term->name )
-		: __( 'Empty fields: from Customizer > Blog > Blog Related Products.', 'silver' );
+		: __( 'Empty fields: from Customizer > Blog > Related products.', 'silver' );
 
 	wp_nonce_field( 'silver_blog_promo_post', 'silver_blog_promo_post_nonce' );
 	?>
@@ -633,7 +633,7 @@ function silver_blog_promo_meta_box( $post ) {
 		<label><input type="checkbox" name="silver_post_promo_hide" value="1" <?php checked( $hide ); ?> /> <?php esc_html_e( 'Hide on this post', 'silver' ); ?></label>
 	</p>
 	<?php if ( ! get_theme_mod( 'blog_promo', 1 ) || ! get_theme_mod( 'blog_promo_single', 1 ) ) : ?>
-		<p class="description"><?php esc_html_e( 'Turned off for every post in Customizer > Blog > Blog Related Products.', 'silver' ); ?></p>
+		<p class="description"><?php esc_html_e( 'Turned off for every post in Customizer > Blog > Related products.', 'silver' ); ?></p>
 	<?php endif; ?>
 	<p class="description"><?php echo esc_html( $from ); ?></p>
 	<p>

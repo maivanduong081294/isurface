@@ -5,6 +5,8 @@
  * @package Silver/Admin/Options/Advanced
  */
 
+require_once __DIR__ . '/functions.options-layout.php';
+
 add_action( 'init', 'of_options' );
 
 if ( ! function_exists( 'of_options' ) ) {
@@ -582,11 +584,21 @@ if ( ! function_exists( 'of_options' ) ) {
 
 		if ( is_woocommerce_activated() ) {
 
+			// Posts and pages apart (silver_search_shows()); the default is
+			// the former single option "search_result".
 			$of_options[] = array(
-				'name' => 'Show Blog and pages in search results',
-				'id'   => 'search_result',
-				'desc' => 'Enable blog and pages in search results.',
-				'std'  => 1,
+				'name' => 'Show blog posts in search results',
+				'id'   => 'search_result_posts',
+				'desc' => 'Enable blog posts in search results (live search and search page).',
+				'std'  => (int) (bool) get_theme_mod( 'search_result', 1 ),
+				'type' => 'checkbox',
+			);
+
+			$of_options[] = array(
+				'name' => 'Show pages in search results',
+				'id'   => 'search_result_pages',
+				'desc' => 'Enable pages in search results (live search and search page).',
+				'std'  => (int) (bool) get_theme_mod( 'search_result', 1 ),
 				'type' => 'checkbox',
 			);
 
@@ -1115,6 +1127,9 @@ if ( ! function_exists( 'of_options' ) ) {
 			'type' => 'transfer',
 			'desc' => 'You can transfer the saved options data between different installs by copying the text inside the text box. To import data from another install, replace the data in the text box with the one from another install and click "Import Options".',
 		);
+
+		// Tabs, groups, labels and group titles (silver_of_options_reorganize()).
+		$of_options = silver_of_options_reorganize( $of_options );
 
 	} // End of 'of_options()' function.
 } // End check if function exists: of_options()

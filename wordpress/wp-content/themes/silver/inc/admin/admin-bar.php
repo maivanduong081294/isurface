@@ -355,125 +355,28 @@ $wp_admin_bar->add_menu( array(
 ));
 
 
-$wp_admin_bar->add_menu( array(
- 'parent' => 'options_advanced',
- 'id' => 'options_advanced_custom_scripts',
- 'title' => 'Global Settings',
- 'href' =>  $advanced_url.'of-option-globalsettings'
-));
-
-$wp_admin_bar->add_menu( array(
- 'parent' => 'options_advanced',
- 'id' => 'options_advanced_custom_css',
- 'title' => 'Custom CSS',
- 'href' =>  $advanced_url.'of-option-customcss'
-));
-
-
-$wp_admin_bar->add_menu( array(
- 'parent' => 'options_advanced',
- 'id' => 'options_advanced_performance',
- 'title' => 'Performance',
- 'href' =>  $advanced_url.'of-option-performance'
-));
-
+// Advanced options: one link per tab (inc/admin/advanced/functions/functions.options-layout.php).
+foreach ( array(
+	'general'         => __( 'General', 'silver' ),
+	'code'            => __( 'Custom code', 'silver' ),
+	'performance'     => __( 'Performance', 'silver' ),
+	'loading'         => __( 'Page loading', 'silver' ),
+	'search'          => __( 'Search', 'silver' ),
+	'woocommerce'     => __( 'WooCommerce', 'silver' ),
+	'instagram'       => __( 'Instagram', 'silver' ),
+	'maintenancemode' => __( 'Maintenance mode', 'silver' ),
+	'system'          => __( 'System', 'silver' ),
+) as $silver_tab => $silver_tab_title ) {
+	if ( 'woocommerce' === $silver_tab && ! is_woocommerce_activated() ) {
+		continue;
+	}
 	$wp_admin_bar->add_menu( array(
 		'parent' => 'options_advanced',
-		'id'     => 'options_advanced_content_delivery',
-		'title'  => 'Content Delivery',
-		'href'   => $advanced_url . 'of-option-contentdelivery',
+		'id'     => 'options_advanced_' . $silver_tab,
+		'title'  => $silver_tab_title,
+		'href'   => $advanced_url . 'of-option-' . $silver_tab,
 	) );
-
-$wp_admin_bar->add_menu( array(
- 'parent' => 'options_advanced',
- 'id' => 'options_advanced_site_loader',
- 'title' => 'Site Loader',
- 'href' =>  $advanced_url.'of-option-siteloader'
-));
-
-$wp_admin_bar->add_menu( array(
- 'parent' => 'options_advanced',
- 'id' => 'options_advanced_site_search',
- 'title' => 'Site Search',
- 'href' =>  $advanced_url.'of-option-sitesearch'
-));
-
-$wp_admin_bar->add_menu( array(
- 'parent' => 'options_advanced',
- 'id' => 'options_advanced_instagram_api',
- 'title' => 'Instagram',
- 'href' =>  $advanced_url.'of-option-instagram'
-));
-
-$wp_admin_bar->add_menu( array(
- 'parent' => 'options_advanced',
- 'id' => 'options_advanced_google_apis',
- 'title' => 'Google APIs',
- 'href' =>  $advanced_url.'of-option-googleapis'
-));
-
-$wp_admin_bar->add_menu( array(
- 'parent' => 'options_advanced',
- 'id' => 'options_advanced_maintenance',
- 'title' => 'Maintenance',
- 'href' =>  $advanced_url.'of-option-maintenancemode'
-));
-
-$wp_admin_bar->add_menu( array(
-	'parent' => 'options_advanced',
-	'id'     => 'options_advanced_404',
-	'title'  => '404 Page',
-	'href'   => $advanced_url . 'of-option-404page',
-) );
-
-$wp_admin_bar->add_menu( array(
-  'parent' => 'options_advanced',
-  'id' => 'options_advanced_woocommerce',
-  'title' => 'WooCommerce',
-  'href' =>  $advanced_url.'of-option-woocommerce'
-));
-
-$wp_admin_bar->add_menu( array(
- 'parent' => 'options_advanced',
- 'id' => 'options_advanced_catalog_mode',
- 'title' => 'Catalog Mode',
- 'href' =>  $advanced_url.'of-option-catalogmode'
-));
-
-$wp_admin_bar->add_menu( array(
- 'parent' => 'options_advanced',
- 'id' => 'options_advanced_portfolio',
- 'title' => 'Portfolio',
- 'href' =>  $advanced_url.'of-option-portfolio'
-));
-
-$wp_admin_bar->add_menu( array(
- 'parent' => 'options_advanced',
- 'id' => 'options_advanced_mobile',
- 'title' => 'Mobile',
- 'href' =>  $advanced_url.'of-option-mobile'
-));
-
-$wp_admin_bar->add_menu( array(
- 'parent' => 'options_advanced',
- 'id' => 'options_advanced_integrations',
- 'title' => 'Integrations',
- 'href' =>  $advanced_url.'of-option-integrations'
-));
-
-$wp_admin_bar->add_menu( array(
- 'parent' => 'options_advanced',
- 'id' => 'options_advanced_updates',
- 'title' => 'Updates',
- 'href' =>  $advanced_url.'of-option-updates'
-));
-
-$wp_admin_bar->add_menu( array(
- 'parent' => 'options_advanced',
- 'id' => 'options_advanced_backup',
- 'title' => 'Backup / Import',
- 'href' =>  $advanced_url.'of-option-backupandimport'
-));
+}
 
 // HELPERS
 

@@ -110,7 +110,7 @@ foreach ( array(
 		'type'            => 'slider',
 		'settings'        => $silver_blog_promo_setting,
 		'label'           => $silver_blog_promo_field[0],
-		'description'     => __( '0 = as the shop (Shop > Product Catalog > Products per row).', 'silver' ),
+		'description'     => __( '0 = as the shop (WooCommerce > Shop layout > Products per row).', 'silver' ),
 		'section'         => 'blog-promo',
 		'default'         => 0,
 		'choices'         => array(

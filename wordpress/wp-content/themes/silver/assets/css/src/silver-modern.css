@@ -971,31 +971,81 @@ label:has(> input[type="radio"]) > input {
 
 /* Product rows */
 :is(.off-canvas-cart, .nav-dropdown) .woocommerce-mini-cart {
-	margin-bottom: 16px;
+	margin-bottom: 12px;
 }
 
-/* Row is at least as tall as the thumbnail (72px + 2 x 16px padding):
-   with a 1-line name the image used to hang past the row and get cut by
-   the next row's border (li has overflow: hidden). */
+/* Each item is a separate card: thumbnail on the left, name and attribute
+   chips on the right, and a bottom line (quantity left, price + remove
+   right) pushed to the bottom of the card (flex column + margin-top: auto),
+   so it lines up with the thumbnail whatever the name length. */
 :is(.off-canvas-cart, .nav-dropdown) ul.product_list_widget li {
-	--sv-cart-thumb: 72px;
+	--sv-cart-thumb: 64px;
+	--sv-cart-card-pad: 10px;
+	background-color: var(--sv-surface);
+	border: 1px solid var(--sv-border);
+	border-radius: var(--sv-radius);
+	display: flex;
+	flex-direction: column;
 	margin: 0; /* never the content-list indent (.col-inner ul li) */
-	min-height: calc(var(--sv-cart-thumb) + 32px);
-	padding: 16px 40px 16px calc(var(--sv-cart-thumb) + 16px);
+	min-height: calc(var(--sv-cart-thumb) + var(--sv-cart-card-pad) * 2 + 2px);
+	padding: var(--sv-cart-card-pad) var(--sv-cart-card-pad) var(--sv-cart-card-pad)
+		calc(var(--sv-cart-thumb) + var(--sv-cart-card-pad) * 2);
+	transition: border-color var(--sv-dur) var(--sv-ease), box-shadow var(--sv-dur) var(--sv-ease);
 }
 
+:is(.off-canvas-cart, .nav-dropdown) ul.product_list_widget li:hover {
+	border-color: var(--sv-border-strong);
+	box-shadow: 0 6px 16px -8px rgba(15, 23, 42, 0.18);
+}
+
+/* Gap between cards (margin-top: the theme zeroes first/last li margins). */
 :is(.off-canvas-cart, .nav-dropdown) ul.product_list_widget li + li {
-	border-top-color: var(--sv-border);
+	border-top: 1px solid var(--sv-border);
+	margin-top: 8px !important;
+}
+
+:is(.off-canvas-cart, .nav-dropdown) ul.product_list_widget li + li:hover {
+	border-top-color: var(--sv-border-strong);
 }
 
 :is(.off-canvas-cart, .nav-dropdown) ul.product_list_widget li img {
 	background-color: var(--sv-surface-muted);
-	border: 1px solid var(--sv-border);
+	border: 0;
 	border-radius: var(--sv-radius-sm);
 	height: var(--sv-cart-thumb);
+	left: var(--sv-cart-card-pad);
 	margin: 0;
-	top: 16px;
+	top: var(--sv-cart-card-pad);
+	transition: transform 0.25s var(--sv-ease);
 	width: var(--sv-cart-thumb);
+}
+
+:is(.off-canvas-cart, .nav-dropdown) ul.product_list_widget li:hover img {
+	transform: scale(1.04);
+}
+
+/* Discount badge on the thumbnail corner (mini-cart.php). Same colour as
+   the product sale bubbles: class "badge-inner on-sale", so Style > Colors
+   > Sale (".badge-inner.on-sale" in function-custom-css.php) applies, with
+   the same default as the pill bubble (silver.css). */
+:is(.off-canvas-cart, .nav-dropdown) .ux-mini-cart-badge {
+	background-color: var(--fs-color-alert, #dc2626);
+	border-radius: var(--sv-radius-pill, 999px);
+	box-shadow: 0 1px 3px rgba(15, 23, 42, 0.2);
+	color: #fff;
+	display: block;
+	height: auto;
+	width: auto;
+	font-size: 0.6875rem;
+	font-variant-numeric: tabular-nums;
+	font-weight: 700;
+	left: calc(var(--sv-cart-card-pad) - 4px);
+	line-height: 1;
+	padding: 4px 7px;
+	pointer-events: none;
+	position: absolute;
+	top: calc(var(--sv-cart-card-pad) - 4px);
+	z-index: 1;
 }
 
 :is(.off-canvas-cart, .nav-dropdown) ul.product_list_widget li a:not(.remove) {
@@ -1007,7 +1057,7 @@ label:has(> input[type="radio"]) > input {
 	-webkit-line-clamp: 2;
 	line-clamp: 2;
 	line-height: 1.35;
-	margin-bottom: 6px;
+	margin-bottom: 4px;
 	min-height: 0;
 	transition: color var(--sv-dur) var(--sv-ease);
 }
@@ -1016,39 +1066,40 @@ label:has(> input[type="radio"]) > input {
 	color: var(--sv-primary);
 }
 
-/* Variation attributes (Size, Color, ...): one compact wrapping line
-   "Size M · Color Red" instead of the base stacked, floated dt/dd. */
+/* Variation attributes (RAM, CPU, ...): one chip per value ("8GB",
+   "Core i5"), never split between two lines. The label (dt) is only
+   read by screen readers. */
 :is(.off-canvas-cart, .nav-dropdown) .woocommerce-mini-cart-item dl.variation {
-	align-items: baseline;
-	color: var(--sv-text-muted);
 	display: flex;
 	flex-wrap: wrap;
-	font-size: 0.8125rem;
-	gap: 2px 0;
+	gap: 4px;
 	line-height: 1.4;
 	margin: 0 0 6px;
 }
 
 :is(.off-canvas-cart, .nav-dropdown) .woocommerce-mini-cart-item dl.variation dt {
-	clear: none;
-	float: none;
-	font-weight: 400;
-	margin: 0 4px 0 0;
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
 }
 
 :is(.off-canvas-cart, .nav-dropdown) .woocommerce-mini-cart-item dl.variation dd {
+	background-color: var(--sv-surface-muted);
+	border: 1px solid var(--sv-border);
+	border-radius: 6px;
 	color: var(--sv-heading);
+	float: none;
+	font-size: 0.75rem;
 	font-weight: 600;
 	margin: 0;
-	min-width: 0;
-	overflow-wrap: anywhere;
-}
-
-:is(.off-canvas-cart, .nav-dropdown) .woocommerce-mini-cart-item dl.variation dd:not(:last-child)::after {
-	color: var(--sv-border-strong);
-	content: "·";
-	font-weight: 400;
-	margin: 0 8px;
+	max-width: 100%;
+	overflow: hidden;
+	padding: 2px 8px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 :is(.off-canvas-cart, .nav-dropdown) .woocommerce-mini-cart-item dl.variation dd p {
@@ -1056,15 +1107,16 @@ label:has(> input[type="radio"]) > input {
 	margin: 0;
 }
 
-/* Same bottom line for every row, with or without the stepper:
-   quantity on the left, price on the right, same size and colour. */
+/* Bottom line of the card, with or without the stepper: quantity on the
+   left, price on the right, room for the remove button after the price. */
 :is(.off-canvas-cart, .nav-dropdown) .woocommerce-mini-cart-item .ux-mini-cart-qty {
 	align-items: center;
 	gap: 8px;
 	justify-content: space-between;
 	margin-right: 0;
-	margin-top: 2px;
-	min-height: 34px;
+	margin-top: auto;
+	min-height: 28px;
+	padding-right: 36px;
 }
 
 /* Header > Cart > "Quantity in mini cart": compact stepper + line subtotal. */
@@ -1128,11 +1180,13 @@ label:has(> input[type="radio"]) > input {
 	font-weight: 700;
 }
 
-/* Remove: 32px target, quiet until hovered, red on hover. */
+/* Remove: trash icon at the end of the bottom line, 32px target, quiet
+   until hovered, red on hover. */
 :is(.off-canvas-cart, .nav-dropdown) .widget_shopping_cart ul.product_list_widget li a.remove {
 	align-items: center;
 	border: 0;
 	border-radius: var(--sv-radius-sm);
+	bottom: calc(var(--sv-cart-card-pad) - 2px); /* centred on the 28px bottom line */
 	color: var(--sv-text-muted);
 	display: flex;
 	font-size: 22px;
@@ -1140,8 +1194,8 @@ label:has(> input[type="radio"]) > input {
 	height: 32px;
 	justify-content: center;
 	line-height: 1;
-	right: 0;
-	top: 12px;
+	right: calc(var(--sv-cart-card-pad) - 6px);
+	top: auto;
 	transition: background-color var(--sv-dur) var(--sv-ease), color var(--sv-dur) var(--sv-ease);
 	width: 32px;
 }
@@ -1159,8 +1213,8 @@ label:has(> input[type="radio"]) > input {
 	content: "";
 	height: 16px;
 	left: 50%;
-	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M18 6 6 18M6 6l12 12'/%3E%3C/svg%3E") center / contain no-repeat;
-	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M18 6 6 18M6 6l12 12'/%3E%3C/svg%3E") center / contain no-repeat;
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6M10 11v6M14 11v6'/%3E%3C/svg%3E") center / contain no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6M10 11v6M14 11v6'/%3E%3C/svg%3E") center / contain no-repeat;
 	position: absolute;
 	top: 50%;
 	transform: translate(-50%, -50%);
@@ -1180,7 +1234,7 @@ label:has(> input[type="radio"]) > input {
 	box-shadow: 0 -12px 24px -16px rgba(15, 23, 42, 0.16);
 	margin-left: calc(var(--sv-cart-pad) * -1);
 	margin-right: calc(var(--sv-cart-pad) * -1);
-	padding: 16px var(--sv-cart-pad) calc(var(--sv-cart-pad) + env(safe-area-inset-bottom, 0px));
+	padding: 12px var(--sv-cart-pad) calc(14px + env(safe-area-inset-bottom, 0px));
 }
 
 :is(.off-canvas-cart, .nav-dropdown) .widget_shopping_cart p.total {
@@ -1188,21 +1242,22 @@ label:has(> input[type="radio"]) > input {
 	border: 0;
 	display: flex;
 	justify-content: space-between;
-	margin: 0 0 16px;
+	margin: 0 0 10px;
 	padding: 0;
 }
 
 :is(.off-canvas-cart, .nav-dropdown) .widget_shopping_cart p.total strong {
-	color: var(--sv-text-muted);
+	color: var(--sv-heading);
 	font-size: 0.9375rem;
-	font-weight: 500;
+	font-weight: 600;
 }
 
 :is(.off-canvas-cart, .nav-dropdown) .widget_shopping_cart p.total .amount {
 	color: var(--sv-cart-price);
-	font-size: 1.25rem;
+	font-size: 1.375rem;
 	font-variant-numeric: tabular-nums;
-	font-weight: 700;
+	font-weight: 800;
+	letter-spacing: -0.01em;
 }
 
 :is(.off-canvas-cart, .nav-dropdown) .woocommerce-mini-cart__buttons {
@@ -1215,32 +1270,154 @@ label:has(> input[type="radio"]) > input {
 :is(.off-canvas-cart, .nav-dropdown) .widget_shopping_cart .woocommerce-mini-cart__buttons .button {
 	--sv-btn-height: 48px;
 	--sv-btn-line-height: 46px;
+	align-items: center;
+	border-radius: var(--sv-radius);
+	display: flex;
 	font-size: 1rem;
+	gap: 10px;
+	justify-content: center;
 	margin: 0;
 	min-height: 48px;
+	text-transform: none;
 }
 
-/* Checkout first and filled; View cart second and outlined. */
-:is(.off-canvas-cart, .nav-dropdown) .woocommerce-mini-cart__buttons .button.checkout {
+/* Checkout first: filled, raised, lock before and arrow after the label.
+   The colours win over the dropdown link colours (.nav-dropdown a). */
+:is(.off-canvas-cart, .nav-dropdown) .widget_shopping_cart .woocommerce-mini-cart__buttons .button.checkout {
 	--sv-btn-accent: var(--sv-primary);
-	background-color: var(--sv-primary);
+	--sv-btn-height: 48px;
+	--sv-btn-line-height: 46px;
+	background: linear-gradient(180deg, color-mix(in srgb, var(--sv-primary) 88%, #fff), var(--sv-primary));
 	border-color: var(--sv-primary);
-	color: #fff;
+	box-shadow: 0 8px 20px -8px color-mix(in srgb, var(--sv-primary) 70%, transparent),
+		inset 0 1px 0 rgba(255, 255, 255, 0.18);
+	color: #fff !important;
+	font-weight: 700;
+	min-height: 48px;
 	order: -1;
+	transition: transform 0.2s var(--sv-ease), box-shadow 0.2s var(--sv-ease), filter 0.2s var(--sv-ease);
 }
 
-:is(.off-canvas-cart, .nav-dropdown) .woocommerce-mini-cart__buttons .button:not(.checkout) {
+:is(.off-canvas-cart, .nav-dropdown) .widget_shopping_cart .woocommerce-mini-cart__buttons .button.checkout:hover {
+	box-shadow: 0 12px 24px -8px color-mix(in srgb, var(--sv-primary) 80%, transparent),
+		inset 0 1px 0 rgba(255, 255, 255, 0.18);
+	filter: brightness(1.06);
+	transform: translateY(-1px);
+}
+
+:is(.off-canvas-cart, .nav-dropdown) .widget_shopping_cart .woocommerce-mini-cart__buttons .button.checkout:active {
+	transform: translateY(0);
+}
+
+:is(.off-canvas-cart, .nav-dropdown) .woocommerce-mini-cart__buttons .button.checkout::before,
+:is(.off-canvas-cart, .nav-dropdown) .woocommerce-mini-cart__buttons .button.checkout::after {
+	background-color: currentColor;
+	content: "";
+	flex: none;
+	height: 18px;
+	position: static;
+	width: 18px;
+}
+
+:is(.off-canvas-cart, .nav-dropdown) .woocommerce-mini-cart__buttons .button.checkout::before {
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='11' width='16' height='10' rx='2'/%3E%3Cpath d='M8 11V7a4 4 0 0 1 8 0v4'/%3E%3C/svg%3E") center / contain no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='11' width='16' height='10' rx='2'/%3E%3Cpath d='M8 11V7a4 4 0 0 1 8 0v4'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+:is(.off-canvas-cart, .nav-dropdown) .woocommerce-mini-cart__buttons .button.checkout::after {
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+	transition: transform 0.2s var(--sv-ease);
+}
+
+:is(.off-canvas-cart, .nav-dropdown) .woocommerce-mini-cart__buttons .button.checkout:hover::after {
+	transform: translateX(3px);
+}
+
+:is(.off-canvas-cart, .nav-dropdown) .widget_shopping_cart .woocommerce-mini-cart__buttons .button:not(.checkout) {
 	--sv-btn-accent: var(--sv-border-strong);
 	background: transparent;
 	border: 1px solid var(--sv-border-strong);
 	box-shadow: none;
-	color: var(--sv-heading);
+	color: var(--sv-heading) !important;
+	font-weight: 600;
 }
 
-:is(.off-canvas-cart, .nav-dropdown) .woocommerce-mini-cart__buttons .button:not(.checkout):hover {
+:is(.off-canvas-cart, .nav-dropdown) .widget_shopping_cart .woocommerce-mini-cart__buttons .button:not(.checkout):hover {
 	background: var(--sv-surface-muted);
 	border-color: var(--sv-control-border-hover);
+}
+
+/* Heading row: "Your cart" + item count pill (mini-cart.php). In the drawer
+   it takes the place of the panel title "Cart" (see below). */
+:is(.off-canvas-cart, .nav-dropdown) .ux-mini-cart-head {
+	align-items: center;
+	display: flex;
+	gap: 8px;
+	justify-content: space-between;
+	padding: 8px 0 10px;
+}
+
+:is(.off-canvas-cart, .nav-dropdown) .ux-mini-cart-head__label {
 	color: var(--sv-heading);
+	font-size: 1rem;
+	font-weight: 700;
+}
+
+:is(.off-canvas-cart, .nav-dropdown) .ux-mini-cart-head__count {
+	background-color: color-mix(in srgb, var(--sv-primary) 10%, transparent);
+	border-radius: var(--sv-radius-pill, 999px);
+	color: var(--sv-primary);
+	font-size: 0.75rem;
+	font-variant-numeric: tabular-nums;
+	font-weight: 700;
+	padding: 4px 10px;
+	white-space: nowrap;
+}
+
+/* Drawer: the heading row becomes the panel header (same bar as the
+   "Cart" title, which is hidden while the cart has items; the empty cart
+   has no heading row and keeps "Cart"). The pill sits next to the label,
+   the close button stays on the right. */
+.off-canvas-cart .cart-popup-inner:has(.ux-mini-cart-head) .cart-popup-title {
+	display: none;
+}
+
+.off-canvas-cart .ux-mini-cart-head {
+	border-bottom: 1px solid var(--sv-border);
+	justify-content: flex-start;
+	margin: 0 calc(var(--sv-cart-pad) * -1) 12px;
+	min-height: 64px;
+	padding: 0 64px 0 var(--sv-cart-pad);
+}
+
+.off-canvas-cart .ux-mini-cart-head__label {
+	color: var(--sv-heading);
+	font-size: 1.125rem;
+	font-weight: 700;
+	letter-spacing: -0.01em;
+}
+
+.nav-dropdown .ux-mini-cart-head {
+	margin-bottom: 2px;
+}
+
+/* Rows slide in when the cart opens / refreshes. */
+@media (prefers-reduced-motion: no-preference) {
+	:is(.off-canvas-cart, .nav-dropdown) ul.product_list_widget li {
+		animation: sv-cart-row-in 0.35s var(--sv-ease) both;
+	}
+
+	:is(.off-canvas-cart, .nav-dropdown) ul.product_list_widget li:nth-child(2) { animation-delay: 40ms; }
+	:is(.off-canvas-cart, .nav-dropdown) ul.product_list_widget li:nth-child(3) { animation-delay: 80ms; }
+	:is(.off-canvas-cart, .nav-dropdown) ul.product_list_widget li:nth-child(n + 4) { animation-delay: 120ms; }
+}
+
+@keyframes sv-cart-row-in {
+	from {
+		opacity: 0;
+		transform: translateY(6px);
+	}
 }
 
 /* Dropdown cart (quick cart "Dropdown" style and the header cart dropdown):
@@ -1248,12 +1425,25 @@ label:has(> input[type="radio"]) > input {
 /* Side padding on the inner li: the theme's dropdown positioning (silver.js)
    measures the width without padding, so padding here pushed it off screen. */
 .nav-dropdown:has(> .widget_shopping_cart) {
-	min-width: 340px;
+	border-radius: var(--sv-radius-lg);
+	box-shadow: 0 24px 48px -12px rgba(15, 23, 42, 0.25), 0 0 0 1px rgba(15, 23, 42, 0.05);
+	min-width: 380px;
 	padding: 8px 0 20px;
 }
 
 .nav-dropdown > .widget_shopping_cart {
 	padding: 0 20px;
+}
+
+/* Scrolling list: thin scrollbar, the next row fades out at the bottom so
+   it is clear there is more to scroll. */
+.nav-dropdown .widget_shopping_cart .product_list_widget {
+	-webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 24px), transparent);
+	mask-image: linear-gradient(to bottom, #000 calc(100% - 24px), transparent);
+	max-height: min(420px, 50vh);
+	padding-bottom: 16px; /* room for the fade */
+	scrollbar-color: var(--sv-border-strong) transparent;
+	scrollbar-width: thin;
 }
 
 /* Below 850px the theme does not reposition dropdowns: the cart opened to
@@ -1266,7 +1456,7 @@ label:has(> input[type="radio"]) > input {
 		margin: 0 !important;
 		min-width: 0;
 		right: -8px;
-		width: min(340px, calc(100vw - 24px));
+		width: min(380px, calc(100vw - 24px));
 	}
 }
 
@@ -1279,11 +1469,15 @@ label:has(> input[type="radio"]) > input {
 	padding-top: 16px;
 }
 
-.nav-dropdown .widget_shopping_cart .woocommerce-mini-cart__buttons .button {
+.nav-dropdown .widget_shopping_cart .woocommerce-mini-cart__buttons .button:not(.checkout) {
 	--sv-btn-height: 44px;
 	--sv-btn-line-height: 42px;
 	font-size: 0.9375rem;
 	min-height: 44px;
+}
+
+.nav-dropdown ul.product_list_widget li {
+	--sv-cart-thumb: 64px;
 }
 
 .nav-dropdown .ux-mini-cart-empty {
@@ -1330,7 +1524,7 @@ label:has(> input[type="radio"]) > input {
 	}
 
 	.off-canvas-cart ul.product_list_widget li {
-		--sv-cart-thumb: 64px;
+		--sv-cart-thumb: 60px;
 	}
 }
 
@@ -3476,27 +3670,37 @@ html[dir="rtl"] {
 /* Blog breadcrumbs and the bar under the header: small and muted, links take
    the primary colour on hover, the current page is the darkest item. On the
    dark title of the "Top" single post layout everything stays light. */
-:is(.blog-breadcrumbs, .breadcrumbs-bar) .breadcrumbs {
+:is(.blog-breadcrumbs, .breadcrumbs-bar, .page-breadcrumbs-row) .breadcrumbs {
 	color: var(--sv-heading);
 	font-size: 0.8125em;
 	font-weight: 500;
 }
 
-:is(.blog-breadcrumbs, .breadcrumbs-bar) .breadcrumbs a {
+:is(.blog-breadcrumbs, .breadcrumbs-bar, .page-breadcrumbs-row) .breadcrumbs a {
 	color: var(--sv-text-muted);
 }
 
-:is(.blog-breadcrumbs, .breadcrumbs-bar) .breadcrumbs a:hover {
+:is(.blog-breadcrumbs, .breadcrumbs-bar, .page-breadcrumbs-row) .breadcrumbs a:hover {
 	color: var(--sv-primary);
 }
 
-.dark :is(.blog-breadcrumbs, .breadcrumbs-bar) .breadcrumbs,
-.dark :is(.blog-breadcrumbs, .breadcrumbs-bar) .breadcrumbs a {
+.dark :is(.blog-breadcrumbs, .breadcrumbs-bar, .page-breadcrumbs-row) .breadcrumbs,
+.dark :is(.blog-breadcrumbs, .breadcrumbs-bar, .page-breadcrumbs-row) .breadcrumbs a {
 	color: rgba(255, 255, 255, 0.85);
 }
 
-.dark :is(.blog-breadcrumbs, .breadcrumbs-bar) .breadcrumbs a:hover {
+.dark :is(.blog-breadcrumbs, .breadcrumbs-bar, .page-breadcrumbs-row) .breadcrumbs a:hover {
 	color: #fff;
+}
+
+/* Pages (structure-breadcrumbs-visibility.php): the trail above the content. */
+.page-breadcrumbs-row {
+	padding-top: 20px;
+	padding-bottom: 14px;
+}
+
+.page-breadcrumbs-row .breadcrumbs {
+	margin: 0;
 }
 
 /* Bar under the header (silver_breadcrumbs_bar()): a white band with a
@@ -6507,6 +6711,45 @@ body.has-sticky-product-cart #footer > :nth-last-child(1 of :not(.back-to-top, s
 
 .page-header-cat.is-active .page-header-cat__img {
 	background-color: #fff;
+}
+
+/* Number of results (search type chips: structure-search-types.php). */
+.page-header-cat__count {
+	background-color: var(--sv-surface-muted);
+	border-radius: var(--sv-radius-pill);
+	color: var(--sv-text-muted);
+	font-size: 0.8125em;
+	font-variant-numeric: tabular-nums;
+	font-weight: 700;
+	line-height: 1;
+	margin-right: -8px;
+	min-width: 24px;
+	padding: 5px 8px;
+	text-align: center;
+}
+
+.page-header-cats .page-header-cat.is-active .page-header-cat__count {
+	background-color: rgba(255, 255, 255, 0.22);
+	color: #fff;
+}
+
+/* A type without results: shown, not clickable. */
+.page-header-cats .page-header-cat.is-disabled {
+	cursor: not-allowed;
+	opacity: 0.45;
+}
+
+.page-header-cats .page-header-cat.is-disabled:hover {
+	border-color: var(--sv-border);
+}
+
+/* No page header bar: the chips above the products / the posts. */
+.search-type-chips-row {
+	margin-bottom: 24px;
+}
+
+.search-type-chips-row .page-header-cats {
+	margin: -2px 0;
 }
 
 /* Customizer > Breadcrumbs > Bar text color > Light (.breadcrumbs-bar.dark). */

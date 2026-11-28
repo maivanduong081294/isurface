@@ -23,7 +23,14 @@ function silver_ajax_search_posts( $args ) {
 	$defaults = $args;
 
 	$args['s']         = apply_filters( 'silver_ajax_search_query', $args['s'] );
-	$args['post_type'] = apply_filters( 'silver_ajax_search_post_type', array( 'post', 'page' ) );
+	// Advanced > Site Search: posts and / or pages.
+	$post_types = array();
+	if ( silver_search_shows( 'post' ) ) $post_types[] = 'post';
+	if ( silver_search_shows( 'page' ) ) $post_types[] = 'page';
+	$args['post_type'] = apply_filters( 'silver_ajax_search_post_type', $post_types );
+	if ( empty( $args['post_type'] ) ) {
+		return array();
+	}
 
 	$search_query   = http_build_query( $args );
 	$query_function = apply_filters( 'silver_ajax_search_function', 'get_posts', $search_query, $args, $defaults );
@@ -164,7 +171,7 @@ function silver_ajax_search() {
 		$tag_products = get_theme_mod( 'search_by_product_tag', 0 ) ? silver_ajax_search_get_products( 'tag', $args ) : array();
 	}
 
-	if ( ( ! $wc_activated || get_theme_mod( 'search_result', 1 ) ) && ! isset( $_REQUEST['product_cat'] ) ) {
+	if ( ( silver_search_shows( 'post' ) || silver_search_shows( 'page' ) ) && ! isset( $_REQUEST['product_cat'] ) ) {
 		$posts = silver_ajax_search_posts( $args );
 	}
 

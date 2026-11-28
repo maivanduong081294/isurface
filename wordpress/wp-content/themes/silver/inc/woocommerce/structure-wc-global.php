@@ -127,18 +127,19 @@ function silver_woocommerce_breadcrumbs() {
 
 add_filter( 'woocommerce_breadcrumb_defaults', 'silver_woocommerce_breadcrumbs' );
 
-/** Localize default labels while preserving custom shop names and translated trails. */
+/**
+ * Localize the default search label of the trail. The shop crumb keeps the
+ * title of the page chosen as shop (WooCommerce > Settings > Products), like
+ * the shop page title.
+ */
 function silver_localize_catalog_breadcrumbs( $crumbs ) {
-	if ( ! is_woocommerce() && ! is_search() ) {
+	if ( ! is_search() ) {
 		return $crumbs;
 	}
 
-	$shop_url = wc_get_page_permalink( 'shop' );
-	$query    = is_search() ? get_search_query() : '';
+	$query = get_search_query();
 	foreach ( $crumbs as $index => $crumb ) {
-		if ( 'Shop' === $crumb[0] && $shop_url === $crumb[1] ) {
-			$crumbs[ $index ][0] = __( 'Shop', 'silver' );
-		} elseif ( is_search() && sprintf( 'Search results for &ldquo;%s&rdquo;', $query ) === $crumb[0] ) {
+		if ( sprintf( 'Search results for &ldquo;%s&rdquo;', $query ) === $crumb[0] ) {
 			$crumbs[ $index ][0] = sprintf( __( 'Search Results for: %s', 'silver' ), $query );
 		}
 	}
@@ -289,7 +290,13 @@ add_filter( 'woocommerce_add_to_cart_fragments', 'silver_header_add_to_cart_cust
  * Add Pages and blog posts to top of search results if set.
  */
 function silver_pages_in_search_results() {
-	if ( ! is_search() || ! get_theme_mod( 'search_result', 1 ) ) return;
+	// Advanced > Site Search: posts and / or pages.
+	$show_posts = silver_search_shows( 'post' );
+	$show_pages = silver_search_shows( 'page' );
+	if ( ! is_search() || ( ! $show_posts && ! $show_pages ) ) return;
+	// Search type chips (structure-search-types.php): posts and pages have
+	// their own chip, the products search lists the products only.
+	if ( function_exists( 'silver_search_has_types' ) && silver_search_has_types() ) return;
 	global $post;
 	?>
 	<?php if ( get_search_query() ) : ?>
@@ -297,19 +304,19 @@ function silver_pages_in_search_results() {
 		/**
 		 * Include pages and posts in search
 		 */
-		query_posts( array( 'post_type' => array( 'post' ), 's' => get_search_query() ) );
-
 		$posts = array();
-		while ( have_posts() ) : the_post();
-			array_push( $posts, $post->ID );
-		endwhile;
-
-		wp_reset_query();
+		if ( $show_posts ) {
+			query_posts( array( 'post_type' => array( 'post' ), 's' => get_search_query() ) );
+			while ( have_posts() ) : the_post();
+				array_push( $posts, $post->ID );
+			endwhile;
+			wp_reset_query();
+		}
 
 		// Get pages.
-		query_posts( array( 'post_type' => array( 'page' ), 's' => get_search_query() ) );
 		$pages = array();
-		while ( have_posts() ) : the_post();
+		if ( $show_pages ) query_posts( array( 'post_type' => array( 'page' ), 's' => get_search_query() ) );
+		while ( $show_pages && have_posts() ) : the_post();
 			$wc_page = false;
 			if ( $post->post_type == 'page' ) {
 				foreach ( array( 'shop', 'cart', 'checkout', 'view_order', 'terms' ) as $wc_page_type ) {

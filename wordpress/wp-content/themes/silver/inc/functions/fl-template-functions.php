@@ -21,6 +21,10 @@ function fl_header_element_error( $resource ) {
  * @param bool         $display Whether to display the breadcrumb (true) or return it (false).
  */
 function silver_breadcrumb( $class = '', $display = true ) {
+	// Breadcrumbs field of the page set to Hide (structure-breadcrumbs-visibility.php).
+	if ( function_exists( 'silver_breadcrumbs_override' ) && 'hide' === silver_breadcrumbs_override() ) {
+		return;
+	}
 	do_action( 'silver_breadcrumb', $class, $display );
 }
 
@@ -504,11 +508,12 @@ function silver_breadcrumbs_bar() {
 
 	$shop = silver_shop_breadcrumbs_view();
 	$blog = ! $shop && function_exists( 'silver_blog_breadcrumbs_enabled' ) && silver_blog_breadcrumbs_enabled();
+	$page = ! $shop && ! $blog && function_exists( 'silver_page_breadcrumbs_enabled' ) && silver_page_breadcrumbs_enabled();
 
 	ob_start();
 	if ( $blog ) {
 		silver_blog_breadcrumbs( 'header' );
-	} elseif ( $shop ) {
+	} elseif ( $shop || $page ) {
 		silver_breadcrumb();
 	}
 	$breadcrumbs = trim( ob_get_clean() );
@@ -561,6 +566,11 @@ function silver_breadcrumbs_bar() {
 		}
 
 		$content .= silver_page_header_cats_html( $page_header['cats'], $page_header['cats_all'] );
+
+		// Extra HTML under the title (search type chips: structure-search-types.php).
+		if ( ! empty( $page_header['after_html'] ) ) {
+			$content .= $page_header['after_html'];
+		}
 	}
 
 	echo '<div class="' . esc_attr( $classes ) . '"><div class="container">' . $content . '</div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped by the breadcrumb source and above.

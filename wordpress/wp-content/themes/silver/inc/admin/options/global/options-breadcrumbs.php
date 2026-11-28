@@ -3,9 +3,10 @@
  * Breadcrumbs: options shared by every breadcrumb of the theme (shop, blog,
  * portfolio), so they are available with or without WooCommerce.
  *
- * Where breadcrumbs show is set where they show: Blog > Blog Archive / Blog
- * Single Post > Breadcrumbs; the size of the shop ones in Shop > Product
- * Catalog > Breadcrumb Size.
+ * Where breadcrumbs show is set where they show: Blog > Archives / Single
+ * post > Breadcrumbs. The size of the shop ones (breadcrumb_size, registered
+ * in options-shop-category.php) shows in this section too
+ * (customizer-layout.php).
  *
  * @package Silver
  */
@@ -13,6 +14,17 @@
 Silver_Option::add_section( 'breadcrumbs', array(
 	'title'       => __( 'Breadcrumbs', 'silver' ),
 	'description' => __( 'Applies to the shop, blog and portfolio breadcrumbs.', 'silver' ),
+) );
+
+// Pages (structure-breadcrumbs-visibility.php): each page can choose with its
+// own Breadcrumbs field.
+Silver_Option::add_field( 'option', array(
+	'type'        => 'checkbox',
+	'settings'    => 'page_breadcrumbs',
+	'label'       => __( 'Show breadcrumbs on pages', 'silver' ),
+	'description' => __( 'Above the page content, or in the bar under the header (Breadcrumbs position). Not on the front page. Each page, post, product and category can Hide or Show its breadcrumbs (Breadcrumbs field).', 'silver' ),
+	'section'     => 'breadcrumbs',
+	'default'     => 0,
 ) );
 
 // Moved from Shop > Product Catalog: same setting, saved values are kept.
@@ -137,7 +149,7 @@ Silver_Option::add_field( 'option', array(
 	'type'            => 'radio-buttonset',
 	'settings'        => 'breadcrumbs_bar_title_tag',
 	'label'           => __( 'Bar title tag (shop)', 'silver' ),
-	'description'     => __( 'Shop page and product categories. Auto: H1, or a div with the same look when the page prints an H1 of its own (in the category description, first page only, or in the shop page content). Blog: Blog > Blog Layout.', 'silver' ),
+	'description'     => __( 'Shop page and product categories. Auto: H1, or a div with the same look when the page prints an H1 of its own (in the category description, first page only, or in the shop page content). Blog: Blog > Blog page.', 'silver' ),
 	'section'         => 'breadcrumbs',
 	'default'         => 'auto',
 	'choices'         => array(
