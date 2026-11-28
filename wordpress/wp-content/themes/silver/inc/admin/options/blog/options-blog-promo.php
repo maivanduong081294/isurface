@@ -162,4 +162,16 @@ Silver_Option::add_field( 'option', array(
 	'active_callback' => $silver_blog_promo_on,
 ) );
 
+// Single posts: the rules of the category of the post (Rank Math primary
+// category, else the first one). See silver_blog_promo_section().
+Silver_Option::add_field( 'option', array(
+	'type'            => 'checkbox',
+	'settings'        => 'blog_promo_single',
+	'label'           => __( 'Related products: on posts', 'silver' ),
+	'description'     => __( 'Under each post, from the settings of its category.', 'silver' ),
+	'section'         => 'blog-promo',
+	'default'         => 1,
+	'active_callback' => $silver_blog_promo_on,
+) );
+
 unset( $silver_blog_promo_on );

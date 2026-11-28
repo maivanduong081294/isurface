@@ -432,12 +432,13 @@ function silver_content_nav( $nav_id ) {
     <?php if ( is_single() ) : // navigation links for single posts ?>
     <nav role="navigation" id="<?php echo esc_attr( $nav_id ); ?>" class="<?php echo $nav_class; ?>">
 	<div class="flex-row next-prev-nav bt bb">
+		<?php // A label above each title (.nav-post-label, silver-modern.css): "Previous post" / "Next post". ?>
 		<div class="flex-col flex-grow nav-prev text-left">
-			    <?php previous_post_link( '<div class="nav-previous">%link</div>','<span class="hide-for-small">' .get_silver_icon('icon-angle-left') . _x( '', 'Previous post link', 'silver' ) . '</span> %title' ); ?>
+			    <?php previous_post_link( '<div class="nav-previous">%link</div>', '<span class="nav-post-label">' . get_silver_icon( 'icon-angle-left' ) . esc_html__( 'Previous post', 'silver' ) . '</span><span class="nav-post-title">%title</span>' ); ?>
 
 		</div>
 		<div class="flex-col flex-grow nav-next text-right">
-			    <?php next_post_link( '<div class="nav-next">%link</div>', '%title <span class="hide-for-small">'. get_silver_icon('icon-angle-right') . _x( '', 'Next post link', 'silver' ) . '</span>' ); ?>
+			    <?php next_post_link( '<div class="nav-next">%link</div>', '<span class="nav-post-label">' . esc_html__( 'Next post', 'silver' ) . get_silver_icon( 'icon-angle-right' ) . '</span><span class="nav-post-title">%title</span>' ); ?>
 		</div>
 	</div>
 
@@ -481,43 +482,46 @@ function silver_comment( $comment, $args, $depth ) {
 		default :
 	?>
 	<li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
+		<?php
+		// Avatar on the left; author (and a "Post author" badge), date, the
+		// text, then the reply / edit actions (silver-modern.css, .comment-list).
+		// Product reviews have their own template (woocommerce_comments).
+		$silver_by_author = $comment->user_id && (int) $comment->user_id === (int) get_post_field( 'post_author', $comment->comment_post_ID );
+		?>
 		<article id="comment-<?php comment_ID(); ?>" class="comment-inner">
+			<div class="comment-author vcard">
+				<?php echo get_avatar( $comment, 96 ); ?>
+			</div>
 
-            <div class="flex-row align-top">
-                <div class="flex-col">
-                    <div class="comment-author mr-half">
-                        <?php echo get_avatar( $comment, 70 ); ?>
-                    </div>
-                </div>
+			<div class="comment-main">
+				<header class="comment-header">
+					<cite class="fn"><?php echo get_comment_author_link( $comment ); // phpcs:ignore WordPress.Security.EscapeOutput ?></cite>
+					<?php if ( $silver_by_author ) : ?>
+						<span class="comment-badge"><?php esc_html_e( 'Post author', 'silver' ); ?></span>
+					<?php endif; ?>
+					<a class="comment-time" href="<?php echo esc_url( get_comment_link( $comment ) ); ?>">
+						<time datetime="<?php comment_time( 'c' ); ?>"><?php printf( _x( '%1$s at %2$s', '1: date, 2: time', 'silver' ), get_comment_date(), get_comment_time() ); // phpcs:ignore WordPress.Security.EscapeOutput ?></time>
+					</a>
+				</header>
 
-                <div class="flex-col flex-grow">
-                    <?php printf( __( '%s <span class="says">says:</span>', 'silver' ), sprintf( '<cite class="strong fn">%s</cite>', get_comment_author_link() ) ); ?>
-                    <?php if ( $comment->comment_approved == '0' ) : ?>
-                    <em><?php _e( 'Your comment is awaiting moderation.', 'silver' ); ?></em>
-                     <br />
-                    <?php endif; ?>
+				<?php if ( '0' == $comment->comment_approved ) : ?>
+					<p class="comment-awaiting-moderation"><?php esc_html_e( 'Your comment is awaiting moderation.', 'silver' ); ?></p>
+				<?php endif; ?>
 
-                   <div class="comment-content"><?php comment_text(); ?></div>
+				<div class="comment-content"><?php comment_text(); ?></div>
 
-
-                 <div class="comment-meta commentmetadata uppercase is-xsmall clear">
-                    <a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"><time datetime="<?php comment_time( 'c' ); ?>" class="pull-left">
-                    <?php printf( _x( '%1$s at %2$s', '1: date, 2: time', 'silver' ), get_comment_date(), get_comment_time() ); ?>
-                    </time></a>
-                    <?php edit_comment_link( __( 'Edit', 'silver' ), '<span class="edit-link ml-half strong">', '<span>' ); ?>
-
-                        <div class="reply pull-right">
-                            <?php
-                                comment_reply_link( array_merge( $args,array(
-                                    'depth'     => $depth,
-                                    'max_depth' => $args['max_depth'],
-                                ) ) );
-                            ?>
-                        </div>
-                </div>
-
-                </div>
-            </div>
+				<div class="comment-actions">
+					<?php
+					comment_reply_link( array_merge( $args, array(
+						'depth'     => $depth,
+						'max_depth' => $args['max_depth'],
+						'before'    => '<span class="reply">',
+						'after'     => '</span>',
+					) ) );
+					edit_comment_link( __( 'Edit', 'silver' ), '<span class="edit-link">', '</span>' );
+					?>
+				</div>
+			</div>
 		</article>
 	<?php
 			break;
@@ -549,6 +553,150 @@ if ( ! function_exists( 'silver_posted_on' ) ) :
 		);
 	}
 endif;
+
+/**
+ * Alignment of the category, title and meta above a post
+ * (template-parts/posts/partials/entry-header*.php): Blog Single Post > Title
+ * align on single posts (it falls back to Blog Layout > Posts Title Align
+ * until saved), Blog Layout > Posts Title Align elsewhere.
+ *
+ * @return string left, center or right.
+ */
+function silver_blog_title_align() {
+	$align = get_theme_mod( 'blog_posts_title_align', 'center' );
+	if ( is_single() ) {
+		$align = get_theme_mod( 'blog_single_title_align', $align );
+	}
+
+	return in_array( $align, array( 'left', 'center', 'right' ), true ) ? $align : 'center';
+}
+
+/**
+ * Meta line under the title of a single post (template-parts/posts/partials/
+ * entry-title.php): the avatar and name of the author, the date (and the
+ * update date when later).
+ */
+function silver_single_post_meta() {
+	$author_id = (int) get_the_author_meta( 'ID' );
+	$items     = array();
+
+	$published = '<time class="entry-date published" datetime="' . esc_attr( get_the_date( 'c' ) ) . '">' . esc_html( get_the_date() ) . '</time>';
+	$items[]   = '<span class="entry-meta__item posted-on">' . $published . '</span>';
+
+	// Updated a day or more after it was published.
+	if ( get_the_modified_time( 'U' ) - get_the_time( 'U' ) >= DAY_IN_SECONDS ) {
+		$items[] = '<span class="entry-meta__item entry-meta__updated">' . sprintf(
+			/* translators: %s: date the post was last updated */
+			esc_html__( 'Updated %s', 'silver' ),
+			'<time class="entry-date-updated" datetime="' . esc_attr( get_the_modified_date( 'c' ) ) . '">' . esc_html( get_the_modified_date() ) . '</time>'
+		) . '</span>';
+	}
+	?>
+	<div class="entry-meta entry-meta--single">
+		<a class="entry-meta__author byline vcard" href="<?php echo esc_url( get_author_posts_url( $author_id ) ); ?>">
+			<?php echo get_avatar( $author_id, 64, '', '', array( 'class' => 'entry-meta__avatar' ) ); ?>
+			<span class="fn"><?php echo esc_html( get_the_author() ); ?></span>
+		</a>
+		<?php echo implode( '', $items ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped above. ?>
+	</div>
+	<?php
+}
+
+/**
+ * Content with a table of contents in the article style ([ux_toc],
+ * inc/shortcodes/ux_toc.php): after the first paragraph (the introduction),
+ * a card "Table of contents" that opens and closes, open at first; the
+ * sections in two columns from 850px (silver-modern.css, .post-toc). Used by
+ * blog posts (silver_single_post_toc()) and the Description tab of products
+ * (silver_product_description_toc_tab()).
+ *
+ * @param string $html Content (filtered).
+ * @param array  $atts [ux_toc] attributes, over the article defaults.
+ * @param int    $min  Fewest headings of the first two levels for a list.
+ *
+ * @return string The content, with the list when there are enough headings.
+ */
+function silver_content_toc( $html, $atts = array(), $min = 3 ) {
+	if ( ! function_exists( 'silver_toc_shortcode' ) ) {
+		return $html;
+	}
+
+	$atts = wp_parse_args( $atts, array(
+		'_id'      => 'post-toc',
+		'class'    => 'post-toc',
+		'title'    => __( 'Table of contents', 'silver' ),
+		'levels'   => 'h2,h3',
+		'position' => 'top',
+		'mobile'   => 'bar',
+		'collapse' => 'open',
+	) );
+
+	// Headings of the listed levels ("h2,h3" -> h2|h3).
+	$tags = implode( '|', array_filter( array_map( 'trim', explode( ',', strtolower( $atts['levels'] ) ) ), function ( $tag ) {
+		return (bool) preg_match( '/^h[2-6]$/', $tag );
+	} ) );
+	if ( '' === $tags || preg_match_all( '/<(?:' . $tags . ')[\s>]/i', $html ) < $min ) {
+		return $html;
+	}
+
+	// The introduction stays above the list (list at the top only; a list
+	// next to the content runs along all of it).
+	$intro = '';
+	if ( 'top' === $atts['position'] && preg_match( '#^\s*<p\b[^>]*>.*?</p>#is', $html, $match ) ) {
+		$intro = $match[0];
+		$html  = substr( $html, strlen( $match[0] ) );
+	}
+
+	return $intro . silver_toc_shortcode( $atts, $html, 'ux_toc' );
+}
+
+/**
+ * Content of a single post with the table of contents of its h2 / h3
+ * headings. Blog Single Post > Table of contents; only from 3 headings.
+ * - With a sidebar: a card after the introduction (silver_content_toc()).
+ * - Without one (Blog Post Single Layout > No sidebar): the headings get
+ *   their ids here and the list is kept for silver_single_post_side_toc(),
+ *   which template-parts/posts/layout.php prints in a sidebar column, in the
+ *   place of the sidebar.
+ *
+ * @param string $html Filtered content (the_content).
+ *
+ * @return string
+ */
+function silver_single_post_toc( $html ) {
+	if ( ! get_theme_mod( 'blog_single_toc', 1 ) || ! function_exists( 'silver_toc_parse' ) ) {
+		return $html;
+	}
+
+	$min = (int) apply_filters( 'silver_single_post_toc_min_headings', 3 );
+
+	if ( 'no-sidebar' === get_theme_mod( 'blog_post_layout', 'right-sidebar' ) ) {
+		$parsed = silver_toc_parse( $html, array( 'h2', 'h3' ) );
+		if ( count( $parsed['headings'] ) < $min ) {
+			return $html;
+		}
+		$title = __( 'Table of contents', 'silver' );
+
+		$GLOBALS['silver_post_side_toc'] = '<nav class="ux-toc is-sticky" aria-label="' . esc_attr( $title ) . '" data-title="' . esc_attr( $title ) . '">'
+			. '<div class="ux-toc__title">' . esc_html( $title ) . '</div>'
+			. silver_toc_list_html( $parsed['headings'], 'h2' )
+			. '</nav>';
+
+		return $parsed['html'];
+	}
+
+	return silver_content_toc( $html, apply_filters( 'silver_single_post_toc_atts', array() ), $min );
+}
+
+/**
+ * The table of contents of the post in the sidebar column (No sidebar
+ * layout, silver_single_post_toc()), once the content has been printed.
+ *
+ * @return string The <nav>, or '' when the post has no list.
+ */
+function silver_single_post_side_toc() {
+	return isset( $GLOBALS['silver_post_side_toc'] ) ? (string) $GLOBALS['silver_post_side_toc'] : '';
+}
 
 function silver_featured_sticky_posts( $query ) {
 	if ( get_theme_mod( 'blog_featured', '' ) && $query->is_home() && $query->is_main_query() ) {

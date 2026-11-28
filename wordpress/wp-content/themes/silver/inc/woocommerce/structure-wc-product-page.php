@@ -149,6 +149,32 @@ function silver_product_video_thumbnail() {
 }
 
 /**
+ * Thumbnails per view under the product gallery, per screen (Product Page >
+ * Thumbnails per view): 0 = auto (the theme's own size), else 2 to 8. The
+ * video tile (Product video > In the gallery thumbnails) counts as one.
+ * Printed by silver_custom_css() (inc/functions/function-custom-css.php);
+ * woocommerce/single-product/product-gallery-thumbnails.php shows the arrows
+ * only when the images do not fit.
+ *
+ * @return int[] Screen key (mobile, tablet, laptop, desktop) => count.
+ */
+function silver_product_gallery_thumbs_per_view() {
+	$screens = array(
+		'mobile'  => 'product_gallery_thumbs_mobile',
+		'tablet'  => 'product_gallery_thumbs_tablet',
+		'laptop'  => 'product_gallery_thumbs_laptop',
+		'desktop' => 'product_gallery_thumbs_desktop',
+	);
+	$counts = array();
+	foreach ( $screens as $screen => $setting ) {
+		$count             = (int) get_theme_mod( $setting, 0 );
+		$counts[ $screen ] = ( $count >= 2 && $count <= 8 ) ? $count : 0;
+	}
+
+	return $counts;
+}
+
+/**
  * Product image lightbox button.
  */
 function silver_product_lightbox_button() {
@@ -592,8 +618,8 @@ add_filter( 'woocommerce_product_tabs', 'silver_product_tabs_order', 100 );
 
 /*
  * Table of contents in the Description tab: the content goes through
- * [ux_toc] (inc/shortcodes/ux_toc.php) with the h3 and h4 headings: a box
- * "Nội dung chính" before the content that opens and closes. No such headings: the content as it is.
+ * [ux_toc] (inc/shortcodes/ux_toc.php) in the article style of the blog
+ * (silver_content_toc()): after the introduction, an open card. Fewer than 3 headings: the content as it is.
  * Filters "silver_product_description_toc" (false turns it off) and
  * "silver_product_description_toc_atts".
  */
@@ -630,19 +656,16 @@ function silver_product_description_toc_tab( $key, $tab ) {
 	}
 	$html = (string) ob_get_clean();
 
-	// Product page: before the content, a box "Nội dung chính" that opens and
-	// closes (closed at first); on phones the box stays and the bar sticks
-	// under the header while the description is read.
+	// Same table of contents as the blog posts (silver_content_toc(),
+	// inc/structure/structure-posts.php): after the introduction, a card
+	// "Table of contents", open, two columns from 850px; from 3 headings.
+	// Headings from h2 when the description has some, else from h3.
 	$atts = apply_filters( 'silver_product_description_toc_atts', array(
-		'_id'      => 'product-description-toc',
-		'title'    => __( 'Nội dung chính', 'silver' ),
-		'levels'   => 'h3,h4',
-		'position' => 'top',
-		'mobile'   => 'bar',
-		'collapse' => 'closed',
+		'_id'    => 'product-description-toc',
+		'levels' => preg_match( '/<h2[\s>]/i', $html ) ? 'h2,h3' : 'h3,h4',
 	) );
 
-	echo silver_toc_shortcode( $atts, $html, 'ux_toc' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- the tab content, with the list built by ux_toc.
+	echo silver_content_toc( $html, $atts, (int) apply_filters( 'silver_product_description_toc_min_headings', 3 ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- the tab content, with the list built by ux_toc.
 }
 
 /*

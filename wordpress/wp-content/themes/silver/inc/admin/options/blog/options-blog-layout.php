@@ -47,6 +47,29 @@ Silver_Option::add_field( 'option',  array(
 	'default'     => 1,
 ));
 
+// Desktop only (min-width 1200px, the xlarge columns); the content takes the
+// rest. Printed by silver_custom_css() in inc/functions/function-custom-css.php.
+Silver_Option::add_field( 'option', array(
+	'type'            => 'slider',
+	'settings'        => 'blog_sidebar_width',
+	'label'           => __( 'Sidebar Width (%)', 'silver' ),
+	'description'     => __( 'Desktop (1200px and up). Default 25%.', 'silver' ),
+	'section'         => 'blog-layout',
+	'default'         => 25,
+	'choices'         => array(
+		'min'  => 15,
+		'max'  => 50,
+		'step' => 1,
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'blog_layout',
+			'operator' => '!==',
+			'value'    => 'no-sidebar',
+		),
+	),
+) );
+
 Silver_Option::add_field( 'option', array(
 	'type'     => 'checkbox',
 	'settings' => 'blog_sticky_sidebar',

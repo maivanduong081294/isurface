@@ -34,7 +34,7 @@ if ( 'post' === get_post_type() && ! get_theme_mod( 'blog_single_comments', 1 ) 
 	<?php // You can start editing here -- including this comment! ?>
 
 	<?php if ( have_comments() ) : ?>
-		<h3 class="comments-title uppercase">
+		<div class="comments-title heading-font uppercase">
 			<?php
 				printf( // WPCS: XSS OK.
 					/* translators: %1$s: Comment count, %2$s: Comment title */
@@ -43,7 +43,7 @@ if ( 'post' === get_post_type() && ! get_theme_mod( 'blog_single_comments', 1 ) 
 					'<span>' . get_the_title() . '</span>'
 				);
 			?>
-		</h3>
+		</div>
 
 		<ol class="comment-list">
 			<?php
@@ -70,6 +70,12 @@ if ( 'post' === get_post_type() && ! get_theme_mod( 'blog_single_comments', 1 ) 
 		<p class="no-comments"><?php esc_html_e( 'Comments are closed.', 'silver' ); ?></p>
 	<?php endif; ?>
 
-	<?php comment_form(); ?>
+	<?php
+	// The form title is a label, not a heading of the page outline.
+	comment_form( array(
+		'title_reply_before' => '<div id="reply-title" class="comment-reply-title heading-font">',
+		'title_reply_after'  => '</div>',
+	) );
+	?>
 
 </div>

@@ -243,6 +243,37 @@ function silver_customizer_shop_product_page_options() {
 		),
 	) );
 
+	// Thumbnails per view under the gallery, per screen. The video tile
+	// (Product video > In the gallery thumbnails) counts as one. See
+	// silver_product_gallery_thumbs_per_view() in
+	// inc/woocommerce/structure-wc-product-page.php.
+	$thumbs_choices = array( 0 => __( 'Auto', 'silver' ) );
+	foreach ( range( 2, 8 ) as $thumbs_count ) {
+		$thumbs_choices[ $thumbs_count ] = (string) $thumbs_count;
+	}
+	$thumbs_screens = array(
+		'desktop' => __( 'Thumbnails per view: desktop (1200px and up)', 'silver' ),
+		'laptop'  => __( 'Thumbnails per view: tablet landscape (850 to 1199px)', 'silver' ),
+		'tablet'  => __( 'Thumbnails per view: tablet portrait (550 to 849px)', 'silver' ),
+		'mobile'  => __( 'Thumbnails per view: mobile (under 550px)', 'silver' ),
+	);
+	foreach ( $thumbs_screens as $thumbs_screen => $thumbs_label ) {
+		Silver_Option::add_field( 'option', array(
+			'type'            => 'select',
+			'settings'        => 'product_gallery_thumbs_' . $thumbs_screen,
+			'label'           => $thumbs_label,
+			'description'     => 'desktop' === $thumbs_screen ? __( 'Auto keeps the theme size. A video thumbnail counts as one.', 'silver' ) : '',
+			'section'         => 'product-page',
+			'default'         => 0,
+			'choices'         => $thumbs_choices,
+			'active_callback' => function () {
+				return ! get_theme_mod( 'product_gallery_woocommerce' )
+				       && get_theme_mod( 'product_layout' ) !== 'gallery-wide'
+				       && get_theme_mod( 'product_image_style', 'normal' ) !== 'vertical';
+			},
+		) );
+	}
+
 	// Keep the saved enabled value selectable for sites using either older viewer.
 	$viewer = get_theme_mod( 'product_lightbox', 'default' );
 	$enabled_viewer = in_array( $viewer, array( 'flatsome', 'woocommerce' ), true ) ? $viewer : 'default';

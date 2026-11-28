@@ -3315,3 +3315,115 @@ msgstr "Đổ bóng thẻ"
 #: inc/admin/options/blog/options-blog-layout.php
 msgid "Lift card with shadow"
 msgstr "Nâng nhẹ và đổ bóng"
+
+#: inc/structure/structure-posts.php
+msgid "Previous post"
+msgstr "Bài trước"
+
+#: inc/structure/structure-posts.php
+msgid "Next post"
+msgstr "Bài tiếp theo"
+
+#: inc/structure/structure-posts.php
+msgid "Updated %s"
+msgstr "Cập nhật %s"
+
+
+#: template-parts/posts/content-single.php
+msgid "Written by"
+msgstr "Tác giả"
+
+#: template-parts/posts/content-single.php
+msgid "View all posts"
+msgstr "Xem tất cả bài viết"
+
+
+
+
+#: inc/admin/options/blog/options-blog-layout.php
+msgid "Sidebar Width (%)"
+msgstr "Độ rộng sidebar (%)"
+
+#: inc/admin/options/blog/options-blog-layout.php
+msgid "Desktop (1200px and up). Default 25%."
+msgstr "Màn hình từ 1200px. Mặc định 25%."
+
+#: inc/admin/options/blog/options-blog-single.php
+msgid "Title align"
+msgstr "Căn lề tiêu đề"
+
+#: inc/structure/structure-posts.php
+msgid "Post author"
+msgstr "Tác giả"
+
+#: inc/admin/options/shop/options-shop-product-page.php
+msgid "Thumbnails per view: desktop (1200px and up)"
+msgstr "Số ảnh nhỏ mỗi khung: desktop (từ 1200px)"
+
+#: inc/admin/options/shop/options-shop-product-page.php
+msgid "Thumbnails per view: tablet landscape (850 to 1199px)"
+msgstr "Số ảnh nhỏ mỗi khung: tablet ngang (850 đến 1199px)"
+
+#: inc/admin/options/shop/options-shop-product-page.php
+msgid "Thumbnails per view: tablet portrait (550 to 849px)"
+msgstr "Số ảnh nhỏ mỗi khung: tablet dọc (550 đến 849px)"
+
+#: inc/admin/options/shop/options-shop-product-page.php
+msgid "Thumbnails per view: mobile (under 550px)"
+msgstr "Số ảnh nhỏ mỗi khung: mobile (dưới 550px)"
+
+#: inc/admin/options/shop/options-shop-product-page.php
+msgid "Auto keeps the theme size. A video thumbnail counts as one."
+msgstr "Tự động: giữ kích thước mặc định của theme. Ô video (nếu có) được tính là một ảnh."
+
+#: inc/admin/options/blog/options-blog-single.php
+msgid "From the h2 / h3 headings (3 or more): after the first paragraph, or in the place of the sidebar with the No sidebar layout."
+msgstr "Tạo từ các tiêu đề h2 / h3 (khi có từ 3 tiêu đề): đặt sau đoạn mở đầu, hoặc thay chỗ sidebar khi dùng layout No sidebar."
+
+#: inc/admin/options/blog/options-blog-single.php
+msgid "Table of contents position"
+msgstr "Vị trí mục lục"
+
+#: inc/admin/options/blog/options-blog-single.php
+msgid "Table of contents width (%)"
+msgstr "Độ rộng mục lục (%)"
+
+#: inc/admin/options/blog/options-blog-single.php
+msgid "From 850px. Default 25%."
+msgstr "Từ màn hình 850px. Mặc định 25%."
+
+#: inc/admin/options/blog/options-blog-promo.php
+msgid "Related products: on posts"
+msgstr "Sản phẩm liên quan: hiện dưới bài viết"
+
+#: inc/admin/options/blog/options-blog-promo.php
+msgid "Under each post, from the settings of its category."
+msgstr "Dưới mỗi bài viết, lấy theo cài đặt của chuyên mục bài viết."
+
+#: inc/woocommerce/structure-wc-blog-promo.php
+msgid "Hide on this post"
+msgstr "Ẩn ở bài viết này"
+
+#: inc/woocommerce/structure-wc-blog-promo.php
+msgid "Turned off for every post in Customizer > Blog > Blog Related Products."
+msgstr "Đang tắt cho mọi bài viết trong Customizer > Blog > Blog Related Products."
+
+#: inc/woocommerce/structure-wc-blog-promo.php
+msgid "Empty fields: from the category \"%s\"."
+msgstr "Ô để trống: lấy theo chuyên mục \"%s\"."
+
+#: inc/woocommerce/structure-wc-blog-promo.php
+msgid "Empty fields: from Customizer > Blog > Blog Related Products."
+msgstr "Ô để trống: lấy theo Customizer > Blog > Blog Related Products."
+
+#: inc/woocommerce/structure-wc-blog-promo.php
+msgid "%s = the name of the category."
+msgstr "%s = tên chuyên mục."
+
+#: inc/woocommerce/structure-wc-blog-promo.php
+msgid "— Inherit (%s) —"
+msgstr "— Kế thừa (%s) —"
+
+#: inc/woocommerce/structure-wc-blog-promo.php
+msgid "Shown first, in this order. Empty: the %d product of the category."
+msgstr "Hiện đầu tiên, theo đúng thứ tự này. Để trống: dùng %d sản phẩm của chuyên mục."

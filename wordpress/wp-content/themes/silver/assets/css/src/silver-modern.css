@@ -1962,6 +1962,858 @@ footer.entry-meta a:hover {
 	font-size: 1.1em;
 }
 
+/* Single post (template-parts/posts/single.php, content-single.php): an
+   article to read. Same type scale as the category description
+   (.term-description): large headings, 1.7 line height; the body text keeps
+   the base color for long reading. Header > image > content > share > meta >
+   author > previous / next, one vertical rhythm (--sv-article-gap). */
+.blog-single .article-inner {
+	--sv-article-gap: 2rem;
+}
+
+/* No sidebar (template-parts/posts/layout.php): a readable measure,
+   about 75 characters a line, instead of the full row. */
+.blog-single .xlarge-12 > article > .article-inner {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 860px;
+}
+/* Header: category, title, meta. */
+.blog-single .entry-header-text {
+	padding-bottom: 0;
+	padding-top: 0;
+}
+
+.blog-single .entry-header .entry-title {
+	color: var(--sv-heading);
+	font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);
+	font-weight: 800;
+	letter-spacing: -0.02em;
+	line-height: 1.2;
+	margin-bottom: 0.5em;
+}
+
+/* Category: a pill above the title. A div (entry-title.php), with the
+   uppercase look it had as an h6. */
+.entry-header .entry-category {
+	font-size: 0.75em;
+	line-height: 1.4;
+	text-transform: uppercase;
+}
+
+.blog-single .entry-header .entry-category {
+	margin-bottom: 1em;
+}
+
+.blog-single .entry-header .entry-category a {
+	background-color: color-mix(in srgb, var(--sv-primary) 10%, transparent);
+	border-radius: var(--sv-radius-pill);
+	display: inline-block;
+	line-height: 1.4;
+	padding: 5px 12px;
+	transition: background-color var(--sv-dur) var(--sv-ease);
+}
+
+.blog-single .entry-header .entry-category a:hover {
+	background-color: color-mix(in srgb, var(--sv-primary) 18%, transparent);
+}
+
+/* Meta (silver_single_post_meta()): avatar and author, then date, update
+   and the update date, separated by dots. */
+.blog-single .entry-meta--single {
+	align-items: center;
+	color: var(--sv-text-muted);
+	display: flex;
+	flex-wrap: wrap;
+	font-size: 0.9375em;
+	gap: 6px 0;
+	letter-spacing: 0;
+	text-transform: none;
+}
+
+.text-center > .blog-single .entry-meta--single,
+.entry-header-text.text-center .entry-meta--single {
+	justify-content: center;
+}
+
+.text-right > .entry-meta--single,
+.entry-header-text.text-right .entry-meta--single {
+	justify-content: flex-end;
+}
+
+.blog-single .entry-meta__author {
+	align-items: center;
+	color: var(--sv-heading);
+	display: inline-flex;
+	font-weight: 600;
+	gap: 8px;
+	margin-right: 4px;
+}
+
+.blog-single .entry-meta__author:hover {
+	color: var(--sv-primary);
+}
+
+.blog-single .entry-meta__avatar {
+	border-radius: 50%;
+	display: block;
+	height: 32px;
+	width: 32px;
+}
+
+/* The gap keeps the space between "Updated" and its date (flex items). */
+.blog-single .entry-meta__item {
+	align-items: center;
+	display: inline-flex;
+	gap: 0.3em;
+}
+
+.blog-single .entry-meta__item::before {
+	background-color: var(--sv-border-strong);
+	border-radius: 50%;
+	content: "";
+	height: 4px;
+	margin: 0 calc(10px - 0.3em) 0 10px;
+	width: 4px;
+}
+
+/* Phones: author and date on one line, without the update date. */
+@media (max-width: 549px) {
+	.blog-single .entry-meta__updated {
+		display: none;
+	}
+}
+
+.blog-single .entry-image {
+	margin-top: var(--sv-article-gap);
+}
+
+/* The date is in the meta line: no badge on the image. */
+.blog-single .entry-image .post-date {
+	display: none;
+}
+
+.blog-single .entry-image img {
+	border-radius: var(--sv-radius);
+	display: block;
+	height: auto;
+}
+
+/* Content. */
+.blog-single .entry-content {
+	padding-bottom: 0;
+	padding-top: var(--sv-article-gap);
+}
+
+.blog-single .entry-content > :first-child {
+	margin-top: 0;
+}
+
+.blog-single .entry-content :is(p, li):not(.ux-toc *) {
+	font-size: 1.0625em;
+	line-height: 1.7;
+}
+
+/* A list item is not scaled twice. */
+.blog-single .entry-content li :is(p, li) {
+	font-size: 1em;
+}
+
+.blog-single .entry-content p {
+	margin-bottom: 1.25em;
+}
+
+.blog-single .entry-content :is(h2, h3, h4) {
+	color: var(--sv-heading);
+	/* Anchors of a table of contents: not under the sticky header. */
+	scroll-margin-top: 100px;
+}
+
+.blog-single .entry-content h2 {
+	font-size: clamp(1.375rem, 1.15rem + 0.8vw, 1.75rem);
+	font-weight: 800;
+	letter-spacing: -0.015em;
+	line-height: 1.3;
+	margin: 1.8em 0 0.6em;
+}
+
+.blog-single .entry-content h3 {
+	font-size: 1.25em;
+	font-weight: 700;
+	line-height: 1.35;
+	margin: 1.5em 0 0.5em;
+}
+
+.blog-single .entry-content h4 {
+	font-size: 1.0625em;
+	font-weight: 700;
+	margin: 1.4em 0 0.4em;
+}
+
+.blog-single .entry-content :is(ul, ol):not(.ux-toc *) {
+	margin: 0 0 1.25em;
+	padding-left: 1.25em;
+}
+
+.blog-single .entry-content li:not(.ux-toc *) {
+	margin-bottom: 0.4em;
+}
+
+.blog-single .entry-content li:not(.ux-toc *)::marker {
+	color: var(--sv-primary);
+}
+
+/* Links in the text: underlined, not told apart by color alone. */
+.blog-single .entry-content :is(p, li, td):not(.ux-toc *) a:not(.button) {
+	text-decoration: underline;
+	text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+	text-decoration-thickness: 1px;
+	text-underline-offset: 3px;
+	transition: text-decoration-color var(--sv-dur) var(--sv-ease);
+}
+
+.blog-single .entry-content :is(p, li, td):not(.ux-toc *) a:not(.button):hover {
+	text-decoration-color: currentColor;
+}
+
+/* Images and captions: the editor sets the caption width inline. */
+.blog-single .entry-content img {
+	border-radius: var(--sv-radius);
+	height: auto;
+	max-width: 100%;
+}
+
+.blog-single .entry-content :is(.wp-caption, figure) {
+	margin: var(--sv-article-gap) auto;
+	max-width: 100%;
+}
+
+.blog-single .entry-content .wp-caption {
+	width: auto !important;
+}
+
+.blog-single .entry-content :is(.wp-caption-text, figcaption) {
+	background: none;
+	color: var(--sv-text-muted);
+	font-size: 0.875em;
+	font-style: normal;
+	line-height: 1.5;
+	padding: 8px 0 0;
+	text-align: center;
+}
+
+/* Tables: rounded frame, muted header, horizontal scroll on small screens
+   instead of a squeezed table. */
+.blog-single .entry-content table {
+	border: 1px solid var(--sv-border);
+	border-collapse: separate;
+	border-radius: var(--sv-radius-sm);
+	border-spacing: 0;
+	font-size: 0.9375em;
+	margin: 0 0 1.5em;
+	overflow: hidden;
+}
+
+.blog-single .entry-content :is(th, td) {
+	border: 0;
+	border-bottom: 1px solid var(--sv-border);
+	line-height: 1.5;
+	padding: 0.75em 1em;
+	text-align: left;
+	vertical-align: top;
+}
+
+.blog-single .entry-content tr:last-child > :is(th, td) {
+	border-bottom: 0;
+}
+
+.blog-single .entry-content :is(thead th, thead td, tr:first-child > th) {
+	background-color: var(--sv-surface-muted);
+	color: var(--sv-heading);
+	font-weight: 600;
+}
+
+@media (max-width: 849px) {
+	.blog-single .entry-content table {
+		display: block;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.blog-single .entry-content :is(th, td) {
+		min-width: 140px;
+	}
+}
+
+.blog-single .entry-content blockquote {
+	background-color: var(--sv-surface-muted);
+	border-radius: 0 var(--sv-radius-sm) var(--sv-radius-sm) 0;
+	margin: var(--sv-article-gap) 0;
+	padding: 1em 1.25em;
+}
+
+.blog-single .entry-content blockquote > :last-child {
+	margin-bottom: 0;
+}
+
+/* Table of contents after the introduction (silver_content_toc(): blog posts
+   and the Description tab of products; [ux_toc] at the top, collapsible): a
+   muted card in the flow. */
+.post-toc {
+	margin: var(--sv-article-gap, 2rem) 0;
+}
+
+.post-toc > .ux-toc-layout__aside {
+	margin-bottom: var(--sv-article-gap, 2rem);
+}
+
+.post-toc .ux-toc.ux-toc--collapsible {
+	background-color: var(--sv-surface-muted);
+	border: 1px solid var(--sv-border);
+	border-radius: var(--sv-radius);
+	max-width: none;
+}
+
+/* Full width: the sections in two columns from 850px. */
+@media (min-width: 850px) {
+	.post-toc .ux-toc__details > .ux-toc__list {
+		column-gap: 32px;
+		columns: 2;
+	}
+
+	.post-toc .ux-toc__item {
+		break-inside: avoid;
+	}
+}
+
+.post-toc .ux-toc__list {
+	margin-bottom: 0;
+}
+
+.post-toc .ux-toc__link {
+	text-decoration: none;
+}
+
+/* No sidebar layout with a table of contents (template-parts/posts/layout.php,
+   .post-toc-layout): the list in the sidebar column, sticky while the post is
+   read; the row keeps no extra space below. */
+.post-toc-layout.ux-toc-layout {
+	margin-bottom: 0;
+}
+
+.post-toc-layout > .post-sidebar .ux-toc {
+	padding: 18px 20px 10px;
+}
+
+/* Footer of the post: terms (pills) and share buttons in one bar between two
+   lines (content-single.php, .entry-footer-bar). */
+.blog-single .entry-footer-bar {
+	align-items: center;
+	border-bottom: 1px solid var(--sv-border);
+	border-top: 1px solid var(--sv-border);
+	display: flex;
+	flex-wrap: wrap;
+	gap: 16px 32px;
+	justify-content: space-between;
+	margin-top: var(--sv-article-gap);
+	padding: 1.25em 0;
+}
+
+.blog-single .entry-footer-bar__label {
+	color: var(--sv-text-muted);
+	font-size: 0.8125em;
+	font-weight: 600;
+	letter-spacing: 0.06em;
+	margin-right: 4px;
+	text-transform: uppercase;
+}
+
+.blog-single .entry-terms {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	min-width: 0;
+}
+
+.blog-single .entry-term {
+	background-color: var(--sv-surface-muted);
+	border: 1px solid var(--sv-border);
+	border-radius: var(--sv-radius-pill);
+	color: var(--sv-heading);
+	font-size: 0.875em;
+	line-height: 1.4;
+	padding: 5px 12px;
+	transition: border-color var(--sv-dur) var(--sv-ease), color var(--sv-dur) var(--sv-ease), background-color var(--sv-dur) var(--sv-ease);
+}
+
+.blog-single .entry-term--category {
+	background-color: color-mix(in srgb, var(--sv-primary) 10%, transparent);
+	border-color: transparent;
+	color: var(--sv-primary);
+	font-weight: 600;
+}
+
+.blog-single .entry-term:hover {
+	border-color: var(--sv-primary);
+	color: var(--sv-primary);
+}
+
+.blog-single .entry-term:focus-visible {
+	box-shadow: var(--sv-focus);
+	outline: 0;
+}
+
+.blog-single .blog-share {
+	align-items: center;
+	display: flex;
+	gap: 8px;
+	margin-left: auto;
+}
+
+.blog-single .blog-share .share-icons {
+	margin: 0;
+}
+
+.blog-single .blog-share .share-icons .button {
+	margin: 0 2px;
+}
+
+/* Author: a card, avatar on the left. */
+.blog-single .entry-author {
+	align-items: flex-start;
+	background-color: var(--sv-surface-muted);
+	border: 1px solid var(--sv-border);
+	border-radius: var(--sv-radius);
+	display: flex;
+	gap: 20px;
+	margin-top: var(--sv-article-gap);
+	padding: 24px;
+}
+
+.blog-single .entry-author .blog-author-image {
+	flex-shrink: 0;
+}
+
+.blog-single .entry-author .blog-author-image img {
+	border: 3px solid var(--sv-surface);
+	border-radius: 50%;
+	box-shadow: var(--sv-shadow-sm);
+	display: block;
+	height: 72px;
+	width: 72px;
+}
+
+.blog-single .entry-author__body {
+	min-width: 0;
+}
+
+.blog-single .entry-author__label {
+	color: var(--sv-text-muted);
+	display: block;
+	font-size: 0.75em;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	margin-bottom: 2px;
+	text-transform: uppercase;
+}
+
+.blog-single .entry-author .author-name {
+	color: var(--sv-heading);
+	font-size: 1.125em;
+	font-weight: 700;
+	letter-spacing: 0;
+	margin: 0 0 6px;
+	padding: 0;
+	text-transform: none;
+}
+
+.blog-single .entry-author .author-desc {
+	color: var(--sv-text-muted);
+	font-size: 0.9375em;
+	line-height: 1.6;
+	margin-bottom: 8px;
+}
+
+.blog-single .entry-author__link {
+	align-items: center;
+	color: var(--sv-primary);
+	display: inline-flex;
+	font-size: 0.875em;
+	font-weight: 600;
+	gap: 4px;
+}
+
+.blog-single .entry-author__link:hover {
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+/* Previous / next: two cards, a label over the title; an empty side (first
+   or last post) keeps its place without a frame. */
+.blog-single .navigation-post {
+	margin-top: var(--sv-article-gap);
+}
+
+.blog-single .next-prev-nav {
+	border: 0;
+	gap: 16px;
+}
+
+.blog-single .next-prev-nav .flex-col {
+	border: 1px solid var(--sv-border);
+	border-radius: var(--sv-radius);
+	flex-basis: 0;
+	min-width: 0;
+	padding: 0;
+	transition: border-color var(--sv-dur) var(--sv-ease), box-shadow var(--sv-dur) var(--sv-ease), transform var(--sv-dur) var(--sv-ease);
+}
+
+.blog-single .next-prev-nav .flex-col + .flex-col {
+	border-left: 1px solid var(--sv-border);
+}
+
+.blog-single .next-prev-nav .flex-col:not(:has(a)) {
+	border-color: transparent;
+}
+
+.blog-single .next-prev-nav .flex-col:has(a:hover) {
+	border-color: color-mix(in srgb, var(--sv-primary) 45%, var(--sv-border));
+	box-shadow: var(--sv-shadow);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.blog-single .next-prev-nav .flex-col:has(a:hover) {
+		transform: translateY(-2px);
+	}
+}
+
+.blog-single .next-prev-nav a {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	height: 100%;
+	padding: 18px 20px;
+}
+
+.blog-single .next-prev-nav .nav-next a {
+	align-items: flex-end;
+}
+
+.blog-single .next-prev-nav a:focus-visible {
+	border-radius: var(--sv-radius);
+	box-shadow: var(--sv-focus);
+	outline: 0;
+}
+
+.blog-single .nav-post-label {
+	align-items: center;
+	color: var(--sv-text-muted);
+	display: inline-flex;
+	font-size: 0.75em;
+	font-weight: 600;
+	gap: 6px;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.blog-single .nav-post-title {
+	color: var(--sv-heading);
+	display: -webkit-box;
+	font-weight: 700;
+	line-height: 1.4;
+	overflow: hidden;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	transition: color var(--sv-dur) var(--sv-ease);
+}
+
+.blog-single .next-prev-nav a:hover .nav-post-title {
+	color: var(--sv-primary);
+}
+
+.blog-single .next-prev-nav i {
+	color: var(--sv-primary);
+	font-size: 1.1em;
+	margin: 0 !important;
+	top: 0;
+}
+
+/* Comments: the form in the same card as the author, not a grey block. */
+.blog-single #comments {
+	margin-top: var(--sv-article-gap);
+}
+
+.blog-single #comments .comment-respond {
+	background-color: var(--sv-surface);
+	border: 1px solid var(--sv-border);
+	border-radius: var(--sv-radius);
+	margin-top: 0;
+	padding: 24px;
+}
+
+/* Titles of the list and the form: div.heading-font (comments.php), not
+   headings of the page outline. */
+.blog-single #comments :is(.comments-title, .comment-reply-title) {
+	color: var(--sv-heading);
+	display: block;
+	font-size: 1.25em;
+	font-weight: 700;
+	line-height: 1.3;
+	margin-bottom: 4px;
+}
+
+.blog-single #comments .comments-title {
+	letter-spacing: 0;
+	margin-bottom: 16px;
+	text-transform: none;
+}
+
+.blog-single #comments .comment-notes {
+	color: var(--sv-text-muted);
+	font-size: 0.875em;
+}
+
+/* Comments (silver_comment(), inc/structure/structure-posts.php): avatar,
+   then author, badge and date on one line, the text, the actions. Replies
+   indented with a line on the left. Only .comments-area .comment-list
+   (comments.php): product reviews use .commentlist and their own template. */
+.comments-area .comment-list {
+	list-style: none;
+	margin: 0 0 var(--sv-article-gap, 2rem);
+	padding: 0;
+}
+
+.comments-area .comment-list li {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.comments-area .comment-list > li + li {
+	border-top: 1px solid var(--sv-border);
+}
+
+.comments-area .comment-list .comment-inner {
+	display: flex;
+	gap: 14px;
+	padding: 20px 0;
+}
+
+.comments-area .comment-list .comment-inner:target {
+	background-color: color-mix(in srgb, var(--sv-primary) 6%, transparent);
+	border-radius: var(--sv-radius);
+	padding: 20px 16px;
+}
+
+.comments-area .comment-list .comment-author {
+	flex-shrink: 0;
+}
+
+.comments-area .comment-list .avatar {
+	border-radius: 50%;
+	display: block;
+	height: 44px;
+	width: 44px;
+}
+
+.comments-area .comment-main {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.comments-area .comment-header {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px 10px;
+	margin-bottom: 6px;
+}
+
+.comments-area .comment-header .fn {
+	color: var(--sv-heading);
+	font-style: normal;
+	font-weight: 700;
+}
+
+.comments-area .comment-header .fn a {
+	color: inherit;
+}
+
+.comments-area .comment-header .fn a:hover {
+	color: var(--sv-primary);
+}
+
+.comments-area .comment-badge {
+	background-color: color-mix(in srgb, var(--sv-primary) 10%, transparent);
+	border-radius: var(--sv-radius-pill);
+	color: var(--sv-primary);
+	font-size: 0.75em;
+	font-weight: 600;
+	line-height: 1.4;
+	padding: 2px 8px;
+}
+
+.comments-area .comment-time {
+	color: var(--sv-text-muted);
+	font-size: 0.8125em;
+}
+
+.comments-area .comment-time:hover {
+	color: var(--sv-primary);
+}
+
+.comments-area .comment-awaiting-moderation {
+	background-color: var(--sv-surface-muted);
+	border-radius: var(--sv-radius-sm);
+	color: var(--sv-text-muted);
+	font-size: 0.875em;
+	margin-bottom: 8px;
+	padding: 6px 10px;
+}
+
+.comments-area .comment-content {
+	line-height: 1.65;
+	overflow-wrap: anywhere;
+}
+
+.comments-area .comment-content > :last-child {
+	margin-bottom: 0;
+}
+
+.comments-area .comment-content p {
+	margin-bottom: 0.6em;
+}
+
+/* Actions: pills of at least 32px (target size). */
+.comments-area .comment-actions {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-top: 10px;
+}
+
+.comments-area .comment-actions:empty {
+	display: none;
+}
+
+.comments-area .comment-actions a {
+	align-items: center;
+	border: 1px solid var(--sv-border);
+	border-radius: var(--sv-radius-pill);
+	color: var(--sv-heading);
+	display: inline-flex;
+	font-size: 0.8125em;
+	font-weight: 600;
+	min-height: 32px;
+	padding: 0 14px;
+	transition: border-color var(--sv-dur) var(--sv-ease), color var(--sv-dur) var(--sv-ease);
+}
+
+.comments-area .comment-actions a:hover {
+	border-color: var(--sv-primary);
+	color: var(--sv-primary);
+}
+
+.comments-area .comment-actions .edit-link a {
+	border-color: transparent;
+	color: var(--sv-text-muted);
+}
+
+.comments-area :is(.comment-actions, .comment-header) a:focus-visible {
+	box-shadow: var(--sv-focus);
+	outline: 0;
+}
+
+/* Replies: indented under the parent's text, a line on the left. */
+.comments-area .comment-list .children {
+	border-left: 2px solid var(--sv-border);
+	list-style: none;
+	margin: 0 0 8px 22px;
+	padding: 0 0 0 20px;
+}
+
+.comments-area .comment-list .children > li + li {
+	border-top: 0;
+}
+
+.comments-area .comment-list .children .comment-inner {
+	padding: 12px 0;
+}
+
+.comments-area .comment-list .children .avatar {
+	height: 36px;
+	width: 36px;
+}
+
+@media (max-width: 549px) {
+	.comments-area .comment-list .comment-inner {
+		gap: 12px;
+	}
+
+	.comments-area .comment-list .avatar {
+		height: 36px;
+		width: 36px;
+	}
+
+	.comments-area .comment-list .children {
+		margin-left: 8px;
+		padding-left: 12px;
+	}
+}
+
+/* The same space above the title and below the button: the last paragraph
+   (.form-submit) keeps no margin of its own. */
+.blog-single #comments .comment-respond > :last-child,
+.blog-single #comments .comment-form > :last-child {
+	margin-bottom: 0;
+}
+
+@media (max-width: 549px) {
+	.blog-single .article-inner {
+		--sv-article-gap: 1.5rem;
+	}
+
+	.blog-single .blog-share {
+		margin-left: 0;
+	}
+
+	.blog-single .entry-author {
+		gap: 14px;
+		padding: 18px;
+	}
+
+	.blog-single .entry-author .blog-author-image img {
+		height: 56px;
+		width: 56px;
+	}
+
+	/* Stacked, full width (.flex-row centers its items, silver.css). */
+	.blog-single .next-prev-nav {
+		align-items: stretch;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.blog-single .next-prev-nav .flex-col {
+		flex: none;
+		width: 100%;
+	}
+
+	.blog-single .next-prev-nav a {
+		padding: 14px 16px;
+	}
+
+	.blog-single .next-prev-nav .flex-col:not(:has(a)) {
+		display: none;
+	}
+
+	.blog-single #comments .comment-respond {
+		padding: 18px;
+	}
+}
+
 /* --------------------------------------------------------- Widgets / footer */
 /* The label of the Search block is the title of its widget: same look. */
 .widget-title,
@@ -5485,15 +6337,16 @@ body.has-sticky-product-cart #footer > :nth-last-child(1 of :not(.back-to-top, s
 
 /* Content under the bar: the first row starts --sv-bar-gap below it on every
    page (the templates add 20px to 40px of their own). */
-.breadcrumbs-bar ~ #main .product-main,
-.breadcrumbs-bar ~ #main .blog-single {
+.breadcrumbs-bar ~ #main .product-main {
 	padding-top: var(--sv-bar-gap);
 }
 
-/* Blog page and archives: the category list and the posts are one section
-   (template-parts/posts/layout*.php), which holds the top and bottom padding
-   instead of the wrapper (.page-wrapper: 30px). */
-.blog-wrapper.blog-archive {
+/* Blog page, archives and single posts: the category list and the posts, or
+   the post, are one section (template-parts/posts/layout*.php), which holds
+   the top and bottom padding instead of the wrapper (.page-wrapper: 30px), as
+   on the category pages; the related products section follows it
+   (.blog-promo-section). */
+.blog-wrapper:is(.blog-archive, .blog-single) {
 	padding-bottom: 0;
 	padding-top: 0;
 }
@@ -5553,8 +6406,14 @@ body.has-sticky-product-cart #footer > :nth-last-child(1 of :not(.back-to-top, s
    of the shop category pages): full width. A slider not started yet is
    "width: auto" (silver.css, .slider:not(.swiper-enabled)); with the auto
    margins of .row it would shrink to its content in a flex column, the cards
-   squeezed until the slider starts (layout shift). */
-:is(.blog-section, .blog-section #post-list, .blog-promo-section, .category-page-row .shop-container) > .row {
+   squeezed until the slider starts (layout shift).
+   Rows nested in a column (#post-list, the shop container) are left out:
+   their negative margins (silver.css, ".row .row", "width: auto") already
+   stretch them to the edges of the column; "width: 100%" would cut the right
+   margin and push the posts in from the right. A collapsed one has no negative
+   margins and still needs it. */
+:is(.blog-section, .blog-promo-section) > .row,
+:is(.blog-section #post-list, .category-page-row .shop-container) > .row-collapse {
 	width: 100%;
 }
 

@@ -1,7 +1,8 @@
 <?php
 /**
- * Related products section under the posts of the blog page and post
- * categories: a section of its own after the section of the posts
+ * Related products section under the posts of the blog page, post
+ * categories and single posts (the category of the post): a section of
+ * its own after the section of the posts
  * (template-parts/posts/layout*.php, silver_after_blog), with an H2 ([title]
  * shortcode) and the products ([ux_products]).
  *
@@ -20,6 +21,10 @@
  * Heading: the one of the post category (inherited too), else the one of the
  * Customizer; %s = the name of the category / blog page.
  *
+ * Single posts: the Related products box of the Edit post screen hides the
+ * section on the post, or sets its own heading, product category and
+ * products; each empty field comes from the category of the post.
+ *
  * @package Silver
  */
 
@@ -29,6 +34,13 @@ const SILVER_BLOG_PROMO_HEADING  = 'silver_promo_heading';
 const SILVER_BLOG_PROMO_CAT      = 'silver_promo_product_cat';
 const SILVER_BLOG_PROMO_PRODUCTS = 'silver_promo_products';
 const SILVER_BLOG_PROMO_VERSION  = 'silver_blog_promo_version';
+
+// Post meta of a single post (Related products box of the Edit post screen),
+// "_": not in the Custom fields box.
+const SILVER_BLOG_PROMO_POST_HIDE     = '_silver_promo_hide';
+const SILVER_BLOG_PROMO_POST_HEADING  = '_silver_promo_heading';
+const SILVER_BLOG_PROMO_POST_CAT      = '_silver_promo_product_cat';
+const SILVER_BLOG_PROMO_POST_PRODUCTS = '_silver_promo_products';
 
 /* ------------------------------------------------------------------ Data */
 
@@ -310,23 +322,87 @@ unset( $silver_blog_promo_tax );
 /* --------------------------------------------------------------- Output */
 
 /**
+ * The category of a post for its related products: the primary category of
+ * Rank Math when set, else the first category.
+ *
+ * @param int $post_id Post ID.
+ *
+ * @return WP_Term|null
+ */
+function silver_blog_promo_post_term( $post_id ) {
+	$primary = (int) get_post_meta( $post_id, 'rank_math_primary_category', true );
+	if ( $primary && has_term( $primary, 'category', $post_id ) ) {
+		$term = get_term( $primary, 'category' );
+		if ( $term instanceof WP_Term ) {
+			return $term;
+		}
+	}
+
+	$terms = get_the_category( $post_id );
+
+	return $terms ? $terms[0] : null;
+}
+
+/**
+ * Settings of the section for a single post: the ones of the post (Related
+ * products box of the Edit post screen), each empty field from its category
+ * (silver_blog_promo_config(), inherited up the tree, then the Customizer).
+ *
+ * @param int          $post_id Post ID.
+ * @param WP_Term|null $term    Category of the post (silver_blog_promo_post_term()).
+ *
+ * @return array See silver_blog_promo_config().
+ */
+function silver_blog_promo_post_config( $post_id, $term ) {
+	$config   = silver_blog_promo_config( $term );
+	$heading  = (string) get_post_meta( $post_id, SILVER_BLOG_PROMO_POST_HEADING, true );
+	$cat      = (int) get_post_meta( $post_id, SILVER_BLOG_PROMO_POST_CAT, true );
+	$products = array_values( array_filter( array_map( 'absint', (array) get_post_meta( $post_id, SILVER_BLOG_PROMO_POST_PRODUCTS, true ) ) ) );
+
+	if ( '' !== $heading ) {
+		$config['heading'] = $heading;
+	}
+	if ( $cat && term_exists( $cat, 'product_cat' ) ) {
+		$config['product_cat'] = $cat;
+	}
+	if ( $products ) {
+		$config['products'] = $products;
+	}
+
+	return apply_filters( 'silver_blog_promo_post_config', $config, $post_id, $term );
+}
+
+/**
  * The section, after the section of the posts (silver_after_blog): blog page
- * and post categories, first page only unless the Customizer says otherwise.
+ * and post categories, first page only unless the Customizer says otherwise;
+ * single posts (Blog Related Products > On posts), from their category.
  */
 function silver_blog_promo_section() {
-	if ( ! get_theme_mod( 'blog_promo', 1 ) || is_singular() ) {
-		return;
-	}
-	if ( ! is_category() && ! ( is_home() && ! is_front_page() ) ) {
-		return;
-	}
-	if ( get_theme_mod( 'blog_promo_first_page', 1 ) && is_paged() ) {
+	if ( ! get_theme_mod( 'blog_promo', 1 ) ) {
 		return;
 	}
 
-	$term   = is_category() ? get_queried_object() : null;
+	// Single posts (Blog Related Products > On posts): the settings of the
+	// post, else the rules of its category (silver_blog_promo_post_config()).
+	$post_id = 0;
+	if ( is_singular( 'post' ) ) {
+		$post_id = (int) get_queried_object_id();
+		if ( ! get_theme_mod( 'blog_promo_single', 1 ) || get_post_meta( $post_id, SILVER_BLOG_PROMO_POST_HIDE, true ) ) {
+			return;
+		}
+		$term = silver_blog_promo_post_term( $post_id );
+	} else {
+		if ( is_singular() || ( ! is_category() && ! ( is_home() && ! is_front_page() ) ) ) {
+			return;
+		}
+		if ( get_theme_mod( 'blog_promo_first_page', 1 ) && is_paged() ) {
+			return;
+		}
+		$term = is_category() ? get_queried_object() : null;
+	}
+
 	$term   = $term instanceof WP_Term ? $term : null;
-	$config = silver_blog_promo_config( $term );
+	$config = $post_id ? silver_blog_promo_post_config( $post_id, $term ) : silver_blog_promo_config( $term );
 	$ids    = silver_blog_promo_product_ids( $config, silver_blog_promo_number() );
 
 	if ( ! $ids ) {
@@ -458,7 +534,7 @@ function silver_blog_promo_term_fields( $term = null ) {
  *
  * @return string
  */
-function silver_blog_promo_products_select( $products ) {
+function silver_blog_promo_products_select( $products, $name = 'silver_promo_products', $id = 'silver-promo-products', $placeholder = '' ) {
 	$options = '';
 	foreach ( $products as $product_id ) {
 		$product = wc_get_product( $product_id );
@@ -467,7 +543,7 @@ function silver_blog_promo_products_select( $products ) {
 		}
 	}
 
-	return '<select class="wc-product-search" multiple="multiple" style="width:95%;max-width:560px" name="silver_promo_products[]" id="silver-promo-products" data-placeholder="' . esc_attr__( 'Search for a product…', 'silver' ) . '" data-action="woocommerce_json_search_products">' . $options . '</select>';
+	return '<select class="wc-product-search" multiple="multiple" style="width:95%;max-width:560px" name="' . esc_attr( $name ) . '[]" id="' . esc_attr( $id ) . '" data-placeholder="' . esc_attr( '' !== $placeholder ? $placeholder : __( 'Search for a product…', 'silver' ) ) . '" data-action="woocommerce_json_search_products">' . $options . '</select>';
 }
 
 /** Add category screen. */
@@ -520,12 +596,127 @@ function silver_blog_promo_save_term( $term_id ) {
 add_action( 'created_category', 'silver_blog_promo_save_term' );
 add_action( 'edited_category', 'silver_blog_promo_save_term' );
 
+/* --------------------------------------------------------- Admin: posts */
+
 /**
- * The product search of WooCommerce on the category screens.
+ * Related products box of the Edit post screen (side column).
+ */
+function silver_blog_promo_add_meta_box() {
+	add_meta_box( 'silver-blog-promo', __( 'Related products', 'silver' ), 'silver_blog_promo_meta_box', 'post', 'side', 'low' );
+}
+add_action( 'add_meta_boxes_post', 'silver_blog_promo_add_meta_box' );
+
+/**
+ * The fields of the box: empty = from the category of the post.
+ *
+ * @param WP_Post $post Post being edited.
+ */
+function silver_blog_promo_meta_box( $post ) {
+	$hide     = (bool) get_post_meta( $post->ID, SILVER_BLOG_PROMO_POST_HIDE, true );
+	$heading  = (string) get_post_meta( $post->ID, SILVER_BLOG_PROMO_POST_HEADING, true );
+	$cat      = (int) get_post_meta( $post->ID, SILVER_BLOG_PROMO_POST_CAT, true );
+	$products = array_filter( array_map( 'absint', (array) get_post_meta( $post->ID, SILVER_BLOG_PROMO_POST_PRODUCTS, true ) ) );
+
+	// What the empty fields take: the category of the post.
+	$term     = silver_blog_promo_post_term( $post->ID );
+	$term     = $term instanceof WP_Term ? $term : null;
+	$inherit  = silver_blog_promo_config( $term );
+	$cat_term = $inherit['product_cat'] ? get_term( $inherit['product_cat'], 'product_cat' ) : null;
+	$from     = $term
+		/* translators: %s: Post category. */
+		? sprintf( __( 'Empty fields: from the category "%s".', 'silver' ), $term->name )
+		: __( 'Empty fields: from Customizer > Blog > Blog Related Products.', 'silver' );
+
+	wp_nonce_field( 'silver_blog_promo_post', 'silver_blog_promo_post_nonce' );
+	?>
+	<p>
+		<label><input type="checkbox" name="silver_post_promo_hide" value="1" <?php checked( $hide ); ?> /> <?php esc_html_e( 'Hide on this post', 'silver' ); ?></label>
+	</p>
+	<?php if ( ! get_theme_mod( 'blog_promo', 1 ) || ! get_theme_mod( 'blog_promo_single', 1 ) ) : ?>
+		<p class="description"><?php esc_html_e( 'Turned off for every post in Customizer > Blog > Blog Related Products.', 'silver' ); ?></p>
+	<?php endif; ?>
+	<p class="description"><?php echo esc_html( $from ); ?></p>
+	<p>
+		<label for="silver-post-promo-heading"><strong><?php esc_html_e( 'Related products heading', 'silver' ); ?></strong></label><br />
+		<input type="text" class="widefat" name="silver_post_promo_heading" id="silver-post-promo-heading" value="<?php echo esc_attr( $heading ); ?>" placeholder="<?php echo esc_attr( $inherit['heading'] ); ?>" />
+		<span class="description"><?php esc_html_e( '%s = the name of the category.', 'silver' ); ?></span>
+	</p>
+	<p>
+		<label for="silver-post-promo-product-cat"><strong><?php esc_html_e( 'Related product category', 'silver' ); ?></strong></label><br />
+		<?php
+		wp_dropdown_categories( array(
+			'taxonomy'          => 'product_cat',
+			'name'              => 'silver_post_promo_product_cat',
+			'id'                => 'silver-post-promo-product-cat',
+			'class'             => 'widefat',
+			/* translators: %s: Product category of the post category. */
+			'show_option_none'  => $cat_term instanceof WP_Term ? sprintf( __( '— Inherit (%s) —', 'silver' ), $cat_term->name ) : __( '— Inherit —', 'silver' ),
+			'option_none_value' => 0,
+			'hide_empty'        => 0,
+			'hierarchical'      => 1,
+			'selected'          => $cat,
+			'value_field'       => 'term_id',
+		) );
+		?>
+	</p>
+	<p>
+		<label for="silver-post-promo-products"><strong><?php esc_html_e( 'Related products (hand-picked)', 'silver' ); ?></strong></label><br />
+		<?php
+		echo silver_blog_promo_products_select( $products, 'silver_post_promo_products', 'silver-post-promo-products' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in the function.
+		?>
+		<span class="description">
+			<?php
+			echo esc_html( $inherit['products'] ? sprintf(
+				/* translators: %d: Number of products chosen on the category. */
+				_n( 'Shown first, in this order. Empty: the %d product of the category.', 'Shown first, in this order. Empty: the %d products of the category.', count( $inherit['products'] ), 'silver' ),
+				count( $inherit['products'] )
+			) : __( 'Shown first, in this order.', 'silver' ) );
+			?>
+		</span>
+	</p>
+	<?php
+}
+
+/**
+ * Saves the box.
+ *
+ * @param int $post_id Post ID.
+ */
+function silver_blog_promo_save_post( $post_id ) {
+	if ( ! isset( $_POST['silver_blog_promo_post_nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['silver_blog_promo_post_nonce'] ) ), 'silver_blog_promo_post' ) ) {
+		return;
+	}
+	if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || wp_is_post_revision( $post_id ) || ! current_user_can( 'edit_post', $post_id ) ) {
+		return;
+	}
+
+	$cat      = isset( $_POST['silver_post_promo_product_cat'] ) ? absint( $_POST['silver_post_promo_product_cat'] ) : 0;
+	$products = isset( $_POST['silver_post_promo_products'] ) ? array_values( array_unique( array_filter( array_map( 'absint', (array) wp_unslash( $_POST['silver_post_promo_products'] ) ) ) ) ) : array();
+
+	$values = array(
+		SILVER_BLOG_PROMO_POST_HIDE     => empty( $_POST['silver_post_promo_hide'] ) ? 0 : 1,
+		SILVER_BLOG_PROMO_POST_HEADING  => isset( $_POST['silver_post_promo_heading'] ) ? sanitize_text_field( wp_unslash( $_POST['silver_post_promo_heading'] ) ) : '',
+		SILVER_BLOG_PROMO_POST_CAT      => $cat && term_exists( $cat, 'product_cat' ) ? $cat : 0,
+		SILVER_BLOG_PROMO_POST_PRODUCTS => $products,
+	);
+
+	foreach ( $values as $key => $value ) {
+		if ( empty( $value ) ) {
+			delete_post_meta( $post_id, $key );
+		} else {
+			update_post_meta( $post_id, $key, $value );
+		}
+	}
+}
+add_action( 'save_post_post', 'silver_blog_promo_save_post' );
+
+/**
+ * The product search of WooCommerce on the category screens and the Edit
+ * post screen.
  */
 function silver_blog_promo_admin_scripts() {
 	$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
-	if ( ! $screen || 'edit-category' !== $screen->id ) {
+	if ( ! $screen || ! ( 'edit-category' === $screen->id || ( 'post' === $screen->id && 'post' === $screen->post_type ) ) ) {
 		return;
 	}
 

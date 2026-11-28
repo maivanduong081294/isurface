@@ -161,11 +161,19 @@
 		setupStars(form);
 		const photos = setupPhotos(form, root, messages);
 
+		// A message, or the general error when there is none (failed request).
 		function showError(message, field) {
 			error.textContent = message || messages.error || '';
 			error.hidden = !error.textContent;
 			const target = field ? form.querySelector('[name="' + field + '"]') : null;
 			if (target) target.focus();
+		}
+
+		// Before each send. Not showError(''): an empty message falls back to
+		// the general error, which then showed while the review was sent.
+		function clearError() {
+			error.textContent = '';
+			error.hidden = true;
 		}
 
 		form.addEventListener('review:error', (event) => showError(event.detail.message));
@@ -203,7 +211,7 @@
 		form.addEventListener('submit', (event) => {
 			event.preventDefault();
 			if (form.classList.contains('is-sending')) return;
-			showError('');
+			clearError();
 
 			const stars = form.querySelector('[data-review-stars]');
 			if (stars && form.querySelector('.product-review-stars__input[required]') && !form.querySelector('.product-review-stars__input:checked')) {

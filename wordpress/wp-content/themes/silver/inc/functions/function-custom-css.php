@@ -347,6 +347,43 @@ if($header_height_mobile){ ?>
 <?php } ?>
 
 <?php
+// Blog Layout / Blog Single Post > Sidebar Width (%): replaces the xlarge-3 /
+// xlarge-9 split of template-parts/posts/layout-{left,right}-sidebar.php
+// (.blog-layout-row) from 1200px, where those columns apply. Nothing is
+// printed at the default 25%.
+$fs_blog_sidebar_widths = array(
+	'blog-archive' => (int) get_theme_mod( 'blog_sidebar_width', 25 ),
+);
+$fs_blog_sidebar_widths['blog-single'] = (int) get_theme_mod( 'blog_single_sidebar_width', $fs_blog_sidebar_widths['blog-archive'] );
+$fs_blog_sidebar_css = '';
+foreach ( $fs_blog_sidebar_widths as $fs_wrapper => $fs_width ) {
+	$fs_width = max( 15, min( 50, $fs_width ) );
+	if ( 25 === $fs_width ) {
+		continue;
+	}
+	$fs_blog_sidebar_css .= '.' . $fs_wrapper . ' .blog-layout-row>.post-sidebar{flex-basis:' . $fs_width . '%;max-width:' . $fs_width . '%}';
+	$fs_blog_sidebar_css .= '.' . $fs_wrapper . ' .blog-layout-row>.col:not(.post-sidebar){flex-basis:' . ( 100 - $fs_width ) . '%;max-width:' . ( 100 - $fs_width ) . '%}';
+}
+if ( $fs_blog_sidebar_css ) {
+	echo '@media screen and (min-width:1200px){' . $fs_blog_sidebar_css . '}';
+}
+
+// Blog Single Post > Table of contents width (%): the column of the table of
+// contents in the No sidebar layout (template-parts/posts/layout.php,
+// .post-toc-layout), from 850px where it is next to the post (large-3 /
+// large-9). Until saved, it follows the sidebar width above.
+// Also at 25% when the sidebar width differs: its rule (from 1200px) would
+// apply to this column too.
+$fs_toc_width = max( 15, min( 40, (int) get_theme_mod( 'blog_single_toc_width', $fs_blog_sidebar_widths['blog-single'] ) ) );
+if ( 25 !== $fs_toc_width || 25 !== max( 15, min( 50, $fs_blog_sidebar_widths['blog-single'] ) ) ) {
+	echo '@media screen and (min-width:850px){'
+		. '.blog-single .post-toc-layout.blog-layout-row>.post-sidebar{flex-basis:' . $fs_toc_width . '%;max-width:' . $fs_toc_width . '%}'
+		. '.blog-single .post-toc-layout.blog-layout-row>.col:not(.post-sidebar){flex-basis:' . ( 100 - $fs_toc_width ) . '%;max-width:' . ( 100 - $fs_toc_width ) . '%}'
+		. '}';
+}
+?>
+
+<?php
 	if(get_theme_mod('type_headings_color')){
 	  echo 'h1,h2,h3,h4,h5,h6,.heading-font{color: '.get_theme_mod('type_headings_color').';}';
 	}
@@ -610,6 +647,32 @@ if ( '' !== $fs_product_image_ratio ) {
 	<?php } ?>
 <?php } ?>
 
+<?php
+// Product Page > Thumbnails per view (silver_product_gallery_thumbs_per_view()):
+// N tiles across the row under the gallery, per screen range; Auto prints
+// nothing for that range. With a video tile (.gallery-video-rail) it takes one
+// of the N places: video = 100% / N of the row minus the 8px gap, the images
+// share the rest, N - 1 of them in view. Not the vertical thumbnails.
+if ( function_exists( 'silver_product_gallery_thumbs_per_view' ) ) {
+	$fs_thumbs_ranges = array(
+		'mobile'  => '(max-width: 549.98px)',
+		'tablet'  => '(min-width: 550px) and (max-width: 849.98px)',
+		'laptop'  => '(min-width: 850px) and (max-width: 1199.98px)',
+		'desktop' => '(min-width: 1200px)',
+	);
+	$fs_thumbs_rail = '.product-thumbnails.row-small.row-slider:not(.vertical-thumbnails *)';
+	foreach ( silver_product_gallery_thumbs_per_view() as $fs_screen => $fs_count ) {
+		if ( ! $fs_count ) {
+			continue;
+		}
+		echo '@media ' . $fs_thumbs_ranges[ $fs_screen ] . '{'
+			. $fs_thumbs_rail . ' .col{flex:0 0 auto;width:calc(100% / ' . $fs_count . ');max-width:none}'
+			. '.gallery-video-rail > ' . $fs_thumbs_rail . ' .col{width:calc(100% / ' . ( $fs_count - 1 ) . ')}'
+			. '.gallery-video-rail:not(.vertical-thumbnails *) > .gallery-video-thumb{width:calc(100% / ' . $fs_count . ' - 8px)}'
+			. '}';
+	}
+}
+?>
 <?php
 $blog_card_hover = get_theme_mod( 'blog_card_hover', 'none' );
 if ( in_array( $blog_card_hover, array( 'lift', 'shadow', 'lift-shadow' ), true ) ) : ?>

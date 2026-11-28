@@ -43,7 +43,12 @@ if ( $attachment_ids || $render_without_attachments ) {
 
 	$gallery_thumbnail = wc_get_image_size( apply_filters( 'woocommerce_gallery_thumbnail_size', 'woocommerce_' . $image_size ) );
 
-	if ( $thumb_count < 5 ) {
+	// Arrows only when the images do not fit: Thumbnails per view on desktop
+	// (silver_product_gallery_thumbs_per_view(), the video tile counts as
+	// one), else 4.
+	$thumbs_per_view = silver_product_gallery_thumbs_per_view()['desktop'];
+	$thumbs_in_view  = $thumbs_per_view ? $thumbs_per_view - ( $video_thumbnail ? 1 : 0 ) : 4;
+	if ( $thumb_count <= $thumbs_in_view ) {
 		$gallery_class[] = 'slider-no-arrows';
 	}
 
